@@ -40,12 +40,12 @@ function Page({ hash, changePage }) {
       return <Frontpage changePage={changePage} />;
     case "buy-coins":
       return <div>gonna be rich</div>;
-    // case "wifi":
-    //   return <WifiSettings />;
-    // case "connections":
-    //   return <Connections />;
-    // default:
-    //   return <Frontpage />;
+    case "wifi-settings":
+      return <div>wifi settings</div>;
+    case "payments":
+      return <div>payments</div>;
+    case "neighbors":
+      return <div>neighbors</div>;
   }
 }
 

@@ -19,9 +19,9 @@ export default () => (
       }}
     >
       <Icon link="#buy-coins">Buy Coins</Icon>
-      <Icon>Wifi Settings</Icon>
-      <Icon>Payments</Icon>
-      <Icon>Neighbors</Icon>
+      <Icon link="#wifi-settings">Wifi Settings</Icon>
+      <Icon link="#payments">Payments</Icon>
+      <Icon link="#neighbors">Neighbors</Icon>
     </div>
   </div>
 );
