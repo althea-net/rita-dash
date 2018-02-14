@@ -8,11 +8,21 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hash: "home"
+      hash: window.location.hash.substr(1)
     };
+    this.onHashChange();
+    window.addEventListener("hashchange", this.onHashChange, false);
   }
 
+  onHashChange = () => {
+    this.setState({
+      hash: window.location.hash.substr(1)
+    });
+  };
+
   render() {
+    // this.onHashChange();
+    // window.addEventListener("hashchange", this.onHashChange, false);
     return (
       <div className="App">
         <header className="App-header">
@@ -24,10 +34,12 @@ class App extends Component {
   }
 }
 
-function Page({ hash }) {
+function Page({ hash, changePage }) {
   switch (hash) {
-    case "home":
-      return <Frontpage />;
+    case "":
+      return <Frontpage changePage={changePage} />;
+    case "buy-coins":
+      return <div>gonna be rich</div>;
     // case "wifi":
     //   return <WifiSettings />;
     // case "connections":
