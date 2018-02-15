@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
-import "./App.css";
+// import "./App.css";
 import Frontpage from "./Frontpage.js";
 import Payments from "./Payments.js";
 import { Button } from "reactstrap";
@@ -52,8 +52,6 @@ function Page({ hash, changePage }) {
   switch (hash) {
     case "":
       return <Frontpage changePage={changePage} />;
-    case "buy-coins":
-      return <div>gonna be rich</div>;
     case "wifi-settings":
       return <div>wifi settings</div>;
     case "payments":

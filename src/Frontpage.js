@@ -10,7 +10,6 @@ export default () => (
       flexWrap: "wrap"
     }}
   >
-    <Icon link="#buy-coins">Buy Coins</Icon>
     <Icon link="#wifi-settings">Wifi Settings</Icon>
     <Icon link="#payments">Payments</Icon>
     <Icon link="#neighbors">Neighbors</Icon>
