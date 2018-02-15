@@ -6,23 +6,14 @@ export default () => (
     style={{
       display: "flex",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
+      flexWrap: "wrap"
     }}
   >
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexWrap: "wrap",
-        maxWidth: 750
-      }}
-    >
-      <Icon link="#buy-coins">Buy Coins</Icon>
-      <Icon link="#wifi-settings">Wifi Settings</Icon>
-      <Icon link="#payments">Payments</Icon>
-      <Icon link="#neighbors">Neighbors</Icon>
-    </div>
+    <Icon link="#buy-coins">Buy Coins</Icon>
+    <Icon link="#wifi-settings">Wifi Settings</Icon>
+    <Icon link="#payments">Payments</Icon>
+    <Icon link="#neighbors">Neighbors</Icon>
   </div>
 );
 

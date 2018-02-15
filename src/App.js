@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Frontpage from "./Frontpage.js";
+import Payments from "./Payments.js";
 import { Button } from "reactstrap";
 
 class App extends Component {
@@ -21,14 +22,27 @@ class App extends Component {
   };
 
   render() {
-    // this.onHashChange();
-    // window.addEventListener("hashchange", this.onHashChange, false);
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Althea</h1>
         </header>
-        <Page hash={this.state.hash} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 750
+            }}
+          >
+            <Page hash={this.state.hash} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -43,7 +57,7 @@ function Page({ hash, changePage }) {
     case "wifi-settings":
       return <div>wifi settings</div>;
     case "payments":
-      return <div>payments</div>;
+      return <Payments />;
     case "neighbors":
       return <div>neighbors</div>;
   }
