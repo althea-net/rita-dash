@@ -6,13 +6,11 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   InputGroup,
   InputGroupAddon,
   Modal,
   ModalHeader,
-  ModalBody,
-  ModalFooter
+  ModalBody
 } from "reactstrap";
 
 export default class Payments extends Component {

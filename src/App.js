@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-// import "./App.css";
 import Frontpage from "./Frontpage.js";
 import Payments from "./Payments.js";
-import { Button } from "reactstrap";
 
 class App extends Component {
   constructor(props) {
@@ -50,14 +47,14 @@ class App extends Component {
 
 function Page({ hash, changePage }) {
   switch (hash) {
-    case "":
-      return <Frontpage changePage={changePage} />;
     case "wifi-settings":
       return <div>wifi settings</div>;
     case "payments":
       return <Payments />;
     case "neighbors":
       return <div>neighbors</div>;
+    default:
+      return <Frontpage changePage={changePage} />;
   }
 }
 
