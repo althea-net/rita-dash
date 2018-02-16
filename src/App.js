@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Frontpage from "./Frontpage.js";
 import Payments from "./Payments.js";
+import Neighbors from "./Neighbors.js";
 
 class App extends Component {
   constructor(props) {
@@ -52,7 +53,7 @@ function Page({ hash, changePage }) {
     case "payments":
       return <Payments />;
     case "neighbors":
-      return <div>neighbors</div>;
+      return <Neighbors />;
     default:
       return <Frontpage changePage={changePage} />;
   }
