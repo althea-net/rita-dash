@@ -12,19 +12,29 @@ import {
 export default class WiFiSettings extends Component {
 	render() {
 		return (
-			<div>
+			<div
+				style={{
+					display: "flex",
+					flexDirection: "column"
+				}}>
 				<div
+					id="2.4GHz-div"
 					style={{
-						display: "flex",
-						border: "5px auto",
-						flexDirection: "column"
+						height: "auto",
+						width: "auto",
+						margin: "5%",
+						padding: "5%",
+						borderStyle: "solid"
 					}}>
 					<TwoGigLogin />
 				</div>
 				<div
 					style={{
-						display: "flex",
-						flexDirection: "column"
+						height: "auto",
+						width: "auto",
+						margin: "5%",
+						padding: "5%",
+						borderStyle: "solid"
 					}}>
 					<FiveGigLogin />
 				</div>
@@ -36,13 +46,24 @@ export default class WiFiSettings extends Component {
 function TwoGigLogin() {
 	return (
 		<Form>
-			<Label for="2.4-GHz-Form"> 2.4 GHz</Label>
+			<Label
+				for="2.4-GHz-Form"
+				style={{
+					height: "100%",
+					width: "100%",
+					marginBottom: "20px",
+					fontSize: "1.5em",
+					textAlign: "center"
+				}}>
+				2.4 GHz
+			</Label>
 
 			<FormGroup id="2.4-GHz-Form" row>
 				<Label for="2.4-GHz-ssid-input" sm={2}>
 					SSID
 				</Label>
-				<Col sm={5}>
+
+				<Col sm={8}>
 					<Input
 						type="text"
 						name="2.4-GHz-ssid"
@@ -51,12 +72,11 @@ function TwoGigLogin() {
 					/>
 				</Col>
 			</FormGroup>
-
 			<FormGroup row>
 				<Label for="2.4-GHz-password-input" sm={2}>
-					Email
+					Password
 				</Label>
-				<Col sm={5}>
+				<Col sm={8}>
 					<Input
 						type="password"
 						name="2.4-GHz-password"
@@ -65,7 +85,6 @@ function TwoGigLogin() {
 					/>
 				</Col>
 			</FormGroup>
-
 			<FormGroup check>
 				<Label check>
 					<Input type="checkbox" />
@@ -73,12 +92,25 @@ function TwoGigLogin() {
 				</Label>
 			</FormGroup>
 
-			<FormGroup>
-				<Button>Submit</Button>
-			</FormGroup>
-
-			<FormGroup>
-				<Button>Revert</Button>
+			<FormGroup
+				style={{
+					display: "flex",
+					marginTop: "20px",
+					justifyContent: "flex-end"
+				}}>
+				<Button
+					style={{
+						width: "80px",
+						marginRight: "20px"
+					}}>
+					Revert
+				</Button>
+				<Button
+					style={{
+						width: "80px"
+					}}>
+					Save
+				</Button>
 			</FormGroup>
 		</Form>
 	);
@@ -87,13 +119,23 @@ function TwoGigLogin() {
 function FiveGigLogin() {
 	return (
 		<Form>
-			<Label for="5-GHz-Form"> 5 GHz</Label>
+			<Label
+				for="5-GHz-Form"
+				style={{
+					height: "100%",
+					width: "100%",
+					marginBottom: "20px",
+					fontSize: "1.5em",
+					textAlign: "center"
+				}}>
+				5 GHz
+			</Label>
 
 			<FormGroup id="5-GHz-Form" row>
 				<Label for="5-GHz-ssid-input" sm={2}>
 					SSID
 				</Label>
-				<Col sm={5}>
+				<Col sm={8}>
 					<Input
 						type="text"
 						name="5-GHz-ssid"
@@ -105,9 +147,9 @@ function FiveGigLogin() {
 
 			<FormGroup row>
 				<Label for="5-GHz-password-input" sm={2}>
-					Email
+					Password
 				</Label>
-				<Col sm={5}>
+				<Col sm={8}>
 					<Input
 						type="password"
 						name="5-GHz-password"
@@ -124,12 +166,25 @@ function FiveGigLogin() {
 				</Label>
 			</FormGroup>
 
-			<FormGroup>
-				<Button>Submit</Button>
-			</FormGroup>
-
-			<FormGroup>
-				<Button>Revert</Button>
+			<FormGroup
+				style={{
+					display: "flex",
+					marginTop: "20px",
+					justifyContent: "flex-end"
+				}}>
+				<Button
+					style={{
+						width: "80px",
+						marginRight: "20px"
+					}}>
+					Revert
+				</Button>
+				<Button
+					style={{
+						width: "80px"
+					}}>
+					Save
+				</Button>
 			</FormGroup>
 		</Form>
 	);
