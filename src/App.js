@@ -27,6 +27,9 @@ class App extends Component {
 					<NavbarBrand href="/"> Althea</NavbarBrand>
 					<Nav>
 						<NavItem>
+							<NavLink href="/#wifi-settings">WiFi Settings</NavLink>
+						</NavItem>
+						<NavItem>
 							<NavLink href="/#payments">Payments</NavLink>
 						</NavItem>
 						<NavItem>
