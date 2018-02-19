@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Frontpage from "./Frontpage.js";
 import Payments from "./Payments.js";
 import Neighbors from "./Neighbors.js";
+import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 
 class App extends Component {
   constructor(props) {
@@ -22,9 +23,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Althea</h1>
-        </header>
+        <Navbar color="faded" light expabd="md">
+          <NavbarBrand href="/"> Althea</NavbarBrand>
+          <Nav>
+            <NavItem>
+              <NavLink href="/#wifi-settings">WiFi Settings</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/#payments">Payments</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/#neighbors">Neighbors</NavLink>
+            </NavItem>
+          </Nav>
+        </Navbar>
         <div
           style={{
             display: "flex",
