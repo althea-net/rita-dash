@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Frontpage from "./Frontpage.js";
 import Payments from "./Payments.js";
 import Neighbors from "./Neighbors.js";
+import WiFiSettings from "./WiFiSettings.js";
 
 class App extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class App extends Component {
 function Page({ hash, changePage }) {
   switch (hash) {
     case "wifi-settings":
-      return <div>wifi settings</div>;
+      return <WiFiSettings />;
     case "payments":
       return <Payments />;
     case "neighbors":
