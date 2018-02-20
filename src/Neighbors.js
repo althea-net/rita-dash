@@ -1,23 +1,236 @@
 import React from "react";
-import { Sigma, RandomizeNodePositions, RelativeSize } from "react-sigma";
-import ForceLink from "react-sigma/lib/ForceLink";
-import NodeShapes from "react-sigma/lib/NodeShapes";
-import EdgeShapes from "react-sigma/lib/EdgeShapes";
-import NOverlap from "react-sigma/lib/NOverlap";
+import "./BasicScroll.css";
+import {
+  Table,
+  Card,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardSubtitle
+} from "reactstrap";
 
 const neighbors = [
-  { name: "1", linkCost: 23 },
-  { name: "2", linkCost: 23 },
-  { name: "3", linkCost: 23 },
-  { name: "4", linkCost: 23 },
-  { name: "5", linkCost: 23 },
-  { name: "6", linkCost: 23 },
-  { name: "7", linkCost: 23 },
-  { name: "8", linkCost: 23 },
-  { name: "9", linkCost: 23 },
-  { name: "10", linkCost: 23 }
+  {
+    name: "Cindy Barker",
+    linkCost: 1,
+    routeMetricToExit: Infinity,
+    currentDebt: -12,
+    totalDebt: 0
+  },
+  {
+    name: "CascadianMesh Tower2",
+    linkCost: 5,
+    routeMetricToExit: 5,
+    currentDebt: 104,
+    totalDebt: 0
+  },
+  {
+    name: "Bobnet",
+    linkCost: 0,
+    routeMetricToExit: Infinity,
+    currentDebt: -5,
+    totalDebt: -230
+  },
+  {
+    name: "Verizon",
+    linkCost: 8,
+    routeMetricToExit: Infinity,
+    currentDebt: -30,
+    totalDebt: 429
+  },
+  {
+    name: "Donald J. Trump",
+    linkCost: 7,
+    routeMetricToExit: 5,
+    currentDebt: 234,
+    totalDebt: 2
+  },
+  {
+    name: "Franklin",
+    linkCost: 4,
+    routeMetricToExit: 6,
+    currentDebt: 0,
+    totalDebt: 0
+  },
+  {
+    name: "78oxoxox",
+    linkCost: 5,
+    routeMetricToExit: 10,
+    currentDebt: 0,
+    totalDebt: 0
+  },
+  {
+    name: "Jeff Knuckles",
+    linkCost: 5,
+    routeMetricToExit: 10,
+    currentDebt: 0,
+    totalDebt: 0
+  },
+  {
+    name: "flopington",
+    linkCost: 2,
+    routeMetricToExit: 4,
+    currentDebt: 0,
+    totalDebt: 199
+  },
+  {
+    name: "doonesbury",
+    linkCost: 3,
+    routeMetricToExit: 2,
+    currentDebt: 0,
+    totalDebt: 2009
+  }
 ];
 
+function metric2word(metric) {
+  if (metric < 3) {
+    return "Excellent";
+  }
+
+  if (metric < 6) {
+    return "Good";
+  }
+
+  if (metric < 10) {
+    return "Poor";
+  }
+
+  return "None";
+}
+
+function LabelUnit({ label, content, marginBottom, marginRight }) {
+  return (
+    <div
+      style={{
+        lineHeight: "100%",
+        marginBottom: 10,
+        marginRight: 10,
+        marginLeft: 10
+      }}
+    >
+      <small>{label}:</small>
+      <br />
+      <b>{content}</b>
+    </div>
+  );
+}
+
+function ConnectionLine({ label, thickness, children, dash, scroll }) {
+  // if (scroll)
+  return (
+    <div
+      style={{
+        minWidth: 30,
+        flexGrow: 1,
+        display: "flex",
+        position: "relative",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start"
+      }}
+    >
+      <div
+        style={{
+          height: thickness,
+          background: `linear-gradient(90deg, #fff 0%, #fff ${dash /
+            2}%, #000 ${dash / 2}%, #000 ${100 - dash / 2}%, #000 100%)`,
+          backgroundSize: thickness * 2,
+          animation:
+            scroll && scroll < 0
+              ? `ScrollRight ${30}s linear infinite`
+              : `ScrollLeft ${30}s linear infinite`,
+          width: "100%"
+        }}
+      />
+    </div>
+  );
+}
+
+function NodeInfo({
+  name,
+  linkCost,
+  routeMetricToExit,
+  currentDebt,
+  totalDebt
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        marginBottom: 30
+      }}
+    >
+      <h5 style={{ marginBottom: 0, marginRight: 10 }}>Me</h5>
+      <ConnectionLine
+        thickness={10 - linkCost}
+        dash={100}
+        scroll={currentDebt}
+      />
+      <div>
+        <Card
+          style={{
+            border: "3px solid black"
+          }}
+        >
+          <CardBody
+            style={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 15 }}
+          >
+            <CardTitle style={{ marginLeft: 10, marginRight: 10 }}>
+              {name}
+            </CardTitle>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexWrap: "wrap"
+              }}
+            >
+              <LabelUnit label="Link to me" content={metric2word(linkCost)} />
+              <LabelUnit
+                label="Link to internet"
+                content={metric2word(routeMetricToExit)}
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexWrap: "wrap"
+              }}
+            >
+              <LabelUnit label="Price" content={`12 ¢/gb`} />
+              {currentDebt < 0 ? (
+                <LabelUnit
+                  label="They are paying me"
+                  content={`${-currentDebt} ¢/sec.`}
+                />
+              ) : (
+                <LabelUnit
+                  label="I am paying them"
+                  content={`${currentDebt} ¢/sec.`}
+                />
+              )}
+              {totalDebt < 0 ? (
+                <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
+              ) : (
+                <LabelUnit label="Total paid" content={`$${totalDebt}`} />
+              )}
+            </div>
+          </CardBody>
+        </Card>
+      </div>
+      <ConnectionLine thickness={10 - routeMetricToExit} />
+      <h5 style={{ marginBottom: 0, marginLeft: 10 }}>🌎</h5>
+    </div>
+  );
+}
+
+export default () => {
+  return <div>{neighbors.map(neigh => <NodeInfo {...neigh} />)}</div>;
+};
+
+// The poor man's D3
 const layouts = {
   1: [
     { x: 50, y: 50 },
@@ -36,16 +249,16 @@ const layouts = {
   ],
   4: [
     { x: 50, y: 50 },
-    { x: 94, y: 10 }, // 1
-    { x: 13, y: 5 }, // 2
+    { x: 94, y: 0 }, // 1
+    { x: 13, y: 0 }, // 2
     { x: 85, y: 99 }, // 3
     { x: 8, y: 98 } // 4
   ],
   5: [
     { x: 50, y: 50 },
-    { x: 94, y: 38 }, // 1
-    { x: 63, y: 5 }, // 2
-    { x: 75, y: 91 }, // 3
+    { x: 100, y: 38 }, // 1
+    { x: 55, y: 0 }, // 2
+    { x: 95, y: 100 }, // 3
     { x: 8, y: 98 }, // 4
     { x: 3, y: 25 } // 5
   ],
@@ -95,14 +308,14 @@ const layouts = {
     { x: 50, y: 50 },
     { x: 100, y: 0 }, // 1
     { x: 68, y: 5 }, // 2
-    { x: 89, y: 34 }, // 3
-    { x: 99, y: 70 }, // 4
-    { x: 40, y: 13 }, // 5
-    { x: 8, y: 10 }, // 6
-    { x: 0, y: 45 }, // 7
-    { x: 80, y: 100 }, // 8
-    { x: 50, y: 94 }, // 9
-    { x: 14, y: 89 } // 10
+    { x: 94, y: 40 }, // 3
+    { x: 99, y: 75 }, // 4
+    { x: 40, y: 3 }, // 5
+    { x: 0, y: 14 }, // 6
+    { x: 0, y: 55 }, // 7
+    { x: 75, y: 100 }, // 8
+    { x: 41, y: 94 }, // 9
+    { x: 4, y: 95 } // 10
   ]
 };
 
@@ -112,7 +325,7 @@ function neigh2Graph(neighbors) {
     nodes: [
       {
         label: "Me",
-        size: 100,
+        size: 150,
         x: layout[0].x,
         y: layout[0].y
       }
@@ -123,30 +336,31 @@ function neigh2Graph(neighbors) {
   neighbors.forEach((neigh, i) => {
     graph.nodes.push({
       label: neigh.name,
-      size: 100,
+      size: 150,
       x: layout[i + 1].x,
       y: layout[i + 1].y
     });
     graph.edges.push({
       start: 0,
-      end: i + 1
+      end: i + 1,
+      weight: 10 - neigh.linkCost
     });
   });
 
   return graph;
 }
 
-function makeSquare(x1, y1, x2, y2) {
+function makeRect(x1, y1, x2, y2) {
   return {
     length: Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)),
     angle: Math.atan2(y1 - y2, x1 - x2)
   };
 }
 
-export default () => {
+function Graph() {
   const graph = neigh2Graph(neighbors);
   return (
-    <div style={{ padding: 50, maxWidth: 500, background: "#fafafa" }}>
+    <div style={{ padding: 50, maxWidth: 500 }}>
       <div
         style={{
           position: "relative",
@@ -157,7 +371,7 @@ export default () => {
         {graph.edges.map((edge, i) => {
           const start = graph.nodes[edge.start];
           const end = graph.nodes[edge.end];
-          const { length, angle } = makeSquare(end.x, end.y, start.x, start.y);
+          const { length, angle } = makeRect(end.x, end.y, start.x, start.y);
           return (
             <div
               key={i}
@@ -166,8 +380,8 @@ export default () => {
                 width: `${length}%`,
                 top: `${start.y}%`,
                 left: `${start.x}%`,
-                height: 3,
-                background: "blue",
+                height: edge.weight,
+                background: "#000",
                 transform: `rotate(${angle}rad)`,
                 transformOrigin: "top left"
               }}
@@ -201,4 +415,4 @@ export default () => {
       </div>
     </div>
   );
-};
+}
