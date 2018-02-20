@@ -7,11 +7,10 @@ export default class WiFiSettings extends Component {
       <div
         style={{
           display: "flex",
-          flexDirection: "column"
+          flexWrap: "wrap"
         }}
       >
         <div
-          id="2.4GHz-div"
           style={{
             height: "auto",
             width: "auto",
@@ -20,7 +19,7 @@ export default class WiFiSettings extends Component {
             borderStyle: "solid"
           }}
         >
-          <LoginForm network="2.4 GHz" />
+          <CreateLoginForm network="2.4 GHz" />
         </div>
         <div
           style={{
@@ -31,14 +30,14 @@ export default class WiFiSettings extends Component {
             borderStyle: "solid"
           }}
         >
-          <LoginForm network="5 GHz" />
+          <CreateLoginForm network="5 GHz" />
         </div>
       </div>
     );
   }
 }
 
-function LoginForm({ network }) {
+function CreateLoginForm({ network }) {
   return (
     <Form>
       <Label
