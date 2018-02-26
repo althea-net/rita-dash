@@ -229,12 +229,6 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              {routeMetricToExit < 10 && (
-                <LabelUnit
-                  label="Bandwidth price"
-                  content={`${priceToExit} ¢/gb`}
-                />
-              )}
               {currentDebt < 0 ? (
                 <LabelUnit
                   label="They are paying me"
@@ -244,6 +238,12 @@ function NodeInfo({
                 <LabelUnit
                   label="I am paying them"
                   content={`${currentDebt} ¢/sec.`}
+                />
+              )}
+              {routeMetricToExit < 10 && (
+                <LabelUnit
+                  label="Bandwidth price"
+                  content={`${priceToExit} ¢/gb`}
                 />
               )}
               {totalDebt < 0 ? (
@@ -276,9 +276,12 @@ export default () => {
   }, 0);
   return (
     <div>
-      {neighbors.map(neigh => (
-        <NodeInfo greatestCurrentDebt={greatestCurrentDebt} {...neigh} />
-      ))}
+      <h1>Neighbors</h1>
+      <div>
+        {neighbors.map(neigh => (
+          <NodeInfo greatestCurrentDebt={greatestCurrentDebt} {...neigh} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -16,23 +16,26 @@ import {
 export default class Payments extends Component {
   render() {
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column"
-        }}
-      >
-        <MoneyBar avgUse={100} currentFunds={50} />
-        <RefillFunds />
+      <div>
+        <h1>Payments</h1>
         <div
           style={{
             display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "space-between"
+            flexDirection: "column"
           }}
         >
-          <LowFunds />
-          <PriceQuality />
+          <MoneyBar avgUse={100} currentFunds={50} />
+          <RefillFunds />
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between"
+            }}
+          >
+            <LowFunds />
+            <PriceQuality />
+          </div>
         </div>
       </div>
     );
@@ -119,7 +122,9 @@ class RefillFunds extends Component {
       <div
         style={{
           display: "flex",
-          justifyContent: "space-around"
+          justifyContent: "space-around",
+          marginTop: 60,
+          marginBottom: 60
         }}
       >
         <Button
