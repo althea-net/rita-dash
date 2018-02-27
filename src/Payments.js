@@ -30,7 +30,9 @@ export default class Payments extends Component {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
+              padding: 10,
+              margin: -20
             }}
           >
             <LowFunds />
@@ -44,21 +46,21 @@ export default class Payments extends Component {
 
 function LowFunds() {
   return (
-    <div>
+    <div style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
       <h3>When funds get low:</h3>
 
       <Form>
         <FormGroup>
           <Label for="exampleEmail">Threshold</Label>
           <InputGroup>
-            <Input type="number" value="10" />
+            <Input style={{ width: "5em" }} type="number" value="10" />
             <InputGroupAddon addonType="append">
               % of average monthly use
             </InputGroupAddon>
           </InputGroup>
         </FormGroup>
 
-        <FormGroup check style={{ marginBottom: ".5rem" }}>
+        {/* <FormGroup check style={{ marginBottom: ".5rem" }}>
           <Label check>
             <Input type="checkbox" /> Send an email to this address:
           </Label>
@@ -66,7 +68,7 @@ function LowFunds() {
 
         <FormGroup>
           <Input type="email" name="email" id="exampleEmail" />
-        </FormGroup>
+        </FormGroup> */}
 
         <FormGroup check>
           <Label check>
@@ -80,7 +82,7 @@ function LowFunds() {
 
 function PriceQuality() {
   return (
-    <div>
+    <div style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
       <h3>Price/Quality tradeoff:</h3>
 
       <Form>

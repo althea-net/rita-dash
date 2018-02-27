@@ -48,7 +48,8 @@ class App extends Component {
           <div
             style={{
               width: "100%",
-              maxWidth: 750
+              maxWidth: 750,
+              padding: 10
             }}
           >
             <Page hash={this.state.hash} />
