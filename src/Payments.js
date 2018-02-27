@@ -10,7 +10,9 @@ import {
   InputGroupAddon,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
+  Card,
+  CardBody
 } from "reactstrap";
 
 export default class Payments extends Component {
@@ -46,21 +48,22 @@ export default class Payments extends Component {
 
 function LowFunds() {
   return (
-    <div style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
-      <h3>When funds get low:</h3>
+    <Card style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
+      <CardBody>
+        <h3>When funds get low:</h3>
 
-      <Form>
-        <FormGroup>
-          <Label for="exampleEmail">Threshold</Label>
-          <InputGroup>
-            <Input style={{ width: "5em" }} type="number" value="10" />
-            <InputGroupAddon addonType="append">
-              % of average monthly use
-            </InputGroupAddon>
-          </InputGroup>
-        </FormGroup>
+        <Form>
+          <FormGroup>
+            <Label for="exampleEmail">Threshold</Label>
+            <InputGroup>
+              <Input style={{ width: "5em" }} type="number" value="10" />
+              <InputGroupAddon addonType="append">
+                % of average monthly use
+              </InputGroupAddon>
+            </InputGroup>
+          </FormGroup>
 
-        {/* <FormGroup check style={{ marginBottom: ".5rem" }}>
+          {/* <FormGroup check style={{ marginBottom: ".5rem" }}>
           <Label check>
             <Input type="checkbox" /> Send an email to this address:
           </Label>
@@ -70,39 +73,42 @@ function LowFunds() {
           <Input type="email" name="email" id="exampleEmail" />
         </FormGroup> */}
 
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" /> Throttle speed
-          </Label>
-        </FormGroup>
-      </Form>
-    </div>
+          <FormGroup check>
+            <Label check>
+              <Input type="checkbox" /> Throttle speed
+            </Label>
+          </FormGroup>
+        </Form>
+      </CardBody>
+    </Card>
   );
 }
 
 function PriceQuality() {
   return (
-    <div style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
-      <h3>Price/Quality tradeoff:</h3>
+    <Card style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
+      <CardBody>
+        <h3>Price/Quality tradeoff:</h3>
 
-      <Form>
-        <FormGroup>
-          <Input type="range" />
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <small>Prefer low price</small>
-            <small>Prefer high quality</small>
-          </div>
-        </FormGroup>
+        <Form>
+          <FormGroup>
+            <Input type="range" />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <small>Prefer low price</small>
+              <small>Prefer high quality</small>
+            </div>
+          </FormGroup>
 
-        <FormGroup>
-          <Label for="exampleEmail">Highest acceptable price</Label>
-          <InputGroup>
-            <Input type="number" value="10" />
-            <InputGroupAddon addonType="append">cents/GB</InputGroupAddon>
-          </InputGroup>
-        </FormGroup>
-      </Form>
-    </div>
+          <FormGroup>
+            <Label for="exampleEmail">Highest acceptable price</Label>
+            <InputGroup>
+              <Input type="number" value="10" />
+              <InputGroupAddon addonType="append">cents/GB</InputGroupAddon>
+            </InputGroup>
+          </FormGroup>
+        </Form>
+      </CardBody>
+    </Card>
   );
 }
 
