@@ -1,108 +1,57 @@
 import React from "react";
 import "./BasicScroll.css";
-import {
-  Table,
-  Card,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle
-} from "reactstrap";
+import { Card, CardBody, CardTitle } from "reactstrap";
 
-const neighbors = [
+let neighbors = [
   {
     name: "Cindy Barker",
-    linkCost: 1,
+    linkCost: 1168,
     routeMetricToExit: Infinity,
     currentDebt: -12,
     totalDebt: 0
   },
   {
     name: "CascadianMesh Tower2",
-    linkCost: 5,
-    routeMetricToExit: 5,
+    linkCost: 1020,
+    routeMetricToExit: 958,
     priceToExit: 12,
     currentDebt: 104,
     totalDebt: 0
   },
   {
     name: "Bobnet",
-    linkCost: 0,
-    routeMetricToExit: Infinity,
+    linkCost: 817,
+    routeMetricToExit: 1596,
     currentDebt: -5,
     totalDebt: -230
   },
   {
     name: "Verizon",
-    linkCost: 8,
-    routeMetricToExit: Infinity,
+    linkCost: 956,
+    routeMetricToExit: 1596,
     currentDebt: -30,
     totalDebt: 429
-  },
-  {
-    name: "Donald J. Trump",
-    linkCost: 7,
-    routeMetricToExit: 5,
-    priceToExit: 8,
-    currentDebt: 234,
-    totalDebt: 2
-  },
-  {
-    name: "Franklin",
-    linkCost: 4,
-    routeMetricToExit: 6,
-    priceToExit: 4,
-    currentDebt: 0,
-    totalDebt: 0
-  },
-  {
-    name: "78oxoxox",
-    linkCost: 5,
-    routeMetricToExit: 10,
-    priceToExit: 120,
-    currentDebt: 0,
-    totalDebt: 0
-  },
-  {
-    name: "Jeff Knuckles",
-    linkCost: 5,
-    routeMetricToExit: 10,
-    priceToExit: 1,
-    currentDebt: 0,
-    totalDebt: 0
-  },
-  {
-    name: "flopington",
-    linkCost: 2,
-    routeMetricToExit: 4,
-    priceToExit: 20,
-    currentDebt: 0,
-    totalDebt: 199
-  },
-  {
-    name: "doonesbury",
-    linkCost: 3,
-    routeMetricToExit: 2,
-    priceToExit: 5,
-    currentDebt: 0,
-    totalDebt: 2009
   }
 ];
 
 function metric2word(metric) {
-  if (metric < 3) {
-    return "Excellent";
+  if (metric > 1) {
+    return "None";
   }
 
-  if (metric < 6) {
-    return "Good";
+  if (metric > 0.75) {
+    return "●○○○";
   }
 
-  if (metric < 10) {
-    return "Poor";
+  if (metric > 0.5) {
+    return "●●○○";
   }
 
-  return "None";
+  if (metric > 0.25) {
+    return "●●●○";
+  }
+
+  return "●●●●";
 }
 
 function LabelUnit({ label, content, marginBottom, marginRight }) {
@@ -155,8 +104,7 @@ function ConnectionLine({
       <div
         style={{
           height: thickness,
-          background: `linear-gradient(90deg, #fff 0%, #fff ${dash}%, #000 ${dash}%, #000 ${100 -
-            dash}%, #000 100%)`,
+          background: `linear-gradient(90deg, #fff 0%, #fff ${dash}%, #000 ${dash}%, #000 100%)`,
           backgroundSize: thickness * 2,
           animation,
           width: "100%"
@@ -166,22 +114,128 @@ function ConnectionLine({
   );
 }
 
+function normalize(current, smallest, greatest) {
+  return (current - smallest) / (greatest - smallest);
+}
+
+function logNormalize(current, smallest, greatest) {
+  if (current === Infinity || current === -Infinity) {
+    return current;
+  }
+  return (
+    Math.log(Math.abs(normalize(current, smallest, greatest) * 10) + 1) /
+    Math.log(11)
+  );
+}
+
+function getGreatestAtKey(key, arr) {
+  return arr.reduce((acc, item) => {
+    if (Math.abs(item[key]) > acc) {
+      return Math.abs(item[key]);
+    } else {
+      return acc;
+    }
+  }, -Infinity);
+}
+
+function getSmallestAtKey(key, arr) {
+  return arr.reduce((acc, item) => {
+    if (Math.abs(item[key]) < acc) {
+      return Math.abs(item[key]);
+    } else {
+      return acc;
+    }
+  }, Infinity);
+}
+
+function clamp(num, min, max) {
+  if (num === Infinity || num === -Infinity) {
+    return num;
+  }
+
+  if (num < min) {
+    return min;
+  }
+
+  if (num > max) {
+    return max;
+  }
+
+  return num;
+}
+
+function normalizeNeighbors(neighbors) {
+  const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
+  const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
+
+  const smallestRouteMetricToExit = getSmallestAtKey(
+    "routeMetricToExit",
+    neighbors
+  );
+  const greatestRouteMetricToExit = getGreatestAtKey(
+    "routeMetricToExit",
+    neighbors
+  );
+
+  const smallestLinkCost = getSmallestAtKey("linkCost", neighbors);
+  const greatestLinkCost = getGreatestAtKey("linkCost", neighbors);
+
+  const n = neighbors.map(neighbor => {
+    return {
+      ...neighbor,
+      normalizedCurrentDebt: logNormalize(
+        Math.abs(neighbor.currentDebt),
+        smallestCurrentDebt,
+        greatestCurrentDebt
+      ),
+      normalizedRouteMetricToExit: logNormalize(
+        neighbor.routeMetricToExit,
+        smallestRouteMetricToExit,
+        greatestRouteMetricToExit
+      ),
+      normalizedLinkCost: logNormalize(
+        neighbor.linkCost,
+        smallestLinkCost,
+        greatestLinkCost
+      )
+    };
+  });
+
+  return n;
+}
+
 function NodeInfo({
   name,
+
   linkCost,
+  normalizedLinkCost,
+
   routeMetricToExit,
+  normalizedRouteMetricToExit,
+
   priceToExit,
-  greatestCurrentDebt,
+
   currentDebt,
+  normalizedCurrentDebt,
+
   totalDebt
 }) {
-  const absCurrentDebt = Math.abs(currentDebt);
+  console.log({
+    name,
 
-  const normalizedCurrentDebt =
-    Math.log(Math.abs(absCurrentDebt / greatestCurrentDebt * 10) + 1) /
-    Math.log(11) *
-    10;
+    linkCost,
+    normalizedLinkCost,
 
+    routeMetricToExit,
+    normalizedRouteMetricToExit,
+
+    priceToExit,
+
+    currentDebt,
+    normalizedCurrentDebt,
+
+    totalDebt
+  });
   return (
     <div
       style={{
@@ -191,11 +245,12 @@ function NodeInfo({
       }}
     >
       <h3 style={{ marginBottom: 0, marginRight: 10 }}>Me</h3>
+      {/* linkCost: {linkCost} normalizedLinkCost: {normalizedLinkCost} */}
       <ConnectionLine
         thickness={10}
-        dash={(linkCost + 1) * 10}
+        dash={clamp(normalizedLinkCost * 100, 4, 96)}
         scrollDirection={currentDebt}
-        scrollSpeed={(11 - normalizedCurrentDebt) * 10}
+        scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
       />
       <div>
         <Card
@@ -216,10 +271,13 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              <LabelUnit label="Link to me" content={metric2word(linkCost)} />
+              <LabelUnit
+                label="Link to me"
+                content={metric2word(normalizedLinkCost)}
+              />
               <LabelUnit
                 label="Link to internet"
-                content={metric2word(routeMetricToExit)}
+                content={metric2word(normalizedRouteMetricToExit)}
               />
             </div>
             <div
@@ -256,10 +314,10 @@ function NodeInfo({
         </Card>
       </div>
       <ConnectionLine
-        thickness={10}
-        dash={(routeMetricToExit + 1) * 10}
+        thickness={!(currentDebt < 0) ? 10 : 0}
+        dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
         scrollDirection={currentDebt}
-        scrollSpeed={(11 - normalizedCurrentDebt) * 10}
+        scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
       />
       <h3 style={{ marginBottom: 0, marginLeft: 10 }}>🌎</h3>
     </div>
@@ -267,21 +325,11 @@ function NodeInfo({
 }
 
 export default () => {
-  const greatestCurrentDebt = neighbors.reduce((acc, neigh) => {
-    if (Math.abs(neigh.currentDebt) > acc) {
-      return Math.abs(neigh.currentDebt);
-    } else {
-      return acc;
-    }
-  }, 0);
+  neighbors = normalizeNeighbors(neighbors);
   return (
     <div>
       <h1>Neighbors</h1>
-      <div>
-        {neighbors.map(neigh => (
-          <NodeInfo greatestCurrentDebt={greatestCurrentDebt} {...neigh} />
-        ))}
-      </div>
+      <div>{neighbors.map(neigh => <NodeInfo {...neigh} />)}</div>
     </div>
   );
 };
