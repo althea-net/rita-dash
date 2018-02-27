@@ -23,15 +23,15 @@ export default class WiFiSettings extends Component {
             margin: -20
           }}
         >
-          <LoginForm network="2.4 GHz" />
-          <LoginForm network="5 GHz" />
+          <WifiSettingsForm network="2.4 GHz" />
+          <WifiSettingsForm network="5 GHz" />
         </div>
       </div>
     );
   }
 }
 
-function LoginForm({ network }) {
+function WifiSettingsForm({ network }) {
   return (
     <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
       <CardBody>
@@ -81,13 +81,6 @@ function LoginForm({ network }) {
               }}
             >
               Save
-            </Button>
-            <Button
-              style={{
-                margin: 10
-              }}
-            >
-              Revert
             </Button>
           </FormGroup>
         </Form>

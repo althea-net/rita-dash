@@ -67,11 +67,11 @@ function LowFunds() {
           <Label check>
             <Input type="checkbox" /> Send an email to this address:
           </Label>
-        </FormGroup>
+          </FormGroup>
 
-        <FormGroup>
-          <Input type="email" name="email" id="exampleEmail" />
-        </FormGroup> */}
+          <FormGroup>
+            <Input type="email" name="email" id="exampleEmail" />
+          </FormGroup> */}
 
           <FormGroup check>
             <Label check>
