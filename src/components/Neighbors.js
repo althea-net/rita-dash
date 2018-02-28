@@ -1,5 +1,5 @@
 import React from "react";
-import "./BasicScroll.css";
+import "../styles/BasicScroll.css";
 import { Card, CardBody, CardTitle } from "reactstrap";
 
 let neighbors = [
@@ -15,7 +15,7 @@ let neighbors = [
     linkCost: 1020,
     routeMetricToExit: 958,
     priceToExit: 12,
-    currentDebt: 104,
+    currentDebt: 10,
     totalDebt: 0
   },
   {

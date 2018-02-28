@@ -4,6 +4,7 @@ import Payments from "./Payments.js";
 import Neighbors from "./Neighbors.js";
 import WiFiSettings from "./WiFiSettings.js";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
+import { fetchUciConfigs } from "../actions";
 
 class App extends Component {
   constructor(props) {
@@ -12,16 +13,21 @@ class App extends Component {
       hash: window.location.hash.substr(1)
     };
 
-    window.addEventListener("hashchange", this.onHashChange, false);
+    this.setters = this.props.store.setters;
   }
 
-  onHashChange = () =>
-    this.props.store.setters.changePage(window.location.hash.substr(1));
+  componentDidMount() {
+    this.onHashChange();
+    window.addEventListener("hashchange", this.onHashChange, false);
+    fetchUciConfigs(this.store);
+  }
+
+  onHashChange = () => this.setters.changePage(window.location.hash.substr(1));
 
   render() {
     return (
       <div className="App">
-        <Navbar color="faded" light expabd="md">
+        <Navbar color="faded" light expand="md">
           <NavbarBrand href="/"> Althea</NavbarBrand>
           <Nav>
             <NavItem>
@@ -60,13 +66,13 @@ class App extends Component {
 function Page({ store }) {
   switch (store.state.page) {
     case "wifi-settings":
-      return <WiFiSettings />;
+      return <WiFiSettings store={store} />;
     case "payments":
-      return <Payments />;
+      return <Payments store={store} />;
     case "neighbors":
-      return <Neighbors />;
+      return <Neighbors store={store} />;
     default:
-      return <Frontpage changePage={store.setters.changePage} />;
+      return <Frontpage />;
   }
 }
 
