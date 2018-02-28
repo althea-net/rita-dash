@@ -11,15 +11,12 @@ class App extends Component {
     this.state = {
       hash: window.location.hash.substr(1)
     };
-    this.onHashChange();
+
     window.addEventListener("hashchange", this.onHashChange, false);
   }
 
-  onHashChange = () => {
-    this.setState({
-      hash: window.location.hash.substr(1)
-    });
-  };
+  onHashChange = () =>
+    this.props.store.setters.changePage(window.location.hash.substr(1));
 
   render() {
     return (
@@ -52,7 +49,7 @@ class App extends Component {
               padding: 10
             }}
           >
-            <Page hash={this.state.hash} />
+            <Page store={this.props.store} />
           </div>
         </div>
       </div>
@@ -60,8 +57,8 @@ class App extends Component {
   }
 }
 
-function Page({ hash, changePage }) {
-  switch (hash) {
+function Page({ store }) {
+  switch (store.state.page) {
     case "wifi-settings":
       return <WiFiSettings />;
     case "payments":
@@ -69,7 +66,7 @@ function Page({ hash, changePage }) {
     case "neighbors":
       return <Neighbors />;
     default:
-      return <Frontpage changePage={changePage} />;
+      return <Frontpage changePage={store.setters.changePage} />;
   }
 }
 
