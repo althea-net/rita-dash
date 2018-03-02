@@ -12,6 +12,10 @@ ReactDOM.render(
       changePage: state => page => ({
         ...state,
         page
+      }),
+      gotWifiSettings: state => wifiSettings => ({
+        ...state,
+        wifiSettings
       })
     }}
   >

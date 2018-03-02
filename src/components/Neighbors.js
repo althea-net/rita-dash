@@ -1,3 +1,5 @@
+//@flow
+
 import React from "react";
 import "../styles/BasicScroll.css";
 import { Card, CardBody, CardTitle } from "reactstrap";
@@ -34,7 +36,7 @@ let neighbors = [
   }
 ];
 
-function metric2word(metric) {
+function metric2word(metric: number) {
   if (metric > 1) {
     return "None";
   }
@@ -48,7 +50,9 @@ function metric2word(metric) {
   }
 
   if (metric > 0.25) {
-    return "●●●○";
+    if (metric > 3) {
+      return "●●●○";
+    }
   }
 
   return "●●●●";
