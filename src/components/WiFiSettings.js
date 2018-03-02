@@ -44,7 +44,7 @@ class AdvancedSettingsModal extends React.Component {
           Advanced Settings
           </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>{this.state.network} Band: WiFi Settings</ModalHeader>
+          <ModalHeader toggle={this.toggle}>{this.state.network} Bandwidth: WiFi Settings</ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
@@ -65,7 +65,7 @@ class AdvancedSettingsModal extends React.Component {
             </Form>
           </ModalBody>
         </Modal>
-      </div >
+      </div>
     )
   }
 }
@@ -105,7 +105,7 @@ function WifiSettingsForm({ network }) {
               textAlign: "center"
             }}
           >
-            {network}
+            {network} Bandwidth
           </Label>
 
           <FormGroup id="form">
