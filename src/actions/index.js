@@ -6,8 +6,7 @@ export async function getWifiSettings(store) {
   store.setters.gotWifiSettings(await backend.getWifiSettings());
 }
 
-export async function setWifiSettings(store, settings) {
-  store.setters.isLoading(true);
-  await backend.setWifiSettings(settings);
-  store.setters.isLoading(false);
+export async function saveWifiSetting(store, setting) {
+  store.setters.savedWifiSetting(setting);
+  await backend.setWifiSettings(setting);
 }

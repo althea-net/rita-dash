@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getWifiSettings, setWifiSettings } from "../actions";
+import { getWifiSettings, saveWifiSetting } from "../actions";
 import {
   Col,
   Card,
@@ -13,11 +13,11 @@ import {
 
 export default class WiFiSettings extends Component {
   componentDidMount() {
-    // getWifiSettings(this.props.store);
+    getWifiSettings(this.props.store);
   }
 
   setWifiSettings() {
-    // setWifiSettings;
+    saveWifiSetting(this.props.store, this.state);
   }
 
   render() {
@@ -32,46 +32,59 @@ export default class WiFiSettings extends Component {
             margin: -20
           }}
         >
-          {this.props.store.state.wifiSettings}
-          <WifiSettingsForm deviceName="2.4 GHz" />
-          <WifiSettingsForm deviceName="5 GHz" />
+          {this.props.store.state.wifiSettings &&
+            this.props.store.state.wifiSettings.map((settings, i) => (
+              <WifiSettingsForm
+                store={this.props.store}
+                key={i}
+                wifiSettings={settings}
+              />
+            ))}
         </div>
       </div>
     );
   }
 }
 
-function isValid(data, predicate) {
-  return data ? predicate : undefined;
-}
-
 class WifiSettingsForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      fields: {},
+      valid: {}
+    };
     this.validators = {
       ssid: value => value.length >= 8,
-      password: value => value.length >= 8
+      key: value => value.length >= 8
     };
   }
+
+  componentDidMount = () => {
+    this.setState({ fields: this.props.wifiSettings });
+  };
 
   onFieldChange = e => {
     const { name, value } = e.target;
 
     this.setState({
-      [name]: {
-        value,
-        valid: this.validators[name](value)
+      fields: {
+        ...this.state.fields,
+        [name]: value
+      },
+      valid: {
+        ...this.state.valid,
+        [name]: this.validators[name](value)
       }
     });
   };
 
-  onSubmit = () => {
-    console.log("froop", this.state);
+  onSubmit = e => {
+    e.preventDefault();
+    saveWifiSetting(this.props.store, this.state.fields);
   };
 
   isFieldValid = name =>
-    this.state[name] ? this.state[name].valid : undefined;
+    this.state.fields[name] ? this.state.valid[name] : undefined;
 
   render() {
     return (
@@ -86,7 +99,7 @@ class WifiSettingsForm extends Component {
                 textAlign: "center"
               }}
             >
-              {this.props.deviceName}
+              {this.state.fields.device_name}
             </Label>
 
             <FormGroup id="form">
@@ -97,16 +110,18 @@ class WifiSettingsForm extends Component {
                 valid={this.isFieldValid("ssid")}
                 placeholder="min. 8 characters"
                 onChange={this.onFieldChange}
+                value={this.state.fields.ssid}
               />
             </FormGroup>
             <FormGroup>
               <Label for="password">Password</Label>
               <Input
                 type="text"
-                name="password"
-                valid={this.isFieldValid("password")}
+                name="key"
+                valid={this.isFieldValid("key")}
                 placeholder="min. 8 characters"
                 onChange={this.onFieldChange}
+                value={this.state.fields.key}
               />
             </FormGroup>
 
