@@ -1,40 +1,71 @@
+//@flow
+
 import React from "react";
 import "../styles/BasicScroll.css";
+import { getNeighborData } from "../actions";
 import { Card, CardBody, CardTitle } from "reactstrap";
 
-let neighbors = [
-  {
-    name: "Cindy Barker",
-    linkCost: 1168,
-    routeMetricToExit: Infinity,
-    currentDebt: -12,
-    totalDebt: 0
-  },
-  {
-    name: "CascadianMesh Tower2",
-    linkCost: 1020,
-    routeMetricToExit: 958,
-    priceToExit: 12,
-    currentDebt: 10,
-    totalDebt: 0
-  },
-  {
-    name: "Bobnet",
-    linkCost: 817,
-    routeMetricToExit: 1596,
-    currentDebt: -5,
-    totalDebt: -230
-  },
-  {
-    name: "Verizon",
-    linkCost: 956,
-    routeMetricToExit: 1596,
-    currentDebt: -30,
-    totalDebt: 429
-  }
-];
 
-function metric2word(metric) {
+export default class Neighbors extends React.Component {
+
+  //   neighbors = normalizeNeighbors();
+
+  componentDidMount() {
+    getNeighborData(this.props.store);
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Neighbors</h1>
+        <div>
+          {this.props.store.state.neighborData &&
+            this.props.store.state.neighborData.map((neigh, i) => (
+              <NodeInfo
+                store={this.props.store}
+                key={i}
+                neighborData={neigh}
+              />
+            ))};
+        </div>
+      </div>
+    );
+  }
+};
+
+// let neighbors = [
+//   {
+//     name: "Cindy Barker",
+//     linkCost: 1168,
+//     routeMetricToExit: Infinity,
+//     currentDebt: -12,
+//     totalDebt: 0
+//   },
+//   {
+//     name: "CascadianMesh Tower2",
+//     linkCost: 1020,
+//     routeMetricToExit: 958,
+//     priceToExit: 12,
+//     currentDebt: 10,
+//     totalDebt: 0
+//   },
+//   {
+//     name: "Bobnet",
+//     linkCost: 817,
+//     routeMetricToExit: 1596,
+//     currentDebt: -5,
+//     totalDebt: -230
+//   },
+//   {
+//     name: "Verizon",
+//     linkCost: 956,
+//     routeMetricToExit: 1596,
+//     currentDebt: -30,
+//     totalDebt: 429
+//   }
+// ];
+
+function metric2word(metric: number) {
   if (metric > 1) {
     return "None";
   }
@@ -48,7 +79,9 @@ function metric2word(metric) {
   }
 
   if (metric > 0.25) {
-    return "●●●○";
+    if (metric > 3) {
+      return "●●●○";
+    }
   }
 
   return "●●●●";
@@ -164,172 +197,326 @@ function clamp(num, min, max) {
   return num;
 }
 
-function normalizeNeighbors(neighbors) {
-  const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
-  const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
 
-  const smallestRouteMetricToExit = getSmallestAtKey(
-    "routeMetricToExit",
-    neighbors
-  );
-  const greatestRouteMetricToExit = getGreatestAtKey(
-    "routeMetricToExit",
-    neighbors
-  );
+class NodeInfo extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      neighbors: 
+    }
+  }
 
-  const smallestLinkCost = getSmallestAtKey("linkCost", neighbors);
-  const greatestLinkCost = getGreatestAtKey("linkCost", neighbors);
+  normalizeNeighbors(neighbors) {
+    const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
+    const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
 
-  const n = neighbors.map(neighbor => {
-    return {
-      ...neighbor,
-      normalizedCurrentDebt: logNormalize(
-        Math.abs(neighbor.currentDebt),
-        smallestCurrentDebt,
-        greatestCurrentDebt
-      ),
-      normalizedRouteMetricToExit: logNormalize(
-        neighbor.routeMetricToExit,
-        smallestRouteMetricToExit,
-        greatestRouteMetricToExit
-      ),
-      normalizedLinkCost: logNormalize(
-        neighbor.linkCost,
-        smallestLinkCost,
-        greatestLinkCost
-      )
-    };
-  });
+    const smallestRouteMetricToExit = getSmallestAtKey(
+      "routeMetricToExit",
+      neighbors
+    );
+    const greatestRouteMetricToExit = getGreatestAtKey(
+      "routeMetricToExit",
+      neighbors
+    );
 
-  return n;
-}
+    const smallestLinkCost = getSmallestAtKey("linkCost", neighbors);
+    const greatestLinkCost = getGreatestAtKey("linkCost", neighbors);
 
-function NodeInfo({
-  name,
+    const n = neighbors.map(neighbor => {
+      return {
+        ...neighbor,
+        normalizedCurrentDebt: logNormalize(
+          Math.abs(neighbor.currentDebt),
+          smallestCurrentDebt,
+          greatestCurrentDebt
+        ),
+        normalizedRouteMetricToExit: logNormalize(
+          neighbor.routeMetricToExit,
+          smallestRouteMetricToExit,
+          greatestRouteMetricToExit
+        ),
+        normalizedLinkCost: logNormalize(
+          neighbor.linkCost,
+          smallestLinkCost,
+          greatestLinkCost
+        )
+      };
+    });
 
-  linkCost,
-  normalizedLinkCost,
+    return n;
+  }
 
-  routeMetricToExit,
-  normalizedRouteMetricToExit,
-
-  priceToExit,
-
-  currentDebt,
-  normalizedCurrentDebt,
-
-  totalDebt
-}) {
-  console.log({
-    name,
-
-    linkCost,
-    normalizedLinkCost,
-
-    routeMetricToExit,
-    normalizedRouteMetricToExit,
-
-    priceToExit,
-
-    currentDebt,
-    normalizedCurrentDebt,
-
-    totalDebt
-  });
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        marginBottom: 30
-      }}
-    >
-      <h3 style={{ marginBottom: 0, marginRight: 10 }}>Me</h3>
-      {/* linkCost: {linkCost} normalizedLinkCost: {normalizedLinkCost} */}
-      <ConnectionLine
-        thickness={10}
-        dash={clamp(normalizedLinkCost * 100, 4, 96)}
-        scrollDirection={currentDebt}
-        scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
-      />
-      <div>
-        <Card
-          style={{
-            border: "3px solid black"
-          }}
-        >
-          <CardBody
-            style={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 15 }}
+  render() {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: 30
+        }}
+      >
+        <h3 style={{ marginBottom: 0, marginRight: 10 }}>Me</h3>
+        {/* linkCost: {linkCost} normalizedLinkCost: {normalizedLinkCost} */}
+        <ConnectionLine
+          thickness={10}
+          dash={clamp(normalizedLinkCost * 100, 4, 96)}
+          scrollDirection={currentDebt}
+          scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
+        />
+        <div>
+          <Card
+            style={{
+              border: "3px solid black"
+            }}
           >
-            <CardTitle style={{ marginLeft: 10, marginRight: 10 }}>
-              {name}
-            </CardTitle>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap"
-              }}
+            <CardBody
+              style={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 15 }}
             >
-              <LabelUnit
-                label="Link to me"
-                content={metric2word(normalizedLinkCost)}
-              />
-              <LabelUnit
-                label="Link to internet"
-                content={metric2word(normalizedRouteMetricToExit)}
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap"
-              }}
-            >
-              {currentDebt < 0 ? (
+              <CardTitle style={{ marginLeft: 10, marginRight: 10 }}>
+                {name}
+              </CardTitle>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap"
+                }}
+              >
                 <LabelUnit
-                  label="They are paying me"
-                  content={`${-currentDebt} ¢/sec.`}
+                  label="Link to me"
+                  content={metric2word(normalizedLinkCost)}
                 />
-              ) : (
                 <LabelUnit
-                  label="I am paying them"
-                  content={`${currentDebt} ¢/sec.`}
+                  label="Link to internet"
+                  content={metric2word(normalizedRouteMetricToExit)}
                 />
-              )}
-              {routeMetricToExit < 10 && (
-                <LabelUnit
-                  label="Bandwidth price"
-                  content={`${priceToExit} ¢/gb`}
-                />
-              )}
-              {totalDebt < 0 ? (
-                <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
-              ) : (
-                <LabelUnit label="Total paid" content={`$${totalDebt}`} />
-              )}
-            </div>
-          </CardBody>
-        </Card>
-      </div>
-      <ConnectionLine
-        thickness={!(currentDebt < 0) ? 10 : 0}
-        dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
-        scrollDirection={currentDebt}
-        scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
-      />
-      <h3 style={{ marginBottom: 0, marginLeft: 10 }}>🌎</h3>
-    </div>
-  );
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap"
+                }}
+              >
+                {currentDebt < 0 ? (
+                  <LabelUnit
+                    label="They are paying me"
+                    content={`${-currentDebt} ¢/sec.`}
+                  />
+                ) : (
+                    <LabelUnit
+                      label="I am paying them"
+                      content={`${currentDebt} ¢/sec.`}
+                    />
+                  )}
+                {routeMetricToExit < 10 && (
+                  <LabelUnit
+                    label="Bandwidth price"
+                    content={`${priceToExit} ¢/gb`}
+                  />
+                )}
+                {totalDebt < 0 ? (
+                  <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
+                ) : (
+                    <LabelUnit label="Total paid" content={`$${totalDebt}`} />
+                  )}
+              </div>
+            </CardBody>
+          </Card>
+        </div>
+        <ConnectionLine
+          thickness={!(currentDebt < 0) ? 10 : 0}
+          dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
+          scrollDirection={currentDebt}
+          scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
+        />
+        <h3 style={{ marginBottom: 0, marginLeft: 10 }}>🌎</h3>
+      </div >
+    );
+  }
 }
 
-export default () => {
-  neighbors = normalizeNeighbors(neighbors);
-  return (
-    <div>
-      <h1>Neighbors</h1>
-      <div>{neighbors.map(neigh => <NodeInfo {...neigh} />)}</div>
-    </div>
-  );
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function normalizeNeighbors(neighbors) {
+//   const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
+//   const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
+
+//   const smallestRouteMetricToExit = getSmallestAtKey(
+//     "routeMetricToExit",
+//     neighbors
+//   );
+//   const greatestRouteMetricToExit = getGreatestAtKey(
+//     "routeMetricToExit",
+//     neighbors
+//   );
+
+//   const smallestLinkCost = getSmallestAtKey("linkCost", neighbors);
+//   const greatestLinkCost = getGreatestAtKey("linkCost", neighbors);
+
+//   const n = neighbors.map(neighbor => {
+//     return {
+//       ...neighbor,
+//       normalizedCurrentDebt: logNormalize(
+//         Math.abs(neighbor.currentDebt),
+//         smallestCurrentDebt,
+//         greatestCurrentDebt
+//       ),
+//       normalizedRouteMetricToExit: logNormalize(
+//         neighbor.routeMetricToExit,
+//         smallestRouteMetricToExit,
+//         greatestRouteMetricToExit
+//       ),
+//       normalizedLinkCost: logNormalize(
+//         neighbor.linkCost,
+//         smallestLinkCost,
+//         greatestLinkCost
+//       )
+//     };
+//   });
+
+//   return n;
+// }
+
+// function NodeInfo({
+//   name,
+
+//   linkCost,
+//   normalizedLinkCost,
+
+//   routeMetricToExit,
+//   normalizedRouteMetricToExit,
+
+//   priceToExit,
+
+//   currentDebt,
+//   normalizedCurrentDebt,
+
+//   totalDebt
+// }) {
+//   console.log({
+//     name,
+
+//     linkCost,
+//     normalizedLinkCost,
+
+//     routeMetricToExit,
+//     normalizedRouteMetricToExit,
+
+//     priceToExit,
+
+//     currentDebt,
+//     normalizedCurrentDebt,
+
+//     totalDebt
+//   });
+//   return (
+//     <div
+//       style={{
+//         display: "flex",
+//         alignItems: "center",
+//         marginBottom: 30
+//       }}
+//     >
+//       <h3 style={{ marginBottom: 0, marginRight: 10 }}>Me</h3>
+//       {/* linkCost: {linkCost} normalizedLinkCost: {normalizedLinkCost} */}
+//       <ConnectionLine
+//         thickness={10}
+//         dash={clamp(normalizedLinkCost * 100, 4, 96)}
+//         scrollDirection={currentDebt}
+//         scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
+//       />
+//       <div>
+//         <Card
+//           style={{
+//             border: "3px solid black"
+//           }}
+//         >
+//           <CardBody
+//             style={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 15 }}
+//           >
+//             <CardTitle style={{ marginLeft: 10, marginRight: 10 }}>
+//               {name}
+//             </CardTitle>
+//             <div
+//               style={{
+//                 display: "flex",
+//                 justifyContent: "space-between",
+//                 flexWrap: "wrap"
+//               }}
+//             >
+//               <LabelUnit
+//                 label="Link to me"
+//                 content={metric2word(normalizedLinkCost)}
+//               />
+//               <LabelUnit
+//                 label="Link to internet"
+//                 content={metric2word(normalizedRouteMetricToExit)}
+//               />
+//             </div>
+//             <div
+//               style={{
+//                 display: "flex",
+//                 justifyContent: "space-between",
+//                 flexWrap: "wrap"
+//               }}
+//             >
+//               {currentDebt < 0 ? (
+//                 <LabelUnit
+//                   label="They are paying me"
+//                   content={`${-currentDebt} ¢/sec.`}
+//                 />
+//               ) : (
+//                   <LabelUnit
+//                     label="I am paying them"
+//                     content={`${currentDebt} ¢/sec.`}
+//                   />
+//                 )}
+//               {routeMetricToExit < 10 && (
+//                 <LabelUnit
+//                   label="Bandwidth price"
+//                   content={`${priceToExit} ¢/gb`}
+//                 />
+//               )}
+//               {totalDebt < 0 ? (
+//                 <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
+//               ) : (
+//                   <LabelUnit label="Total paid" content={`$${totalDebt}`} />
+//                 )}
+//             </div>
+//           </CardBody>
+//         </Card>
+//       </div>
+//       <ConnectionLine
+//         thickness={!(currentDebt < 0) ? 10 : 0}
+//         dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
+//         scrollDirection={currentDebt}
+//         scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
+//       />
+//       <h3 style={{ marginBottom: 0, marginLeft: 10 }}>🌎</h3>
+//     </div>
+//   );
+// }
