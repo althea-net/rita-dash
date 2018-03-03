@@ -19,7 +19,6 @@ class App extends Component {
   componentDidMount() {
     this.onHashChange();
     window.addEventListener("hashchange", this.onHashChange, false);
-    // fetchUciConfigs(this.store);
   }
 
   onHashChange = () => this.setters.changePage(window.location.hash.substr(1));
