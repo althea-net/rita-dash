@@ -38,6 +38,7 @@ class AdvancedSettingsModal extends React.Component {
           color="link"
           onClick={this.toggle}
           style={{
+            padding: 0,
             margin: 10
           }}
         >
@@ -51,19 +52,23 @@ class AdvancedSettingsModal extends React.Component {
                 <h5>Connect to a Mesh Network</h5>
                 <FormGroup check>
                   <Label check>
-                    <Input type="radio" name="enableMesh" />{' '}
-                    Enable Connection
-                </Label>
-                </FormGroup>
-                <FormGroup check>
-                  <Label check>
-                    <Input type="radio" name="enableMesh" />{' '}
-                    Disable Connection
+                    <Input type="checkbox" />{' '}
+                    Check to Enable Connection
                 </Label>
                 </FormGroup>
               </FormGroup>
             </Form>
           </ModalBody>
+          <ModalFooter>
+            <Button
+              color="primary"
+              style={{
+                margin: 10
+              }}
+            >
+              Save
+            </Button>
+          </ModalFooter>
         </Modal>
       </div>
     )
@@ -143,6 +148,16 @@ function WifiSettingsForm({ network }) {
             >
               Save
             </Button>
+          </FormGroup>
+
+          <FormGroup
+            style={{
+              display: "flex",
+              margin: -20,
+              marginTop: 0,
+              padding: 10
+            }}
+          >
             <AdvancedSettingsModal network={network} />
           </FormGroup>
         </Form>
