@@ -8,9 +8,9 @@ export default class State extends Component {
     const setState = this.setState.bind(this);
 
     this.setters = Object.keys(this.props.setters).reduce((acc, key) => {
-      const setter = this.props.setters[key](this.state.data);
+      const setter = this.props.setters[key];
       acc[key] = (...args) => {
-        const newState = setter(...args);
+        const newState = setter(this.state.data)(...args);
         setState({ data: newState });
       };
       return acc;
