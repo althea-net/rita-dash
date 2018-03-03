@@ -33,7 +33,14 @@ ReactDOM.render(
             return s;
           })
         };
-      }
+      },
+      gotNeighborData: state => neighborData => {
+        console.log("gotNeighborData");
+        return {
+          ...state,
+          neighborData: neighborData
+        };
+      },
     }}
   >
     <App />

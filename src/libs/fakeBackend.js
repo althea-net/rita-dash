@@ -36,6 +36,16 @@ export default class Backend {
         key: "secret passphrase"
       }
     ];
+    this.neighborData = [
+      {
+        name: "Cindy Barker",
+        linkCost: 1241,
+        routeMetricToExit: 1544,
+        priceToExit: 12,
+        currentDebt: 232,
+        totalDebt: 500
+      }
+    ];
   }
 
   // GET | POST /wifi_iface
@@ -64,5 +74,10 @@ export default class Backend {
         return s;
       }
     });
+  }
+
+  async getNeighborData() {
+    await timeout(100);
+    return this.neighborData;
   }
 }

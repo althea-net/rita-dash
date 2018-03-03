@@ -10,3 +10,7 @@ export async function saveWifiSetting(store, setting) {
   store.setters.savedWifiSetting(setting);
   await backend.setWifiSettings(setting);
 }
+
+export async function getNeighborData(store) {
+  store.setters.gotNeighborData(await backend.getNeighborData());
+}
