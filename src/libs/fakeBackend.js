@@ -22,14 +22,14 @@ export default class Backend {
     this.url = url;
     this.wifiSettings = [
       {
-        device_name: "2.4ghz",
+        device_name: "2.4GHz Bandwidth",
         mesh: false,
         ssid: "MyWifiAP",
         encryption: "psk2",
         key: "secret passphrase"
       },
       {
-        device_name: "5ghz",
+        device_name: "5GHz Bandwidth",
         mesh: false,
         ssid: "MyWifiAP 5ghz",
         encryption: "psk2",
