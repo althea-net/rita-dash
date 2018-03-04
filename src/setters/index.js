@@ -1,4 +1,4 @@
-export const initState = { page: "", wifiSettings: [] };
+export const initState = { page: "", wifiSettings: [], neighborData: [] };
 
 export const setters = {
   changePage: state => page => {
@@ -25,5 +25,12 @@ export const setters = {
         return s;
       })
     };
-  }
+  },
+  gotNeighborData: state => neighborData => {
+    console.log("gotNeighborData");
+    return {
+      ...state,
+      neighborData: neighborData
+    };
+  },
 };
