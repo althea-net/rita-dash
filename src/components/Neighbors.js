@@ -1,14 +1,12 @@
 //@flow
 
-import React from "react";
+import React, { Component } from "react";
 import "../styles/BasicScroll.css";
 import { getNeighborData } from "../actions";
 import { Card, CardBody, CardTitle } from "reactstrap";
 
 
 export default class Neighbors extends React.Component {
-
-  //   neighbors = normalizeNeighbors();
 
   componentDidMount() {
     getNeighborData(this.props.store);
@@ -33,177 +31,144 @@ export default class Neighbors extends React.Component {
   }
 };
 
-// let neighbors = [
-//   {
-//     name: "Cindy Barker",
-//     linkCost: 1168,
-//     routeMetricToExit: Infinity,
-//     currentDebt: -12,
-//     totalDebt: 0
-//   },
-//   {
-//     name: "CascadianMesh Tower2",
-//     linkCost: 1020,
-//     routeMetricToExit: 958,
-//     priceToExit: 12,
-//     currentDebt: 10,
-//     totalDebt: 0
-//   },
-//   {
-//     name: "Bobnet",
-//     linkCost: 817,
-//     routeMetricToExit: 1596,
-//     currentDebt: -5,
-//     totalDebt: -230
-//   },
-//   {
-//     name: "Verizon",
-//     linkCost: 956,
-//     routeMetricToExit: 1596,
-//     currentDebt: -30,
-//     totalDebt: 429
-//   }
-// ];
-
-function metric2word(metric: number) {
-  if (metric > 1) {
-    return "None";
-  }
-
-  if (metric > 0.75) {
-    return "●○○○";
-  }
-
-  if (metric > 0.5) {
-    return "●●○○";
-  }
-
-  if (metric > 0.25) {
-    if (metric > 3) {
-      return "●●●○";
-    }
-  }
-
-  return "●●●●";
-}
-
-function LabelUnit({ label, content, marginBottom, marginRight }) {
-  return (
-    <div
-      style={{
-        lineHeight: "100%",
-        marginBottom: 10,
-        marginRight: 10,
-        marginLeft: 10
-      }}
-    >
-      <small>{label}:</small>
-      <br />
-      <b>{content}</b>
-    </div>
-  );
-}
-
-function ConnectionLine({
-  label,
-  thickness,
-  children,
-  dash,
-  scrollDirection,
-  scrollSpeed
-}) {
-  let animation;
-  if (scrollDirection && scrollSpeed) {
-    if (scrollDirection > 0) {
-      animation = `ScrollLeft ${scrollSpeed}s linear infinite`;
-    } else {
-      animation = `ScrollRight ${scrollSpeed}s linear infinite`;
-    }
-  } else {
-    animation = "none";
-  }
-  return (
-    <div
-      style={{
-        minWidth: 30,
-        flexGrow: 1,
-        display: "flex",
-        position: "relative",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "flex-start"
-      }}
-    >
-      <div
-        style={{
-          height: thickness,
-          background: `linear-gradient(90deg, #fff 0%, #fff ${dash}%, #000 ${dash}%, #000 100%)`,
-          backgroundSize: thickness * 2,
-          animation,
-          width: "100%"
-        }}
-      />
-    </div>
-  );
-}
-
-function normalize(current, smallest, greatest) {
-  return (current - smallest) / (greatest - smallest);
-}
-
-function logNormalize(current, smallest, greatest) {
-  if (current === Infinity || current === -Infinity) {
-    return current;
-  }
-  return (
-    Math.log(Math.abs(normalize(current, smallest, greatest) * 10) + 1) /
-    Math.log(11)
-  );
-}
-
-function getGreatestAtKey(key, arr) {
-  return arr.reduce((acc, item) => {
-    if (Math.abs(item[key]) > acc) {
-      return Math.abs(item[key]);
-    } else {
-      return acc;
-    }
-  }, -Infinity);
-}
-
-function getSmallestAtKey(key, arr) {
-  return arr.reduce((acc, item) => {
-    if (Math.abs(item[key]) < acc) {
-      return Math.abs(item[key]);
-    } else {
-      return acc;
-    }
-  }, Infinity);
-}
-
-function clamp(num, min, max) {
-  if (num === Infinity || num === -Infinity) {
-    return num;
-  }
-
-  if (num < min) {
-    return min;
-  }
-
-  if (num > max) {
-    return max;
-  }
-
-  return num;
-}
-
-
 class NodeInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      neighbors: 
+      fields: {}
     }
+  }
+
+  metric2word(metric: number) {
+    if (metric > 1) {
+      return "None";
+    }
+
+    if (metric > 0.75) {
+      return "●○○○";
+    }
+
+    if (metric > 0.5) {
+      return "●●○○";
+    }
+
+    if (metric > 0.25) {
+      if (metric > 3) {
+        return "●●●○";
+      }
+    }
+
+    return "●●●●";
+  }
+
+  LabelUnit({ label, content, marginBottom, marginRight }) {
+    return (
+      <div
+        style={{
+          lineHeight: "100%",
+          marginBottom: 10,
+          marginRight: 10,
+          marginLeft: 10
+        }}
+      >
+        <small>{label}:</small>
+        <br />
+        <b>{content}</b>
+      </div>
+    );
+  }
+
+  ConnectionLine({
+    label,
+    thickness,
+    children,
+    dash,
+    scrollDirection,
+    scrollSpeed
+  }) {
+    let animation;
+    if (scrollDirection && scrollSpeed) {
+      if (scrollDirection > 0) {
+        animation = `ScrollLeft ${scrollSpeed}s linear infinite`;
+      } else {
+        animation = `ScrollRight ${scrollSpeed}s linear infinite`;
+      }
+    } else {
+      animation = "none";
+    }
+    return (
+      <div
+        style={{
+          minWidth: 30,
+          flexGrow: 1,
+          display: "flex",
+          position: "relative",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start"
+        }}
+      >
+        <div
+          style={{
+            height: thickness,
+            background: `linear-gradient(90deg, #fff 0%, #fff ${dash}%, #000 ${dash}%, #000 100%)`,
+            backgroundSize: thickness * 2,
+            animation,
+            width: "100%"
+          }}
+        />
+      </div>
+    );
+  }
+
+  normalize(current, smallest, greatest) {
+    return (current - smallest) / (greatest - smallest);
+  }
+
+  logNormalize(current, smallest, greatest) {
+    if (current === Infinity || current === -Infinity) {
+      return current;
+    }
+    return (
+      Math.log(Math.abs(normalize(current, smallest, greatest) * 10) + 1) /
+      Math.log(11)
+    );
+  }
+
+  getGreatestAtKey(key, arr) {
+    return arr.reduce((acc, item) => {
+      if (Math.abs(item[key]) > acc) {
+        return Math.abs(item[key]);
+      } else {
+        return acc;
+      }
+    }, -Infinity);
+  }
+
+  getSmallestAtKey(key, arr) {
+    return arr.reduce((acc, item) => {
+      if (Math.abs(item[key]) < acc) {
+        return Math.abs(item[key]);
+      } else {
+        return acc;
+      }
+    }, Infinity);
+  }
+
+  clamp(num, min, max) {
+    if (num === Infinity || num === -Infinity) {
+      return num;
+    }
+
+    if (num < min) {
+      return min;
+    }
+
+    if (num > max) {
+      return max;
+    }
+
+    return num;
   }
 
   normalizeNeighbors(neighbors) {
@@ -245,6 +210,9 @@ class NodeInfo extends Component {
 
     return n;
   }
+
+  componentDidMount()
+
 
   render() {
     return (
@@ -357,9 +325,37 @@ class NodeInfo extends Component {
 
 
 
-
-
-
+// let neighbors = [
+//   {
+//     name: "Cindy Barker",
+//     linkCost: 1168,
+//     routeMetricToExit: Infinity,
+//     currentDebt: -12,
+//     totalDebt: 0
+//   },
+//   {
+//     name: "CascadianMesh Tower2",
+//     linkCost: 1020,
+//     routeMetricToExit: 958,
+//     priceToExit: 12,
+//     currentDebt: 10,
+//     totalDebt: 0
+//   },
+//   {
+//     name: "Bobnet",
+//     linkCost: 817,
+//     routeMetricToExit: 1596,
+//     currentDebt: -5,
+//     totalDebt: -230
+//   },
+//   {
+//     name: "Verizon",
+//     linkCost: 956,
+//     routeMetricToExit: 1596,
+//     currentDebt: -30,
+//     totalDebt: 429
+//   }
+// ];
 
 // function normalizeNeighbors(neighbors) {
 //   const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
