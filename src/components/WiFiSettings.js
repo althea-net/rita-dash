@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getWifiSettings, saveWifiSetting } from "../actions";
 import {
   Col,
   Card,
@@ -13,11 +12,7 @@ import {
 
 export default class WiFiSettings extends Component {
   componentDidMount() {
-    getWifiSettings(this.props.store);
-  }
-
-  setWifiSettings() {
-    saveWifiSetting(this.props.store, this.state);
+    this.props.store.actions.getWifiSettings();
   }
 
   render() {
@@ -80,7 +75,7 @@ class WifiSettingsForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    saveWifiSetting(this.props.store, this.state.fields);
+    this.props.store.actions.saveWifiSetting(this.state);
   };
 
   isFieldValid = name =>
