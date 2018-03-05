@@ -2,26 +2,18 @@ import React, { Component } from "react";
 import Frontpage from "./Frontpage.js";
 import Payments from "./Payments.js";
 import Neighbors from "./Neighbors.js";
-import WiFiSettings from "./WiFiSettings.js";
+import WifiSettings from "./WiFiSettings.js";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import { fetchUciConfigs } from "../actions";
+import { actions, connect } from "../store";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hash: window.location.hash.substr(1)
-    };
-
-    this.setters = this.props.store.setters;
-  }
-
   componentDidMount() {
     this.onHashChange();
     window.addEventListener("hashchange", this.onHashChange, false);
   }
 
-  onHashChange = () => this.setters.changePage(window.location.hash.substr(1));
+  onHashChange = () => actions.changePage(window.location.hash.substr(1));
 
   render() {
     return (
@@ -54,7 +46,7 @@ class App extends Component {
               padding: 10
             }}
           >
-            <Page store={this.props.store} />
+            <Page />
           </div>
         </div>
       </div>
@@ -62,17 +54,17 @@ class App extends Component {
   }
 }
 
-function Page({ store }) {
-  switch (store.state.page) {
+const Page = connect(["page"])(({ state }) => {
+  switch (state.page) {
     case "wifi-settings":
-      return <WiFiSettings store={store} />;
+      return <WifiSettings />;
     case "payments":
-      return <Payments store={store} />;
+      return <Payments />;
     case "neighbors":
-      return <Neighbors store={store} />;
+      return <Neighbors />;
     default:
       return <Frontpage />;
   }
-}
+});
 
 export default App;

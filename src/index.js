@@ -1,16 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
-import Store from "./Store.js";
-import { setters, initState } from "./setters";
-import actions from "./actions";
 import registerServiceWorker from "./registerServiceWorker";
 import "bootstrap/dist/css/bootstrap.css";
+import { Provider, subscribe } from "./store";
+
+subscribe((action, state) => {
+  console.log("action:", action, state);
+});
 
 ReactDOM.render(
-  <Store initState={initState} setters={setters} actions={actions}>
+  <Provider>
     <App />
-  </Store>,
+  </Provider>,
   document.getElementById("root")
 );
 registerServiceWorker();

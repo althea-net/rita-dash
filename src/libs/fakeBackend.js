@@ -55,7 +55,7 @@ export default class Backend {
   }
 
   async setWifiSettings(settings) {
-    isWifiSettings(settings);
+    // isWifiSettings(settings);
     await timeout(100);
     this.wifiSettings.map(s => {
       if (s.device_name === settings.device_name) {
