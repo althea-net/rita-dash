@@ -4,7 +4,6 @@ import Payments from "./Payments.js";
 import Neighbors from "./Neighbors.js";
 import WifiSettings from "./WiFiSettings.js";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
-import { fetchUciConfigs } from "../actions";
 import { actions, connect } from "../store";
 
 class App extends Component {
