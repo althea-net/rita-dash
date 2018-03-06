@@ -7,31 +7,6 @@ import { Card, CardBody, CardTitle } from "reactstrap";
 
 
 export default class Neighbors extends React.Component {
-
-  componentDidMount() {
-    getNeighborData(this.props.store);
-  }
-
-  render() {
-    return (
-      <div>
-        <h1>Neighbors</h1>
-        <div>
-          {this.props.store.state.neighborData &&
-            this.props.store.state.neighborData.map((neigh, i) => (
-              <NodeInfo
-                store={this.props.store}
-                key={i}
-                neighborData={neigh}
-              />
-            ))};
-        </div>
-      </div>
-    );
-  }
-};
-
-class NodeInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -39,88 +14,14 @@ class NodeInfo extends Component {
     }
   }
 
-  metric2word(metric: number) {
-    if (metric > 1) {
-      return "None";
-    }
+  // normalizeNeighbors = this.normalizeNeighbors.bind(this)
 
-    if (metric > 0.75) {
-      return "●○○○";
-    }
+  // componentDidMount() {
+  //   this.normalizeNeighbors(this.props.store.neighborData);
+  //   getNeighborData(this.props.store);
+  // }
 
-    if (metric > 0.5) {
-      return "●●○○";
-    }
-
-    if (metric > 0.25) {
-      if (metric > 3) {
-        return "●●●○";
-      }
-    }
-
-    return "●●●●";
-  }
-
-  LabelUnit({ label, content, marginBottom, marginRight }) {
-    return (
-      <div
-        style={{
-          lineHeight: "100%",
-          marginBottom: 10,
-          marginRight: 10,
-          marginLeft: 10
-        }}
-      >
-        <small>{label}:</small>
-        <br />
-        <b>{content}</b>
-      </div>
-    );
-  }
-
-  ConnectionLine({
-    label,
-    thickness,
-    children,
-    dash,
-    scrollDirection,
-    scrollSpeed
-  }) {
-    let animation;
-    if (scrollDirection && scrollSpeed) {
-      if (scrollDirection > 0) {
-        animation = `ScrollLeft ${scrollSpeed}s linear infinite`;
-      } else {
-        animation = `ScrollRight ${scrollSpeed}s linear infinite`;
-      }
-    } else {
-      animation = "none";
-    }
-    return (
-      <div
-        style={{
-          minWidth: 30,
-          flexGrow: 1,
-          display: "flex",
-          position: "relative",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "flex-start"
-        }}
-      >
-        <div
-          style={{
-            height: thickness,
-            background: `linear-gradient(90deg, #fff 0%, #fff ${dash}%, #000 ${dash}%, #000 100%)`,
-            backgroundSize: thickness * 2,
-            animation,
-            width: "100%"
-          }}
-        />
-      </div>
-    );
-  }
-
+  // move to libs folder
   normalize(current, smallest, greatest) {
     return (current - smallest) / (greatest - smallest);
   }
@@ -130,7 +31,7 @@ class NodeInfo extends Component {
       return current;
     }
     return (
-      Math.log(Math.abs(normalize(current, smallest, greatest) * 10) + 1) /
+      Math.log(Math.abs(this.normalize(current, smallest, greatest) * 10) + 1) /
       Math.log(11)
     );
   }
@@ -155,6 +56,97 @@ class NodeInfo extends Component {
     }, Infinity);
   }
 
+  normalizeNeighbors(neighbors) {
+    const smallestCurrentDebt = this.getSmallestAtKey("currentDebt", neighbors);
+    const greatestCurrentDebt = this.getGreatestAtKey("currentDebt", neighbors);
+
+    const smallestRouteMetricToExit = this.getSmallestAtKey(
+      "routeMetricToExit",
+      neighbors
+    );
+    const greatestRouteMetricToExit = this.getGreatestAtKey(
+      "routeMetricToExit",
+      neighbors
+    );
+
+    const smallestLinkCost = this.getSmallestAtKey("linkCost", neighbors);
+    const greatestLinkCost = this.getGreatestAtKey("linkCost", neighbors);
+
+    const n = neighbors.map(neighbor => {
+      return {
+        ...neighbor,
+        normalizedCurrentDebt: this.logNormalize(
+          Math.abs(neighbor.currentDebt),
+          smallestCurrentDebt,
+          greatestCurrentDebt
+        ),
+        normalizedRouteMetricToExit: this.logNormalize(
+          neighbor.routeMetricToExit,
+          smallestRouteMetricToExit,
+          greatestRouteMetricToExit
+        ),
+        normalizedLinkCost: this.logNormalize(
+          neighbor.linkCost,
+          smallestLinkCost,
+          greatestLinkCost
+        )
+      };
+    });
+
+    this.setState({
+      fields: this.props.store.state.neighborData
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>Neighbors</h1>
+        <div>
+          {this.props.store.state.neighborData &&
+            this.props.store.state.neighborData.map((neigh, i) => (
+              <NodeInfo
+                store={this.props.store}
+                key={i}
+                neighborData={neigh}
+              />
+            ))};
+        </div>
+      </div>
+    );
+  }
+};
+
+class NodeInfo extends React.Component {
+  constructor(props) {
+    super(props)
+    // this.state = {
+    //   fields: {}
+    // }
+  }
+
+  metric2word(metric: number) {
+    if (metric > 1) {
+      return "None";
+    }
+
+    if (metric > 0.75) {
+      return "●○○○";
+    }
+
+    if (metric > 0.5) {
+      return "●●○○";
+    }
+
+    if (metric > 0.25) {
+      if (metric > 3) {
+        return "●●●○";
+      }
+    }
+
+    return "●●●●";
+  }
+
   clamp(num, min, max) {
     if (num === Infinity || num === -Infinity) {
       return num;
@@ -171,49 +163,6 @@ class NodeInfo extends Component {
     return num;
   }
 
-  normalizeNeighbors(neighbors) {
-    const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
-    const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
-
-    const smallestRouteMetricToExit = getSmallestAtKey(
-      "routeMetricToExit",
-      neighbors
-    );
-    const greatestRouteMetricToExit = getGreatestAtKey(
-      "routeMetricToExit",
-      neighbors
-    );
-
-    const smallestLinkCost = getSmallestAtKey("linkCost", neighbors);
-    const greatestLinkCost = getGreatestAtKey("linkCost", neighbors);
-
-    const n = neighbors.map(neighbor => {
-      return {
-        ...neighbor,
-        normalizedCurrentDebt: logNormalize(
-          Math.abs(neighbor.currentDebt),
-          smallestCurrentDebt,
-          greatestCurrentDebt
-        ),
-        normalizedRouteMetricToExit: logNormalize(
-          neighbor.routeMetricToExit,
-          smallestRouteMetricToExit,
-          greatestRouteMetricToExit
-        ),
-        normalizedLinkCost: logNormalize(
-          neighbor.linkCost,
-          smallestLinkCost,
-          greatestLinkCost
-        )
-      };
-    });
-
-    return n;
-  }
-
-  componentDidMount()
-
-
   render() {
     return (
       <div
@@ -227,7 +176,7 @@ class NodeInfo extends Component {
         {/* linkCost: {linkCost} normalizedLinkCost: {normalizedLinkCost} */}
         <ConnectionLine
           thickness={10}
-          dash={clamp(normalizedLinkCost * 100, 4, 96)}
+          dash={this.clamp(normalizedLinkCost * 100, 4, 96)}
           scrollDirection={currentDebt}
           scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
         />
@@ -252,11 +201,11 @@ class NodeInfo extends Component {
               >
                 <LabelUnit
                   label="Link to me"
-                  content={metric2word(normalizedLinkCost)}
+                  content={this.metric2word(normalizedLinkCost)}
                 />
                 <LabelUnit
                   label="Link to internet"
-                  content={metric2word(normalizedRouteMetricToExit)}
+                  content={this.metric2word(normalizedRouteMetricToExit)}
                 />
               </div>
               <div
@@ -294,7 +243,7 @@ class NodeInfo extends Component {
         </div>
         <ConnectionLine
           thickness={!(currentDebt < 0) ? 10 : 0}
-          dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
+          dash={this.clamp(normalizedRouteMetricToExit * 100, 4, 96)}
           scrollDirection={currentDebt}
           scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
         />
@@ -305,214 +254,57 @@ class NodeInfo extends Component {
 }
 
 
+class ConnectionLine extends Component {
+  render() {
+    let animation;
+    if (scrollDirection && scrollSpeed) {
+      if (scrollDirection > 0) {
+        animation = `ScrollLeft ${scrollSpeed}s linear infinite`;
+      } else {
+        animation = `ScrollRight ${scrollSpeed}s linear infinite`;
+      }
+    } else {
+      animation = "none";
+    }
+    return (
+      <div
+        style={{
+          minWidth: 30,
+          flexGrow: 1,
+          display: "flex",
+          position: "relative",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start"
+        }}
+      >
+        <div
+          style={{
+            height: thickness,
+            background: `linear-gradient(90deg, #fff 0%, #fff ${dash}%, #000 ${dash}%, #000 100%)`,
+            backgroundSize: thickness * 2,
+            animation,
+            width: "100%"
+          }}
+        />
+      </div>
+    );
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// let neighbors = [
-//   {
-//     name: "Cindy Barker",
-//     linkCost: 1168,
-//     routeMetricToExit: Infinity,
-//     currentDebt: -12,
-//     totalDebt: 0
-//   },
-//   {
-//     name: "CascadianMesh Tower2",
-//     linkCost: 1020,
-//     routeMetricToExit: 958,
-//     priceToExit: 12,
-//     currentDebt: 10,
-//     totalDebt: 0
-//   },
-//   {
-//     name: "Bobnet",
-//     linkCost: 817,
-//     routeMetricToExit: 1596,
-//     currentDebt: -5,
-//     totalDebt: -230
-//   },
-//   {
-//     name: "Verizon",
-//     linkCost: 956,
-//     routeMetricToExit: 1596,
-//     currentDebt: -30,
-//     totalDebt: 429
-//   }
-// ];
-
-// function normalizeNeighbors(neighbors) {
-//   const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
-//   const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
-
-//   const smallestRouteMetricToExit = getSmallestAtKey(
-//     "routeMetricToExit",
-//     neighbors
-//   );
-//   const greatestRouteMetricToExit = getGreatestAtKey(
-//     "routeMetricToExit",
-//     neighbors
-//   );
-
-//   const smallestLinkCost = getSmallestAtKey("linkCost", neighbors);
-//   const greatestLinkCost = getGreatestAtKey("linkCost", neighbors);
-
-//   const n = neighbors.map(neighbor => {
-//     return {
-//       ...neighbor,
-//       normalizedCurrentDebt: logNormalize(
-//         Math.abs(neighbor.currentDebt),
-//         smallestCurrentDebt,
-//         greatestCurrentDebt
-//       ),
-//       normalizedRouteMetricToExit: logNormalize(
-//         neighbor.routeMetricToExit,
-//         smallestRouteMetricToExit,
-//         greatestRouteMetricToExit
-//       ),
-//       normalizedLinkCost: logNormalize(
-//         neighbor.linkCost,
-//         smallestLinkCost,
-//         greatestLinkCost
-//       )
-//     };
-//   });
-
-//   return n;
-// }
-
-// function NodeInfo({
-//   name,
-
-//   linkCost,
-//   normalizedLinkCost,
-
-//   routeMetricToExit,
-//   normalizedRouteMetricToExit,
-
-//   priceToExit,
-
-//   currentDebt,
-//   normalizedCurrentDebt,
-
-//   totalDebt
-// }) {
-//   console.log({
-//     name,
-
-//     linkCost,
-//     normalizedLinkCost,
-
-//     routeMetricToExit,
-//     normalizedRouteMetricToExit,
-
-//     priceToExit,
-
-//     currentDebt,
-//     normalizedCurrentDebt,
-
-//     totalDebt
-//   });
-//   return (
-//     <div
-//       style={{
-//         display: "flex",
-//         alignItems: "center",
-//         marginBottom: 30
-//       }}
-//     >
-//       <h3 style={{ marginBottom: 0, marginRight: 10 }}>Me</h3>
-//       {/* linkCost: {linkCost} normalizedLinkCost: {normalizedLinkCost} */}
-//       <ConnectionLine
-//         thickness={10}
-//         dash={clamp(normalizedLinkCost * 100, 4, 96)}
-//         scrollDirection={currentDebt}
-//         scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
-//       />
-//       <div>
-//         <Card
-//           style={{
-//             border: "3px solid black"
-//           }}
-//         >
-//           <CardBody
-//             style={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 15 }}
-//           >
-//             <CardTitle style={{ marginLeft: 10, marginRight: 10 }}>
-//               {name}
-//             </CardTitle>
-//             <div
-//               style={{
-//                 display: "flex",
-//                 justifyContent: "space-between",
-//                 flexWrap: "wrap"
-//               }}
-//             >
-//               <LabelUnit
-//                 label="Link to me"
-//                 content={metric2word(normalizedLinkCost)}
-//               />
-//               <LabelUnit
-//                 label="Link to internet"
-//                 content={metric2word(normalizedRouteMetricToExit)}
-//               />
-//             </div>
-//             <div
-//               style={{
-//                 display: "flex",
-//                 justifyContent: "space-between",
-//                 flexWrap: "wrap"
-//               }}
-//             >
-//               {currentDebt < 0 ? (
-//                 <LabelUnit
-//                   label="They are paying me"
-//                   content={`${-currentDebt} ¢/sec.`}
-//                 />
-//               ) : (
-//                   <LabelUnit
-//                     label="I am paying them"
-//                     content={`${currentDebt} ¢/sec.`}
-//                   />
-//                 )}
-//               {routeMetricToExit < 10 && (
-//                 <LabelUnit
-//                   label="Bandwidth price"
-//                   content={`${priceToExit} ¢/gb`}
-//                 />
-//               )}
-//               {totalDebt < 0 ? (
-//                 <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
-//               ) : (
-//                   <LabelUnit label="Total paid" content={`$${totalDebt}`} />
-//                 )}
-//             </div>
-//           </CardBody>
-//         </Card>
-//       </div>
-//       <ConnectionLine
-//         thickness={!(currentDebt < 0) ? 10 : 0}
-//         dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
-//         scrollDirection={currentDebt}
-//         scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
-//       />
-//       <h3 style={{ marginBottom: 0, marginLeft: 10 }}>🌎</h3>
-//     </div>
-//   );
-// }
+class LabelUnit extends React.Component {
+  render() {
+    <div
+      style={{
+        lineHeight: "100%",
+        marginBottom: 10,
+        marginRight: 10,
+        marginLeft: 10
+      }}
+    >
+      <small>{label}:</small>
+      <br />
+      <b>{content}</b>
+    </div>
+  }
+}
