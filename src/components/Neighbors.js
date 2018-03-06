@@ -1,40 +1,71 @@
 //@flow
 
-import React from "react";
+import React, { Component } from "react";
 import "../styles/BasicScroll.css";
-import { Card, CardBody, CardTitle } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle
+} from "reactstrap";
+import { actions, connect } from "../store";
 
-let neighbors = [
-  {
-    name: "Cindy Barker",
-    linkCost: 1168,
-    routeMetricToExit: Infinity,
-    currentDebt: -12,
-    totalDebt: 0
-  },
-  {
-    name: "CascadianMesh Tower2",
-    linkCost: 1020,
-    routeMetricToExit: 958,
-    priceToExit: 12,
-    currentDebt: 10,
-    totalDebt: 0
-  },
-  {
-    name: "Bobnet",
-    linkCost: 817,
-    routeMetricToExit: 1596,
-    currentDebt: -5,
-    totalDebt: -230
-  },
-  {
-    name: "Verizon",
-    linkCost: 956,
-    routeMetricToExit: 1596,
-    currentDebt: -30,
-    totalDebt: 429
+
+// let neighborData = [
+//   {
+//     name: "Cindy Barker",
+//     linkCost: 1168,
+//     routeMetricToExit: Infinity,
+//     currentDebt: -12,
+//     totalDebt: 0
+//   },
+//   {
+//     name: "CascadianMesh Tower2",
+//     linkCost: 1020,
+//     routeMetricToExit: 958,
+//     priceToExit: 12,
+//     currentDebt: 10,
+//     totalDebt: 0
+//   },
+//   {
+//     name: "Bobnet",
+//     linkCost: 817,
+//     routeMetricToExit: 1596,
+//     currentDebt: -5,
+//     totalDebt: -230
+//   },
+//   {
+//     name: "Verizon",
+//     linkCost: 956,
+//     routeMetricToExit: 1596,
+//     currentDebt: -30,
+//     totalDebt: 429
+//   }
+// ];
+
+class Neighbors extends Component {
+  componentDidMount() {
+    actions.getNeighborData();
   }
-];
+
+  render() {
+    const { neighborData } = this.props.state;
+    console.log(neighborData);
+    const normNeighbors = normalizeNeighbors(neighborData);
+    // console.log(normNeighbors);
+    return (
+      <div>
+        <h1>Neighbors</h1>
+        <div>
+          {normNeighbors.map(neigh =>
+            <NodeInfo
+              {...neigh}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+};
 
 function metric2word(metric: number) {
   if (metric > 1) {
@@ -168,23 +199,23 @@ function clamp(num, min, max) {
   return num;
 }
 
-function normalizeNeighbors(neighbors) {
-  const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
-  const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
+function normalizeNeighbors(neighborData) {
+  const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighborData);
+  const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighborData);
 
   const smallestRouteMetricToExit = getSmallestAtKey(
     "routeMetricToExit",
-    neighbors
+    neighborData
   );
   const greatestRouteMetricToExit = getGreatestAtKey(
     "routeMetricToExit",
-    neighbors
+    neighborData
   );
 
-  const smallestLinkCost = getSmallestAtKey("linkCost", neighbors);
-  const greatestLinkCost = getGreatestAtKey("linkCost", neighbors);
+  const smallestLinkCost = getSmallestAtKey("linkCost", neighborData);
+  const greatestLinkCost = getGreatestAtKey("linkCost", neighborData);
 
-  const n = neighbors.map(neighbor => {
+  const n = neighborData.map(neighbor => {
     return {
       ...neighbor,
       normalizedCurrentDebt: logNormalize(
@@ -297,11 +328,11 @@ function NodeInfo({
                   content={`${-currentDebt} ¢/sec.`}
                 />
               ) : (
-                <LabelUnit
-                  label="I am paying them"
-                  content={`${currentDebt} ¢/sec.`}
-                />
-              )}
+                  <LabelUnit
+                    label="I am paying them"
+                    content={`${currentDebt} ¢/sec.`}
+                  />
+                )}
               {routeMetricToExit < 10 && (
                 <LabelUnit
                   label="Bandwidth price"
@@ -311,8 +342,8 @@ function NodeInfo({
               {totalDebt < 0 ? (
                 <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
               ) : (
-                <LabelUnit label="Total paid" content={`$${totalDebt}`} />
-              )}
+                  <LabelUnit label="Total paid" content={`$${totalDebt}`} />
+                )}
             </div>
           </CardBody>
         </Card>
@@ -328,12 +359,4 @@ function NodeInfo({
   );
 }
 
-export default () => {
-  neighbors = normalizeNeighbors(neighbors);
-  return (
-    <div>
-      <h1>Neighbors</h1>
-      <div>{neighbors.map(neigh => <NodeInfo {...neigh} />)}</div>
-    </div>
-  );
-};
+export default connect(["neighborData"])(Neighbors);
