@@ -9,39 +9,6 @@ import {
 } from "reactstrap";
 import { actions, connect } from "../store";
 
-
-// let neighborData = [
-//   {
-//     name: "Cindy Barker",
-//     linkCost: 1168,
-//     routeMetricToExit: Infinity,
-//     currentDebt: -12,
-//     totalDebt: 0
-//   },
-//   {
-//     name: "CascadianMesh Tower2",
-//     linkCost: 1020,
-//     routeMetricToExit: 958,
-//     priceToExit: 12,
-//     currentDebt: 10,
-//     totalDebt: 0
-//   },
-//   {
-//     name: "Bobnet",
-//     linkCost: 817,
-//     routeMetricToExit: 1596,
-//     currentDebt: -5,
-//     totalDebt: -230
-//   },
-//   {
-//     name: "Verizon",
-//     linkCost: 956,
-//     routeMetricToExit: 1596,
-//     currentDebt: -30,
-//     totalDebt: 429
-//   }
-// ];
-
 class Neighbors extends Component {
   componentDidMount() {
     actions.getNeighborData();
@@ -49,9 +16,7 @@ class Neighbors extends Component {
 
   render() {
     const { neighborData } = this.props.state;
-    console.log(neighborData);
     const normNeighbors = normalizeNeighbors(neighborData);
-    // console.log(normNeighbors);
     return (
       <div>
         <h1>Neighbors</h1>
