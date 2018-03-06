@@ -7,7 +7,11 @@ import {
   Form,
   FormGroup,
   Label,
-  Input
+  Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap";
 import { actions, connect } from "../store";
 
@@ -138,19 +142,89 @@ class WifiSettingsForm extends Component {
               >
                 Save
               </Button>
-              <Button
-                color="primary"
-                style={{
-                  margin: 10
-                }}
-              >
-                Revert
-              </Button>
+            </FormGroup>
+
+            <FormGroup
+              style={{
+                display: "flex",
+                margin: -20,
+                marginTop: 0,
+                padding: 10
+              }}
+            >
+              <AdvancedSettingsModal
+                network={this.state.fields.device_name}
+              />
             </FormGroup>
           </Form>
         </CardBody>
       </Card>
     );
+  }
+}
+
+class AdvancedSettingsModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false,
+    };
+
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
+
+  render() {
+    return (
+      <div>
+        <Button
+          color="link"
+          onClick={this.toggle}
+          style={{
+            padding: 0,
+            margin: 10
+          }}
+        >
+          Advanced Settings
+          </Button>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          className={this.props.className}>
+          <ModalHeader toggle={this.toggle}>
+            {this.props.network}: WiFi Settings
+            </ModalHeader>
+          <ModalBody>
+            <Form>
+              <FormGroup>
+                <h5>Connect to a Mesh Network</h5>
+                <FormGroup check>
+                  <Label check>
+                    <Input type="checkbox" />{' '}
+                    Check to Enable Connection
+                </Label>
+                </FormGroup>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="primary"
+              style={{
+                margin: 10
+              }}
+            >
+              Save
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    )
   }
 }
 
