@@ -6,10 +6,11 @@
     "bootstrap": "^4.0.0",
     "core-util-is": "^1.0.2",
     "nested-validate": "^1.1.6",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "16.3.0-alpha.0",
+    "react-dom": "16.3.0-alpha.0",
     "react-scripts": "1.1.1",
     "react-sigma": "^1.2.30",
+    "react-stateful": "git+https://github.com/jtremback/react-stateful.git",
     "react-vis-force": "^0.3.1",
     "reactstrap": "^5.0.0-beta"
   },

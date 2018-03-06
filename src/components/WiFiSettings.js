@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getWifiSettings, saveWifiSetting } from "../actions";
 import {
   Col,
   Card,
@@ -14,18 +13,15 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
+import { actions, connect } from "../store";
 
-
-export default class WiFiSettings extends Component {
+class WifiSettings extends Component {
   componentDidMount() {
-    getWifiSettings(this.props.store);
-  }
-
-  setWifiSettings() {
-    saveWifiSetting(this.props.store, this.state);
+    actions.getWifiSettings();
   }
 
   render() {
+    const { wifiSettings } = this.props.state;
     return (
       <div>
         <h1>WiFi Settings</h1>
@@ -37,8 +33,8 @@ export default class WiFiSettings extends Component {
             margin: -20
           }}
         >
-          {this.props.store.state.wifiSettings &&
-            this.props.store.state.wifiSettings.map((settings, i) => (
+          {wifiSettings &&
+            wifiSettings.map((settings, i) => (
               <WifiSettingsForm
                 store={this.props.store}
                 key={i}
@@ -85,7 +81,7 @@ class WifiSettingsForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    saveWifiSetting(this.props.store, this.state.fields);
+    actions.saveWifiSetting(this.state.fields);
   };
 
   isFieldValid = name =>
@@ -231,3 +227,5 @@ class AdvancedSettingsModal extends React.Component {
     )
   }
 }
+
+export default connect(["wifiSettings"])(WifiSettings);

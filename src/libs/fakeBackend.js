@@ -1,4 +1,5 @@
 import { isRequired, isOptional, isObjectOf, label } from "nested-validate";
+
 import { isNumber, isString, isBoolean } from "core-util-is";
 
 const isEncryptionType = type => isString(type) && /(psk2|psk|wep)/.test(type);
@@ -39,11 +40,33 @@ export default class Backend {
     this.neighborData = [
       {
         name: "Cindy Barker",
-        linkCost: 1241,
-        routeMetricToExit: 1544,
+        linkCost: 1168,
+        routeMetricToExit: Infinity,
+        currentDebt: -12,
+        totalDebt: 0
+      },
+      {
+        name: "CascadianMesh Tower2",
+        linkCost: 1020,
+        routeMetricToExit: 958,
         priceToExit: 12,
-        currentDebt: 232,
-        totalDebt: 500
+        currentDebt: 10,
+        totalDebt: 0
+      },
+      {
+        name: "Bobnet",
+        linkCost: 4355,
+        routeMetricToExit: 1596,
+        currentDebt: -5,
+        totalDebt: -230
+      },
+      {
+        name: "Verizon",
+        linkCost: 10781,
+        routeMetricToExit: 958,
+        priceToExit: 200,
+        currentDebt: 1000,
+        totalDebt: 100
       }
     ];
   }
@@ -65,7 +88,7 @@ export default class Backend {
   }
 
   async setWifiSettings(settings) {
-    isWifiSettings(settings);
+    // isWifiSettings(settings);
     await timeout(100);
     this.wifiSettings.map(s => {
       if (s.device_name === settings.device_name) {
