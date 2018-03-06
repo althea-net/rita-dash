@@ -1,4 +1,5 @@
 import { isRequired, isOptional, isObjectOf, label } from "nested-validate";
+
 import { isNumber, isString, isBoolean } from "core-util-is";
 
 const isEncryptionType = type => isString(type) && /(psk2|psk|wep)/.test(type);
@@ -39,11 +40,10 @@ export default class Backend {
     this.neighborData = [
       {
         name: "Cindy Barker",
-        linkCost: 1241,
-        routeMetricToExit: 1544,
-        priceToExit: 12,
-        currentDebt: 232,
-        totalDebt: 500
+        linkCost: 1168,
+        routeMetricToExit: 1596,
+        currentDebt: -12,
+        totalDebt: 0
       }
     ];
   }
