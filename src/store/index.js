@@ -20,6 +20,9 @@ const store = {
         })
       });
       await backend.setWifiSettings(setting);
+    },
+    getNeighbors: async ({ state }) => {
+      return { neighborData: await backend.getWifiSettings() };
     }
   }
 };
