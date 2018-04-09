@@ -1,18 +1,4 @@
-import { isRequired, isOptional, isObjectOf, label } from "nested-validate";
-
-import { isNumber, isString, isBoolean } from "core-util-is";
-
-const isEncryptionType = type => isString(type) && /(psk2|psk|wep)/.test(type);
-
-const isDeviceName = isRequired(isString);
-
-const isWifiSettings = isObjectOf({
-  device_name: isDeviceName,
-  mesh: isOptional(isBoolean),
-  ssid: isOptional(isString),
-  encryption: isOptional(isEncryptionType),
-  key: isOptional(isString)
-});
+// @ts-check
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
