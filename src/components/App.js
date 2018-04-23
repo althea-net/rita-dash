@@ -18,16 +18,16 @@ class App extends Component {
     return (
       <div className="App">
         <Navbar color="faded" light expand="md">
-          <NavbarBrand href="/"> Althea</NavbarBrand>
+          <NavbarBrand href="#"> Althea</NavbarBrand>
           <Nav>
             <NavItem>
-              <NavLink href="/#wifi-settings">WiFi Settings</NavLink>
+              <NavLink href="#wifi-settings">WiFi Settings</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/#payments">Payments</NavLink>
+              <NavLink href="#payments">Payments</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/#neighbors">Neighbors</NavLink>
+              <NavLink href="#neighbors">Neighbors</NavLink>
             </NavItem>
           </Nav>
         </Navbar>
