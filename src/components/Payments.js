@@ -16,6 +16,9 @@ import {
 } from "reactstrap";
 
 export default class Payments extends Component {
+  componentDidMount() {
+    actions.getBalanceData();
+  }
   render() {
     return (
       <div>

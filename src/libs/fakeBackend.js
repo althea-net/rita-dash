@@ -1,5 +1,13 @@
 // @ts-check
 
+function post(url, json) {
+  return fetch(url, {
+    method: "POST",
+    body: JSON.stringify(json),
+    headers: new Headers({ "Content-Type": "application/json" })
+  });
+}
+
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -69,24 +77,35 @@ export default class Backend {
   //
 
   async getWifiSettings() {
-    await timeout(100);
-    return this.wifiSettings;
+    // await timeout(100);
+    // return this.wifiSettings;
+    const res = await fetch("http://192.168.1.1:4877/wifi_settings");
+    const json = await res.json();
+    return json;
   }
 
   async setWifiSettings(settings) {
     // isWifiSettings(settings);
-    await timeout(100);
-    this.wifiSettings.map(s => {
-      if (s.device_name === settings.device_name) {
-        return settings;
-      } else {
-        return s;
-      }
-    });
+    // await timeout(100);
+    // this.wifiSettings.map(s => {
+    //   if (s.device_name === settings.device_name) {
+    //     return settings;
+    //   } else {
+    //     return s;
+    //   }
+    // });
+    post("http://192.168.1.1:4877/wifi_settings", settings);
   }
 
   async getNeighborData() {
-    await timeout(100);
-    return this.neighborData;
+    const res = await fetch("http://192.168.1.1:4877/neighbors");
+    const json = await res.json();
+    return json;
+  }
+
+  async getBalanceData() {
+    const res = await fetch("http://192.168.1.1:4877/info");
+    const json = await res.json();
+    return json;
   }
 }
