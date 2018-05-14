@@ -15,6 +15,9 @@ function timeout(ms) {
 export default class Backend {
   constructor(url) {
     this.url = url;
+    this.info = {
+      balance: 87
+    };
     this.wifiSettings = [
       {
         device_name: "2.4GHz Bandwidth",
@@ -82,6 +85,11 @@ export default class Backend {
     const res = await fetch("http://192.168.1.1:4877/wifi_settings");
     const json = await res.json();
     return json;
+  }
+
+  async getInfo() {
+    await timeout(100);
+    return this.info;
   }
 
   async setWifiSettings(settings) {

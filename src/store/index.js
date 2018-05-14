@@ -4,7 +4,7 @@ import FakeBackend from "../libs/fakeBackend";
 const backend = new FakeBackend("url");
 
 const store = {
-  initialState: { page: "", wifiSettings: [], neighborData: [] },
+  initialState: { page: "", wifiSettings: [], neighborData: [], info: { balance: 0 } },
   actions: {
     changePage: (_, page) => ({ page: page }),
     getWifiSettings: async ({ state }) => {
@@ -23,6 +23,9 @@ const store = {
     },
     getNeighborData: async ({ state }) => {
       return { neighborData: await backend.getNeighborData() };
+    },
+    getInfo: async () => {
+      return { info: await backend.getInfo() }
     }
   }
 };

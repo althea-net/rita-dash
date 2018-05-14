@@ -15,11 +15,14 @@ import {
   CardBody
 } from "reactstrap";
 
-export default class Payments extends Component {
+import { actions, connect } from "../store";
+
+class Payments extends Component {
   componentDidMount() {
-    actions.getBalanceData();
+    actions.getInfo();
   }
   render() {
+    const { info } = this.props.state;
     return (
       <div>
         <h1>Payments</h1>
@@ -29,7 +32,7 @@ export default class Payments extends Component {
             flexDirection: "column"
           }}
         >
-          <MoneyBar avgUse={100} currentFunds={50} />
+          <MoneyBar avgUse={100 + 12} currentFunds={info.balance} />
           <RefillFunds />
           <div
             style={{
@@ -262,3 +265,5 @@ function PercentSpacer({ children, progress, pointer, pointerAlign }) {
     );
   }
 }
+
+export default connect(["info"])(Payments);

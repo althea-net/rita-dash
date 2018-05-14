@@ -2,11 +2,13 @@
 
 import React, { Component } from "react";
 import "../styles/BasicScroll.css";
+
 import {
   Card,
   CardBody,
   CardTitle
 } from "reactstrap";
+
 import { actions, connect } from "../store";
 
 class Neighbors extends Component {
