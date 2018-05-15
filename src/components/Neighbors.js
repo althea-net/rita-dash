@@ -3,11 +3,7 @@
 import React, { Component } from "react";
 import "../styles/BasicScroll.css";
 
-import {
-  Card,
-  CardBody,
-  CardTitle
-} from "reactstrap";
+import { Card, CardBody, CardTitle } from "reactstrap";
 
 import { actions, connect } from "../store";
 
@@ -22,17 +18,11 @@ class Neighbors extends Component {
     return (
       <div>
         <h1>Neighbors</h1>
-        <div>
-          {normNeighbors.map(neigh =>
-            <NodeInfo
-              {...neigh}
-            />
-          )}
-        </div>
+        <div>{normNeighbors.map(neigh => <NodeInfo {...neigh} />)}</div>
       </div>
     );
   }
-};
+}
 
 function metric2word(metric: number) {
   if (metric > 1) {
@@ -295,11 +285,11 @@ function NodeInfo({
                   content={`${-currentDebt} ¢/sec.`}
                 />
               ) : (
-                  <LabelUnit
-                    label="I am paying them"
-                    content={`${currentDebt} ¢/sec.`}
-                  />
-                )}
+                <LabelUnit
+                  label="I am paying them"
+                  content={`${currentDebt} ¢/sec.`}
+                />
+              )}
               {routeMetricToExit < 10 && (
                 <LabelUnit
                   label="Bandwidth price"
@@ -309,8 +299,8 @@ function NodeInfo({
               {totalDebt < 0 ? (
                 <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
               ) : (
-                  <LabelUnit label="Total paid" content={`$${totalDebt}`} />
-                )}
+                <LabelUnit label="Total paid" content={`$${totalDebt}`} />
+              )}
             </div>
           </CardBody>
         </Card>

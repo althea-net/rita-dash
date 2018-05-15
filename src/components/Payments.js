@@ -16,13 +16,16 @@ import {
 } from "reactstrap";
 
 import { actions, connect } from "../store";
+import QRious from "qrious";
 
 class Payments extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
     actions.getInfo();
+    actions.getSettings();
   }
   render() {
-    const { info } = this.props.state;
+    const { info, settings } = this.props.state;
     return (
       <div>
         <h1>Payments</h1>
@@ -33,7 +36,7 @@ class Payments extends Component {
           }}
         >
           <MoneyBar avgUse={100 + 12} currentFunds={info.balance} />
-          <RefillFunds />
+          <RefillFunds address={settings.payment.eth_address} />
           <div
             style={{
               display: "flex",
@@ -43,8 +46,8 @@ class Payments extends Component {
               margin: -20
             }}
           >
-            <LowFunds />
-            <PriceQuality />
+            {/* <LowFunds />
+            <PriceQuality /> */}
           </div>
         </div>
       </div>
@@ -164,15 +167,13 @@ class RefillFunds extends Component {
               alignItems: "center"
             }}
           >
-            <div
-              style={{
-                background: "blue",
-                width: 200,
-                height: 200,
-                margin: 20
-              }}
+            <img
+              src={new QRious({
+                size: 256,
+                value: this.props.address
+              }).toDataURL()}
             />
-            0x983742983rf29f829d82
+            {this.props.address}
           </ModalBody>
         </Modal>
       </div>
@@ -266,4 +267,4 @@ function PercentSpacer({ children, progress, pointer, pointerAlign }) {
   }
 }
 
-export default connect(["info"])(Payments);
+export default connect(["settings", "info"])(Payments);

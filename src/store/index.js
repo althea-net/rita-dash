@@ -4,7 +4,13 @@ import FakeBackend from "../libs/fakeBackend";
 const backend = new FakeBackend("url");
 
 const store = {
-  initialState: { page: "", wifiSettings: [], neighborData: [], info: { balance: 0 } },
+  initialState: {
+    page: "",
+    wifiSettings: [],
+    neighborData: [],
+    info: { balance: 0 },
+    settings: { payment: {} }
+  },
   actions: {
     changePage: (_, page) => ({ page: page }),
     getWifiSettings: async ({ state }) => {
@@ -25,7 +31,12 @@ const store = {
       return { neighborData: await backend.getNeighborData() };
     },
     getInfo: async () => {
-      return { info: await backend.getInfo() }
+      return { info: await backend.getInfo() };
+    },
+    getSettings: async () => {
+      const settings = await backend.getSettings();
+      console.log("SZETTINGS", settings);
+      return { settings };
     }
   }
 };

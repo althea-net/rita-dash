@@ -18,6 +18,42 @@ export default class Backend {
     this.info = {
       balance: 87
     };
+    this.settings = {
+      exit_client: {
+        exit_ip: "fd96::1337:e1f",
+        exit_registration_port: 4875,
+        reg_details: {
+          email: "1234@gmail.com",
+          zip_code: "1234"
+        },
+        wg_listen_port: 59999
+      },
+      exit_tunnel_settings: {
+        lan_nics: ["lan"]
+      },
+      network: {
+        babel_port: 6872,
+        bounty_ip: "fd96::1337:e1f",
+        bounty_port: 8888,
+        default_route: [],
+        manual_peers: ["test.altheamesh.com"],
+        own_ip: "fdaa:5dac:e37d:4a31:28e:1ede:590a:ee28",
+        peer_interfaces: ["eth0.4", "wlan1", "eth0.3", "eth0.5", "wlan0"],
+        rita_dashboard_port: 4877,
+        rita_hello_port: 4876,
+        wg_private_key: "CLUA7Q4zUjz5iwzrw1iuSKXStyrHU0LGZ0mrRAHa0H0=",
+        wg_private_key_path: "/tmp/priv",
+        wg_public_key: "q2ccDUJnyHpyTvRhudoYIlZ/xOrMhy/ygTEJhz1ZlxI=",
+        wg_start_port: 60000
+      },
+      payment: {
+        buffer_period: 3,
+        close_fraction: "100",
+        close_threshold: "-1000000000",
+        eth_address: "0x0101010101010101010101010101010101010101",
+        pay_threshold: "0"
+      }
+    };
     this.wifiSettings = [
       {
         device_name: "2.4GHz Bandwidth",
@@ -68,51 +104,29 @@ export default class Backend {
     ];
   }
 
-  // GET | POST /wifi_iface
-  //
-  // {
-  //   device: "2.4ghz",
-  //   mesh: false,
-  //   ssid: "MyWifiAP",
-  //   encryption: "psk2",
-  //   key: "secret passphrase"
-  // }
-  //
-
   async getWifiSettings() {
-    // await timeout(100);
-    // return this.wifiSettings;
-    const res = await fetch("http://192.168.1.1:4877/wifi_settings");
+    const res = await fetch("http://192.168.2.1:4877/wifi_settings");
+    const json = await res.json();
+    return json;
+  }
+
+  async setWifiSettings(settings) {
+    post("http://192.168.2.1:4877/wifi_settings", settings);
+  }
+
+  async getNeighborData() {
+    const res = await fetch("http://192.168.2.1:4877/neighbors");
     const json = await res.json();
     return json;
   }
 
   async getInfo() {
-    await timeout(100);
-    return this.info;
-  }
-
-  async setWifiSettings(settings) {
-    // isWifiSettings(settings);
-    // await timeout(100);
-    // this.wifiSettings.map(s => {
-    //   if (s.device_name === settings.device_name) {
-    //     return settings;
-    //   } else {
-    //     return s;
-    //   }
-    // });
-    post("http://192.168.1.1:4877/wifi_settings", settings);
-  }
-
-  async getNeighborData() {
-    const res = await fetch("http://192.168.1.1:4877/neighbors");
+    const res = await fetch("http://192.168.2.1:4877/info");
     const json = await res.json();
     return json;
   }
-
-  async getBalanceData() {
-    const res = await fetch("http://192.168.1.1:4877/info");
+  async getSettings() {
+    const res = await fetch("http://192.168.2.1:4877/settings");
     const json = await res.json();
     return json;
   }
