@@ -12,6 +12,9 @@ function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+//const url = location.hostname + ":4877";
+const pageAddress = "http://192.168.1.2:4877";
+
 export default class Backend {
   constructor(url) {
     this.url = url;
@@ -105,21 +108,45 @@ export default class Backend {
   }
 
   async getWifiSettings() {
+<<<<<<< HEAD:src/libs/fakeBackend.js
     const res = await fetch("http://192.168.2.1:4877/wifi_settings");
+=======
+    // await timeout(100);
+    // return this.wifiSettings;
+    const res = await fetch(pageAddress + "/wifi_settings");
+>>>>>>> ef4c48c635988ff9333b065c1ff52c1411a8693e:src/libs/backend.js
     const json = await res.json();
     return json;
   }
 
   async setWifiSettings(settings) {
+<<<<<<< HEAD:src/libs/fakeBackend.js
     post("http://192.168.2.1:4877/wifi_settings", settings);
   }
 
   async getNeighborData() {
     const res = await fetch("http://192.168.2.1:4877/neighbors");
+=======
+    // isWifiSettings(settings);
+    // await timeout(100);
+    // this.wifiSettings.map(s => {
+    //   if (s.device_name === settings.device_name) {
+    //     return settings;
+    //   } else {
+    //     return s;
+    //   }
+    // });
+    post(pageAddress + "/wifi_settings", settings);
+  }
+
+  async getNeighborData() {
+    const res = await fetch(pageAddress + "/neighbors");
+>>>>>>> ef4c48c635988ff9333b065c1ff52c1411a8693e:src/libs/backend.js
     const json = await res.json();
     return json;
   }
 
+<<<<<<< HEAD:src/libs/fakeBackend.js
   async getInfo() {
     const res = await fetch("http://192.168.2.1:4877/info");
     const json = await res.json();
@@ -127,6 +154,10 @@ export default class Backend {
   }
   async getSettings() {
     const res = await fetch("http://192.168.2.1:4877/settings");
+=======
+  async getBalanceData() {
+    const res = await fetch(pageAddress + "/info");
+>>>>>>> ef4c48c635988ff9333b065c1ff52c1411a8693e:src/libs/backend.js
     const json = await res.json();
     return json;
   }
