@@ -12,6 +12,9 @@ function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+//const url = location.hostname + ":4877";
+const pageAddress = "http://192.168.1.2:4877";
+
 export default class Backend {
   constructor(url) {
     this.url = url;
@@ -82,7 +85,7 @@ export default class Backend {
   async getWifiSettings() {
     // await timeout(100);
     // return this.wifiSettings;
-    const res = await fetch("http://192.168.1.1:4877/wifi_settings");
+    const res = await fetch(pageAddress + "/wifi_settings");
     const json = await res.json();
     return json;
   }
@@ -102,17 +105,17 @@ export default class Backend {
     //     return s;
     //   }
     // });
-    post("http://192.168.1.1:4877/wifi_settings", settings);
+    post(pageAddress + "/wifi_settings", settings);
   }
 
   async getNeighborData() {
-    const res = await fetch("http://192.168.1.1:4877/neighbors");
+    const res = await fetch(pageAddress + "/neighbors");
     const json = await res.json();
     return json;
   }
 
   async getBalanceData() {
-    const res = await fetch("http://192.168.1.1:4877/info");
+    const res = await fetch(pageAddress + "/info");
     const json = await res.json();
     return json;
   }

@@ -1,10 +1,15 @@
 import { initStore } from "react-stateful";
-import FakeBackend from "../libs/fakeBackend";
+import FakeBackend from "../libs/backend";
 
 const backend = new FakeBackend("url");
 
 const store = {
-  initialState: { page: "", wifiSettings: [], neighborData: [], info: { balance: 0 } },
+  initialState: {
+    page: "",
+    wifiSettings: [],
+    neighborData: [],
+    info: { balance: 0 }
+  },
   actions: {
     changePage: (_, page) => ({ page: page }),
     getWifiSettings: async ({ state }) => {
@@ -25,7 +30,7 @@ const store = {
       return { neighborData: await backend.getNeighborData() };
     },
     getInfo: async () => {
-      return { info: await backend.getInfo() }
+      return { info: await backend.getInfo() };
     }
   }
 };
