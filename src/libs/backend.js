@@ -12,8 +12,7 @@ function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-//const url = location.hostname + ":4877";
-const pageAddress = "http://192.168.1.2:4877";
+const url = "http://192.168.1.1:4877";
 
 export default class Backend {
   constructor(url) {
@@ -110,7 +109,7 @@ export default class Backend {
   async getWifiSettings() {
     // await timeout(100);
     // return this.wifiSettings;
-    const res = await fetch(pageAddress + "/wifi_settings");
+    const res = await fetch(url + "/wifi_settings");
     const json = await res.json();
     return json;
   }
@@ -125,17 +124,23 @@ export default class Backend {
     //     return s;
     //   }
     // });
-    post(pageAddress + "/wifi_settings", settings);
+    post(url + "/wifi_settings", settings);
   }
 
   async getNeighborData() {
-    const res = await fetch(pageAddress + "/neighbors");
+    const res = await fetch(url + "/neighbors");
     const json = await res.json();
     return json;
   }
 
-  async getBalanceData() {
-    const res = await fetch(pageAddress + "/info");
+  async getSettings() {
+    const res = await fetch(url + "/settings");
+    const json = await res.json();
+    return json;
+  }
+
+  async getInfo() {
+    const res = await fetch(url + "/info");
     const json = await res.json();
     return json;
   }

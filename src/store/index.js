@@ -1,7 +1,7 @@
 import { initStore } from "react-stateful";
-import FakeBackend from "../libs/backend";
+import Backend from "../libs/backend";
 
-const backend = new FakeBackend("url");
+const backend = new Backend();
 
 const store = {
   initialState: {
@@ -35,7 +35,6 @@ const store = {
     },
     getSettings: async () => {
       const settings = await backend.getSettings();
-      console.log("SZETTINGS", settings);
       return { settings };
     }
   }
