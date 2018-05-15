@@ -8,12 +8,8 @@ const store = {
     page: "",
     wifiSettings: [],
     neighborData: [],
-<<<<<<< HEAD
     info: { balance: 0 },
     settings: { payment: {} }
-=======
-    info: { balance: 0 }
->>>>>>> ef4c48c635988ff9333b065c1ff52c1411a8693e
   },
   actions: {
     changePage: (_, page) => ({ page: page }),
@@ -36,14 +32,11 @@ const store = {
     },
     getInfo: async () => {
       return { info: await backend.getInfo() };
-<<<<<<< HEAD
     },
     getSettings: async () => {
       const settings = await backend.getSettings();
       console.log("SZETTINGS", settings);
       return { settings };
-=======
->>>>>>> ef4c48c635988ff9333b065c1ff52c1411a8693e
     }
   }
 };
