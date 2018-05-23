@@ -12,7 +12,7 @@ function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const url = "http://192.168.1.1:4877";
+const url = window.location.hostname + ":4877";
 
 export default class Backend {
   constructor(url) {
