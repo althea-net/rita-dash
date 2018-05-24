@@ -9,7 +9,15 @@ function post(url, json) {
   });
 }
 
+<<<<<<< HEAD
 const url = "http://192.168.2.1:4877";
+=======
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const url = window.location.hostname + ":4877";
+>>>>>>> 3b64cb81f16745849b1ae22ef074b09af6054273
 
 export default class Backend {
   constructor(url) {
