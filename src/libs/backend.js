@@ -1,4 +1,5 @@
 // @ts-check
+import { actions } from "../store";
 
 function post(url, json) {
   return fetch(url, {
@@ -8,11 +9,7 @@ function post(url, json) {
   });
 }
 
-function timeout(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-const url = "http://192.168.1.1:4877";
+const url = "http://192.168.2.1:4877";
 
 export default class Backend {
   constructor(url) {
@@ -22,8 +19,16 @@ export default class Backend {
     };
     this.settings = {
       exit_client: {
-        exit_ip: "fd96::1337:e1f",
-        exit_registration_port: 4875,
+        exit_list: [
+          {
+            fqdn: "test.altheamesh.com",
+            mesh_ip: "fd96::1337:e1f",
+            port: 89992,
+            wg_key: "234n23o4n23o2n3r2r",
+            status: "accepted"
+          }
+        ],
+        selected_exit_fqdn: "fd96::1337:e1f",
         reg_details: {
           email: "1234@gmail.com",
           zip_code: "1234"
@@ -107,23 +112,12 @@ export default class Backend {
   }
 
   async getWifiSettings() {
-    // await timeout(100);
-    // return this.wifiSettings;
     const res = await fetch(url + "/wifi_settings");
     const json = await res.json();
     return json;
   }
 
   async setWifiSettings(settings) {
-    // isWifiSettings(settings);
-    // await timeout(100);
-    // this.wifiSettings.map(s => {
-    //   if (s.device_name === settings.device_name) {
-    //     return settings;
-    //   } else {
-    //     return s;
-    //   }
-    // });
     post(url + "/wifi_settings", settings);
   }
 
@@ -143,5 +137,17 @@ export default class Backend {
     const res = await fetch(url + "/info");
     const json = await res.json();
     return json;
+  }
+
+  async requestExitConnection(nickname) {
+    console.log("ffo");
+    const res = await post(url + "/settings", {
+      exit_client: {
+        current_exit: nickname
+      }
+    });
+    console.log(await res.text());
+    // const json = await res.json();
+    // return json;
   }
 }

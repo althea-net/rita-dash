@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
 import "bootstrap/dist/css/bootstrap.css";
+import "./styles/bootstrap-overrides.css";
 import { Provider, subscribe } from "./store";
 
 subscribe((action, state) => {

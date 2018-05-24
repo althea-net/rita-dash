@@ -15,10 +15,10 @@ export default () => (
     <Icon image="/neighbors.svg" link="#neighbors">
       Neighbors
     </Icon>
-    <Icon image="/network.svg" link="#wifi-settings">
+    <Icon image="/network.svg" link="#network-settings">
       Network Settings
     </Icon>
-    <Icon image="/router.svg" link="#wifi-settings">
+    <Icon image="/router.svg" link="#router-settings">
       Router Settings
     </Icon>
   </div>

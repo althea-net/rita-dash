@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Frontpage from "./Frontpage.js";
 import Payments from "./Payments.js";
 import Neighbors from "./Neighbors.js";
-import WifiSettings from "./WiFiSettings.js";
+import RouterSettings from "./RouterSettings.js";
+import NetworkSettings from "./NetworkSettings.js";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import { actions, connect } from "../store";
 
@@ -21,13 +22,16 @@ class App extends Component {
           <NavbarBrand href="#"> Althea</NavbarBrand>
           <Nav>
             <NavItem>
-              <NavLink href="#wifi-settings">WiFi Settings</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink href="#payments">Payments</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="#neighbors">Neighbors</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#router-settings">Router Settings</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#network-settings">Network Settings</NavLink>
             </NavItem>
           </Nav>
         </Navbar>
@@ -55,8 +59,10 @@ class App extends Component {
 
 const Page = connect(["page"])(({ state }) => {
   switch (state.page) {
-    case "wifi-settings":
-      return <WifiSettings />;
+    case "router-settings":
+      return <RouterSettings />;
+    case "network-settings":
+      return <NetworkSettings />;
     case "payments":
       return <Payments />;
     case "neighbors":

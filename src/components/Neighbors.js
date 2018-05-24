@@ -1,5 +1,3 @@
-//@flow
-
 import React, { Component } from "react";
 import "../styles/BasicScroll.css";
 
@@ -24,7 +22,7 @@ class Neighbors extends Component {
   }
 }
 
-function metric2word(metric: number) {
+function metric2word(metric) {
   if (metric > 1) {
     return "None";
   }

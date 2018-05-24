@@ -15,7 +15,7 @@ import {
 } from "reactstrap";
 import { actions, connect } from "../store";
 
-class WifiSettings extends Component {
+class RouterSettings extends Component {
   componentDidMount() {
     actions.getWifiSettings();
   }
@@ -24,7 +24,7 @@ class WifiSettings extends Component {
     const { wifiSettings } = this.props.state;
     return (
       <div>
-        <h1>WiFi Settings</h1>
+        <h1>Router Settings</h1>
         <div
           style={{
             display: "flex",
@@ -152,9 +152,7 @@ class WifiSettingsForm extends Component {
                 padding: 10
               }}
             >
-              <AdvancedSettingsModal
-                network={this.state.fields.device_name}
-              />
+              <AdvancedSettingsModal network={this.state.fields.device_name} />
             </FormGroup>
           </Form>
         </CardBody>
@@ -167,7 +165,7 @@ class AdvancedSettingsModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
+      modal: false
     };
 
     this.toggle = this.toggle.bind(this);
@@ -176,7 +174,7 @@ class AdvancedSettingsModal extends React.Component {
   toggle() {
     this.setState({
       modal: !this.state.modal
-    })
+    });
   }
 
   render() {
@@ -191,23 +189,23 @@ class AdvancedSettingsModal extends React.Component {
           }}
         >
           Advanced Settings
-          </Button>
+        </Button>
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
-          className={this.props.className}>
+          className={this.props.className}
+        >
           <ModalHeader toggle={this.toggle}>
             {this.props.network}: WiFi Settings
-            </ModalHeader>
+          </ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
                 <h5>Connect to a Mesh Network</h5>
                 <FormGroup check>
                   <Label check>
-                    <Input type="checkbox" />{' '}
-                    Check to Enable Connection
-                </Label>
+                    <Input type="checkbox" /> Check to Enable Connection
+                  </Label>
                 </FormGroup>
               </FormGroup>
             </Form>
@@ -224,8 +222,8 @@ class AdvancedSettingsModal extends React.Component {
           </ModalFooter>
         </Modal>
       </div>
-    )
+    );
   }
 }
 
-export default connect(["wifiSettings"])(WifiSettings);
+export default connect(["wifiSettings"])(RouterSettings);
