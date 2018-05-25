@@ -1,5 +1,12 @@
 // @ts-check
 import { actions } from "../store";
+import cckd from "camelcase-keys-deep";
+
+async function get(url) {
+    const res = await fetch(url);
+    const json = await res.json();
+    return cckd(json);
+}
 
 function post(url, json) {
   return fetch(url, {
@@ -9,15 +16,12 @@ function post(url, json) {
   });
 }
 
-<<<<<<< HEAD
-const url = "http://192.168.2.1:4877";
-=======
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const url = window.location.hostname + ":4877";
->>>>>>> 3b64cb81f16745849b1ae22ef074b09af6054273
+//const url = window.location.hostname + ":4877";
+const url = "http://192.168.10.1:4877";
 
 export default class Backend {
   constructor(url) {
@@ -129,10 +133,8 @@ export default class Backend {
     post(url + "/wifi_settings", settings);
   }
 
-  async getNeighborData() {
-    const res = await fetch(url + "/neighbors");
-    const json = await res.json();
-    return json;
+  getNeighborData() {
+    return get(url + "/neighbors");
   }
 
   async getSettings() {
@@ -148,7 +150,6 @@ export default class Backend {
   }
 
   async requestExitConnection(nickname) {
-    console.log("ffo");
     const res = await post(url + "/settings", {
       exit_client: {
         current_exit: nickname

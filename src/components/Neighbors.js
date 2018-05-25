@@ -13,6 +13,7 @@ class Neighbors extends Component {
   render() {
     const { neighborData } = this.props.state;
     const normNeighbors = normalizeNeighbors(neighborData);
+    console.log("nn ", normNeighbors);
     return (
       <div>
         <h1>Neighbors</h1>

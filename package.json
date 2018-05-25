@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "camelcase-keys-deep": "0.1.0",
     "core-util-is": "^1.0.2",
     "qrious": "^4.0.2",
     "react": "16.3.1",

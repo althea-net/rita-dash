@@ -82,8 +82,9 @@ const store = {
     getInfo: async () => {
       return { info: await backend.getInfo() };
     },
-    requestExitConnection: async ({ state }, nickname) => {
+    requestExitConnection: async ({ setState, state }, nickname) => {
       await backend.requestExitConnection(nickname);
+      await backend.getSettings();
     },
     getSettings: async () => {
       const settings = await backend.getSettings();

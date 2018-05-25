@@ -1,4 +1,8 @@
 import React from "react";
+import payments from "../images/payments.svg"
+import neighbors from "../images/neighbors.svg"
+import network from "../images/network.svg"
+import router from "../images/router.svg"
 
 export default () => (
   <div
@@ -9,16 +13,16 @@ export default () => (
       flexWrap: "wrap"
     }}
   >
-    <Icon image="/payments.svg" link="#payments">
+    <Icon image={payments} link="#payments">
       Payments
     </Icon>
-    <Icon image="/neighbors.svg" link="#neighbors">
+    <Icon image={neighbors} link="#neighbors">
       Neighbors
     </Icon>
-    <Icon image="/network.svg" link="#network-settings">
+    <Icon image={network} link="#network-settings">
       Network Settings
     </Icon>
-    <Icon image="/router.svg" link="#router-settings">
+    <Icon image={router} link="#router-settings">
       Router Settings
     </Icon>
   </div>
