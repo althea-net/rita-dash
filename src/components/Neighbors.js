@@ -13,7 +13,6 @@ class Neighbors extends Component {
   render() {
     const { neighborData } = this.props.state;
     const normNeighbors = normalizeNeighbors(neighborData);
-    console.log("nn ", normNeighbors);
     return (
       <div>
         <h1>Neighbors</h1>
@@ -106,7 +105,7 @@ function ConnectionLine({
 }
 
 function normalize(current, smallest, greatest) {
-  return (current - smallest) / (greatest - smallest);
+  return greatest && (current - smallest) / (greatest - smallest);
 }
 
 function logNormalize(current, smallest, greatest) {
@@ -196,7 +195,7 @@ function normalizeNeighbors(neighborData) {
 }
 
 function NodeInfo({
-  name,
+  nickname,
 
   linkCost,
   normalizedLinkCost,
@@ -211,22 +210,6 @@ function NodeInfo({
 
   totalDebt
 }) {
-  console.log({
-    name,
-
-    linkCost,
-    normalizedLinkCost,
-
-    routeMetricToExit,
-    normalizedRouteMetricToExit,
-
-    priceToExit,
-
-    currentDebt,
-    normalizedCurrentDebt,
-
-    totalDebt
-  });
   return (
     <div
       style={{
@@ -253,7 +236,7 @@ function NodeInfo({
             style={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 15 }}
           >
             <CardTitle style={{ marginLeft: 10, marginRight: 10 }}>
-              {name}
+              {nickname}
             </CardTitle>
             <div
               style={{

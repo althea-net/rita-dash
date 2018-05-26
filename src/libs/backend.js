@@ -3,9 +3,9 @@ import { actions } from "../store";
 import cckd from "camelcase-keys-deep";
 
 async function get(url) {
-    const res = await fetch(url);
-    const json = await res.json();
-    return cckd(json);
+  const res = await fetch(url);
+  const json = await res.json();
+  return cckd(json);
 }
 
 function post(url, json) {
@@ -91,34 +91,20 @@ export default class Backend {
     ];
     this.neighborData = [
       {
-        name: "Cindy Barker",
-        linkCost: 1168,
-        routeMetricToExit: Infinity,
-        currentDebt: -12,
-        totalDebt: 0
+        nickname: "fd00::2",
+        route_metric_to_exit: 0,
+        total_debt: 0,
+        current_debt: 0,
+        link_cost: 0,
+        price_to_exit: 0
       },
       {
-        name: "CascadianMesh Tower2",
-        linkCost: 1020,
-        routeMetricToExit: 958,
-        priceToExit: 12,
-        currentDebt: 10,
-        totalDebt: 0
-      },
-      {
-        name: "Bobnet",
-        linkCost: 4355,
-        routeMetricToExit: 1596,
-        currentDebt: -5,
-        totalDebt: -230
-      },
-      {
-        name: "Verizon",
-        linkCost: 10781,
-        routeMetricToExit: 958,
-        priceToExit: 200,
-        currentDebt: 1000,
-        totalDebt: 100
+        nickname: "fd00::7",
+        route_metric_to_exit: 0,
+        total_debt: 0,
+        current_debt: 0,
+        link_cost: 0,
+        price_to_exit: 0
       }
     ];
   }
@@ -133,8 +119,10 @@ export default class Backend {
     post(url + "/wifi_settings", settings);
   }
 
-  getNeighborData() {
+  async getNeighborData() {
     return get(url + "/neighbors");
+    // await timeout(100);
+    // return cckd(this.neighborData);
   }
 
   async getSettings() {

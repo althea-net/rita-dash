@@ -73,8 +73,7 @@ const exit_client = {
 
 class NetworkSettings extends Component {
   componentDidMount() {
-    actions.getSettings();
-    this.timer = setInterval(actions.getSettings, 1000);
+    this.timer = setInterval(actions.getSettings, 5000);
   }
   componentWillUnmount() {
     clearInterval(this.timer);
@@ -221,7 +220,7 @@ function ExitList({ current_exit, exits, disabled }) {
           active={true}
           description={exits[current_exit].message}
           nickname={current_exit}
-          state={exits[current_exit].state}
+          state={exits[current_exit].statex}
           message={exits[current_exit].message}
           key={"foo"}
         />
