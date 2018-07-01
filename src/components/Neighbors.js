@@ -261,28 +261,30 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              {currentDebt < 0 ? (
+              {(currentDebt < 0 && (
                 <LabelUnit
                   label="They are paying me"
                   content={`${-currentDebt} ¢/sec.`}
                 />
-              ) : (
-                <LabelUnit
-                  label="I am paying them"
-                  content={`${currentDebt} ¢/sec.`}
-                />
-              )}
+              )) ||
+                (currentDebt > 0 && (
+                  <LabelUnit
+                    label="I am paying them"
+                    content={`${currentDebt} ¢/sec.`}
+                  />
+                ))}
               {routeMetricToExit < 10 && (
                 <LabelUnit
                   label="Bandwidth price"
                   content={`${priceToExit} ¢/gb`}
                 />
               )}
-              {totalDebt < 0 ? (
+              {(totalDebt < 0 && (
                 <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
-              ) : (
-                <LabelUnit label="Total paid" content={`$${totalDebt}`} />
-              )}
+              )) ||
+                (totalDebt > 0 && (
+                  <LabelUnit label="Total paid" content={`$${totalDebt}`} />
+                ))}
             </div>
           </CardBody>
         </Card>
