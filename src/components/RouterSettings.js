@@ -100,7 +100,7 @@ class WifiSettingsForm extends Component {
                 textAlign: "center"
               }}
             >
-              {this.state.fields.device_name}
+              {this.props.wifiSettings.device.radio_type}
             </Label>
 
             <FormGroup id="form">
@@ -152,7 +152,9 @@ class WifiSettingsForm extends Component {
                 padding: 10
               }}
             >
-              <AdvancedSettingsModal network={this.state.fields.device_name} />
+              <AdvancedSettingsModal
+                network={this.props.wifiSettings.device.radio_type}
+              />
             </FormGroup>
           </Form>
         </CardBody>
