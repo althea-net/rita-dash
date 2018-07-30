@@ -20,8 +20,7 @@ function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-//const url = window.location.hostname + ":4877";
-const url = "http://192.168.10.1:4877";
+const url = process.env.REACT_APP_BACKEND_URL;
 
 export default class Backend {
   constructor(url) {

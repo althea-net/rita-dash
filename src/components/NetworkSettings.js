@@ -199,14 +199,44 @@ class NodeInfoForm extends Component {
 }
 
 function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
+  function registered() {
+    let r = {}
+    Object.keys(exits).map(k => { if (exits[k]['state'] === 'Registered') r[k] = exits[k] })
+    return r
+  }
+
+  function viable() {
+    let r = {} 
+    Object.keys(exits).map(k => { if (exits[k]['state'] !== 'Registered' && exits[k]['state'] !== 'Denied' ) r[k] = exits[k] })
+    return r
+  }
+
+  function nonviable() {
+    let r = {} 
+    Object.keys(exits).map(k => { if (exits[k]['state'] === 'Denied') r[k] = exits[k] })
+    return r
+  }
+
   return (
     <div>
       <NodeInfoForm reg_details={reg_details} />
-      <h2 style={{ marginTop: 20 }}>Select exit</h2>
+      <h2 style={{ marginTop: 20 }}>Registered Exits</h2>
       <ExitList
         disabled={!(reg_details.email && reg_details.email.match(email_regex))}
         current_exit={current_exit}
-        exits={exits}
+        exits={registered()}
+      />
+      <h2 style={{ marginTop: 20 }}>Viable Exits</h2>
+      <ExitList
+        disabled={!(reg_details.email && reg_details.email.match(email_regex))}
+        current_exit={current_exit}
+        exits={viable()}
+      />
+      <h2 style={{ marginTop: 20 }}>Non-Viable Exits</h2>
+      <ExitList
+        disabled={!(reg_details.email && reg_details.email.match(email_regex))}
+        current_exit={current_exit}
+        exits={nonviable()}
       />
     </div>
   );
@@ -215,21 +245,11 @@ function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
 function ExitList({ current_exit, exits, disabled }) {
   return (
     <ListGroup style={{ position: "relative" }}>
-      {exits[current_exit] && (
-        <ExitListItem
-          active={true}
-          description={exits[current_exit].message}
-          nickname={current_exit}
-          state={exits[current_exit].statex}
-          message={exits[current_exit].message}
-          key={"foo"}
-        />
-      )}
       {Object.entries(exits).map(([nickname, exit], i) => {
         return (
-          nickname !== current_exit &&
           exit.state !== "Disabled" && (
             <ExitListItem
+              active={nickname === current_exit}
               description={exit.message}
               nickname={nickname}
               state={exit.state}
@@ -264,26 +284,15 @@ function ExitList({ current_exit, exits, disabled }) {
 }
 
 function ExitListItem({ active, description, nickname, state, message }) {
+  let waiting = false
   return (
-    <ListGroupItem
-      color={
-        {
-          Registered: "success",
-          Denied: "danger"
-        }[state]
-      }
-      disabled={state === "Disabled"}
+    <ListGroupItem 
       active={active}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between"
-        }}
-      >
+      className="list-group-item-action list-group-item-light" 
+      disabled={state === "Disabled"}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ marginRight: 20, textAlign: "left" }}>
           <ListGroupItemHeading>{nickname}</ListGroupItemHeading>
-          <div>{description}</div>
           {active ? (
             <div>Currently connected</div>
           ) : (
@@ -303,21 +312,33 @@ function ExitListItem({ active, description, nickname, state, message }) {
             </div>
           )}
         </div>
-
-        {active ? (
-          <div />
-        ) : (
-          <div>
-            <Button
-              disabled={state === "Disabled" || state === "Pending"}
-              color="primary"
-              size="lg"
-              onClick={() => actions.requestExitConnection(nickname)}
-            >
-              {state === "Pending" ? "Connecting..." : "Connect"}
-            </Button>
+        <div>
+          <div style={{ marginBottom: "30px", minWidth: "80px" }}>
+            <abbr title="Tunnel Is Working"><i style={{ marginLeft: "5px" }} className="fa fa-lg fa-signal float-right"></i></abbr>
+            <abbr title="Has Route"><i style={{ marginLeft: "5px", color: '#007bff' }} className="fa fa-lg fa-route float-right"></i></abbr>
+            <abbr title="Is Reachable"><i style={{color: 'orange' }} className="fa fa-lg fa-bolt float-right"></i></abbr>
           </div>
-        )}
+          { active || state !== 'Registered' ||
+          <Button
+            disabled={state === "Disabled" || state === "Pending" || waiting}
+            color="primary"
+            size="lg"
+            onClick={() => { waiting = true; actions.requestExitConnection(nickname) }}
+          >
+            {state === "Pending" ? "Connecting..." : "Connect"}
+          </Button>
+          }
+          { state === 'Registered' || state === 'Denied'  || 
+          <Button
+            disabled={state === "Disabled" || state === "Pending"}
+            color="primary"
+            size="lg"
+            onClick={() => actions.registerExit(nickname)}
+          >
+            Register
+          </Button>
+          }
+        </div>
       </div>
     </ListGroupItem>
   );

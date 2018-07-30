@@ -58,7 +58,8 @@ const store = {
     page: "",
     wifiSettings: [],
     neighborData: [],
-    info: { balance: 0 }
+    info: { balance: 0 },
+    waiting: false
   },
   actions: {
     changePage: (_, page) => ({ page: page }),
@@ -68,9 +69,6 @@ const store = {
     saveWifiSetting: async ({ state, setState }, setting) => {
       setState({
         wifiSettings: state.wifiSettings.map(s => {
-          if (s.device_name === setting.device_name) {
-            return setting;
-          }
           return s;
         })
       });
@@ -82,9 +80,14 @@ const store = {
     getInfo: async () => {
       return { info: await backend.getInfo() };
     },
+    registerExit: async ({ setState, state }, nickname) => {
+      // TODO
+    },
     requestExitConnection: async ({ setState, state }, nickname) => {
+      setState({ waiting: true })
       await backend.requestExitConnection(nickname);
       await backend.getSettings();
+      setState({ waiting: false })
     },
     getSettings: async () => {
       const settings = await backend.getSettings();
