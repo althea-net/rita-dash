@@ -1,5 +1,4 @@
 // @ts-check
-import { actions } from "../store";
 import cckd from "camelcase-keys-deep";
 
 async function get(url) {
@@ -14,10 +13,6 @@ function post(url, json) {
     body: JSON.stringify(json),
     headers: new Headers({ "Content-Type": "application/json" })
   });
-}
-
-function timeout(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const url = process.env.REACT_APP_BACKEND_URL;
@@ -120,8 +115,6 @@ export default class Backend {
 
   async getNeighborData() {
     return get(url + "/neighbors");
-    // await timeout(100);
-    // return cckd(this.neighborData);
   }
 
   async getSettings() {

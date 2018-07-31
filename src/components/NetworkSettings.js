@@ -1,75 +1,19 @@
 import React, { Component } from "react";
 import {
-  Col,
   Card,
   CardBody,
   Button,
   Form,
   FormGroup,
   Label,
-  Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   ListGroup,
+  Input,
   ListGroupItemHeading,
-  ListGroupItem,
-  CardTitle
+  ListGroupItem
 } from "reactstrap";
 import { actions, connect } from "../store";
-import { relative } from "path";
 
-const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const exit_client = {
-  exit_client: {
-    current_exit: "exit_a",
-    exits: {
-      exit_a: {
-        general_details: {
-          description: "just a normal althea exit",
-          eth_address: "0x0101010101010101010101010101010101010101",
-          exit_price: 50,
-          netmask: 24,
-          server_internal_ip: "172.168.1.254",
-          wg_exit_port: 59999,
-          wg_public_key: "OBQNe50O7Gf+pJq4ZC1tTcjVYbx7o8jt4dxTFw7QnVw="
-        },
-        ip: "fd00::5",
-        message: "Registration OK",
-        our_details: { client_internal_ip: "172.168.1.101" },
-        registration_port: 4875,
-        state: "Registered"
-      }
-    },
-    reg_details: { email: "1234@gmail.com", zip_code: "1234" },
-    wg_listen_port: 59999
-  },
-  exit_tunnel_settings: { lan_nics: ["lo"] },
-  network: {
-    babel_port: 6872,
-    bounty_ip: "fd00::3",
-    bounty_port: 8888,
-    default_route: [],
-    manual_peers: [],
-    own_ip: "fd00::1",
-    peer_interfaces: ["veth-1-6"],
-    rita_dashboard_port: 4877,
-    rita_hello_port: 4876,
-    wg_private_key: "AKlrbUt13OPYp6+cy9lllQ47KCdM2+3+y7q3OqsTd2Q=",
-    wg_private_key_path:
-      "/home/ben/src/althea_rs/integration-tests/private-key-1",
-    wg_public_key: "QEKhgUJ7VnjPnEJ2eLYaLu4RMDhQmylN1dNHQHth+Uw=",
-    wg_start_port: 60000
-  },
-  payment: {
-    buffer_period: 3,
-    close_fraction: "100",
-    close_threshold: "-1000000000",
-    eth_address: "0x0101010101010101010101010101010101010101",
-    pay_threshold: "0"
-  }
-};
+const email_regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 class NetworkSettings extends Component {
   componentDidMount() {
@@ -200,21 +144,28 @@ class NodeInfoForm extends Component {
 
 function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
   function registered() {
-    let r = {}
-    Object.keys(exits).map(k => { if (exits[k]['state'] === 'Registered') r[k] = exits[k] })
-    return r
+    let r = {};
+    Object.keys(exits).forEach(k => {
+      if (exits[k]["state"] === "Registered") r[k] = exits[k];
+    });
+    return r;
   }
 
   function viable() {
-    let r = {} 
-    Object.keys(exits).map(k => { if (exits[k]['state'] !== 'Registered' && exits[k]['state'] !== 'Denied' ) r[k] = exits[k] })
-    return r
+    let r = {};
+    Object.keys(exits).forEach(k => {
+      if (exits[k]["state"] !== "Registered" && exits[k]["state"] !== "Denied")
+        r[k] = exits[k];
+    });
+    return r;
   }
 
   function nonviable() {
-    let r = {} 
-    Object.keys(exits).map(k => { if (exits[k]['state'] === 'Denied') r[k] = exits[k] })
-    return r
+    let r = {};
+    Object.keys(exits).forEach(k => {
+      if (exits[k]["state"] === "Denied") r[k] = exits[k];
+    });
+    return r;
   }
 
   return (
@@ -284,12 +235,12 @@ function ExitList({ current_exit, exits, disabled }) {
 }
 
 function ExitListItem({ active, description, nickname, state, message }) {
-  let waiting = false
   return (
-    <ListGroupItem 
+    <ListGroupItem
       active={active}
-      className="list-group-item-action list-group-item-light" 
-      disabled={state === "Disabled"}>
+      className="list-group-item-action list-group-item-light"
+      disabled={state === "Disabled"}
+    >
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ marginRight: 20, textAlign: "left" }}>
           <ListGroupItemHeading>{nickname}</ListGroupItemHeading>
@@ -314,30 +265,51 @@ function ExitListItem({ active, description, nickname, state, message }) {
         </div>
         <div>
           <div style={{ marginBottom: "30px", minWidth: "80px" }}>
-            <abbr title="Tunnel Is Working"><i style={{ marginLeft: "5px" }} className="fa fa-lg fa-signal float-right"></i></abbr>
-            <abbr title="Has Route"><i style={{ marginLeft: "5px", color: '#007bff' }} className="fa fa-lg fa-route float-right"></i></abbr>
-            <abbr title="Is Reachable"><i style={{color: 'orange' }} className="fa fa-lg fa-bolt float-right"></i></abbr>
+            <abbr title="Tunnel Is Working">
+              <i
+                style={{ marginLeft: "5px" }}
+                className="fa fa-lg fa-signal float-right"
+              />
+            </abbr>
+            <abbr title="Has Route">
+              <i
+                style={{ marginLeft: "5px", color: "#007bff" }}
+                className="fa fa-lg fa-route float-right"
+              />
+            </abbr>
+            <abbr title="Is Reachable">
+              <i
+                style={{ color: "orange" }}
+                className="fa fa-lg fa-bolt float-right"
+              />
+            </abbr>
           </div>
-          { active || state !== 'Registered' ||
-          <Button
-            disabled={state === "Disabled" || state === "Pending" || waiting}
-            color="primary"
-            size="lg"
-            onClick={() => { waiting = true; actions.requestExitConnection(nickname) }}
-          >
-            {state === "Pending" ? "Connecting..." : "Connect"}
-          </Button>
-          }
-          { state === 'Registered' || state === 'Denied'  || 
-          <Button
-            disabled={state === "Disabled" || state === "Pending"}
-            color="primary"
-            size="lg"
-            onClick={() => actions.registerExit(nickname)}
-          >
-            Register
-          </Button>
-          }
+          {active ||
+            state !== "Registered" || (
+              <Button
+                disabled={state === "Disabled" || state === "Pending"}
+                color="primary"
+                size="lg"
+                onClick={() => {
+                  state = "Pending";
+                  actions.requestExitConnection(nickname);
+                }}
+              >
+                {state === "Pending" ? "Connecting..." : "Connect"}
+                {state === "Pending" && <i className="fa fa-spinner fa-spin" />}
+              </Button>
+            )}
+          {state === "Registered" ||
+            state === "Denied" || (
+              <Button
+                disabled={state === "Disabled" || state === "Pending"}
+                color="primary"
+                size="lg"
+                onClick={() => actions.registerExit(nickname)}
+              >
+                Register
+              </Button>
+            )}
         </div>
       </div>
     </ListGroupItem>
