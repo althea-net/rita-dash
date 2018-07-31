@@ -51,97 +51,6 @@ class NetworkSettings extends Component {
   }
 }
 
-class NodeInfoForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fields: {},
-      valid: {}
-    };
-    this.validators = {
-      email: value => !!value.match(email_regex)
-    };
-  }
-
-  componentDidMount = () => {
-    this.setState({ fields: this.props.reg_details });
-  };
-
-  onFieldChange = e => {
-    const { name, value } = e.target;
-
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        [name]: value
-      },
-      valid: {
-        ...this.state.valid,
-        [name]: this.validators[name](value)
-      }
-    });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    actions.saveRegDetails(this.state.fields);
-  };
-
-  isFieldValid = name =>
-    this.state.fields[name] ? this.state.valid[name] : undefined;
-
-  render() {
-    return (
-      <Card>
-        <CardBody>
-          <Form onSubmit={this.onSubmit}>
-            <Label
-              for="form"
-              style={{
-                marginBottom: "20px",
-                fontSize: "1.5em",
-                textAlign: "center"
-              }}
-            >
-              Node details
-            </Label>
-
-            <FormGroup id="form">
-              <Label for="email">Email</Label>
-              <Input
-                type="email"
-                name="email"
-                valid={this.isFieldValid("email")}
-                onChange={this.onFieldChange}
-                value={this.state.fields.email || ""}
-              />
-            </FormGroup>
-
-            <FormGroup
-              style={{
-                display: "flex",
-                margin: -20,
-                marginTop: 0,
-                padding: 10
-              }}
-            >
-              <Button
-                color="primary"
-                disabled={!Object.values(this.state.valid).some(t => t)}
-                style={{
-                  margin: 10
-                }}
-              >
-                Save
-              </Button>
-            </FormGroup>
-          </Form>
-        </CardBody>
-      </Card>
-    );
-  }
-}
-
 function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
   function registered() {
     let r = {};
@@ -170,7 +79,6 @@ function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
 
   return (
     <div>
-      <NodeInfoForm reg_details={reg_details} />
       <h2 style={{ marginTop: 20 }}>Registered Exits</h2>
       <ExitList
         disabled={!(reg_details.email && reg_details.email.match(email_regex))}
@@ -183,7 +91,7 @@ function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
         current_exit={current_exit}
         exits={viable()}
       />
-      <h2 style={{ marginTop: 20 }}>Non-Viable Exits</h2>
+      <h2 style={{ marginTop: 20 }}>Nonviable Exits</h2>
       <ExitList
         disabled={!(reg_details.email && reg_details.email.match(email_regex))}
         current_exit={current_exit}
@@ -235,6 +143,13 @@ function ExitList({ current_exit, exits, disabled }) {
 }
 
 function ExitListItem({ active, description, nickname, state, message }) {
+  function format(m) {
+    if (m.includes("Json")) {
+      return m.match(/.*"(.*)".*/)[1];
+    }
+    return m;
+  }
+
   return (
     <ListGroupItem
       active={active}
@@ -255,7 +170,7 @@ function ExitListItem({ active, description, nickname, state, message }) {
                     (message ? " with message: " + message : ""),
                   Denied:
                     "Connection previously denied" +
-                    (message ? " with message: " + message : ""),
+                    (message ? " with message: " + format(message) : ""),
                   New: "Never connected",
                   Pending: "Connection pending"
                 }[state]
@@ -273,13 +188,13 @@ function ExitListItem({ active, description, nickname, state, message }) {
             </abbr>
             <abbr title="Has Route">
               <i
-                style={{ marginLeft: "5px", color: "#007bff" }}
+                style={{ marginLeft: "5px", color: "#80ccff" }}
                 className="fa fa-lg fa-route float-right"
               />
             </abbr>
             <abbr title="Is Reachable">
               <i
-                style={{ color: "orange" }}
+                style={{ color: "#ffc266" }}
                 className="fa fa-lg fa-sitemap float-right"
               />
             </abbr>
