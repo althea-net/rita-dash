@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import {
+  Card,
+  CardBody,
   Button,
+  Form,
+  FormGroup,
+  Label,
   ListGroup,
+  Input,
   ListGroupItemHeading,
   ListGroupItem
 } from "reactstrap";
@@ -45,6 +51,86 @@ class NetworkSettings extends Component {
   }
 }
 
+class NodeInfoForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fields: {},
+      valid: {}
+    };
+    this.validators = {
+      email: value => !!value.match(email_regex)
+    };
+  }
+
+  componentDidMount = () => {
+    this.setState({ fields: this.props.reg_details });
+  };
+
+  onFieldChange = e => {
+    const { name, value } = e.target;
+
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        [name]: value
+      },
+      valid: {
+        ...this.state.valid,
+        [name]: this.validators[name](value)
+      }
+    });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    actions.saveRegDetails(this.state.fields);
+  };
+
+  isFieldValid = name =>
+    this.state.fields[name] ? this.state.valid[name] : undefined;
+
+  render() {
+    return (
+      <Card>
+        <CardBody>
+          <Form onSubmit={this.onSubmit}>
+            <FormGroup id="form">
+              <Label for="email">Email</Label>
+              <Input
+                type="email"
+                name="email"
+                valid={this.isFieldValid("email")}
+                onChange={this.onFieldChange}
+                value={this.state.fields.email || ""}
+              />
+            </FormGroup>
+
+            <FormGroup
+              style={{
+                display: "flex",
+                margin: -20,
+                marginTop: 0,
+                padding: 10
+              }}
+            >
+              <Button
+                color="primary"
+                disabled={!Object.values(this.state.valid).some(t => t)}
+                style={{
+                  margin: 10
+                }}
+              >
+                Save
+              </Button>
+            </FormGroup>
+          </Form>
+        </CardBody>
+      </Card>
+    );
+  }
+}
+
 function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
   let registered = {};
   let viable = {};
@@ -58,6 +144,7 @@ function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
 
   return (
     <div>
+      <NodeInfoForm reg_details={reg_details} />
       <h2 style={{ marginTop: 20 }}>Registered Exits</h2>
       <ExitList
         disabled={!(reg_details.email && reg_details.email.match(email_regex))}
