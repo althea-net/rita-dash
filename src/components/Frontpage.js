@@ -1,5 +1,4 @@
 import React from "react";
-import payments from "../images/payments.svg";
 import neighbors from "../images/neighbors.svg";
 import network from "../images/network.svg";
 import router from "../images/router.svg";
@@ -13,9 +12,6 @@ export default () => (
       flexWrap: "wrap"
     }}
   >
-    <Icon image={payments} link="#payments">
-      Payments
-    </Icon>
     <Icon image={neighbors} link="#neighbors">
       Neighbors
     </Icon>

@@ -267,7 +267,7 @@ function ExitListItem({ active, description, nickname, state, message }) {
           <div style={{ marginBottom: "30px", minWidth: "80px" }}>
             <abbr title="Tunnel Is Working">
               <i
-                style={{ marginLeft: "5px" }}
+                style={{ marginLeft: "5px", color: "#80ff80" }}
                 className="fa fa-lg fa-signal float-right"
               />
             </abbr>

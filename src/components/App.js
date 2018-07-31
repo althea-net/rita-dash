@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Frontpage from "./Frontpage.js";
-import Payments from "./Payments.js";
 import Neighbors from "./Neighbors.js";
 import RouterSettings from "./RouterSettings.js";
 import NetworkSettings from "./NetworkSettings.js";
@@ -21,9 +20,6 @@ class App extends Component {
         <Navbar color="faded" light expand="md">
           <NavbarBrand href="#"> Althea</NavbarBrand>
           <Nav>
-            <NavItem>
-              <NavLink href="#payments">Payments</NavLink>
-            </NavItem>
             <NavItem>
               <NavLink href="#neighbors">Neighbors</NavLink>
             </NavItem>
@@ -63,8 +59,6 @@ const Page = connect(["page"])(({ state }) => {
       return <RouterSettings />;
     case "network-settings":
       return <NetworkSettings />;
-    case "payments":
-      return <Payments />;
     case "neighbors":
       return <Neighbors />;
     default:
