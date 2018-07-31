@@ -5,6 +5,16 @@ import RouterSettings from "./RouterSettings.js";
 import NetworkSettings from "./NetworkSettings.js";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import { actions, connect } from "../store";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faRoute,
+  faSignal,
+  faSitemap
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faRoute);
+library.add(faSignal);
+library.add(faSitemap);
 
 class App extends Component {
   componentDidMount() {

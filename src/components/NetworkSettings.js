@@ -12,6 +12,7 @@ import {
   ListGroupItem
 } from "reactstrap";
 import { actions, connect } from "../store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const email_regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -247,21 +248,27 @@ function ExitListItem({ active, description, nickname, state, message }) {
         <div>
           <div style={{ marginBottom: "30px", minWidth: "100px" }}>
             <abbr title="Tunnel Is Working">
-              <i
-                style={{ marginLeft: "5px", color: "#80ff80" }}
-                className="fa fa-lg fa-signal float-right"
+              <FontAwesomeIcon
+                icon="signal"
+                pull="right"
+                color="#80ff80"
+                size="lg"
               />
             </abbr>
             <abbr title="Has Route">
-              <i
-                style={{ marginLeft: "5px", color: "#80ccff" }}
-                className="fa fa-lg fa-route float-right"
+              <FontAwesomeIcon
+                icon="route"
+                pull="right"
+                color="#80ccff"
+                size="lg"
               />
             </abbr>
             <abbr title="Is Reachable">
-              <i
-                style={{ color: "#ffc266" }}
-                className="fa fa-lg fa-sitemap float-right"
+              <FontAwesomeIcon
+                icon="sitemap"
+                pull="right"
+                color="#ffc266"
+                size="lg"
               />
             </abbr>
           </div>
