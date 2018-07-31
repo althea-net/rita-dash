@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import {
-  Card,
-  CardBody,
   Button,
-  Form,
-  FormGroup,
-  Label,
   ListGroup,
-  Input,
   ListGroupItemHeading,
   ListGroupItem
 } from "reactstrap";
@@ -52,30 +46,15 @@ class NetworkSettings extends Component {
 }
 
 function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
-  function registered() {
-    let r = {};
-    Object.keys(exits).forEach(k => {
-      if (exits[k]["state"] === "Registered") r[k] = exits[k];
-    });
-    return r;
-  }
+  let registered = {};
+  let viable = {};
+  let nonviable = {};
 
-  function viable() {
-    let r = {};
-    Object.keys(exits).forEach(k => {
-      if (exits[k]["state"] !== "Registered" && exits[k]["state"] !== "Denied")
-        r[k] = exits[k];
-    });
-    return r;
-  }
-
-  function nonviable() {
-    let r = {};
-    Object.keys(exits).forEach(k => {
-      if (exits[k]["state"] === "Denied") r[k] = exits[k];
-    });
-    return r;
-  }
+  Object.keys(exits).forEach(k => {
+    if (exits[k]["state"] === "Registered") registered[k] = exits[k];
+    else if (exits[k]["state"] !== "Denied") viable[k] = exits[k];
+    else nonviable[k] = exits[k];
+  });
 
   return (
     <div>
@@ -83,19 +62,19 @@ function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
       <ExitList
         disabled={!(reg_details.email && reg_details.email.match(email_regex))}
         current_exit={current_exit}
-        exits={registered()}
+        exits={registered}
       />
       <h2 style={{ marginTop: 20 }}>Viable Exits</h2>
       <ExitList
         disabled={!(reg_details.email && reg_details.email.match(email_regex))}
         current_exit={current_exit}
-        exits={viable()}
+        exits={viable}
       />
       <h2 style={{ marginTop: 20 }}>Nonviable Exits</h2>
       <ExitList
         disabled={!(reg_details.email && reg_details.email.match(email_regex))}
         current_exit={current_exit}
-        exits={nonviable()}
+        exits={nonviable}
       />
     </div>
   );
