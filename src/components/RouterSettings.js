@@ -50,7 +50,10 @@ class WifiSettingsForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fields: {},
+      fields: {
+        key: "",
+        ssid: ""
+      },
       valid: {}
     };
     this.validators = {

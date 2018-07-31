@@ -130,13 +130,10 @@ export default class Backend {
   }
 
   async requestExitConnection(nickname) {
-    const res = await post(url + "/settings", {
+    await post(url + "/settings", {
       exit_client: {
         current_exit: nickname
       }
     });
-    console.log(await res.text());
-    // const json = await res.json();
-    // return json;
   }
 }
