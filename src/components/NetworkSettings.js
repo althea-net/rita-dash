@@ -280,7 +280,7 @@ function ExitListItem({ active, description, nickname, state, message }) {
             <abbr title="Is Reachable">
               <i
                 style={{ color: "orange" }}
-                className="fa fa-lg fa-bolt float-right"
+                className="fa fa-lg fa-sitemap float-right"
               />
             </abbr>
           </div>
