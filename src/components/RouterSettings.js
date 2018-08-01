@@ -155,7 +155,7 @@ class WifiSettingsForm extends Component {
               }}
             >
               <AdvancedSettingsModal
-                network={this.props.wifiSettings.device.radio_type}
+                radio={this.props.wifiSettings.device.radio_type}
               />
             </FormGroup>
           </Form>
@@ -169,16 +169,26 @@ class AdvancedSettingsModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      mesh: false
     };
 
     this.toggle = this.toggle.bind(this);
+    this.onToggleWifiMesh = this.onToggleWifiMesh.bind(this);
   }
 
   toggle() {
     this.setState({
       modal: !this.state.modal
     });
+  }
+
+  onToggleWifiMesh() {
+    this.setState({
+      mesh: !this.state.mesh
+    });
+
+    actions.toggleWifiMesh(this.props.radio);
   }
 
   render() {
@@ -200,15 +210,21 @@ class AdvancedSettingsModal extends React.Component {
           className={this.props.className}
         >
           <ModalHeader toggle={this.toggle}>
-            {this.props.network}: WiFi Settings
+            {this.props.radio}: WiFi Settings
           </ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
-                <h5>Connect to a Mesh Network</h5>
+                <h5>Connect to a Mesh radio</h5>
                 <FormGroup check>
                   <Label check>
-                    <Input type="checkbox" /> Check to Enable Connection
+                    <Input
+                      type="checkbox"
+                      onChange={this.onToggleWifiMesh}
+                      value={this.state.mesh}
+                      checked={this.state.mesh}
+                    />{" "}
+                    Check to Enable Connection
                   </Label>
                 </FormGroup>
               </FormGroup>
@@ -220,8 +236,9 @@ class AdvancedSettingsModal extends React.Component {
               style={{
                 margin: 10
               }}
+              onClick={this.toggle}
             >
-              Save
+              Close
             </Button>
           </ModalFooter>
         </Modal>

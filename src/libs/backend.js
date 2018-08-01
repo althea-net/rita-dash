@@ -75,13 +75,7 @@ export default class Backend {
         encryption: "psk2",
         key: "secret passphrase"
       },
-      {
-        device_name: "5GHz Bandwidth",
-        mesh: false,
-        ssid: "MyWifiAP 5ghz",
-        encryption: "psk2",
-        key: "secret passphrase"
-      }
+      {}
     ];
     this.neighborData = [
       {
@@ -135,5 +129,9 @@ export default class Backend {
         current_exit: nickname
       }
     });
+  }
+
+  async toggleWifiMesh(radio) {
+    // await fetch(url + `/wifi-settings/${radio}/mesh`);
   }
 }

@@ -39,6 +39,9 @@ const store = {
     getSettings: async () => {
       const settings = await backend.getSettings();
       return { settings };
+    },
+    toggleWifiMesh: async ({ setState, state }, radio) => {
+      await backend.toggleWifiMesh(radio);
     }
   }
 };
