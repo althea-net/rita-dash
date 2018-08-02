@@ -15,7 +15,8 @@ function post(url, json) {
   });
 }
 
-const url = process.env.REACT_APP_BACKEND_URL;
+const url =
+  process.env.REACT_APP_BACKEND_URL || window.location.hostname + ":4877";
 
 export default class Backend {
   constructor(url) {
