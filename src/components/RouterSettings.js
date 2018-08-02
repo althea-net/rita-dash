@@ -215,7 +215,7 @@ class AdvancedSettingsModal extends React.Component {
           <ModalBody>
             <Form>
               <FormGroup>
-                <h5>Connect to a Mesh radio</h5>
+                <h5>Connect to a Mesh Network</h5>
                 <FormGroup check>
                   <Label check>
                     <Input
