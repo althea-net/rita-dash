@@ -5,6 +5,7 @@ import RouterSettings from "./RouterSettings.js";
 import NetworkSettings from "./NetworkSettings.js";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import { actions, connect } from "../store";
+import logo from "../images/althea.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faRoute,
@@ -17,28 +18,49 @@ library.add(faSignal);
 library.add(faSitemap);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      current_page: window.location.hash.substr(1),
+      pages: {
+        neighbors: "Neighbors",
+        router_settings: "Router Settings",
+        network_settings: "Network Settings"
+      }
+    };
+    this.onHashChange = this.onHashChange.bind(this);
+  }
+
   componentDidMount() {
     this.onHashChange();
     window.addEventListener("hashchange", this.onHashChange, false);
   }
 
-  onHashChange = () => actions.changePage(window.location.hash.substr(1));
+  onHashChange() {
+    let page = window.location.hash.substr(1);
+    this.setState({ current_page: page });
+    actions.changePage(page);
+  }
 
   render() {
     return (
       <div className="App">
-        <Navbar color="faded" light expand="md">
-          <NavbarBrand href="#"> Althea</NavbarBrand>
-          <Nav>
-            <NavItem>
-              <NavLink href="#neighbors">Neighbors</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#router-settings">Router Settings</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="#network-settings">Network Settings</NavLink>
-            </NavItem>
+        <Navbar color="primary" dark expand="md">
+          <NavbarBrand href="#">
+            <img src={logo} width="60px" alt="Althea Logo" />
+            Althea
+          </NavbarBrand>
+          <Nav className="bg-light">
+            {Object.keys(this.state.pages).map(p => {
+              let page = p.replace("_", "-");
+              let current_page = this.state.current_page;
+              let title = this.state.pages[p];
+              return (
+                <NavItem className={page === current_page ? "active" : null}>
+                  <NavLink href={"#" + page}>{title}</NavLink>
+                </NavItem>
+              );
+            })}
           </Nav>
         </Navbar>
         <div
