@@ -3,6 +3,7 @@ import Frontpage from "./Frontpage.js";
 import Neighbors from "./Neighbors.js";
 import RouterSettings from "./RouterSettings.js";
 import NetworkSettings from "./NetworkSettings.js";
+import Payments from "./Payments.js";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import { actions, connect } from "../store";
 import logo from "../images/althea.png";
@@ -25,7 +26,8 @@ class App extends Component {
       pages: {
         neighbors: "Neighbors",
         router_settings: "Router Settings",
-        network_settings: "Network Settings"
+        network_settings: "Network Settings",
+        payments: "Payments"
       }
     };
     this.onHashChange = this.onHashChange.bind(this);
@@ -93,6 +95,8 @@ const Page = connect(["page"])(({ state }) => {
       return <NetworkSettings />;
     case "neighbors":
       return <Neighbors />;
+    case "payments":
+      return <Payments />;
     default:
       return <Frontpage />;
   }

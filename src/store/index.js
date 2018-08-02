@@ -36,9 +36,8 @@ const store = {
       await backend.requestExitConnection(nickname);
       setState({ settings: await backend.getSettings() });
     },
-    getSettings: async () => {
-      const settings = await backend.getSettings();
-      return { settings };
+    getSettings: async ({ setState, state }) => {
+      setState({ settings: await backend.getSettings() });
     },
     toggleWifiMesh: async ({ setState, state }, radio) => {
       await backend.toggleWifiMesh(radio);

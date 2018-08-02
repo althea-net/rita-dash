@@ -19,13 +19,14 @@ import { actions, connect } from "../store";
 import QRious from "qrious";
 
 class Payments extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     actions.getInfo();
     actions.getSettings();
   }
+
   render() {
     const { info, settings } = this.props.state;
+    if (!(info && settings)) return null;
     return (
       <div>
         <h1>Payments</h1>
