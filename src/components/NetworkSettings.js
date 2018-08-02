@@ -283,8 +283,7 @@ function ExitListItem({ active, description, nickname, state, message }) {
                   actions.requestExitConnection(nickname);
                 }}
               >
-                {state === "Pending" ? "Connecting..." : "Connect"}
-                {state === "Pending" && <i className="fa fa-spinner fa-spin" />}
+                {state === "Pending" ? "Connecting..." : "Select"}
               </Button>
             )}
           {state === "Registered" ||
