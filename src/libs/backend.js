@@ -142,6 +142,10 @@ export default class Backend {
     });
   }
 
+  async selectExit(nickname) {
+    await get(url + `/exits/${nickname}/select`);
+  }
+
   async toggleWifiMesh(radio) {
     // await fetch(url + `/wifi-settings/${radio}/mesh`);
   }

@@ -168,10 +168,10 @@ function ExitList({ exits }) {
           exit.state !== "Disabled" && (
             <ExitListItem
               active={exit.is_selected}
-              description={exit.message}
+              description={exit.exit_settings.description}
+              message={exit.exit_settings.message}
               nickname={exit.nickname}
-              state={exit.state}
-              message={exit.message}
+              state={exit.exit_settings.state}
               key={i}
             />
           )
@@ -181,7 +181,8 @@ function ExitList({ exits }) {
   );
 }
 
-function ExitListItem({ active, description, nickname, state, message }) {
+function ExitListItem({ active, description, message, nickname, state }) {
+  if (!message) message = "";
   function format(m) {
     if (m.includes("Json")) {
       return m.match(/.*"(.*)".*/)[1];
@@ -221,14 +222,10 @@ function ExitListItem({ active, description, nickname, state, message }) {
             <div>
               {
                 {
-                  Registered:
-                    "Connection previously accepted" +
-                    (message ? " with message: " + message : ""),
-                  Denied:
-                    "Connection previously denied" +
-                    (message ? " with message: " + format(message) : ""),
-                  New: "Never connected",
-                  Pending: "Connection pending"
+                  Registered: "Registered",
+                  Denied: "Connection Denied: " + format(message),
+                  New: "Not Registered",
+                  Pending: "Waiting for Verification Code"
                 }[state]
               }
             </div>
