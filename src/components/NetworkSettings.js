@@ -4,6 +4,7 @@ import {
   CardBody,
   Button,
   Form,
+  FormFeedback,
   FormGroup,
   Label,
   ListGroup,
@@ -13,8 +14,7 @@ import {
 } from "reactstrap";
 import { actions, connect } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-const email_regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import regex from "./EmailRegex";
 
 class NetworkSettings extends Component {
   componentDidMount() {
@@ -27,6 +27,13 @@ class NetworkSettings extends Component {
 
   render() {
     const exits = this.props.state.exits;
+    const registered = [];
+    const unregistered = [];
+
+    Object.keys(exits).forEach(k => {
+      if (exits[k]["state"] === "Registered") registered[k] = exits[k];
+      else unregistered[k] = exits[k];
+    });
 
     return (
       <div>
@@ -43,11 +50,8 @@ class NetworkSettings extends Component {
           runs some exit nodes, but in the future you will be able to select
           exits from other companies if you prefer.
         </p>
-        {exits ? (
-          <ExitList exits={exits} />
-        ) : (
-          <h5>Exit node selection screen loading...</h5>
-        )}
+        {registered.length > 0 && <ExitList exits={registered} />}
+        {unregistered.length > 0 && <ExitList exits={unregistered} />}
       </div>
     );
   }
@@ -57,26 +61,46 @@ class NodeInfoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fields: {},
+      blurred: false,
+      fields: {
+        email: ""
+      },
       valid: {}
     };
     this.validators = {
-      email: value => !!value.match(email_regex)
+      email: value => !!value.match(regex)
     };
   }
 
   componentDidMount = () => {
-    this.setState({ fields: this.props.email });
+    this.setState({
+      fields: {
+        email: this.props.email
+      }
+    });
   };
 
   onFieldChange = e => {
     const { name, value } = e.target;
 
     this.setState({
+      blurred: false,
       fields: {
         ...this.state.fields,
         [name]: value
       },
+      valid: {
+        ...this.state.valid,
+        [name]: true
+      }
+    });
+  };
+
+  onBlur = e => {
+    const { name, value } = e.target;
+
+    this.setState({
+      blurred: true,
       valid: {
         ...this.state.valid,
         [name]: this.validators[name](value)
@@ -86,7 +110,7 @@ class NodeInfoForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    actions.saveRegDetails(this.state.fields);
+    actions.registerExit(this.state.fields.email);
   };
 
   isFieldValid = name =>
@@ -102,10 +126,13 @@ class NodeInfoForm extends Component {
               <Input
                 type="email"
                 name="email"
-                valid={this.isFieldValid("email")}
+                valid={this.isFieldValid("email") && this.state.blurred}
+                invalid={this.state.fields.email && !this.isFieldValid("email")}
                 onChange={this.onFieldChange}
+                onBlur={this.onBlur}
                 value={this.state.fields.email || ""}
               />
+              <FormFeedback invalid>A valid email is required</FormFeedback>
             </FormGroup>
 
             <FormGroup
@@ -117,13 +144,13 @@ class NodeInfoForm extends Component {
               }}
             >
               <Button
-                color="primary"
-                disabled={!Object.values(this.state.valid).some(t => t)}
+                color={this.isFieldValid("email") ? "primary" : "secondary"}
+                disabled={!this.isFieldValid("email")}
                 style={{
                   margin: 10
                 }}
               >
-                Save
+                Register
               </Button>
             </FormGroup>
           </Form>
@@ -223,16 +250,7 @@ function ExitListItem({ active, description, nickname, state, message }) {
               </Button>
             )}
           {state === "Registered" ||
-            state === "Denied" || (
-              <Button
-                disabled={state === "Disabled" || state === "Pending"}
-                color="primary"
-                size="lg"
-                onClick={() => actions.registerExit(nickname)}
-              >
-                Register
-              </Button>
-            )}
+            state === "Denied" || <NodeInfoForm email="" />}
         </div>
       </div>
     </ListGroupItem>
