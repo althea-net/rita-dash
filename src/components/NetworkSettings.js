@@ -134,36 +134,14 @@ class NodeInfoForm extends Component {
 }
 
 function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
-  let registered = {};
-  let viable = {};
-  let nonviable = {};
-
-  Object.keys(exits).forEach(k => {
-    if (exits[k]["state"] === "Registered") registered[k] = exits[k];
-    else if (exits[k]["state"] !== "Denied") viable[k] = exits[k];
-    else nonviable[k] = exits[k];
-  });
-
   return (
     <div>
       <NodeInfoForm reg_details={reg_details} />
-      <h2 style={{ marginTop: 20 }}>Registered Exits</h2>
+      <h2 style={{ marginTop: 20 }}>Exits</h2>
       <ExitList
         disabled={!(reg_details.email && reg_details.email.match(email_regex))}
         current_exit={current_exit}
-        exits={registered}
-      />
-      <h2 style={{ marginTop: 20 }}>Viable Exits</h2>
-      <ExitList
-        disabled={!(reg_details.email && reg_details.email.match(email_regex))}
-        current_exit={current_exit}
-        exits={viable}
-      />
-      <h2 style={{ marginTop: 20 }}>Nonviable Exits</h2>
-      <ExitList
-        disabled={!(reg_details.email && reg_details.email.match(email_regex))}
-        current_exit={current_exit}
-        exits={nonviable}
+        exits={exits}
       />
     </div>
   );
@@ -218,6 +196,8 @@ function ExitListItem({ active, description, nickname, state, message }) {
     return m;
   }
 
+  let connected = true;
+
   return (
     <ListGroupItem
       active={active}
@@ -226,7 +206,22 @@ function ExitListItem({ active, description, nickname, state, message }) {
     >
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ marginRight: 20, textAlign: "left" }}>
-          <ListGroupItemHeading>{nickname}</ListGroupItemHeading>
+          <ListGroupItemHeading>
+            <abbr
+              title="Tunnel Connection Is Working"
+              style={{ marginRight: "10px" }}
+            >
+              {connected ? (
+                <FontAwesomeIcon icon="signal" color="#80ff80" />
+              ) : (
+                <span className="fa-layers fa-fw">
+                  <FontAwesomeIcon icon="signal" color="black" />
+                  <FontAwesomeIcon icon="ban" color="red" size="lg" />
+                </span>
+              )}
+            </abbr>
+            {nickname}
+          </ListGroupItemHeading>
           {active ? (
             <div>Currently connected</div>
           ) : (
@@ -247,7 +242,6 @@ function ExitListItem({ active, description, nickname, state, message }) {
           )}
         </div>
         <div>
-          <Icons />
           {active ||
             state !== "Registered" || (
               <Button
@@ -276,46 +270,6 @@ function ExitListItem({ active, description, nickname, state, message }) {
         </div>
       </div>
     </ListGroupItem>
-  );
-}
-
-function Icons() {
-  let icons = [
-    {
-      field: "is_tunnel_working",
-      icon: "signal",
-      desc: "Tunnel Is Working",
-      color: "#80ff80"
-    },
-    {
-      field: "have_route",
-      icon: "route",
-      desc: "Has Route",
-      color: "#80ccff"
-    },
-    {
-      field: "is_reachable",
-      icon: "sitemap",
-      desc: "Is Reachable",
-      color: "#ffc266"
-    }
-  ];
-
-  return (
-    <div style={{ marginBottom: "30px", minWidth: "100px" }}>
-      {icons.map(i => {
-        return (
-          <abbr title={i.desc}>
-            <FontAwesomeIcon
-              icon={i.icon}
-              pull="right"
-              color={i.color}
-              size="lg"
-            />
-          </abbr>
-        );
-      })}
-    </div>
   );
 }
 

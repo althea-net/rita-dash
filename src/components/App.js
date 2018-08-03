@@ -9,11 +9,13 @@ import { actions, connect } from "../store";
 import logo from "../images/althea.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faBan,
   faRoute,
   faSignal,
   faSitemap
 } from "@fortawesome/free-solid-svg-icons";
 
+library.add(faBan);
 library.add(faRoute);
 library.add(faSignal);
 library.add(faSitemap);
