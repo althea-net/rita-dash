@@ -164,10 +164,15 @@ function ExitList({ exits }) {
   return (
     <ListGroup style={{ position: "relative" }}>
       {exits.map((exit, i) => {
+        let connected =
+          exit.exit_settings.state === "Registered"
+            ? exit.is_tunnel_working
+            : exit.is_reachable && exit.have_route;
         return (
           exit.state !== "Disabled" && (
             <ExitListItem
               active={exit.is_selected}
+              connected={connected}
               description={exit.exit_settings.description}
               message={exit.exit_settings.message}
               nickname={exit.nickname}
@@ -181,7 +186,14 @@ function ExitList({ exits }) {
   );
 }
 
-function ExitListItem({ active, description, message, nickname, state }) {
+function ExitListItem({
+  active,
+  connected,
+  description,
+  message,
+  nickname,
+  state
+}) {
   if (!message) message = "";
   function format(m) {
     if (m.includes("Json")) {
@@ -189,8 +201,6 @@ function ExitListItem({ active, description, message, nickname, state }) {
     }
     return m;
   }
-
-  let connected = true;
 
   return (
     <ListGroupItem
@@ -202,7 +212,7 @@ function ExitListItem({ active, description, message, nickname, state }) {
         <div style={{ marginRight: 20, textAlign: "left" }}>
           <ListGroupItemHeading>
             <abbr
-              title="Tunnel Connection Is Working"
+              title={connected ? "Connection OK!" : "Connection Problem"}
               style={{ marginRight: "10px" }}
             >
               {connected ? (
@@ -220,6 +230,7 @@ function ExitListItem({ active, description, message, nickname, state }) {
             <div>Currently connected</div>
           ) : (
             <div>
+              Status:
               {
                 {
                   Registered: "Registered",
@@ -239,7 +250,6 @@ function ExitListItem({ active, description, message, nickname, state }) {
                 color="primary"
                 size="lg"
                 onClick={() => {
-                  state = "Pending";
                   actions.requestExitConnection(nickname);
                 }}
               >
