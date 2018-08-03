@@ -110,7 +110,7 @@ class NodeInfoForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    actions.registerExit(this.state.fields.email);
+    actions.registerExit(this.props.nickname, this.state.fields.email);
   };
 
   isFieldValid = name =>
@@ -267,7 +267,7 @@ function ExitListItem({
               </Button>
             )}
           {state === "Registered" ||
-            state === "Denied" || <NodeInfoForm email="" />}
+            state === "Denied" || <NodeInfoForm nickname={nickname} email="" />}
         </div>
       </div>
     </ListGroupItem>

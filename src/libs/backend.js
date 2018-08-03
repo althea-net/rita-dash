@@ -130,8 +130,18 @@ export default class Backend {
     return json;
   }
 
-  async registerExit(nickname) {
-    // await post(url + `/exits/${nickname}/register`)
+  async registerExit(nickname, email) {
+    await post(url + `/settings`, {
+      exit_client: {
+        reg_details: {
+          email: email
+        }
+      }
+    });
+
+    await post(url + `/settings`, {
+      exit_client: { exits: { [nickname]: { auto_register: true } } }
+    });
   }
 
   async resetExit(nickname) {

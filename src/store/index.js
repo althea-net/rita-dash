@@ -28,8 +28,8 @@ const store = {
     getWifiSettings: async ({ state }) => {
       return { wifiSettings: await backend.getWifiSettings() };
     },
-    registerExit: async ({ setState, state }, nickname) => {
-      // TODO
+    registerExit: async ({ setState, state }, nickname, email) => {
+      await backend.registerExit(nickname, email);
     },
     resetExit: async ({ setState, state }, nickname) => {
       await backend.resetExit(nickname);
