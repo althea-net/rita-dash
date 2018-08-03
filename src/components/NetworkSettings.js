@@ -19,6 +19,7 @@ const email_regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@
 class NetworkSettings extends Component {
   componentDidMount() {
     this.timer = setInterval(actions.getSettings, 5000);
+    actions.getSettings();
   }
   componentWillUnmount() {
     clearInterval(this.timer);
@@ -246,32 +247,7 @@ function ExitListItem({ active, description, nickname, state, message }) {
           )}
         </div>
         <div>
-          <div style={{ marginBottom: "30px", minWidth: "100px" }}>
-            <abbr title="Tunnel Is Working">
-              <FontAwesomeIcon
-                icon="signal"
-                pull="right"
-                color="#80ff80"
-                size="lg"
-              />
-            </abbr>
-            <abbr title="Has Route">
-              <FontAwesomeIcon
-                icon="route"
-                pull="right"
-                color="#80ccff"
-                size="lg"
-              />
-            </abbr>
-            <abbr title="Is Reachable">
-              <FontAwesomeIcon
-                icon="sitemap"
-                pull="right"
-                color="#ffc266"
-                size="lg"
-              />
-            </abbr>
-          </div>
+          <Icons />
           {active ||
             state !== "Registered" || (
               <Button
@@ -300,6 +276,46 @@ function ExitListItem({ active, description, nickname, state, message }) {
         </div>
       </div>
     </ListGroupItem>
+  );
+}
+
+function Icons() {
+  let icons = [
+    {
+      field: "is_tunnel_working",
+      icon: "signal",
+      desc: "Tunnel Is Working",
+      color: "#80ff80"
+    },
+    {
+      field: "have_route",
+      icon: "route",
+      desc: "Has Route",
+      color: "#80ccff"
+    },
+    {
+      field: "is_reachable",
+      icon: "sitemap",
+      desc: "Is Reachable",
+      color: "#ffc266"
+    }
+  ];
+
+  return (
+    <div style={{ marginBottom: "30px", minWidth: "100px" }}>
+      {icons.map(i => {
+        return (
+          <abbr title={i.desc}>
+            <FontAwesomeIcon
+              icon={i.icon}
+              pull="right"
+              color={i.color}
+              size="lg"
+            />
+          </abbr>
+        );
+      })}
+    </div>
   );
 }
 
