@@ -18,15 +18,15 @@ const email_regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@
 
 class NetworkSettings extends Component {
   componentDidMount() {
-    this.timer = setInterval(actions.getSettings, 5000);
-    actions.getSettings();
+    this.timer = setInterval(actions.getExits, 5000);
+    actions.getExits();
   }
   componentWillUnmount() {
     clearInterval(this.timer);
   }
 
   render() {
-    const settings = this.props.state.settings;
+    const exits = this.props.state.exits;
 
     return (
       <div>
@@ -43,8 +43,8 @@ class NetworkSettings extends Component {
           runs some exit nodes, but in the future you will be able to select
           exits from other companies if you prefer.
         </p>
-        {settings ? (
-          <ExitSelector exit_client={settings.exit_client} />
+        {exits ? (
+          <ExitList exits={exits} />
         ) : (
           <h5>Exit node selection screen loading...</h5>
         )}
@@ -66,7 +66,7 @@ class NodeInfoForm extends Component {
   }
 
   componentDidMount = () => {
-    this.setState({ fields: this.props.reg_details });
+    this.setState({ fields: this.props.email });
   };
 
   onFieldChange = e => {
@@ -133,30 +133,16 @@ class NodeInfoForm extends Component {
   }
 }
 
-function ExitSelector({ exit_client: { reg_details, current_exit, exits } }) {
-  return (
-    <div>
-      <NodeInfoForm reg_details={reg_details} />
-      <h2 style={{ marginTop: 20 }}>Exits</h2>
-      <ExitList
-        disabled={!(reg_details.email && reg_details.email.match(email_regex))}
-        current_exit={current_exit}
-        exits={exits}
-      />
-    </div>
-  );
-}
-
-function ExitList({ current_exit, exits, disabled }) {
+function ExitList({ exits }) {
   return (
     <ListGroup style={{ position: "relative" }}>
-      {Object.entries(exits).map(([nickname, exit], i) => {
+      {exits.map((exit, i) => {
         return (
           exit.state !== "Disabled" && (
             <ExitListItem
-              active={nickname === current_exit}
+              active={exit.is_selected}
               description={exit.message}
-              nickname={nickname}
+              nickname={exit.nickname}
               state={exit.state}
               message={exit.message}
               key={i}
@@ -164,26 +150,6 @@ function ExitList({ current_exit, exits, disabled }) {
           )
         );
       })}
-      {disabled && (
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            height: "100%",
-            width: "100%",
-            backgroundColor: "rgba(240,240,240,.8)",
-            zIndex: 100000,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >
-          <h5>
-            Please enter a valid email address before selecting an exit node.
-          </h5>
-        </div>
-      )}
     </ListGroup>
   );
 }
@@ -273,4 +239,4 @@ function ExitListItem({ active, description, nickname, state, message }) {
   );
 }
 
-export default connect(["settings"])(NetworkSettings);
+export default connect(["exits"])(NetworkSettings);

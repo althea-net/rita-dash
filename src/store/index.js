@@ -5,29 +5,28 @@ const backend = new Backend();
 
 const store = {
   initialState: {
-    page: "",
-    wifiSettings: [],
+    exits: [],
+    info: { balance: 0 },
     neighborData: [],
-    info: { balance: 0 }
+    page: "",
+    wifiSettings: []
   },
   actions: {
     changePage: (_, page) => ({ page: page }),
-    getWifiSettings: async ({ state }) => {
-      return { wifiSettings: await backend.getWifiSettings() };
+    getExits: async ({ setState, state }) => {
+      setState({ exits: await backend.getExits() });
     },
-    saveWifiSetting: async ({ state, setState }, setting) => {
-      setState({
-        wifiSettings: state.wifiSettings.map(s => {
-          return s;
-        })
-      });
-      await backend.setWifiSettings(setting);
+    getInfo: async () => {
+      return { info: await backend.getInfo() };
     },
     getNeighborData: async ({ state }) => {
       return { neighborData: await backend.getNeighborData() };
     },
-    getInfo: async () => {
-      return { info: await backend.getInfo() };
+    getSettings: async ({ setState, state }) => {
+      setState({ settings: await backend.getSettings() });
+    },
+    getWifiSettings: async ({ state }) => {
+      return { wifiSettings: await backend.getWifiSettings() };
     },
     registerExit: async ({ setState, state }, nickname) => {
       // TODO
@@ -36,8 +35,13 @@ const store = {
       await backend.requestExitConnection(nickname);
       setState({ settings: await backend.getSettings() });
     },
-    getSettings: async ({ setState, state }) => {
-      setState({ settings: await backend.getSettings() });
+    saveWifiSetting: async ({ state, setState }, setting) => {
+      setState({
+        wifiSettings: state.wifiSettings.map(s => {
+          return s;
+        })
+      });
+      await backend.setWifiSettings(setting);
     },
     toggleWifiMesh: async ({ setState, state }, radio) => {
       await backend.toggleWifiMesh(radio);

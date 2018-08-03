@@ -108,6 +108,12 @@ export default class Backend {
     post(url + "/wifi_settings", settings);
   }
 
+  async getExits() {
+    const res = await fetch(url + "/exits");
+    const json = await res.json();
+    return json;
+  }
+
   async getNeighborData() {
     return get(url + "/neighbors");
   }
