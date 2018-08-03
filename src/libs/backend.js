@@ -134,6 +134,10 @@ export default class Backend {
     // await post(url + `/exits/${nickname}/register`)
   }
 
+  async resetExit(nickname) {
+    await post(url + `/exits/${nickname}/reset`);
+  }
+
   async requestExitConnection(nickname) {
     await post(url + "/settings", {
       exit_client: {

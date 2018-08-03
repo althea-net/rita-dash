@@ -31,6 +31,9 @@ const store = {
     registerExit: async ({ setState, state }, nickname) => {
       // TODO
     },
+    resetExit: async ({ setState, state }, nickname) => {
+      await backend.resetExit(nickname);
+    },
     requestExitConnection: async ({ setState, state }, nickname) => {
       await backend.requestExitConnection(nickname);
       setState({ settings: await backend.getSettings() });

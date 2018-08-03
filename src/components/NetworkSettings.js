@@ -241,6 +241,16 @@ function ExitListItem({
               }
             </div>
           )}
+          {state === "New" || (
+            <Button
+              color="primary"
+              onClick={() => {
+                actions.resetExit(nickname);
+              }}
+            >
+              Reset
+            </Button>
+          )}
         </div>
         <div>
           {active ||
