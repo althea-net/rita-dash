@@ -55,12 +55,15 @@ class App extends Component {
             Althea
           </NavbarBrand>
           <Nav className="bg-light">
-            {Object.keys(this.state.pages).map(p => {
+            {Object.keys(this.state.pages).map((p, i) => {
               let page = p.replace("_", "-");
               let current_page = this.state.current_page;
               let title = this.state.pages[p];
               return (
-                <NavItem className={page === current_page ? "active" : null}>
+                <NavItem
+                  className={page === current_page ? "active" : null}
+                  key={i}
+                >
                   <NavLink href={"#" + page}>{title}</NavLink>
                 </NavItem>
               );

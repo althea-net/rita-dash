@@ -29,11 +29,16 @@ class NetworkSettings extends Component {
     const exits = this.props.state.exits;
     const registered = [];
     const unregistered = [];
+    const sort = (a, b) =>
+      a.nickname.localeCompare(b.nickname, undefined, { sensitivity: "base" });
 
     Object.keys(exits).forEach(k => {
       if (exits[k]["state"] === "Registered") registered[k] = exits[k];
       else unregistered[k] = exits[k];
     });
+
+    registered.sort(sort);
+    unregistered.sort(sort);
 
     return (
       <div>

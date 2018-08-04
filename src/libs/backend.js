@@ -11,7 +11,10 @@ function post(url, json) {
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(json),
-    headers: new Headers({ "Content-Type": "application/json" })
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
   });
 }
 
@@ -105,7 +108,13 @@ export default class Backend {
   }
 
   async setWifiSettings(settings) {
-    post(url + "/wifi_settings", settings);
+    const radio = settings.device.section_name.replace("radio", "wlan");
+    const { ssid, mesh, key } = settings;
+    const pass = key;
+
+    await post(url + "/wifi_settings/ssid", { radio, ssid });
+    await post(url + "/wifi_settings/pass", { radio, pass });
+    await post(url + "/wifi_settings/mesh", { radio, mesh });
   }
 
   async getExits() {

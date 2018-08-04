@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Alert,
   Card,
   CardBody,
   Button,
@@ -10,13 +11,14 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  Progress
 } from "reactstrap";
 import { actions, connect } from "../store";
 
 class RouterSettings extends Component {
-  componentDidMount() {
-    actions.getWifiSettings();
+  async componentDidMount() {
+    await actions.getWifiSettings();
   }
 
   render() {
@@ -35,7 +37,7 @@ class RouterSettings extends Component {
           {wifiSettings &&
             wifiSettings.map((settings, i) => (
               <WifiSettingsForm
-                store={this.props.store}
+                state={this.props.state}
                 key={i}
                 wifiSettings={settings}
               />
@@ -93,6 +95,12 @@ class WifiSettingsForm extends Component {
     return (
       <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
         <CardBody>
+          {this.props.state.saved[
+            this.props.wifiSettings.device.section_name
+          ] && <Alert color="success">Settings Saved Successfully</Alert>}
+          {this.props.state.saving[
+            this.props.wifiSettings.device.section_name
+          ] && <Progress animated color="info" value="100" />}
           <Form onSubmit={this.onSubmit}>
             <Label
               for="form"
@@ -247,4 +255,4 @@ class AdvancedSettingsModal extends React.Component {
   }
 }
 
-export default connect(["wifiSettings"])(RouterSettings);
+export default connect(["saving", "saved", "wifiSettings"])(RouterSettings);
