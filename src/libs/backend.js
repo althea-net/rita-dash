@@ -7,8 +7,8 @@ async function get(url) {
   return cckd(json);
 }
 
-function post(url, json) {
-  return fetch(url, {
+async function post(url, json) {
+  await fetch(url, {
     method: "POST",
     body: JSON.stringify(json),
     headers: {

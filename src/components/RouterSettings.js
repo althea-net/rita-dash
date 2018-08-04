@@ -56,6 +56,8 @@ class WifiSettingsForm extends Component {
         key: "",
         ssid: ""
       },
+      saved: false,
+      saving: false,
       valid: {}
     };
     this.validators = {
@@ -76,6 +78,8 @@ class WifiSettingsForm extends Component {
         ...this.state.fields,
         [name]: value
       },
+      saving: false,
+      saved: false,
       valid: {
         ...this.state.valid,
         [name]: this.validators[name](value)
@@ -83,9 +87,12 @@ class WifiSettingsForm extends Component {
     });
   };
 
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault();
-    actions.saveWifiSetting(this.state.fields);
+
+    this.setState({ saving: true });
+    await actions.saveWifiSetting(this.state.fields);
+    this.setState({ saving: false, saved: true });
   };
 
   isFieldValid = name =>
@@ -95,12 +102,10 @@ class WifiSettingsForm extends Component {
     return (
       <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
         <CardBody>
-          {this.props.state.saved[
-            this.props.wifiSettings.device.section_name
-          ] && <Alert color="success">Settings Saved Successfully</Alert>}
-          {this.props.state.saving[
-            this.props.wifiSettings.device.section_name
-          ] && <Progress animated color="info" value="100" />}
+          {this.state.saved && (
+            <Alert color="success">Settings Saved Successfully</Alert>
+          )}
+          {this.state.saving && <Progress animated color="info" value="100" />}
           <Form onSubmit={this.onSubmit}>
             <Label
               for="form"
@@ -255,4 +260,4 @@ class AdvancedSettingsModal extends React.Component {
   }
 }
 
-export default connect(["saving", "saved", "wifiSettings"])(RouterSettings);
+export default connect(["wifiSettings"])(RouterSettings);

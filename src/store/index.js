@@ -9,8 +9,6 @@ const store = {
     info: { balance: 0 },
     neighborData: [],
     page: "",
-    saved: {},
-    saving: {},
     wifiSettings: []
   },
   actions: {
@@ -43,15 +41,13 @@ const store = {
       setState({ exits: await backend.getExits() });
     },
     saveWifiSetting: async ({ state, setState }, setting) => {
-      const radio = setting.device.section_name;
-      setState({ saving: { [radio]: true } });
       setState({
         wifiSettings: state.wifiSettings.map(s => {
           return s;
         })
       });
-      await backend.setWifiSettings(setting);
-      setState({ saving: { [radio]: false }, saved: { [radio]: true } });
+
+      return await backend.setWifiSettings(setting);
     },
     toggleWifiMesh: async ({ setState, state }, radio) => {
       await backend.toggleWifiMesh(radio);
