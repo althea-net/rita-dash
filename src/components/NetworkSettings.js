@@ -10,17 +10,28 @@ import {
   ListGroup,
   Input,
   ListGroupItemHeading,
-  ListGroupItem
+  ListGroupItem,
+  Progress
 } from "reactstrap";
 import { actions, connect } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import regex from "./EmailRegex";
 
 class NetworkSettings extends Component {
-  componentDidMount() {
-    this.timer = setInterval(actions.getExits, 5000);
-    actions.getExits();
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false
+    };
   }
+
+  async componentDidMount() {
+    this.setState({ loading: true });
+    this.timer = setInterval(actions.getExits, 5000);
+    await actions.getExits();
+    // why doesn't the await above work? this.setState({ loading: false });
+  }
+
   componentWillUnmount() {
     clearInterval(this.timer);
   }
@@ -57,22 +68,27 @@ class NetworkSettings extends Component {
         </p>
         {registered.length > 0 && <ExitList exits={registered} />}
         {unregistered.length > 0 && <ExitList exits={unregistered} />}
+        {this.state.loading && <Progress animated color="info" value="100" />}
       </div>
     );
   }
 }
 
-class NodeInfoForm extends Component {
+class RegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       blurred: false,
       fields: {
+        code: "",
         email: ""
       },
+      pending: false,
+      verifying: false,
       valid: {}
     };
     this.validators = {
+      code: value => Number.isInteger(value) && value.toString().length === 6,
       email: value => !!value.match(regex)
     };
   }
@@ -113,9 +129,17 @@ class NodeInfoForm extends Component {
     });
   };
 
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault();
-    actions.registerExit(this.props.nickname, this.state.fields.email);
+
+    console.log(this.state);
+    if (this.state.pending) {
+      this.setState({ pending: false, verifying: true });
+      await actions.verifyExit(this.props.nickname, this.state.fields.code);
+    } else {
+      this.setState({ pending: true });
+      await actions.registerExit(this.props.nickname, this.state.fields.email);
+    }
   };
 
   isFieldValid = name =>
@@ -126,38 +150,90 @@ class NodeInfoForm extends Component {
       <Card>
         <CardBody>
           <Form onSubmit={this.onSubmit}>
-            <FormGroup id="form">
-              <Label for="email">Email</Label>
-              <Input
-                type="email"
-                name="email"
-                valid={this.isFieldValid("email") && this.state.blurred}
-                invalid={this.state.fields.email && !this.isFieldValid("email")}
-                onChange={this.onFieldChange}
-                onBlur={this.onBlur}
-                value={this.state.fields.email || ""}
-              />
-              <FormFeedback invalid>A valid email is required</FormFeedback>
-            </FormGroup>
+            {this.state.pending ||
+              this.state.verifying || (
+                <React.Fragment>
+                  <FormGroup id="form">
+                    <Label for="email">Email</Label>
+                    <Input
+                      type="email"
+                      name="email"
+                      valid={this.isFieldValid("email") && this.state.blurred}
+                      invalid={this.state.email && !this.isFieldValid("email")}
+                      onChange={this.onFieldChange}
+                      onBlur={this.onBlur}
+                      value={this.state.fields.email || ""}
+                    />
+                    <FormFeedback invalid>
+                      A valid email is required
+                    </FormFeedback>
+                  </FormGroup>
+                  <FormGroup
+                    style={{
+                      display: "flex",
+                      margin: -20,
+                      marginTop: 0,
+                      padding: 10
+                    }}
+                  >
+                    <Button
+                      color={
+                        this.isFieldValid("email") ? "primary" : "secondary"
+                      }
+                      disabled={!this.isFieldValid("email")}
+                      style={{
+                        margin: 10
+                      }}
+                    >
+                      Register
+                    </Button>
+                  </FormGroup>
+                </React.Fragment>
+              )}
 
-            <FormGroup
-              style={{
-                display: "flex",
-                margin: -20,
-                marginTop: 0,
-                padding: 10
-              }}
-            >
-              <Button
-                color={this.isFieldValid("email") ? "primary" : "secondary"}
-                disabled={!this.isFieldValid("email")}
-                style={{
-                  margin: 10
-                }}
-              >
-                Register
-              </Button>
-            </FormGroup>
+            {this.state.verifying && (
+              <FontAwesomeIcon icon="spin" color="#80ff80" />
+            )}
+
+            {this.state.pending && (
+              <React.Fragment>
+                <FormGroup id="form">
+                  <Label for="email">Verification Code</Label>
+                  <Input
+                    type="text"
+                    name="code"
+                    maxLength="6"
+                    valid={this.isFieldValid("code")}
+                    invalid={!this.isFieldValid("code")}
+                    onChange={this.onFieldChange}
+                    onBlur={this.onBlur}
+                    value={this.state.fields.code || ""}
+                  />
+                  <FormFeedback invalid>
+                    Please enter the code from your email
+                  </FormFeedback>
+                </FormGroup>
+
+                <FormGroup
+                  style={{
+                    display: "flex",
+                    margin: -20,
+                    marginTop: 0,
+                    padding: 10
+                  }}
+                >
+                  <Button
+                    color={this.isFieldValid("code") ? "primary" : "secondary"}
+                    disabled={!this.isFieldValid("code")}
+                    style={{
+                      margin: 10
+                    }}
+                  >
+                    Verify
+                  </Button>
+                </FormGroup>
+              </React.Fragment>
+            )}
           </Form>
         </CardBody>
       </Card>
@@ -272,7 +348,9 @@ function ExitListItem({
               </Button>
             )}
           {state === "Registered" ||
-            state === "Denied" || <NodeInfoForm nickname={nickname} email="" />}
+            state === "Denied" || (
+              <RegistrationForm nickname={nickname} state={state} email="" />
+            )}
         </div>
       </div>
     </ListGroupItem>

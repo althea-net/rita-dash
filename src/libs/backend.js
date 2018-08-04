@@ -172,4 +172,8 @@ export default class Backend {
   async toggleWifiMesh(radio) {
     // await fetch(url + `/wifi-settings/${radio}/mesh`);
   }
+
+  async verifyExit(nickname, code) {
+    await post(url + `/exits/${nickname}/verify/${code}`);
+  }
 }
