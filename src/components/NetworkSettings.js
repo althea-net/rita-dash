@@ -69,37 +69,61 @@ class NetworkSettings extends Component {
 }
 
 function ExitList({ exits }) {
+  let selected;
+  function item(exit, i) {
+    let connected =
+      exit.exit_settings.state === "Registered"
+        ? exit.is_tunnel_working
+        : exit.is_reachable && exit.have_route;
+
+    return (
+      <ExitListItem
+        connected={connected}
+        description={exit.exit_settings.description}
+        message={exit.exit_settings.message}
+        nickname={exit.nickname}
+        selected={exit.is_selected}
+        state={exit.exit_settings.state}
+        key={i}
+      />
+    );
+  }
+
+  let unselected = exits
+    .filter(exit => {
+      if (exit.is_selected) {
+        selected = exit;
+        return false;
+      }
+
+      if (exit.exit_settings.state === "Disabled") {
+        return false;
+      }
+
+      return true;
+    })
+    .map((exit, i) => item(exit, i));
+
   return (
-    <ListGroup style={{ position: "relative" }}>
-      {exits.map((exit, i) => {
-        let connected =
-          exit.exit_settings.state === "Registered"
-            ? exit.is_tunnel_working
-            : exit.is_reachable && exit.have_route;
-        return (
-          exit.state !== "Disabled" && (
-            <ExitListItem
-              active={exit.is_selected}
-              connected={connected}
-              description={exit.exit_settings.description}
-              message={exit.exit_settings.message}
-              nickname={exit.nickname}
-              state={exit.exit_settings.state}
-              key={i}
-            />
-          )
-        );
-      })}
-    </ListGroup>
+    <div>
+      {selected && (
+        <div>
+          <h2>Selected Exit</h2>
+          <ListGroup>{item(selected, 0)}</ListGroup>
+        </div>
+      )}
+      <h2>Available Exits</h2>
+      <ListGroup>{unselected}</ListGroup>
+    </div>
   );
 }
 
 function ExitListItem({
-  active,
   connected,
   description,
   message,
   nickname,
+  selected,
   state
 }) {
   if (!message) message = "";
@@ -133,21 +157,17 @@ function ExitListItem({
             </abbr>
             {nickname}
           </ListGroupItemHeading>
-          {active ? (
-            <div>Currently Selected</div>
-          ) : (
-            <div>
-              Status:
+          <div>
+            Status:
+            {
               {
-                {
-                  Registered: "Registered",
-                  Denied: "Connection Denied: " + format(message),
-                  New: "Not Registered",
-                  Pending: "Waiting for Verification Code"
-                }[state]
-              }
-            </div>
-          )}
+                Registered: "Registered",
+                Denied: "Connection Denied: " + format(message),
+                New: "Not Registered",
+                Pending: "Waiting for Verification Code"
+              }[state]
+            }
+          </div>
           {state === "New" || (
             <Button
               color="primary"
@@ -160,7 +180,7 @@ function ExitListItem({
           )}
         </div>
         <div>
-          {active ||
+          {selected ||
             state !== "Registered" || (
               <Button
                 disabled={state === "Disabled" || state === "Pending"}
