@@ -67,7 +67,7 @@ class RegistrationForm extends Component {
   onSubmit = async e => {
     e.preventDefault();
 
-    await actions.registerExit(this.props.nickname, this.state.fields.email);
+    actions.registerExit(this.props.nickname, this.state.fields.email);
   };
 
   isFieldValid = name =>

@@ -1,14 +1,17 @@
 // @ts-check
 import cckd from "camelcase-keys-deep";
 
+const base =
+  process.env.REACT_APP_BACKEND_URL || window.location.hostname + ":4877";
+
 async function get(url) {
-  const res = await fetch(url);
+  const res = await fetch(base + url);
   const json = await res.json();
   return cckd(json);
 }
 
 async function post(url, json) {
-  await fetch(url, {
+  await fetch(base + url, {
     method: "POST",
     body: JSON.stringify(json),
     headers: {
@@ -17,9 +20,6 @@ async function post(url, json) {
     }
   });
 }
-
-const url =
-  process.env.REACT_APP_BACKEND_URL || window.location.hostname + ":4877";
 
 export default class Backend {
   constructor(url) {
@@ -102,9 +102,7 @@ export default class Backend {
   }
 
   async getWifiSettings() {
-    const res = await fetch(url + "/wifi_settings");
-    const json = await res.json();
-    return json;
+    return get("/wifi_settings");
   }
 
   async setWifiSettings(settings) {
@@ -112,35 +110,29 @@ export default class Backend {
     const { ssid, mesh, key } = settings;
     const pass = key;
 
-    await post(url + "/wifi_settings/ssid", { radio, ssid });
-    await post(url + "/wifi_settings/pass", { radio, pass });
-    await post(url + "/wifi_settings/mesh", { radio, mesh });
+    await post("/wifi_settings/ssid", { radio, ssid });
+    await post("/wifi_settings/pass", { radio, pass });
+    await post("/wifi_settings/mesh", { radio, mesh });
   }
 
   async getExits() {
-    const res = await fetch(url + "/exits");
-    const json = await res.json();
-    return json;
+    return get("/exits");
   }
 
   async getNeighborData() {
-    return get(url + "/neighbors");
+    return get("/neighbors");
   }
 
   async getSettings() {
-    const res = await fetch(url + "/settings");
-    const json = await res.json();
-    return json;
+    return get("/settings");
   }
 
   async getInfo() {
-    const res = await fetch(url + "/info");
-    const json = await res.json();
-    return json;
+    return get("/info");
   }
 
   async registerExit(nickname, email) {
-    await post(url + `/settings`, {
+    await post(`/settings`, {
       exit_client: {
         reg_details: {
           email: email
@@ -148,17 +140,17 @@ export default class Backend {
       }
     });
 
-    await post(url + `/settings`, {
+    await post(`/settings`, {
       exit_client: { exits: { [nickname]: { auto_register: true } } }
     });
   }
 
   async resetExit(nickname) {
-    await post(url + `/exits/${nickname}/reset`);
+    post(`/exits/${nickname}/reset`);
   }
 
   async requestExitConnection(nickname) {
-    await post(url + "/settings", {
+    post("/settings", {
       exit_client: {
         current_exit: nickname
       }
@@ -166,16 +158,16 @@ export default class Backend {
   }
 
   async selectExit(nickname) {
-    await get(url + `/exits/${nickname}/select`);
+    return get(`/exits/${nickname}/select`);
   }
 
   async toggleWifiMesh(radio) {
-    // await fetch(url + `/wifi-settings/${radio}/mesh`);
+    // return get(`/wifi-settings/${radio}/mesh`);
   }
 
   async verifyExit(nickname, code) {
-    // await post(url + `/exits/${nickname}/verify/${code}`);
-    await post(url + `/settings`, {
+    // post(`/exits/${nickname}/verify/${code}`);
+    post(`/settings`, {
       exit_client: { exits: { [nickname]: { email_code: code } } }
     });
   }
