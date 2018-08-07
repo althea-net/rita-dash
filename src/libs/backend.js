@@ -174,6 +174,9 @@ export default class Backend {
   }
 
   async verifyExit(nickname, code) {
-    await post(url + `/exits/${nickname}/verify/${code}`);
+    // await post(url + `/exits/${nickname}/verify/${code}`);
+    await post(url + `/settings`, {
+      exit_client: { exits: { [nickname]: { email_code: code } } }
+    });
   }
 }
