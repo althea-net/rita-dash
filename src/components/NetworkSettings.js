@@ -20,10 +20,8 @@ class NetworkSettings extends Component {
   }
 
   async componentDidMount() {
-    this.setState({ loading: true });
     this.timer = setInterval(actions.getExits, 5000);
-    await actions.getExits();
-    // why doesn't the await above work? this.setState({ loading: false });
+    actions.getExits();
   }
 
   componentWillUnmount() {
@@ -72,18 +70,18 @@ function ExitList({ exits }) {
   let selected;
   function item(exit, i) {
     let connected =
-      exit.exit_settings.state === "Registered"
+      exit.state === "Registered"
         ? exit.is_tunnel_working
         : exit.is_reachable && exit.have_route;
 
     return (
       <ExitListItem
         connected={connected}
-        description={exit.exit_settings.description}
-        message={exit.exit_settings.message}
+        description={exit.description}
+        message={exit.message}
         nickname={exit.nickname}
         selected={exit.is_selected}
-        state={exit.exit_settings.state}
+        state={exit.state}
         key={i}
       />
     );
@@ -96,7 +94,7 @@ function ExitList({ exits }) {
         return false;
       }
 
-      if (exit.exit_settings.state === "Disabled") {
+      if (exit.state === "Disabled") {
         return false;
       }
 
