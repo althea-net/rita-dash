@@ -24,28 +24,15 @@ class Exits extends Component {
 
   render() {
     const { exits, loading } = this.props.state;
-    const registered = [];
-    const unregistered = [];
     const sort = (a, b) =>
       a.nickname.localeCompare(b.nickname, undefined, { sensitivity: "base" });
-
-    if (exits && exits.length) {
-      Object.keys(exits).forEach(k => {
-        if (exits[k]["exitSettings"]["state"] === "Registered")
-          registered[k] = exits[k];
-        else unregistered[k] = exits[k];
-      });
-
-      registered.sort(sort);
-      unregistered.sort(sort);
-    }
+    exits.sort(sort);
 
     return (
       <div>
         <Error />
         {loading && <Progress animated color="info" value="100" />}
-        {registered.length > 0 && <ExitList exits={registered} />}
-        {unregistered.length > 0 && <ExitList exits={unregistered} />}
+        {exits.length > 0 && <ExitList exits={exits} />}
       </div>
     );
   }

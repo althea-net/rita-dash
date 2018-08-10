@@ -106,14 +106,12 @@ class RegistrationForm extends Component {
                   type="email"
                   name="email"
                   valid={this.isFieldValid("email") && this.state.blurred}
-                  invalid={this.state.email && !this.isFieldValid("email")}
+                  invalid={!this.isFieldValid("email")}
                   onChange={this.onFieldChange}
                   onBlur={this.onBlur}
                   value={this.state.fields.email || ""}
                 />
-                <FormFeedback invalid="true">
-                  A valid email is required
-                </FormFeedback>
+                <FormFeedback invalid>A valid email is required</FormFeedback>
               </FormGroup>
               <FormGroup
                 style={{
