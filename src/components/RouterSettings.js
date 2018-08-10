@@ -56,8 +56,6 @@ class WifiSettingsForm extends Component {
         key: "",
         ssid: ""
       },
-      saved: false,
-      saving: false,
       valid: {}
     };
     this.validators = {
@@ -78,8 +76,6 @@ class WifiSettingsForm extends Component {
         ...this.state.fields,
         [name]: value
       },
-      saving: false,
-      saved: false,
       valid: {
         ...this.state.valid,
         [name]: this.validators[name](value)
@@ -87,25 +83,28 @@ class WifiSettingsForm extends Component {
     });
   };
 
-  onSubmit = async e => {
+  onSubmit = e => {
     e.preventDefault();
-
-    this.setState({ saving: true });
-    await actions.saveWifiSetting(this.state.fields);
-    this.setState({ saving: false, saved: true });
+    actions.saveWifiSetting(
+      this.state.fields,
+      this.props.wifiSettings.device.radioType
+    );
   };
 
   isFieldValid = name =>
     this.state.fields[name] ? this.state.valid[name] : undefined;
 
   render() {
+    let radio = this.props.wifiSettings.device.radioType;
+    let { loading, success } = this.props.state;
+
     return (
       <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
         <CardBody>
-          {this.state.saved && (
+          {success === radio && (
             <Alert color="success">Settings Saved Successfully</Alert>
           )}
-          {this.state.saving && <Progress animated color="info" value="100" />}
+          {loading === radio && <Progress animated color="info" value="100" />}
           <Form onSubmit={this.onSubmit}>
             <Label
               for="form"
@@ -115,7 +114,7 @@ class WifiSettingsForm extends Component {
                 textAlign: "center"
               }}
             >
-              {this.props.wifiSettings.device.radioType}
+              {radio}
             </Label>
 
             <FormGroup id="form">
@@ -167,9 +166,7 @@ class WifiSettingsForm extends Component {
                 padding: 10
               }}
             >
-              <AdvancedSettingsModal
-                radio={this.props.wifiSettings.device.radioType}
-              />
+              <AdvancedSettingsModal radio={radio} />
             </FormGroup>
           </Form>
         </CardBody>
@@ -259,4 +256,4 @@ class AdvancedSettingsModal extends React.Component {
   }
 }
 
-export default connect(["wifiSettings"])(RouterSettings);
+export default connect(["loading", "success", "wifiSettings"])(RouterSettings);

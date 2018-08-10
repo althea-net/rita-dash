@@ -43,7 +43,7 @@ class Exits extends Component {
     return (
       <div>
         <Error />
-        {loading && <Progress animated color="dark" value="100" />}
+        {loading && <Progress animated color="info" value="100" />}
         {registered.length > 0 && <ExitList exits={registered} />}
         {unregistered.length > 0 && <ExitList exits={unregistered} />}
       </div>
