@@ -5,7 +5,9 @@ const backend = new Backend();
 
 const store = {
   initialState: {
+    error: null,
     exits: [],
+    loading: true,
     info: { balance: 0 },
     neighborData: [],
     page: "",
@@ -14,7 +16,18 @@ const store = {
   actions: {
     changePage: (_, page) => ({ page: page }),
     getExits: async ({ setState, state }) => {
-      setState({ exits: await backend.getExits() });
+      if (!state.exits.length) {
+        setState({ loading: true });
+      }
+      let exits = await backend.getExits();
+      if (exits instanceof Error) {
+        return setState({
+          error: "Getting exits failed",
+          exits: [],
+          loading: false
+        });
+      }
+      setState({ error: null, exits, loading: false });
     },
     getInfo: async () => {
       return { info: await backend.getInfo() };

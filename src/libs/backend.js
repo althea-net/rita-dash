@@ -6,8 +6,15 @@ const base =
 
 async function get(url) {
   const res = await fetch(base + url);
-  const json = await res.json();
-  return cckd(json);
+  try {
+    const json = await res.json();
+    if (json && json.error) {
+      throw new Error(json.error);
+    }
+    return cckd(json);
+  } catch (e) {
+    return e;
+  }
 }
 
 async function post(url, json) {
@@ -106,7 +113,7 @@ export default class Backend {
   }
 
   async setWifiSettings(settings) {
-    const radio = settings.device.section_name.replace("radio", "wlan");
+    const radio = settings.device.sectionName.replace("radio", "wlan");
     const { ssid, mesh, key } = settings;
     const pass = key;
 
@@ -166,9 +173,6 @@ export default class Backend {
   }
 
   async verifyExit(nickname, code) {
-    // post(`/exits/${nickname}/verify/${code}`);
-    post(`/settings`, {
-      exit_client: { exits: { [nickname]: { email_code: code } } }
-    });
+    post(`/exits/${nickname}/verify/${code}`);
   }
 }

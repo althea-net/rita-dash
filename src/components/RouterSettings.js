@@ -115,7 +115,7 @@ class WifiSettingsForm extends Component {
                 textAlign: "center"
               }}
             >
-              {this.props.wifiSettings.device.radio_type}
+              {this.props.wifiSettings.device.radioType}
             </Label>
 
             <FormGroup id="form">
@@ -168,7 +168,7 @@ class WifiSettingsForm extends Component {
               }}
             >
               <AdvancedSettingsModal
-                radio={this.props.wifiSettings.device.radio_type}
+                radio={this.props.wifiSettings.device.radioType}
               />
             </FormGroup>
           </Form>
@@ -223,12 +223,11 @@ class AdvancedSettingsModal extends React.Component {
           className={this.props.className}
         >
           <ModalHeader toggle={this.toggle}>
-            {this.props.radio}: WiFi Settings
+            {this.props.radio} WiFi Settings
           </ModalHeader>
           <ModalBody>
             <Form>
               <FormGroup>
-                <h5>Connect to a Mesh Network</h5>
                 <FormGroup check>
                   <Label check>
                     <Input
@@ -237,7 +236,7 @@ class AdvancedSettingsModal extends React.Component {
                       value={this.state.mesh}
                       checked={this.state.mesh}
                     />{" "}
-                    Check to Enable Connection
+                    Enable Mesh Over Wifi
                   </Label>
                 </FormGroup>
               </FormGroup>
