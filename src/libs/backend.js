@@ -113,13 +113,11 @@ export default class Backend {
   }
 
   async setWifiSettings(settings) {
-    const radio = settings.device.sectionName.replace("radio", "wlan");
-    const { ssid, mesh, key } = settings;
-    const pass = key;
+    const radio = settings.device.sectionName;
+    const { ssid, key } = settings;
 
     await post("/wifi_settings/ssid", { radio, ssid });
-    await post("/wifi_settings/pass", { radio, pass });
-    await post("/wifi_settings/mesh", { radio, mesh });
+    await post("/wifi_settings/pass", { radio, pass: key });
   }
 
   async getExits() {
@@ -166,8 +164,8 @@ export default class Backend {
     post(`/exits/${nickname}/select`);
   }
 
-  async toggleWifiMesh(radio) {
-    // return get(`/wifi-settings/${radio}/mesh`);
+  async toggleWifiMesh(radio, mesh) {
+    post("/wifi_settings/mesh", { radio, mesh });
   }
 
   async verifyExit(nickname, code) {

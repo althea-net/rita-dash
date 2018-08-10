@@ -96,6 +96,8 @@ class WifiSettingsForm extends Component {
 
   render() {
     let radio = this.props.wifiSettings.device.radioType;
+    let section = this.props.wifiSettings.device.sectionName;
+    let mesh = this.props.wifiSettings.mesh;
     let { loading, success } = this.props.state;
 
     return (
@@ -166,7 +168,7 @@ class WifiSettingsForm extends Component {
                 padding: 10
               }}
             >
-              <AdvancedSettingsModal radio={radio} />
+              <AdvancedSettingsModal radio={section} mesh={mesh} />
             </FormGroup>
           </Form>
         </CardBody>
@@ -180,7 +182,7 @@ class AdvancedSettingsModal extends React.Component {
     super(props);
     this.state = {
       modal: false,
-      mesh: false
+      mesh: props.mesh
     };
 
     this.toggle = this.toggle.bind(this);
@@ -194,11 +196,9 @@ class AdvancedSettingsModal extends React.Component {
   }
 
   onToggleWifiMesh() {
-    this.setState({
-      mesh: !this.state.mesh
-    });
-
-    actions.toggleWifiMesh(this.props.radio);
+    let mesh = !this.state.mesh;
+    this.setState({ mesh });
+    actions.toggleWifiMesh(this.props.radio, mesh);
   }
 
   render() {
