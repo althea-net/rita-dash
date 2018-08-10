@@ -54,14 +54,20 @@ class Exits extends Component {
 function ExitList({ exits }) {
   let selected;
   function item(exit, i) {
-    let connected =
-      exit.exitSettings.state === "Registered"
-        ? exit.isTunnelWorking
-        : exit.isReachable && exit.haveRoute;
+    let connection = "";
+    if (exit.exitSettings.state === "Registered")
+      connection = exit.isTunnelWorking
+        ? "Connection OK!"
+        : "Tunnel connection not working";
+    else {
+      if (!exit.isReachable) connection += "Exit is not reachable. ";
+      if (!exit.haveRoute) connection += "No route to exit.";
+      if (!connection) connection = "Connection OK!";
+    }
 
     return (
       <ExitListItem
-        connected={connected}
+        connection={connection}
         description={exit.exitSettings.description}
         message={exit.exitSettings.message}
         nickname={exit.nickname}
@@ -102,7 +108,7 @@ function ExitList({ exits }) {
 }
 
 function ExitListItem({
-  connected,
+  connection,
   description,
   message,
   nickname,
@@ -122,11 +128,8 @@ function ExitListItem({
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div style={{ marginRight: 20, textAlign: "left" }}>
           <ListGroupItemHeading>
-            <abbr
-              title={connected ? "Connection OK!" : "Connection Problem"}
-              style={{ marginRight: "10px" }}
-            >
-              {connected ? (
+            <abbr title={connection} style={{ marginRight: "10px" }}>
+              {connection === "Connection OK!" ? (
                 <FontAwesomeIcon icon="signal" color="#80ff80" />
               ) : (
                 <span className="fa-layers fa-fw">
@@ -139,6 +142,7 @@ function ExitListItem({
           </ListGroupItemHeading>
           <div>{description}</div>
           <div>
+            Status:&nbsp;
             {
               {
                 Registered: "Registered",
@@ -174,12 +178,9 @@ function ExitListItem({
                 {state === "Pending" ? "Connecting..." : "Select"}
               </Button>
             )}
-          {selected ||
-            state === "Registered" ||
-            state === "Pending" ||
-            state === "Denied" || (
-              <RegistrationForm nickname={nickname} state={state} email="" />
-            )}
+          {(state === "GotInfo" || state === "Denied") && (
+            <RegistrationForm nickname={nickname} state={state} email="" />
+          )}
           {state === "Pending" && (
             <VerifyForm nickname={nickname} state={state} email="" />
           )}
