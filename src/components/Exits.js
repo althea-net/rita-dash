@@ -117,7 +117,7 @@ function ExitListItem({
 }) {
   if (!message) message = "";
   function format(m) {
-    if (m.includes("Json")) {
+    if (m.includes("Json") || m.includes("msg:")) {
       return m.match(/.*"(.*)".*/)[1];
     }
     return m;
@@ -153,7 +153,7 @@ function ExitListItem({
               }[state]
             }
           </div>
-          {state === "New" || (
+          {state === "Denied" && (
             <Button
               color="dark"
               onClick={() => {
@@ -178,7 +178,7 @@ function ExitListItem({
                 {state === "Pending" ? "Connecting..." : "Select"}
               </Button>
             )}
-          {(state === "GotInfo" || state === "Denied") && (
+          {(state === "New" || state === "GotInfo" || state === "Denied") && (
             <RegistrationForm nickname={nickname} state={state} email="" />
           )}
           {state === "Pending" && (

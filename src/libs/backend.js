@@ -147,9 +147,7 @@ export default class Backend {
       }
     });
 
-    await post(`/settings`, {
-      exit_client: { exits: { [nickname]: { auto_register: true } } }
-    });
+    await post(`/exits/${nickname}/register`);
   }
 
   async resetExit(nickname) {
