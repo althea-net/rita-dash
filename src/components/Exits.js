@@ -136,25 +136,22 @@ function ExitListItem({
               )}
             </abbr>
             {nickname}
-
-            <div className="float-right">
-              {
-                {
-                  Registered: "Registered",
-                  Denied: "Connection Denied: " + format(message),
-                  New: "Never Contacted",
-                  Pending: "Pending, Waiting for Verification Code",
-                  GotInfo: "Contacted but Not Registered"
-                }[state]
-              }
-            </div>
           </ListGroupItemHeading>
-          <div style={{ background: "#ddd", padding: "10px" }}>
-            {description}
+          <div>{description}</div>
+          <div>
+            {
+              {
+                Registered: "Registered",
+                Denied: "Connection Denied: " + format(message),
+                New: "Never Contacted",
+                Pending: "Pending, Waiting for Verification Code",
+                GotInfo: "Contacted but Not Registered"
+              }[state]
+            }
           </div>
           {state === "New" || (
             <Button
-              color="primary"
+              color="dark"
               onClick={() => {
                 actions.resetExit(nickname);
               }}
