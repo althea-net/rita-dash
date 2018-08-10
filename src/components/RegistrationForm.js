@@ -7,7 +7,8 @@ import {
   FormFeedback,
   FormGroup,
   Label,
-  Input
+  Input,
+  Progress
 } from "reactstrap";
 import { actions } from "../store";
 
@@ -22,6 +23,7 @@ class RegistrationForm extends Component {
         email: ""
       },
       registering: false,
+      waiting: false,
       valid: {}
     };
     this.validators = {
@@ -70,6 +72,7 @@ class RegistrationForm extends Component {
   onSubmit = async e => {
     e.preventDefault();
 
+    this.setState({ waiting: true });
     actions.registerExit(this.props.nickname, this.state.fields.email);
   };
 
@@ -81,16 +84,21 @@ class RegistrationForm extends Component {
   }
 
   stopRegistering() {
-    this.setState({ registering: false });
+    this.setState({ registering: false, waiting: false });
   }
 
   render() {
-    let { registering } = this.state;
+    let { registering, waiting } = this.state;
 
     return (
       <Card>
         <CardBody>
-          {registering ? (
+          {waiting ? (
+            <div>
+              Submitting Registration Request
+              <Progress color="info" animated value="100" />
+            </div>
+          ) : registering ? (
             <Form onSubmit={this.onSubmit}>
               <FormGroup id="form">
                 <Label for="email">Email</Label>
@@ -117,7 +125,7 @@ class RegistrationForm extends Component {
               >
                 <Button
                   color={this.isFieldValid("email") ? "primary" : "secondary"}
-                  disabled={!this.isFieldValid("email")}
+                  disabled={!this.isFieldValid("email") || waiting}
                   style={{
                     margin: 10
                   }}

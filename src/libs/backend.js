@@ -163,7 +163,7 @@ export default class Backend {
   }
 
   async selectExit(nickname) {
-    return get(`/exits/${nickname}/select`);
+    post(`/exits/${nickname}/select`);
   }
 
   async toggleWifiMesh(radio) {

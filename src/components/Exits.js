@@ -153,7 +153,7 @@ function ExitListItem({
               }[state]
             }
           </div>
-          {state === "Denied" && (
+          {state !== "New" && (
             <Button
               color="dark"
               onClick={() => {
@@ -168,17 +168,15 @@ function ExitListItem({
           {selected ||
             state !== "Registered" || (
               <Button
-                disabled={state === "Disabled" || state === "Pending"}
-                color="primary"
-                size="lg"
+                color="dark"
                 onClick={() => {
-                  actions.requestExitConnection(nickname);
+                  actions.selectExit(nickname);
                 }}
               >
-                {state === "Pending" ? "Connecting..." : "Select"}
+                Select
               </Button>
             )}
-          {(state === "New" || state === "GotInfo" || state === "Denied") && (
+          {(state === "GotInfo" || state === "Denied") && (
             <RegistrationForm nickname={nickname} state={state} email="" />
           )}
           {state === "Pending" && (
