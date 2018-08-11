@@ -38,7 +38,6 @@ class AdvancedSettings extends Component {
   }
 
   render() {
-    console.log(this.props);
     let { loading } = this.props.state;
 
     return (

@@ -19,7 +19,6 @@ library.add(faBan);
 library.add(faRoute);
 library.add(faSignal);
 library.add(faSitemap);
-console.log(faSignal);
 
 class App extends Component {
   constructor(props) {

@@ -1,8 +1,10 @@
 // @ts-check
 import cckd from "camelcase-keys-deep";
 
+const { protocol, hostname } = window.location;
+const port = 4877;
 const base =
-  process.env.REACT_APP_BACKEND_URL || window.location.hostname + ":4877";
+  process.env.REACT_APP_BACKEND_URL || `${protocol}//${hostname}:${port}`;
 
 async function get(url) {
   const res = await fetch(base + url);
