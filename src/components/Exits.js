@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   Alert,
+  Badge,
   Button,
   ListGroup,
   ListGroupItemHeading,
@@ -127,19 +128,32 @@ function ExitListItem({
             </abbr>
             {nickname}
           </ListGroupItemHeading>
-          <div>{description}</div>
-          <div>
-            Status:&nbsp;
-            {
+          <div style={{ marginBottom: "10px" }}>
+            <Badge
+              color={
+                {
+                  Registered: "success",
+                  Denied: "danger",
+                  New: "info",
+                  Pending: "warning",
+                  GotInfo: "info"
+                }[state]
+              }
+              style={{ paddingTop: "5px" }}
+            >
+              Status:&nbsp;
               {
-                Registered: "Registered",
-                Denied: "Connection Denied: " + format(message),
-                New: "Waiting For Contact",
-                Pending: "Pending, Waiting for Verification Code",
-                GotInfo: "Contacted but Not Registered"
-              }[state]
-            }
+                {
+                  Registered: "Registered",
+                  Denied: "Connection Denied: " + format(message),
+                  New: "Waiting For Contact",
+                  Pending: "Pending, Waiting for Verification Code",
+                  GotInfo: "Contacted but Not Registered"
+                }[state]
+              }
+            </Badge>
           </div>
+          <div>{description}</div>
           {state !== "New" && (
             <Button
               color="dark"

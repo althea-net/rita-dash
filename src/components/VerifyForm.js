@@ -68,6 +68,7 @@ class VerifyForm extends Component {
     e.preventDefault();
 
     this.setState({ waiting: true });
+    setTimeout(this.setState({ waiting: false }), 10000);
     await actions.verifyExit(this.props.nickname, this.state.fields.code);
   };
 
