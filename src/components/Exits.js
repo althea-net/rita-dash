@@ -128,7 +128,9 @@ function ExitListItem({
             </abbr>
             {nickname}
           </ListGroupItemHeading>
+          <div>{description}</div>
           <div style={{ marginBottom: "10px" }}>
+            Status:&nbsp;
             <Badge
               color={
                 {
@@ -141,7 +143,6 @@ function ExitListItem({
               }
               style={{ paddingTop: "5px" }}
             >
-              Status:&nbsp;
               {
                 {
                   Registered: "Registered",
@@ -153,7 +154,6 @@ function ExitListItem({
               }
             </Badge>
           </div>
-          <div>{description}</div>
           {state !== "New" && (
             <Button
               color="dark"

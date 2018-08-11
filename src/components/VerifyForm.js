@@ -20,6 +20,7 @@ class VerifyForm extends Component {
       fields: {
         code: ""
       },
+      timeout: false,
       waiting: false,
       valid: {}
     };
@@ -68,7 +69,7 @@ class VerifyForm extends Component {
     e.preventDefault();
 
     this.setState({ waiting: true });
-    setTimeout(this.setState({ waiting: false }), 10000);
+    setTimeout(() => this.setState({ timeout: true, waiting: false }), 15000);
     await actions.verifyExit(this.props.nickname, this.state.fields.code);
   };
 
@@ -76,7 +77,7 @@ class VerifyForm extends Component {
     this.state.fields[name] ? this.state.valid[name] : undefined;
 
   render() {
-    let { waiting } = this.state;
+    let { timeout, waiting } = this.state;
 
     return (
       <Card>
@@ -88,6 +89,11 @@ class VerifyForm extends Component {
             </div>
           ) : (
             <Form onSubmit={this.onSubmit}>
+              {timeout && (
+                <div>
+                  Registration timed out possibly due to an invalid code
+                </div>
+              )}
               <FormGroup id="form">
                 <Label for="email">Verification Code</Label>
                 <Input
