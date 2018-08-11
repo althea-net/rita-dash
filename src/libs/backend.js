@@ -137,7 +137,7 @@ export default class Backend {
   }
 
   async registerExit(nickname, email) {
-    await post(`/settings`, {
+    return post(`/settings`, {
       exit_client: {
         reg_details: {
           email: email
@@ -145,15 +145,15 @@ export default class Backend {
       }
     });
 
-    await post(`/exits/${nickname}/register`);
+    return post(`/exits/${nickname}/register`);
   }
 
   async resetExit(nickname) {
-    post(`/exits/${nickname}/reset`);
+    return post(`/exits/${nickname}/reset`);
   }
 
   async requestExitConnection(nickname) {
-    post("/settings", {
+    return post("/settings", {
       exit_client: {
         current_exit: nickname
       }
@@ -161,14 +161,14 @@ export default class Backend {
   }
 
   async selectExit(nickname) {
-    post(`/exits/${nickname}/select`);
+    return post(`/exits/${nickname}/select`);
   }
 
   async toggleWifiMesh(radio, mesh) {
-    post("/wifi_settings/mesh", { radio, mesh });
+    return post("/wifi_settings/mesh", { radio, mesh });
   }
 
   async verifyExit(nickname, code) {
-    post(`/exits/${nickname}/verify/${code}`);
+    return post(`/exits/${nickname}/verify/${code}`);
   }
 }

@@ -63,7 +63,9 @@ const store = {
       setState({ loading: false, success: radio });
     },
     toggleWifiMesh: async ({ setState, state }, radio, mesh) => {
+      setState({ loading: true });
       await backend.toggleWifiMesh(radio, mesh);
+      setState({ loading: false });
     },
     verifyExit: async ({ setState, state }, nickname, code) => {
       await backend.verifyExit(nickname, code);

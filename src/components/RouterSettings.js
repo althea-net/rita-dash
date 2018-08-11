@@ -8,13 +8,11 @@ import {
   FormGroup,
   Label,
   Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Progress
 } from "reactstrap";
 import { actions, connect } from "../store";
+import "./RouterSettings.css";
+import AdvancedSettings from "./AdvancedSettings";
 
 class RouterSettings extends Component {
   async componentDidMount() {
@@ -168,90 +166,11 @@ class WifiSettingsForm extends Component {
                 padding: 10
               }}
             >
-              <AdvancedSettingsModal radio={section} mesh={mesh} />
+              <AdvancedSettings radio={section} mesh={mesh} />
             </FormGroup>
           </Form>
         </CardBody>
       </Card>
-    );
-  }
-}
-
-class AdvancedSettingsModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false,
-      mesh: props.mesh
-    };
-
-    this.toggle = this.toggle.bind(this);
-    this.onToggleWifiMesh = this.onToggleWifiMesh.bind(this);
-  }
-
-  toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
-  }
-
-  onToggleWifiMesh() {
-    let mesh = !this.state.mesh;
-    this.setState({ mesh });
-    actions.toggleWifiMesh(this.props.radio, mesh);
-  }
-
-  render() {
-    return (
-      <div>
-        <Button
-          color="link"
-          onClick={this.toggle}
-          style={{
-            padding: 0,
-            margin: 10
-          }}
-        >
-          Advanced Settings
-        </Button>
-        <Modal
-          isOpen={this.state.modal}
-          toggle={this.toggle}
-          className={this.props.className}
-        >
-          <ModalHeader toggle={this.toggle}>
-            {this.props.radio} WiFi Settings
-          </ModalHeader>
-          <ModalBody>
-            <Form>
-              <FormGroup>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      onChange={this.onToggleWifiMesh}
-                      value={this.state.mesh}
-                      checked={this.state.mesh}
-                    />{" "}
-                    Enable Mesh Over Wifi
-                  </Label>
-                </FormGroup>
-              </FormGroup>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              color="primary"
-              style={{
-                margin: 10
-              }}
-              onClick={this.toggle}
-            >
-              Close
-            </Button>
-          </ModalFooter>
-        </Modal>
-      </div>
     );
   }
 }

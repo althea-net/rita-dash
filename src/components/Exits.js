@@ -134,7 +134,7 @@ function ExitListItem({
               {
                 Registered: "Registered",
                 Denied: "Connection Denied: " + format(message),
-                New: "Never Contacted",
+                New: "Waiting For Contact",
                 Pending: "Pending, Waiting for Verification Code",
                 GotInfo: "Contacted but Not Registered"
               }[state]
