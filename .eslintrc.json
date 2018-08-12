@@ -1,6 +1,7 @@
 {
   "extends": "react-app",
+  "plugins": ["prettier"],
   "rules": {
-    "no-loop-func": "off"
+    "prettier/prettier": "error"
   }
 }

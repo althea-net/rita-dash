@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  Col,
+  Alert,
   Card,
   CardBody,
   Button,
@@ -8,12 +8,12 @@ import {
   FormGroup,
   Label,
   Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
+  Progress
 } from "reactstrap";
 import { actions, connect } from "../store";
+import "./RouterSettings.css";
+import AdvancedSettings from "./AdvancedSettings";
+import Error from "./Error";
 
 class RouterSettings extends Component {
   componentDidMount() {
@@ -21,10 +21,12 @@ class RouterSettings extends Component {
   }
 
   render() {
-    const { wifiSettings } = this.props.state;
+    const { error, loading, wifiSettings } = this.props.state;
     return (
       <div>
         <h1>Router Settings</h1>
+        {loading && <Progress animated color="info" value="100" />}
+        <Error />
         <div
           style={{
             display: "flex",
@@ -33,10 +35,11 @@ class RouterSettings extends Component {
             margin: -20
           }}
         >
-          {wifiSettings &&
+          {!error &&
+            wifiSettings &&
             wifiSettings.map((settings, i) => (
               <WifiSettingsForm
-                store={this.props.store}
+                state={this.props.state}
                 key={i}
                 wifiSettings={settings}
               />
@@ -51,7 +54,10 @@ class WifiSettingsForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fields: {},
+      fields: {
+        key: "",
+        ssid: ""
+      },
       valid: {}
     };
     this.validators = {
@@ -81,16 +87,28 @@ class WifiSettingsForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    actions.saveWifiSetting(this.state.fields);
+    actions.saveWifiSetting(
+      this.state.fields,
+      this.props.wifiSettings.device.radioType
+    );
   };
 
   isFieldValid = name =>
     this.state.fields[name] ? this.state.valid[name] : undefined;
 
   render() {
+    let radio = this.props.wifiSettings.device.radioType;
+    let section = this.props.wifiSettings.device.sectionName;
+    let mesh = this.props.wifiSettings.mesh;
+    let { loading, success } = this.props.state;
+
     return (
       <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
         <CardBody>
+          {success === radio && (
+            <Alert color="success">Settings Saved Successfully</Alert>
+          )}
+          {loading === radio && <Progress animated color="info" value="100" />}
           <Form onSubmit={this.onSubmit}>
             <Label
               for="form"
@@ -100,7 +118,7 @@ class WifiSettingsForm extends Component {
                 textAlign: "center"
               }}
             >
-              {this.props.wifiSettings.device.radio_type}
+              {radio}
             </Label>
 
             <FormGroup id="form">
@@ -152,9 +170,7 @@ class WifiSettingsForm extends Component {
                 padding: 10
               }}
             >
-              <AdvancedSettingsModal
-                network={this.props.wifiSettings.device.radio_type}
-              />
+              <AdvancedSettings radio={section} mesh={mesh} />
             </FormGroup>
           </Form>
         </CardBody>
@@ -163,69 +179,6 @@ class WifiSettingsForm extends Component {
   }
 }
 
-class AdvancedSettingsModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false
-    };
-
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <Button
-          color="link"
-          onClick={this.toggle}
-          style={{
-            padding: 0,
-            margin: 10
-          }}
-        >
-          Advanced Settings
-        </Button>
-        <Modal
-          isOpen={this.state.modal}
-          toggle={this.toggle}
-          className={this.props.className}
-        >
-          <ModalHeader toggle={this.toggle}>
-            {this.props.network}: WiFi Settings
-          </ModalHeader>
-          <ModalBody>
-            <Form>
-              <FormGroup>
-                <h5>Connect to a Mesh Network</h5>
-                <FormGroup check>
-                  <Label check>
-                    <Input type="checkbox" /> Check to Enable Connection
-                  </Label>
-                </FormGroup>
-              </FormGroup>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              color="primary"
-              style={{
-                margin: 10
-              }}
-            >
-              Save
-            </Button>
-          </ModalFooter>
-        </Modal>
-      </div>
-    );
-  }
-}
-
-export default connect(["wifiSettings"])(RouterSettings);
+export default connect(["error", "loading", "success", "wifiSettings"])(
+  RouterSettings
+);

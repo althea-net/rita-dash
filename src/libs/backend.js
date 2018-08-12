@@ -1,27 +1,34 @@
 // @ts-check
-import { actions } from "../store";
 import cckd from "camelcase-keys-deep";
 
+const { protocol, hostname } = window.location;
+const port = 4877;
+const base =
+  process.env.REACT_APP_BACKEND_URL || `${protocol}//${hostname}:${port}`;
+
 async function get(url) {
-  const res = await fetch(url);
-  const json = await res.json();
-  return cckd(json);
+  const res = await fetch(base + url);
+  try {
+    const json = await res.json();
+    if (json && json.error) {
+      throw new Error(json.error);
+    }
+    return cckd(json);
+  } catch (e) {
+    return e;
+  }
 }
 
-function post(url, json) {
-  return fetch(url, {
+async function post(url, json) {
+  await fetch(base + url, {
     method: "POST",
     body: JSON.stringify(json),
-    headers: new Headers({ "Content-Type": "application/json" })
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
   });
 }
-
-function timeout(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-//const url = window.location.hostname + ":4877";
-const url = "http://192.168.10.1:4877";
 
 export default class Backend {
   constructor(url) {
@@ -81,13 +88,7 @@ export default class Backend {
         encryption: "psk2",
         key: "secret passphrase"
       },
-      {
-        device_name: "5GHz Bandwidth",
-        mesh: false,
-        ssid: "MyWifiAP 5ghz",
-        encryption: "psk2",
-        key: "secret passphrase"
-      }
+      {}
     ];
     this.neighborData = [
       {
@@ -110,41 +111,66 @@ export default class Backend {
   }
 
   async getWifiSettings() {
-    const res = await fetch(url + "/wifi_settings");
-    const json = await res.json();
-    return json;
+    return get("/wifi_settings");
   }
 
   async setWifiSettings(settings) {
-    post(url + "/wifi_settings", settings);
+    const radio = settings.device.sectionName;
+    const { ssid, key } = settings;
+
+    await post("/wifi_settings/ssid", { radio, ssid });
+    await post("/wifi_settings/pass", { radio, pass: key });
+  }
+
+  async getExits() {
+    return get("/exits");
   }
 
   async getNeighborData() {
-    return get(url + "/neighbors");
-    // await timeout(100);
-    // return cckd(this.neighborData);
+    return get("/neighbors");
   }
 
   async getSettings() {
-    const res = await fetch(url + "/settings");
-    const json = await res.json();
-    return json;
+    return get("/settings");
   }
 
   async getInfo() {
-    const res = await fetch(url + "/info");
-    const json = await res.json();
-    return json;
+    return get("/info");
+  }
+
+  async registerExit(nickname, email) {
+    await post(`/settings`, {
+      exit_client: {
+        reg_details: {
+          email: email
+        }
+      }
+    });
+
+    return post(`/exits/${nickname}/register`);
+  }
+
+  async resetExit(nickname) {
+    return post(`/exits/${nickname}/reset`);
   }
 
   async requestExitConnection(nickname) {
-    const res = await post(url + "/settings", {
+    return post("/settings", {
       exit_client: {
         current_exit: nickname
       }
     });
-    console.log(await res.text());
-    // const json = await res.json();
-    // return json;
+  }
+
+  async selectExit(nickname) {
+    return post(`/exits/${nickname}/select`);
+  }
+
+  async toggleWifiMesh(radio, mesh) {
+    return post("/wifi_settings/mesh", { radio, mesh });
+  }
+
+  async verifyExit(nickname, code) {
+    return post(`/exits/${nickname}/verify/${code}`);
   }
 }

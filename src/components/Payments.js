@@ -19,13 +19,14 @@ import { actions, connect } from "../store";
 import QRious from "qrious";
 
 class Payments extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     actions.getInfo();
     actions.getSettings();
   }
+
   render() {
     const { info, settings } = this.props.state;
+    if (!(info && settings)) return null;
     return (
       <div>
         <h1>Payments</h1>
@@ -46,8 +47,8 @@ class Payments extends Component {
               margin: -20
             }}
           >
-            {/* <LowFunds />
-            <PriceQuality /> */}
+            <LowFunds />
+            <PriceQuality />
           </div>
         </div>
       </div>
@@ -168,6 +169,7 @@ class RefillFunds extends Component {
             }}
           >
             <img
+              alt="QR Code"
               src={new QRious({
                 size: 256,
                 value: this.props.address
@@ -185,10 +187,10 @@ function MoneyBar({ avgUse, currentFunds }) {
   let currentFundsPos, avgUsePos;
   const scaling = 85;
   if (currentFunds < avgUse) {
-    currentFundsPos = currentFunds / avgUse * scaling;
+    currentFundsPos = (currentFunds / avgUse) * scaling;
     avgUsePos = scaling;
   } else {
-    avgUsePos = avgUse / currentFunds * scaling;
+    avgUsePos = (avgUse / currentFunds) * scaling;
     currentFundsPos = scaling;
   }
 

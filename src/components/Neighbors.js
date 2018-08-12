@@ -16,7 +16,11 @@ class Neighbors extends Component {
     return (
       <div>
         <h1>Neighbors</h1>
-        <div>{normNeighbors.map(neigh => <NodeInfo {...neigh} />)}</div>
+        <div>
+          {normNeighbors.map(neigh => (
+            <NodeInfo {...neigh} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -295,7 +299,11 @@ function NodeInfo({
         scrollDirection={currentDebt}
         scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
       />
-      <h3 style={{ marginBottom: 0, marginLeft: 10 }}>🌎</h3>
+      <h3 style={{ marginBottom: 0, marginLeft: 10 }}>
+        <span role="img" aria-label="Globe">
+          🌎
+        </span>
+      </h3>
     </div>
   );
 }
