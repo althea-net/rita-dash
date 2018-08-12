@@ -102,7 +102,7 @@ class VerifyForm extends Component {
                   name="code"
                   maxLength="6"
                   valid={this.isFieldValid("code")}
-                  invalid={!this.isFieldValid("code")}
+                  invalid={!this.isFieldValid("code") && this.state.fields.code}
                   onChange={this.onFieldChange}
                   onBlur={this.onBlur}
                   value={this.state.fields.code || ""}

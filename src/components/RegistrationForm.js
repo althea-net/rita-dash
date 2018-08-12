@@ -106,7 +106,9 @@ class RegistrationForm extends Component {
                   type="email"
                   name="email"
                   valid={this.isFieldValid("email") && this.state.blurred}
-                  invalid={!this.isFieldValid("email")}
+                  invalid={
+                    !this.isFieldValid("email") && this.state.fields.email
+                  }
                   onChange={this.onFieldChange}
                   onBlur={this.onBlur}
                   value={this.state.fields.email || ""}
