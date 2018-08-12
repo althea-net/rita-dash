@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Alert,
   Card,
   CardBody,
   Button,
@@ -90,9 +91,9 @@ class VerifyForm extends Component {
           ) : (
             <Form onSubmit={this.onSubmit}>
               {timeout && (
-                <div>
+                <Alert color="warning">
                   Registration timed out possibly due to an invalid code
-                </div>
+                </Alert>
               )}
               <FormGroup id="form">
                 <Label for="email">Verification Code</Label>
