@@ -13,17 +13,20 @@ import {
 import { actions, connect } from "../store";
 import "./RouterSettings.css";
 import AdvancedSettings from "./AdvancedSettings";
+import Error from "./Error";
 
 class RouterSettings extends Component {
-  async componentDidMount() {
-    await actions.getWifiSettings();
+  componentDidMount() {
+    actions.getWifiSettings();
   }
 
   render() {
-    const { wifiSettings } = this.props.state;
+    const { error, loading, wifiSettings } = this.props.state;
     return (
       <div>
         <h1>Router Settings</h1>
+        {loading && <Progress animated color="info" value="100" />}
+        <Error />
         <div
           style={{
             display: "flex",
@@ -32,7 +35,8 @@ class RouterSettings extends Component {
             margin: -20
           }}
         >
-          {wifiSettings &&
+          {!error &&
+            wifiSettings &&
             wifiSettings.map((settings, i) => (
               <WifiSettingsForm
                 state={this.props.state}
@@ -175,4 +179,6 @@ class WifiSettingsForm extends Component {
   }
 }
 
-export default connect(["loading", "success", "wifiSettings"])(RouterSettings);
+export default connect(["error", "loading", "success", "wifiSettings"])(
+  RouterSettings
+);

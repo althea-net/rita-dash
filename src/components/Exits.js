@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Alert,
   Badge,
   Button,
   ListGroup,
@@ -10,6 +9,7 @@ import {
 } from "reactstrap";
 import { actions, connect } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Error from "./Error";
 import RegistrationForm from "./RegistrationForm";
 import VerifyForm from "./VerifyForm";
 
@@ -188,10 +188,5 @@ function ExitListItem({
     </ListGroupItem>
   );
 }
-
-const Error = connect(["error"])(({ state }) => {
-  if (!state.error) return null;
-  return <Alert color="danger">{state.error}</Alert>;
-});
 
 export default connect(["exits", "loading"])(Exits);

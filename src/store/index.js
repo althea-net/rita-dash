@@ -23,7 +23,7 @@ const store = {
       let exits = await backend.getExits();
       if (exits instanceof Error) {
         return setState({
-          error: "Getting exits failed",
+          error: "Problem connecting to rita server",
           exits: [],
           loading: false
         });
@@ -39,8 +39,17 @@ const store = {
     getSettings: async ({ setState, state }) => {
       setState({ settings: await backend.getSettings() });
     },
-    getWifiSettings: async ({ state }) => {
-      return { wifiSettings: await backend.getWifiSettings() };
+    getWifiSettings: async ({ setState, state }) => {
+      setState({ loading: true });
+      let res = await backend.getWifiSettings();
+      if (res instanceof Error) {
+        return setState({
+          error: "Problem connecting to rita server",
+          exits: [],
+          loading: false
+        });
+      }
+      setState({ error: null, wifiSettings: res, loading: false });
     },
     registerExit: async ({ setState, state }, nickname, email) => {
       await backend.registerExit(nickname, email);
