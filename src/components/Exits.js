@@ -43,20 +43,13 @@ class Exits extends Component {
 function ExitList({ exits }) {
   let selected;
   function item(exit, i) {
-    let connection = "";
+    let connected = exit.isReachable && exit.haveRoute;
     if (exit.exitSettings.state === "Registered")
-      connection = exit.isTunnelWorking
-        ? "Connection OK!"
-        : "Tunnel connection not working";
-    else {
-      if (!exit.isReachable) connection += "Exit is not reachable. ";
-      if (!exit.haveRoute) connection += "No route to exit.";
-      if (!connection) connection = "Connection OK!";
-    }
+      connected = exit.isTunnelWorking;
 
     return (
       <ExitListItem
-        connection={connection}
+        connected={connected}
         description={exit.exitSettings.description}
         message={exit.exitSettings.message}
         nickname={exit.nickname}
@@ -97,7 +90,7 @@ function ExitList({ exits }) {
 }
 
 function ExitListItem({
-  connection,
+  connected,
   description,
   message,
   nickname,
@@ -116,13 +109,15 @@ function ExitListItem({
     <div>
       <ListGroupItem
         color={
-          {
-            Registered: "success",
-            Denied: "danger",
-            New: "info",
-            Pending: "info",
-            GotInfo: "info"
-          }[state]
+          connected
+            ? {
+                Registered: "success",
+                Denied: "danger",
+                New: "info",
+                Pending: "info",
+                GotInfo: "info"
+              }[state]
+            : "danger"
         }
         disabled={state === "Disabled"}
       >
@@ -130,15 +125,15 @@ function ExitListItem({
           <Row>
             <Col xs="6">{nickname}</Col>
             <Col xs="6" className="text-right">
-              {
-                {
-                  Registered: "Registered",
-                  Denied: "Registration denied",
-                  New: "Unregistered",
-                  Pending: "Registering",
-                  GotInfo: "Unregistered"
-                }[state]
-              }
+              {connected
+                ? {
+                    New: "Unregistered",
+                    GotInfo: "Unregistered",
+                    Pending: "Registering",
+                    Registered: "Registered",
+                    Denied: "Registration denied"
+                  }[state]
+                : "Connection problem"}
             </Col>
           </Row>
         </ListGroupItemHeading>
@@ -148,11 +143,12 @@ function ExitListItem({
         style={{ marginBottom: "10px" }}
       >
         <Row>
-          <Col xs="12" md="6">
+          <Col xs="12" md="8">
             <div>{description}</div>
             {state === "Denied" && <div>{format(message)}</div>}
+            <ConnectionError connected={connected} state={state} />
           </Col>
-          <Col xs="12" md="6">
+          <Col xs="12" md="4">
             {selected ||
               state !== "Registered" || (
                 <Button
@@ -201,6 +197,47 @@ function ExitListItem({
       </ListGroupItem>
     </div>
   );
+}
+
+class ConnectionError extends Component {
+  constructor() {
+    super();
+    this.state = {
+      text: "View"
+    };
+    this.debug = this.debug.bind(this);
+  }
+
+  debug(e) {
+    e.preventDefault();
+    if (this.state.text === "View") {
+      this.setState({ text: "Hide" });
+    } else {
+      this.setState({ text: "View" });
+    }
+  }
+
+  render() {
+    let connected = this.props.connected;
+    let message =
+      this.props.state === "Registered"
+        ? "Tunnel connection not working"
+        : "Exit is not reachable.";
+
+    return (
+      connected || (
+        <div>
+          Unable to reach exit.{" "}
+          <a href="#debug" onClick={this.debug}>
+            {this.state.text} advanced debugging message
+          </a>
+          {this.state.text === "Hide" && (
+            <pre style={{ background: "#ddd", padding: "10px" }}>{message}</pre>
+          )}
+        </div>
+      )
+    );
+  }
 }
 
 export default connect(["exits", "loading"])(Exits);
