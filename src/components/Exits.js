@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import {
-  Badge,
   Button,
+  Col,
   ListGroup,
   ListGroupItemHeading,
   ListGroupItem,
-  Progress
+  Progress,
+  Row
 } from "reactstrap";
 import { actions, connect } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -112,48 +113,67 @@ function ExitListItem({
   }
 
   return (
-    <ListGroupItem disabled={state === "Disabled"}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div style={{ marginRight: 20, textAlign: "left" }}>
-          <ListGroupItemHeading>
-            <abbr title={connection} style={{ marginRight: "10px" }}>
-              {connection === "Connection OK!" ? (
-                <FontAwesomeIcon icon="signal" color="#80ff80" />
-              ) : (
-                <span className="fa-layers fa-fw">
-                  <FontAwesomeIcon icon="signal" color="black" />
-                  <FontAwesomeIcon icon="ban" color="red" size="lg" />
-                </span>
-              )}
-            </abbr>
-            {nickname}
-          </ListGroupItemHeading>
-          <div>{description}</div>
-          <div style={{ marginBottom: "10px" }}>
-            Status:&nbsp;
-            <Badge
-              color={
-                {
-                  Registered: "success",
-                  Denied: "danger",
-                  New: "info",
-                  Pending: "warning",
-                  GotInfo: "info"
-                }[state]
-              }
-              style={{ paddingTop: "5px" }}
-            >
+    <div>
+      <ListGroupItem
+        color={
+          {
+            Registered: "success",
+            Denied: "danger",
+            New: "info",
+            Pending: "info",
+            GotInfo: "info"
+          }[state]
+        }
+        disabled={state === "Disabled"}
+      >
+        <ListGroupItemHeading>
+          <Row>
+            <Col xs="6">{nickname}</Col>
+            <Col xs="6" className="text-right">
               {
                 {
                   Registered: "Registered",
-                  Denied: "Connection Denied: " + format(message),
-                  New: "Waiting For Contact",
-                  Pending: "Pending, Waiting for Verification Code",
-                  GotInfo: "Contacted but Not Registered"
+                  Denied: "Registration denied",
+                  New: "Unregistered",
+                  Pending: "Registering",
+                  GotInfo: "Unregistered"
                 }[state]
               }
-            </Badge>
-          </div>
+            </Col>
+          </Row>
+        </ListGroupItemHeading>
+      </ListGroupItem>
+      <ListGroupItem
+        disabled={state === "Disabled"}
+        style={{ marginBottom: "10px" }}
+      >
+        <Row>
+          <Col xs="12" md="6">
+            <div>{description}</div>
+            {state === "Denied" && <div>{format(message)}</div>}
+          </Col>
+          <Col xs="12" md="6">
+            {selected ||
+              state !== "Registered" || (
+                <Button
+                  color="success"
+                  className="float-md-right"
+                  onClick={() => {
+                    actions.selectExit(nickname);
+                  }}
+                >
+                  Connect
+                </Button>
+              )}
+            {(state === "GotInfo" || state === "Denied") && (
+              <RegistrationForm nickname={nickname} state={state} email="" />
+            )}
+            {state === "Pending" && (
+              <VerifyForm nickname={nickname} state={state} email="" />
+            )}
+          </Col>
+        </Row>
+        <Row>
           {state !== "New" && (
             <span
               style={{
@@ -168,33 +188,18 @@ function ExitListItem({
               <FontAwesomeIcon
                 icon="sync"
                 color="#aaaaaa"
-                style={{ marginRight: "5px" }}
+                style={{
+                  marginLeft: "15px",
+                  marginTop: "10px",
+                  marginRight: "5px"
+                }}
               />
               Reset
             </span>
           )}
-        </div>
-        <div>
-          {selected ||
-            state !== "Registered" || (
-              <Button
-                color="dark"
-                onClick={() => {
-                  actions.selectExit(nickname);
-                }}
-              >
-                Select
-              </Button>
-            )}
-          {(state === "GotInfo" || state === "Denied") && (
-            <RegistrationForm nickname={nickname} state={state} email="" />
-          )}
-          {state === "Pending" && (
-            <VerifyForm nickname={nickname} state={state} email="" />
-          )}
-        </div>
-      </div>
-    </ListGroupItem>
+        </Row>
+      </ListGroupItem>
+    </div>
   );
 }
 

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import {
-  Card,
-  CardBody,
   Button,
   Form,
   FormFeedback,
@@ -90,66 +88,59 @@ class RegistrationForm extends Component {
   render() {
     let { registering, waiting } = this.state;
 
-    return (
-      <Card>
-        <CardBody>
-          {waiting ? (
-            <div>
-              Submitting Registration Request
-              <Progress color="info" animated value="100" />
-            </div>
-          ) : registering ? (
-            <Form onSubmit={this.onSubmit}>
-              <FormGroup id="form">
-                <Label for="email">Email</Label>
-                <Input
-                  type="email"
-                  name="email"
-                  valid={this.isFieldValid("email") && this.state.blurred}
-                  invalid={
-                    !this.isFieldValid("email") && this.state.fields.email
-                  }
-                  onChange={this.onFieldChange}
-                  onBlur={this.onBlur}
-                  value={this.state.fields.email || ""}
-                />
-                <FormFeedback invalid>A valid email is required</FormFeedback>
-              </FormGroup>
-              <FormGroup
-                style={{
-                  display: "flex",
-                  margin: -20,
-                  marginTop: 0,
-                  padding: 10
-                }}
-              >
-                <Button
-                  color={this.isFieldValid("email") ? "primary" : "secondary"}
-                  disabled={!this.isFieldValid("email") || waiting}
-                  style={{
-                    margin: 10
-                  }}
-                >
-                  Submit
-                </Button>
-                <Button style={{ margin: 10 }} onClick={this.stopRegistering}>
-                  Cancel
-                </Button>
-              </FormGroup>
-            </Form>
-          ) : (
-            <Button
-              color="dark"
-              onClick={this.startRegistering}
-              style={{
-                margin: 10
-              }}
-            >
-              Register
-            </Button>
-          )}
-        </CardBody>
-      </Card>
+    return waiting ? (
+      <div>
+        Submitting Registration Request
+        <Progress color="info" animated value="100" />
+      </div>
+    ) : registering ? (
+      <Form onSubmit={this.onSubmit}>
+        <FormGroup id="form">
+          <Label for="email">Email</Label>
+          <Input
+            type="email"
+            name="email"
+            valid={this.isFieldValid("email") && this.state.blurred}
+            invalid={!this.isFieldValid("email") && this.state.fields.email}
+            onChange={this.onFieldChange}
+            onBlur={this.onBlur}
+            value={this.state.fields.email || ""}
+          />
+          <FormFeedback invalid>A valid email is required</FormFeedback>
+        </FormGroup>
+        <FormGroup
+          style={{
+            display: "flex",
+            margin: -20,
+            marginTop: 0,
+            padding: 10
+          }}
+        >
+          <Button
+            color={this.isFieldValid("email") ? "primary" : "secondary"}
+            disabled={!this.isFieldValid("email") || waiting}
+            style={{
+              margin: 10
+            }}
+          >
+            Submit
+          </Button>
+          <Button style={{ margin: 10 }} onClick={this.stopRegistering}>
+            Cancel
+          </Button>
+        </FormGroup>
+      </Form>
+    ) : (
+      <Button
+        color="primary"
+        className="float-lg-right"
+        onClick={this.startRegistering}
+        style={{
+          margin: 10
+        }}
+      >
+        Register
+      </Button>
     );
   }
 }
