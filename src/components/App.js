@@ -12,13 +12,15 @@ import {
   faBan,
   faRoute,
   faSignal,
-  faSitemap
+  faSitemap,
+  faSync
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faBan);
 library.add(faRoute);
 library.add(faSignal);
 library.add(faSitemap);
+library.add(faSync);
 
 class App extends Component {
   constructor(props) {

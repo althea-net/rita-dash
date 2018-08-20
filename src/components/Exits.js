@@ -155,14 +155,23 @@ function ExitListItem({
             </Badge>
           </div>
           {state !== "New" && (
-            <Button
-              color="dark"
+            <span
+              style={{
+                color: "#999",
+                cursor: "pointer",
+                textDecoration: "underline"
+              }}
               onClick={() => {
                 actions.resetExit(nickname);
               }}
             >
+              <FontAwesomeIcon
+                icon="sync"
+                color="#aaaaaa"
+                style={{ marginRight: "5px" }}
+              />
               Reset
-            </Button>
+            </span>
           )}
         </div>
         <div>
