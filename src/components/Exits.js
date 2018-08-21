@@ -43,21 +43,7 @@ class Exits extends Component {
 function ExitList({ exits }) {
   let selected;
   function item(exit, i) {
-    let connected = exit.isReachable && exit.haveRoute;
-    if (exit.exitSettings.state === "Registered")
-      connected = exit.isTunnelWorking;
-
-    return (
-      <ExitListItem
-        connected={connected}
-        description={exit.exitSettings.description}
-        message={exit.exitSettings.message}
-        nickname={exit.nickname}
-        selected={exit.isSelected}
-        state={exit.exitSettings.state}
-        key={i}
-      />
-    );
+    return <ExitListItem exit={exit} key={i} />;
   }
 
   let unselected = exits
@@ -67,7 +53,7 @@ function ExitList({ exits }) {
         return false;
       }
 
-      if (exit.state === "Disabled") {
+      if (exit.state === "Disabled" || exit.state === "New") {
         return false;
       }
 
@@ -89,14 +75,14 @@ function ExitList({ exits }) {
   );
 }
 
-function ExitListItem({
-  connected,
-  description,
-  message,
-  nickname,
-  selected,
-  state
-}) {
+function ExitListItem({ exit }) {
+  let { description, message, state } = exit.exitSettings;
+  let { nickname, selected } = exit;
+  let connected = exit.isReachable && exit.haveRoute;
+
+  if (exit.exitSettings.state === "Registered")
+    connected = exit.isTunnelWorking;
+
   if (!message) message = "";
   function format(m) {
     if (m.includes("Json") || m.includes("msg:")) {
@@ -146,7 +132,7 @@ function ExitListItem({
           <Col xs="12" md="8">
             <div>{description}</div>
             {state === "Denied" && <div>{format(message)}</div>}
-            <ConnectionError connected={connected} state={state} />
+            <ConnectionError connected={connected} exit={exit} />
           </Col>
           <Col xs="12" md="4">
             {selected ||
@@ -203,18 +189,14 @@ class ConnectionError extends Component {
   constructor() {
     super();
     this.state = {
-      text: "View"
+      show: false
     };
     this.debug = this.debug.bind(this);
   }
 
   debug(e) {
     e.preventDefault();
-    if (this.state.text === "View") {
-      this.setState({ text: "Hide" });
-    } else {
-      this.setState({ text: "View" });
-    }
+    this.setState({ show: !this.state.show });
   }
 
   render() {
@@ -222,16 +204,18 @@ class ConnectionError extends Component {
     let message =
       this.props.state === "Registered"
         ? "Tunnel connection not working"
-        : "Exit is not reachable.";
+        : this.props.exit.haveRoute
+          ? "No route to exit"
+          : "Exit is not reachable";
 
     return (
       connected || (
         <div>
-          Unable to reach exit.{" "}
+          Connection Problem.{" "}
           <a href="#debug" onClick={this.debug}>
-            {this.state.text} advanced debugging message
+            {this.state.show ? "Hide" : "View"} advanced debugging message
           </a>
-          {this.state.text === "Hide" && (
+          {this.state.show && (
             <pre style={{ background: "#ddd", padding: "10px" }}>{message}</pre>
           )}
         </div>
