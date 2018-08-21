@@ -48,7 +48,7 @@ function ExitList({ exits }) {
 
   let unselected = exits
     .filter(exit => {
-      if (exit.isSelected) {
+      if (exit.isSelected && exit.exitSettings.state === "Registered") {
         selected = exit;
         return false;
       }
