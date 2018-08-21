@@ -77,7 +77,7 @@ function ExitList({ exits }) {
 
 function ExitListItem({ exit }) {
   let { description, message, state } = exit.exitSettings;
-  let { nickname, selected } = exit;
+  let { nickname, isSelected } = exit;
   let connected = exit.isReachable && exit.haveRoute;
 
   if (exit.exitSettings.state === "Registered")
@@ -135,7 +135,7 @@ function ExitListItem({ exit }) {
             <ConnectionError connected={connected} exit={exit} />
           </Col>
           <Col xs="12" md="4">
-            {selected ||
+            {isSelected ||
               state !== "Registered" || (
                 <Button
                   color="success"
