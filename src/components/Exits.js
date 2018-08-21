@@ -110,11 +110,13 @@ function ExitListItem({ exit }) {
       >
         <ListGroupItemHeading>
           <Row>
-            <Col xs="6">{nickname}</Col>
+            <Col xs="6">
+              {nickname} {connected.toString()}
+            </Col>
             <Col xs="6" className="text-right">
               {connected || state === "New"
                 ? {
-                    New: "Unavailable",
+                    New: "",
                     GotInfo: "Unregistered",
                     Pending: "Registering",
                     Registered: "Registered",
@@ -149,7 +151,7 @@ function ExitListItem({ exit }) {
                   Connect
                 </Button>
               )}
-            {(state === "GotInfo" || state === "Denied") && (
+            {state === "GotInfo" && (
               <RegistrationForm nickname={nickname} state={state} email="" />
             )}
             {state === "Pending" && (
@@ -207,8 +209,8 @@ class ConnectionError extends Component {
       this.props.state === "Registered"
         ? "Tunnel connection not working"
         : this.props.exit.haveRoute
-          ? "No route to exit"
-          : "Exit is not reachable";
+          ? "Exit is not reachable"
+          : "No route to exit";
 
     return (
       connected || (
