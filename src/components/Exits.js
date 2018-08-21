@@ -48,12 +48,13 @@ function ExitList({ exits }) {
 
   let unselected = exits
     .filter(exit => {
-      if (exit.isSelected && exit.exitSettings.state === "Registered") {
+      let { state } = exit.exitSettings;
+      if (exit.isSelected && state === "Registered") {
         selected = exit;
         return false;
       }
 
-      if (exit.state === "Disabled" || exit.state === "New") {
+      if (state === "Disabled") {
         return false;
       }
 
@@ -105,15 +106,15 @@ function ExitListItem({ exit }) {
               }[state]
             : "danger"
         }
-        disabled={state === "Disabled"}
+        disabled={state === "New" || state === "Disabled"}
       >
         <ListGroupItemHeading>
           <Row>
             <Col xs="6">{nickname}</Col>
             <Col xs="6" className="text-right">
-              {connected
+              {connected || state === "New"
                 ? {
-                    New: "Unregistered",
+                    New: "Unavailable",
                     GotInfo: "Unregistered",
                     Pending: "Registering",
                     Registered: "Registered",
@@ -136,6 +137,7 @@ function ExitListItem({ exit }) {
           </Col>
           <Col xs="12" md="4">
             {isSelected ||
+              !connected ||
               state !== "Registered" || (
                 <Button
                   color="success"
