@@ -246,6 +246,8 @@ class ConnectionError extends Component {
           </a>
           {this.state.show && (
             <pre style={{ background: "#ddd", padding: "10px" }}>
+              state: {this.props.exit.exitSettings.state}
+              <br />
               is_reachable: {isReachable.toString()}
               <br />
               have_route: {haveRoute.toString()}
