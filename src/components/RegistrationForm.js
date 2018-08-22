@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import {
   Button,
-  Card,
-  CardTitle,
-  CardBody,
   Form,
   FormFeedback,
   FormGroup,
@@ -97,52 +94,51 @@ class RegistrationForm extends Component {
         <Progress color="info" animated value="100" />
       </div>
     ) : registering ? (
-      <Card>
-        <CardBody>
-          <CardTitle>Register</CardTitle>
-          <Form onSubmit={this.onSubmit}>
-            <FormGroup id="form">
-              <Label for="email">Email</Label>
-              <Input
-                label="Email"
-                type="email"
-                name="email"
-                valid={this.isFieldValid("email") && this.state.blurred}
-                invalid={
-                  !(this.isFieldValid("email") || !this.state.fields.email)
-                }
-                onChange={this.onFieldChange}
-                onBlur={this.onBlur}
-                value={this.state.fields.email || ""}
-              />
-              <FormFeedback invalid="true">
-                A valid email is required
-              </FormFeedback>
-            </FormGroup>
-            <FormGroup
-              style={{
-                display: "flex",
-                margin: -20,
-                marginTop: 0,
-                padding: 10
-              }}
-            >
-              <Button
-                color={this.isFieldValid("email") ? "primary" : "secondary"}
-                disabled={!this.isFieldValid("email") || waiting}
-                style={{
-                  margin: 10
-                }}
-              >
-                Submit
-              </Button>
-              <Button style={{ margin: 10 }} onClick={this.stopRegistering}>
-                Cancel
-              </Button>
-            </FormGroup>
-          </Form>
-        </CardBody>
-      </Card>
+      <Form onSubmit={this.onSubmit} className="form-inline">
+        <h5>Register</h5>
+        <FormGroup id="form">
+          <Label for="email" style={{ marginRight: 5 }}>
+            <b>Email</b>
+          </Label>
+          <Input
+            label="Email"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            valid={this.isFieldValid("email") && this.state.blurred}
+            invalid={!(this.isFieldValid("email") || !this.state.fields.email)}
+            onChange={this.onFieldChange}
+            onBlur={this.onBlur}
+            value={this.state.fields.email || ""}
+          />
+          <FormFeedback invalid="true">A valid email is required</FormFeedback>
+        </FormGroup>
+        <FormGroup
+          style={{
+            display: "flex",
+            margin: -20,
+            marginTop: 0,
+            padding: 10
+          }}
+        >
+          <Button
+            color={this.isFieldValid("email") ? "primary" : "secondary"}
+            disabled={!this.isFieldValid("email") || waiting}
+            style={{
+              margin: 3
+            }}
+          >
+            Submit
+          </Button>
+          <Button
+            color="primary"
+            style={{ margin: 3 }}
+            onClick={this.stopRegistering}
+          >
+            Cancel
+          </Button>
+        </FormGroup>
+      </Form>
     ) : (
       <Button
         color="primary"

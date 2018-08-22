@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {
   Alert,
-  Card,
-  CardBody,
   Button,
   Form,
   FormFeedback,
@@ -80,62 +78,62 @@ class VerifyForm extends Component {
   render() {
     let { timeout, waiting } = this.state;
 
-    return (
-      <Card>
-        <CardBody>
-          {waiting ? (
-            <div>
-              Submitting Verification
-              <Progress color="info" animated value="100" />
-            </div>
-          ) : (
-            <Form onSubmit={this.onSubmit}>
-              {timeout && (
-                <Alert color="warning">
-                  Registration timed out possibly due to an invalid code
-                </Alert>
-              )}
-              <FormGroup id="form">
-                <Label for="email">Verification Code</Label>
-                <Input
-                  type="text"
-                  name="code"
-                  maxLength="6"
-                  valid={this.isFieldValid("code")}
-                  invalid={
-                    !(this.isFieldValid("code") || !this.state.fields.code)
-                  }
-                  onChange={this.onFieldChange}
-                  onBlur={this.onBlur}
-                  value={this.state.fields.code || ""}
-                />
-                <FormFeedback invalid="true">
-                  Please enter a valid 6-digit code
-                </FormFeedback>
-              </FormGroup>
+    return waiting ? (
+      <div>
+        Submitting Verification
+        <Progress color="info" animated value="100" />
+      </div>
+    ) : (
+      <Form onSubmit={this.onSubmit} className="form-inline">
+        <h5>Register</h5>
+        {timeout ? (
+          <Alert color="warning">
+            Registration timed out possibly due to an invalid code
+          </Alert>
+        ) : (
+          <p>
+            A six-digit registration code is being sent to your email address.
+          </p>
+        )}
+        <FormGroup id="form" className="form-inline">
+          <Label for="code" style={{ marginRight: 5 }}>
+            <b>Code</b>
+          </Label>
+          <Input
+            type="text"
+            name="code"
+            placeholder="Enter 6 digit code"
+            maxLength="6"
+            valid={this.isFieldValid("code")}
+            invalid={!(this.isFieldValid("code") || !this.state.fields.code)}
+            onChange={this.onFieldChange}
+            onBlur={this.onBlur}
+            value={this.state.fields.code || ""}
+          />
+          <FormFeedback invalid="true">
+            Please enter a valid 6-digit code
+          </FormFeedback>
+        </FormGroup>
 
-              <FormGroup
-                style={{
-                  display: "flex",
-                  margin: -20,
-                  marginTop: 0,
-                  padding: 10
-                }}
-              >
-                <Button
-                  color={this.isFieldValid("code") ? "primary" : "secondary"}
-                  disabled={!this.isFieldValid("code")}
-                  style={{
-                    margin: 10
-                  }}
-                >
-                  Verify
-                </Button>
-              </FormGroup>
-            </Form>
-          )}
-        </CardBody>
-      </Card>
+        <FormGroup
+          style={{
+            display: "flex",
+            margin: -20,
+            marginTop: 0,
+            padding: 10
+          }}
+        >
+          <Button
+            color={this.isFieldValid("code") ? "primary" : "secondary"}
+            disabled={!this.isFieldValid("code")}
+            style={{
+              margin: 10
+            }}
+          >
+            Verify
+          </Button>
+        </FormGroup>
+      </Form>
     );
   }
 }

@@ -110,9 +110,7 @@ function ExitListItem({ exit }) {
       >
         <ListGroupItemHeading>
           <Row>
-            <Col xs="6">
-              {nickname} {connected.toString()}
-            </Col>
+            <Col xs="6">{nickname}</Col>
             <Col xs="6" className="text-right">
               {connected
                 ? state === "Registered"
@@ -134,12 +132,12 @@ function ExitListItem({ exit }) {
         style={{ marginBottom: "10px" }}
       >
         <Row>
-          <Col xs="12" md="8">
+          <Col xs="12" md="6">
             <div>{description}</div>
             {state === "Denied" && <div>{format(message)}</div>}
             <ConnectionError connected={connected} exit={exit} />
           </Col>
-          <Col xs="12" md="4">
+          <Col xs="12" md="6">
             {isSelected ||
               !connected ||
               state !== "Registered" || (
