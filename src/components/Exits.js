@@ -54,7 +54,7 @@ function ExitList({ exits }) {
         return false;
       }
 
-      if (state === "Disabled") {
+      if (state === "Disabled" || state === "New") {
         return false;
       }
 
