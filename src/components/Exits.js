@@ -86,13 +86,6 @@ class ExitListItem extends Component {
     this.stopRegistering = this.stopRegistering.bind(this);
   }
 
-  format(m) {
-    if (m.includes("Json") || m.includes("msg:")) {
-      return m.match(/.*"(.*)".*/)[1];
-    }
-    return m;
-  }
-
   startRegistering() {
     this.setState({ registering: true });
   }
@@ -162,7 +155,7 @@ class ExitListItem extends Component {
           <Row>
             <Col xs="12" md={pseudostate === "Problem" ? 12 : 6}>
               <div>{description}</div>
-              {state === "Denied" && <div>{this.format(message)}</div>}
+              {state === "Denied" && <div>{message}</div>}
               <ConnectionError connected={connected} exit={exit} />
             </Col>
             {pseudostate !== "Problem" && (
