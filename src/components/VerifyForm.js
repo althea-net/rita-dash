@@ -75,7 +75,7 @@ class VerifyForm extends Component {
   };
 
   isFieldValid = name =>
-    this.state.fields[name] ? this.state.valid[name] : undefined;
+    this.state.fields[name] ? this.state.valid[name] : false;
 
   render() {
     let { timeout, waiting } = this.state;
@@ -102,12 +102,14 @@ class VerifyForm extends Component {
                   name="code"
                   maxLength="6"
                   valid={this.isFieldValid("code")}
-                  invalid={!this.isFieldValid("code") && this.state.fields.code}
+                  invalid={
+                    !(this.isFieldValid("code") || !this.state.fields.code)
+                  }
                   onChange={this.onFieldChange}
                   onBlur={this.onBlur}
                   value={this.state.fields.code || ""}
                 />
-                <FormFeedback invalid>
+                <FormFeedback invalid="true">
                   Please enter a valid 6-digit code
                 </FormFeedback>
               </FormGroup>
