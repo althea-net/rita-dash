@@ -80,6 +80,7 @@ class VerifyForm extends Component {
 
     return waiting ? (
       <div>
+        <h5>Register</h5>
         <Progress color="success" animated value="50" />
         <p style={{ marginTop: 10 }} className="text-center">
           <b>Submitting verification code to exit...</b>
