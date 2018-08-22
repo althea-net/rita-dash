@@ -51,7 +51,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar color="dark" dark expand="md">
+        <Navbar color="primary" dark expand="md">
           <NavbarBrand href="#">
             <img src={logo} width="60px" alt="Althea Logo" />
             Althea
