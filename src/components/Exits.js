@@ -114,14 +114,16 @@ function ExitListItem({ exit }) {
               {nickname} {connected.toString()}
             </Col>
             <Col xs="6" className="text-right">
-              {connected || state === "New"
-                ? {
-                    New: "",
-                    GotInfo: "Unregistered",
-                    Pending: "Registering",
-                    Registered: "Registered",
-                    Denied: "Registration denied"
-                  }[state]
+              {connected
+                ? state === "Registered"
+                  ? "Connected"
+                  : {
+                      New: "",
+                      GotInfo: "Unregistered",
+                      Pending: "Registering",
+                      Registered: "Registered",
+                      Denied: "Registration denied"
+                    }[state]
                 : "Connection problem"}
             </Col>
           </Row>
