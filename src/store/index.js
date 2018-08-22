@@ -53,7 +53,6 @@ const store = {
     },
     registerExit: async ({ setState, state }, nickname, email) => {
       await backend.registerExit(nickname, email);
-      await backend.selectExit(nickname);
       setState({ exits: await backend.getExits() });
     },
     resetExit: async ({ setState, state }, nickname) => {
@@ -79,6 +78,7 @@ const store = {
     },
     verifyExit: async ({ setState, state }, nickname, code) => {
       await backend.verifyExit(nickname, code);
+      await backend.selectExit(nickname);
     }
   }
 };
