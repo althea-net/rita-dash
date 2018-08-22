@@ -80,8 +80,10 @@ class VerifyForm extends Component {
 
     return waiting ? (
       <div>
-        Submitting Verification
-        <Progress color="info" animated value="100" />
+        <Progress color="success" animated value="50" />
+        <p>
+          <b>Submitting verification code to exit...</b>
+        </p>
       </div>
     ) : (
       <Form onSubmit={this.onSubmit} className="form-inline">

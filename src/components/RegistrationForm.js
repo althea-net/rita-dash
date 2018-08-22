@@ -20,7 +20,6 @@ class RegistrationForm extends Component {
       fields: {
         email: ""
       },
-      registering: false,
       waiting: false,
       valid: {}
     };
@@ -78,10 +77,12 @@ class RegistrationForm extends Component {
     this.state.fields[name] ? this.state.valid[name] : false;
 
   startRegistering() {
+    this.props.startRegistering();
     this.setState({ registering: true });
   }
 
   stopRegistering() {
+    this.props.stopRegistering();
     this.setState({ registering: false, waiting: false });
   }
 
@@ -90,8 +91,11 @@ class RegistrationForm extends Component {
 
     return waiting ? (
       <div>
-        Submitting Registration Request
-        <Progress color="info" animated value="100" />
+        <h5>Register</h5>
+        <Progress color="success" animated value="50" />
+        <p style={{ marginTop: 10 }} className="text-center">
+          <b>Submitting email to exit...</b>
+        </p>
       </div>
     ) : registering ? (
       <Form onSubmit={this.onSubmit} className="form-inline">

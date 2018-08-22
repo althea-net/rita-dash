@@ -76,117 +76,154 @@ function ExitList({ exits }) {
   );
 }
 
-function ExitListItem({ exit }) {
-  let { description, message, state } = exit.exitSettings;
-  let { nickname, isSelected } = exit;
-  let connected = exit.isReachable && exit.haveRoute;
+class ExitListItem extends Component {
+  constructor(props) {
+    super(props);
 
-  if (exit.exitSettings.state === "Registered")
-    connected = exit.isTunnelWorking;
+    this.state = { registering: false };
 
-  if (!message) message = "";
-  function format(m) {
+    this.startRegistering = this.startRegistering.bind(this);
+    this.stopRegistering = this.stopRegistering.bind(this);
+  }
+
+  format(m) {
     if (m.includes("Json") || m.includes("msg:")) {
       return m.match(/.*"(.*)".*/)[1];
     }
     return m;
   }
 
-  return (
-    <div>
-      <ListGroupItem
-        color={
-          connected
-            ? {
-                Registered: "success",
-                Denied: "danger",
-                New: "info",
-                Pending: "info",
-                GotInfo: "info"
-              }[state]
-            : "danger"
-        }
-        disabled={state === "New" || state === "Disabled"}
-      >
-        <ListGroupItemHeading>
+  startRegistering() {
+    this.setState({ registering: true });
+  }
+
+  stopRegistering() {
+    this.setState({ registering: false });
+  }
+
+  render() {
+    let exit = this.props.exit;
+    let { description, message, state } = exit.exitSettings;
+    let { nickname, isSelected } = exit;
+    let connected = exit.isReachable && exit.haveRoute;
+    let pseudostate = state;
+    if (state === "Registered") {
+      connected = exit.isTunnelWorking;
+      pseudostate = connected && "Connected";
+    }
+    if (!message) message = "";
+    if (!connected) pseudostate = "Problem";
+
+    if (this.state.registering && state === "GotInfo") {
+      pseudostate = "Registering";
+    }
+
+    return (
+      <div>
+        <ListGroupItem
+          color={
+            {
+              Connected: "success",
+              Denied: "danger",
+              GotInfo: "info",
+              New: "info",
+              Pending: "info",
+              Problem: "danger",
+              Registered: "success",
+              Registering: "info"
+            }[pseudostate]
+          }
+          disabled={state === "New" || state === "Disabled"}
+        >
+          <ListGroupItemHeading>
+            <Row>
+              <Col xs="6">{nickname}</Col>
+              <Col xs="6" className="text-right">
+                {
+                  {
+                    New: "",
+                    GotInfo: "Unregistered",
+                    Registering: "Registering",
+                    Pending: "Registering",
+                    Registered: "Registered",
+                    Connected: "Connected",
+                    Problem: "Connection problem",
+                    Denied: "Registration denied"
+                  }[pseudostate]
+                }
+              </Col>
+            </Row>
+          </ListGroupItemHeading>
+        </ListGroupItem>
+        <ListGroupItem
+          disabled={state === "Disabled"}
+          style={{ marginBottom: "10px" }}
+        >
           <Row>
-            <Col xs="6">{nickname}</Col>
-            <Col xs="6" className="text-right">
-              {connected
-                ? state === "Registered"
-                  ? "Connected"
-                  : {
-                      New: "",
-                      GotInfo: "Unregistered",
-                      Pending: "Registering",
-                      Registered: "Registered",
-                      Denied: "Registration denied"
-                    }[state]
-                : "Connection problem"}
+            <Col xs="12" md={pseudostate === "Problem" ? 12 : 6}>
+              <div>{description}</div>
+              {state === "Denied" && <div>{this.format(message)}</div>}
+              <ConnectionError connected={connected} exit={exit} />
             </Col>
+            {pseudostate !== "Problem" && (
+              <Col xs="12" md="6">
+                {isSelected ||
+                  !connected ||
+                  state !== "Registered" || (
+                    <Button
+                      color="success"
+                      className="float-md-right"
+                      onClick={() => {
+                        actions.selectExit(nickname);
+                      }}
+                    >
+                      Connect
+                    </Button>
+                  )}
+                {(state === "GotInfo" || state === "Registering") && (
+                  <RegistrationForm
+                    nickname={nickname}
+                    state={state}
+                    email=""
+                    startRegistering={this.startRegistering}
+                    stopRegistering={this.stopRegistering}
+                  />
+                )}
+                {state === "Pending" && (
+                  <VerifyForm nickname={nickname} state={state} email="" />
+                )}
+              </Col>
+            )}
           </Row>
-        </ListGroupItemHeading>
-      </ListGroupItem>
-      <ListGroupItem
-        disabled={state === "Disabled"}
-        style={{ marginBottom: "10px" }}
-      >
-        <Row>
-          <Col xs="12" md="6">
-            <div>{description}</div>
-            {state === "Denied" && <div>{format(message)}</div>}
-            <ConnectionError connected={connected} exit={exit} />
-          </Col>
-          <Col xs="12" md="6">
-            {isSelected ||
-              !connected ||
-              state !== "Registered" || (
-                <Button
-                  color="success"
-                  className="float-md-right"
-                  onClick={() => {
-                    actions.selectExit(nickname);
-                  }}
-                >
-                  Connect
-                </Button>
-              )}
-            {state === "GotInfo" && (
-              <RegistrationForm nickname={nickname} state={state} email="" />
-            )}
-            {state === "Pending" && (
-              <VerifyForm nickname={nickname} state={state} email="" />
-            )}
-          </Col>
-        </Row>
-        <Row>
-          {state !== "New" && (
-            <span
-              style={{
-                color: "#999",
-                cursor: "pointer",
-                textDecoration: "underline"
-              }}
-              onClick={() => {
-                actions.resetExit(nickname);
-              }}
-            >
-              <FontAwesomeIcon
-                icon="sync"
-                color="#aaaaaa"
+          <Row>
+            {state !== "New" && (
+              <span
                 style={{
-                  marginLeft: "15px",
-                  marginTop: "10px",
-                  marginRight: "5px"
+                  color: "#999",
+                  cursor: "pointer",
+                  textDecoration: "underline"
                 }}
-              />
-              Reset
-            </span>
-          )}
-        </Row>
-      </ListGroupItem>
-    </div>
-  );
+                onClick={() => {
+                  actions.resetExit(nickname);
+                }}
+              >
+                <FontAwesomeIcon
+                  icon="sync"
+                  color="#aaaaaa"
+                  style={{
+                    marginLeft: "15px",
+                    marginTop: "10px",
+                    marginRight: "5px"
+                  }}
+                />
+                Reset
+              </span>
+            )}
+          </Row>
+        </ListGroupItem>
+      </div>
+    );
+  }
 }
 
 class ConnectionError extends Component {
@@ -205,22 +242,23 @@ class ConnectionError extends Component {
 
   render() {
     let connected = this.props.connected;
-    let message =
-      this.props.state === "Registered"
-        ? "Tunnel connection not working"
-        : this.props.exit.haveRoute
-          ? "Exit is not reachable"
-          : "No route to exit";
+    let { isReachable, haveRoute, isTunnelWorking } = this.props.exit;
 
     return (
       connected || (
-        <div>
-          Connection Problem.{" "}
+        <div style={{ marginTop: 5, marginBottom: 5 }}>
+          Unable to reach exit.{" "}
           <a href="#debug" onClick={this.debug}>
             {this.state.show ? "Hide" : "View"} advanced debugging message
           </a>
           {this.state.show && (
-            <pre style={{ background: "#ddd", padding: "10px" }}>{message}</pre>
+            <pre style={{ background: "#ddd", padding: "10px" }}>
+              is_reachable: {isReachable.toString()}
+              <br />
+              have_route: {haveRoute.toString()}
+              <br />
+              is_tunnel_working: {isTunnelWorking.toString()}
+            </pre>
           )}
         </div>
       )
