@@ -12,6 +12,7 @@ import {
   Progress
 } from "reactstrap";
 import { actions } from "../store";
+import animatedScrollTo from "animated-scroll-to";
 
 class VerifyForm extends Component {
   constructor(props) {
@@ -68,10 +69,15 @@ class VerifyForm extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
+    let scroll = window.scrollY;
 
     this.setState({ waiting: true });
-    setTimeout(() => this.setState({ timeout: true, waiting: false }), 15000);
+    setTimeout(() => {
+      this.setState({ timeout: true, waiting: false });
+      animatedScrollTo(scroll);
+    }, 5000);
     await actions.verifyExit(this.props.nickname, this.state.fields.code);
+    animatedScrollTo(0);
   };
 
   isFieldValid = name =>

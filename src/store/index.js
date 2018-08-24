@@ -1,6 +1,5 @@
 import { initStore } from "react-stateful";
 import Backend from "../libs/backend";
-import animatedScrollTo from "animated-scroll-to";
 
 const backend = new Backend();
 
@@ -81,7 +80,6 @@ const store = {
       await backend.verifyExit(nickname, code);
       await backend.selectExit(nickname);
       setState({ exits: await backend.getExits() });
-      animatedScrollTo(0);
     }
   }
 };
