@@ -78,6 +78,8 @@ const store = {
     },
     verifyExit: async ({ setState, state }, nickname, code) => {
       await backend.verifyExit(nickname, code);
+      await backend.selectExit(nickname);
+      setState({ exits: await backend.getExits() });
     }
   }
 };

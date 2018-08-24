@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import {
+  Alert,
+  Button,
   Card,
   CardBody,
-  Button,
   Form,
   FormFeedback,
   FormGroup,
@@ -11,6 +12,7 @@ import {
   Progress
 } from "reactstrap";
 import { actions } from "../store";
+import animatedScrollTo from "animated-scroll-to";
 
 class VerifyForm extends Component {
   constructor(props) {
@@ -67,14 +69,19 @@ class VerifyForm extends Component {
 
   onSubmit = async e => {
     e.preventDefault();
+    let scroll = window.scrollY;
 
     this.setState({ waiting: true });
-    setTimeout(() => this.setState({ timeout: true, waiting: false }), 15000);
+    setTimeout(() => {
+      this.setState({ timeout: true, waiting: false });
+      animatedScrollTo(scroll);
+    }, 5000);
     await actions.verifyExit(this.props.nickname, this.state.fields.code);
+    animatedScrollTo(0);
   };
 
   isFieldValid = name =>
-    this.state.fields[name] ? this.state.valid[name] : undefined;
+    this.state.fields[name] ? this.state.valid[name] : false;
 
   render() {
     let { timeout, waiting } = this.state;
@@ -84,29 +91,43 @@ class VerifyForm extends Component {
         <CardBody>
           {waiting ? (
             <div>
-              Submitting Verification
-              <Progress color="info" animated value="100" />
+              <h5>Register</h5>
+              <Progress color="success" animated value="50" />
+              <p style={{ marginTop: 10 }} className="text-center">
+                <b>Submitting verification code to exit...</b>
+              </p>
             </div>
           ) : (
-            <Form onSubmit={this.onSubmit}>
-              {timeout && (
-                <div>
+            <Form onSubmit={this.onSubmit} className="form-inline">
+              <h5>Register</h5>
+              {timeout ? (
+                <Alert color="warning">
                   Registration timed out possibly due to an invalid code
-                </div>
+                </Alert>
+              ) : (
+                <p>
+                  A six-digit registration code is being sent to your email
+                  address.
+                </p>
               )}
-              <FormGroup id="form">
-                <Label for="email">Verification Code</Label>
+              <FormGroup id="form" className="form-inline">
+                <Label for="code" style={{ marginRight: 5 }}>
+                  <b>Code</b>
+                </Label>
                 <Input
                   type="text"
                   name="code"
+                  placeholder="Enter 6 digit code"
                   maxLength="6"
                   valid={this.isFieldValid("code")}
-                  invalid={!this.isFieldValid("code")}
+                  invalid={
+                    !(this.isFieldValid("code") || !this.state.fields.code)
+                  }
                   onChange={this.onFieldChange}
                   onBlur={this.onBlur}
                   value={this.state.fields.code || ""}
                 />
-                <FormFeedback invalid>
+                <FormFeedback invalid="true">
                   Please enter a valid 6-digit code
                 </FormFeedback>
               </FormGroup>
