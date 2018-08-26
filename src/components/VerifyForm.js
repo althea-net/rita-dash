@@ -67,16 +67,18 @@ class VerifyForm extends Component {
     });
   };
 
-  onSubmit = async e => {
+  onSubmit = e => {
     e.preventDefault();
-    let scroll = window.scrollY;
+    // let scroll = window.scrollY;
 
     this.setState({ waiting: true });
+
     setTimeout(() => {
       this.setState({ timeout: true, waiting: false });
-      animatedScrollTo(scroll);
+      // TODO: Figure out why state is 'Pending' even after successful registration
+      // if (this.props.state !== "Registered") animatedScrollTo(scroll);
     }, 5000);
-    await actions.verifyExit(this.props.nickname, this.state.fields.code);
+    actions.verifyExit(this.props.nickname, this.state.fields.code);
     animatedScrollTo(0);
   };
 
