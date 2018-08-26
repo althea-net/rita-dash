@@ -1,21 +1,35 @@
 import React, { Component } from "react";
-import { Button, Col, Input, ListGroup, ListGroupItem, Row } from "reactstrap";
+import {
+  Button,
+  Col,
+  Form,
+  FormGroup,
+  FormFeedback,
+  Input,
+  ListGroup,
+  ListGroupItem,
+  Row
+} from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { actions, connect } from "../store";
+import web3 from "web3";
 
 class DaoSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: ""
+      address: "",
+      valid: false
     };
+    this.web3 = new web3();
   }
   componentDidMount() {
     actions.getSubnetDaos();
   }
 
   addressUpdated = e => {
-    this.setState({ address: e.target.value });
+    let address = e.target.value;
+    this.setState({ address, valid: web3.utils.isAddress(address) });
   };
 
   addSubnetDao = () => {
@@ -29,24 +43,33 @@ class DaoSelection extends Component {
     return (
       <div>
         <h2>Subnet DAO(s)</h2>
-        <Row>
-          <Col md="9">
-            <Input
-              placeholder="Put subnet DAO eth address here..."
-              onChange={this.addressUpdated}
-              value={this.state.address}
-            />
-          </Col>
-          <Col md="3">
-            <Button
-              color="primary"
-              className="float-right"
-              onClick={this.addSubnetDao}
-            >
-              Add subnet DAO
-            </Button>
-          </Col>
-        </Row>
+        <Form>
+          <FormGroup>
+            <Row>
+              <Col md="9">
+                <Input
+                  placeholder="Put subnet DAO eth address here..."
+                  onChange={this.addressUpdated}
+                  valid={this.state.valid}
+                  invalid={!(this.state.valid || !this.state.address)}
+                  value={this.state.address}
+                />
+              </Col>
+              <Col md="3">
+                <Button
+                  color="primary"
+                  className="float-right"
+                  onClick={this.addSubnetDao}
+                >
+                  Add subnet DAO
+                </Button>
+                <FormFeedback invalid="true">
+                  Please enter a valid Ethereum address
+                </FormFeedback>
+              </Col>
+            </Row>
+          </FormGroup>
+        </Form>
         <ListGroup style={{ marginTop: 10 }}>
           {daos.map((address, i) => {
             return (
