@@ -9,21 +9,19 @@ class DaoSelection extends Component {
     this.state = {
       address: ""
     };
-    this.addressUpdated = this.addressUpdated.bind(this);
-    this.addSubnetDao = this.addSubnetDao.bind(this);
   }
   componentDidMount() {
     actions.getSubnetDaos();
   }
 
-  addressUpdated(e) {
+  addressUpdated = e => {
     this.setState({ address: e.target.value });
-  }
+  };
 
-  addSubnetDao() {
+  addSubnetDao = () => {
     actions.addSubnetDao(this.state.address);
     this.setState({ address: "" });
-  }
+  };
 
   render() {
     let { daos } = this.props.state;
