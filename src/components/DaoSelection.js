@@ -22,6 +22,7 @@ class DaoSelection extends Component {
 
   addSubnetDao() {
     actions.addSubnetDao(this.state.address);
+    this.setState({ address: "" });
   }
 
   render() {
@@ -55,6 +56,9 @@ class DaoSelection extends Component {
                 <Button
                   className="float-right"
                   style={{ background: "white", color: "black" }}
+                  onClick={() => {
+                    actions.removeSubnetDao(address);
+                  }}
                 >
                   <FontAwesomeIcon icon="minus-circle" color="black" />
                   &nbsp; Remove

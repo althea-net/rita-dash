@@ -158,6 +158,10 @@ export default class Backend {
     return post(`/exits/${nickname}/register`);
   }
 
+  async removeSubnetDao(address) {
+    return post(`/dao_list/remove/${address}`);
+  }
+
   async resetExit(nickname) {
     return post(`/exits/${nickname}/reset`);
   }
