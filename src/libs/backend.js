@@ -110,6 +110,10 @@ export default class Backend {
     ];
   }
 
+  async addSubnetDao(address) {
+    return post(`/dao_list/add/${address}`);
+  }
+
   async getWifiSettings() {
     return get("/wifi_settings");
   }
@@ -124,6 +128,10 @@ export default class Backend {
 
   async getExits() {
     return get("/exits");
+  }
+
+  async getSubnetDaos() {
+    return get("/dao_list");
   }
 
   async getNeighborData() {

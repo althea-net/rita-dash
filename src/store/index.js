@@ -5,6 +5,7 @@ const backend = new Backend();
 
 const store = {
   initialState: {
+    daos: [],
     error: null,
     exits: [],
     loading: false,
@@ -15,6 +16,10 @@ const store = {
     wifiSettings: []
   },
   actions: {
+    addSubnetDao: async ({ setState, state }, address) => {
+      await backend.addSubnetDao(address);
+      setState({ daos: await backend.getSubnetDaos() });
+    },
     changePage: (_, page) => ({ page: page }),
     getExits: async ({ setState, state }) => {
       if (!state.exits.length) {
@@ -29,6 +34,20 @@ const store = {
         });
       }
       setState({ error: null, exits, loading: false });
+    },
+    getSubnetDaos: async ({ setState, state }) => {
+      if (!state.daos.length) {
+        setState({ loading: true });
+      }
+      let daos = await backend.getSubnetDaos();
+      if (daos instanceof Error) {
+        return setState({
+          error: "Problem connecting to rita server",
+          daos: [],
+          loading: false
+        });
+      }
+      setState({ error: null, daos, loading: false });
     },
     getInfo: async () => {
       return { info: await backend.getInfo() };
