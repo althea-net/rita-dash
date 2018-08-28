@@ -1,22 +1,19 @@
 import React, { Component } from "react";
 import {
   Button,
-  Progress,
+  Card,
+  CardBody,
+  Col,
   Form,
   FormGroup,
-  Label,
   Input,
   InputGroup,
   InputGroupAddon,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Card,
-  CardBody
+  Label,
+  Row
 } from "reactstrap";
 
 import { actions, connect } from "../store";
-import QRious from "qrious";
 
 class Payments extends Component {
   componentDidMount() {
@@ -30,27 +27,20 @@ class Payments extends Component {
     return (
       <div>
         <h1>Payments</h1>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column"
-          }}
-        >
-          <MoneyBar avgUse={100 + 12} currentFunds={info.balance} />
-          <RefillFunds address={settings.payment.eth_address} />
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "space-between",
-              padding: 10,
-              margin: -20
-            }}
-          >
-            <LowFunds />
-            <PriceQuality />
-          </div>
+        <div className="text-center">
+          <h2>Current Balance:</h2>
+          <h3>&Xi; {Math.max(0, info.balance)}</h3>
+          <Button color="primary">Add &Xi;1 to balance</Button>
         </div>
+
+        <Row style={{ opacity: 0.3 }}>
+          <Col md="6">
+            <LowFunds />
+          </Col>
+          <Col md="6">
+            <PriceQuality />
+          </Col>
+        </Row>
       </div>
     );
   }
@@ -120,153 +110,6 @@ function PriceQuality() {
       </CardBody>
     </Card>
   );
-}
-
-class RefillFunds extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      addressModal: false
-    };
-  }
-
-  toggleAddressModal = () => {
-    this.setState({
-      addressModal: !this.state.addressModal
-    });
-  };
-  render() {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          marginTop: 60,
-          marginBottom: 60
-        }}
-      >
-        <Button
-          onClick={this.toggleAddressModal}
-          outline
-          color="primary"
-          size="lg"
-        >
-          Refill Funds
-        </Button>
-
-        <Modal
-          isOpen={this.state.addressModal}
-          toggle={this.toggleAddressModal}
-        >
-          <ModalHeader toggle={this.toggleAddressModal}>
-            Send Ether to this address:
-          </ModalHeader>
-          <ModalBody
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center"
-            }}
-          >
-            <img
-              alt="QR Code"
-              src={new QRious({
-                size: 256,
-                value: this.props.address
-              }).toDataURL()}
-            />
-            {this.props.address}
-          </ModalBody>
-        </Modal>
-      </div>
-    );
-  }
-}
-
-function MoneyBar({ avgUse, currentFunds }) {
-  let currentFundsPos, avgUsePos;
-  const scaling = 85;
-  if (currentFunds < avgUse) {
-    currentFundsPos = (currentFunds / avgUse) * scaling;
-    avgUsePos = scaling;
-  } else {
-    avgUsePos = (avgUse / currentFunds) * scaling;
-    currentFundsPos = scaling;
-  }
-
-  let color;
-  if (currentFunds > 25) {
-    color = "success";
-  } else if (currentFunds > 10) {
-    color = "warning";
-  } else {
-    color = "danger";
-  }
-
-  return (
-    <div>
-      <PercentSpacer
-        progress={currentFundsPos}
-        pointer="↓"
-        pointerAlign="bottom"
-      >
-        Current funds: ${currentFunds}
-      </PercentSpacer>
-      <Progress striped color={color} value={currentFundsPos} />
-      <PercentSpacer progress={avgUsePos} pointer="↑">
-        Average monthly use: ${avgUse}
-      </PercentSpacer>
-    </div>
-  );
-}
-
-function PercentSpacer({ children, progress, pointer, pointerAlign }) {
-  if (progress < 50) {
-    return (
-      <div style={{ textAlign: "left", display: "flex" }}>
-        <div
-          style={{
-            width: `${progress}%`,
-            marginLeft: ".5em",
-            textAlign: "right"
-          }}
-        >
-          {pointer}
-        </div>
-        <div
-          style={{
-            width: `${100 - progress}%`,
-            textAlign: "left"
-          }}
-        >
-          {children}
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div style={{ textAlign: "right", display: "flex" }}>
-        <div
-          style={{
-            width: `${progress}%`,
-            textAlign: "right",
-            display: "inline-block"
-          }}
-        >
-          {children}
-        </div>
-        <div
-          style={{
-            width: `${100 - progress}%`,
-            marginRight: ".7em",
-            textAlign: "left"
-          }}
-        >
-          {pointer}
-        </div>
-      </div>
-    );
-  }
 }
 
 export default connect(["settings", "info"])(Payments);
