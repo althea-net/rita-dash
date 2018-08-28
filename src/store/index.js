@@ -69,7 +69,7 @@ const store = {
         return exit;
       });
 
-      return { neighbors };
+      return { loading: false, neighbors };
     },
 
     getSettings: async ({ setState, state }) => {

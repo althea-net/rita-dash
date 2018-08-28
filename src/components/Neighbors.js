@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../styles/BasicScroll.css";
 
-import { Card, CardBody, CardTitle } from "reactstrap";
+import { Card, CardBody, CardTitle, Progress } from "reactstrap";
 
 import { actions, connect } from "../store";
 import Error from "./Error";
@@ -12,7 +12,7 @@ class Neighbors extends Component {
   }
 
   render() {
-    const { neighbors, neighborsError } = this.props.state;
+    const { loading, neighbors, neighborsError } = this.props.state;
     const normNeighbors = normalizeNeighbors(neighbors);
     const exits = normNeighbors.filter(n => n.isExit);
     const peers = normNeighbors.filter(n => !n.isExit);
@@ -20,15 +20,24 @@ class Neighbors extends Component {
     return (
       <div>
         <h1>Neighbors</h1>
-        <h2>Mesh Peers</h2>
         <Error error={neighborsError} />
-        {peers.map(n => (
-          <NodeInfo {...n} key={n.nickname} />
-        ))}
-        <h2>Exits</h2>
-        {exits.map(n => (
-          <NodeInfo {...n} key={n.nickname} />
-        ))}
+        {loading && <Progress animated color="info" value="100" />}
+        {peers.length > 0 && (
+          <Card style={{ padding: 10 }}>
+            <h2>Mesh Peers</h2>
+            {peers.map(n => (
+              <NodeInfo {...n} key={n.nickname} />
+            ))}
+          </Card>
+        )}
+        {exits.length > 0 && (
+          <Card style={{ padding: 10, marginTop: 10 }}>
+            <h2>Exits</h2>
+            {exits.map(n => (
+              <NodeInfo {...n} key={n.nickname} />
+            ))}
+          </Card>
+        )}
       </div>
     );
   }
@@ -316,4 +325,4 @@ function NodeInfo({
   );
 }
 
-export default connect(["neighbors", "neighborsError"])(Neighbors);
+export default connect(["loading", "neighbors", "neighborsError"])(Neighbors);
