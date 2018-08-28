@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import Exits from "./Exits";
+import Exits from "./Exits";
 import DaoSelection from "./DaoSelection";
 
 class NetworkSettings extends Component {
@@ -19,7 +19,7 @@ class NetworkSettings extends Component {
           runs some exit nodes, but in the future you will be able to select
           exits from other companies if you prefer.
         </p>
-        {/* <Exits /> */}
+        <Exits />
         <DaoSelection />
       </div>
     );
