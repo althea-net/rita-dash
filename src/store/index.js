@@ -18,7 +18,8 @@ const store = {
     exitsError: null,
     loading: false,
     info: { balance: 0 },
-    neighborData: [],
+    neighbors: [],
+    neighborsError: null,
     page: "",
     success: false,
     wifiSettings: []
@@ -28,12 +29,49 @@ const store = {
     ...exitActions,
     ...wifiActions,
     changePage: (_, page) => ({ page: page }),
+
     getInfo: async () => {
       return { info: await backend.getInfo() };
     },
-    getNeighborData: async ({ state }) => {
-      return { neighborData: await backend.getNeighborData() };
+
+    getNeighborData: async ({ setState, state }) => {
+      if (!state.neighbors.length) {
+        setState({ loading: true });
+      }
+
+      let exits = await backend.getExits();
+
+      if (exits instanceof Error) {
+        return {
+          neighboursError: "Problem retrieving exit information",
+          loading: false
+        };
+      }
+
+      let neighbors = await backend.getNeighbors();
+
+      if (neighbors instanceof Error) {
+        return {
+          neighborsError: "Problem retrieving neighbors",
+          loading: false
+        };
+      }
+
+      exits.map(exit => {
+        neighbors.map(n => {
+          n.nickname = n.nickname.replace(`"`, "");
+          if (n.nickname === exit.exitSettings.id.meshIp) {
+            n.nickname = exit.nickname;
+            n.isExit = true;
+          }
+          return n;
+        });
+        return exit;
+      });
+
+      return { neighbors };
     },
+
     getSettings: async ({ setState, state }) => {
       setState({ settings: await backend.getSettings() });
     }

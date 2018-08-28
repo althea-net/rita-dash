@@ -134,7 +134,7 @@ export default class Backend {
     return get("/dao_list");
   }
 
-  async getNeighborData() {
+  async getNeighbors() {
     return get("/neighbors");
   }
 

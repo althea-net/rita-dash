@@ -4,6 +4,7 @@ import "../styles/BasicScroll.css";
 import { Card, CardBody, CardTitle } from "reactstrap";
 
 import { actions, connect } from "../store";
+import Error from "./Error";
 
 class Neighbors extends Component {
   componentDidMount() {
@@ -11,16 +12,23 @@ class Neighbors extends Component {
   }
 
   render() {
-    const { neighborData } = this.props.state;
-    const normNeighbors = normalizeNeighbors(neighborData);
+    const { neighbors, neighborsError } = this.props.state;
+    const normNeighbors = normalizeNeighbors(neighbors);
+    const exits = normNeighbors.filter(n => n.isExit);
+    const peers = normNeighbors.filter(n => !n.isExit);
+
     return (
       <div>
         <h1>Neighbors</h1>
-        <div>
-          {normNeighbors.map(neigh => (
-            <NodeInfo {...neigh} />
-          ))}
-        </div>
+        <h2>Mesh Peers</h2>
+        <Error error={neighborsError} />
+        {peers.map(n => (
+          <NodeInfo {...n} key={n.nickname} />
+        ))}
+        <h2>Exits</h2>
+        {exits.map(n => (
+          <NodeInfo {...n} key={n.nickname} />
+        ))}
       </div>
     );
   }
@@ -158,23 +166,23 @@ function clamp(num, min, max) {
   return num;
 }
 
-function normalizeNeighbors(neighborData) {
-  const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighborData);
-  const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighborData);
+function normalizeNeighbors(neighbors) {
+  const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
+  const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
 
   const smallestRouteMetricToExit = getSmallestAtKey(
     "routeMetricToExit",
-    neighborData
+    neighbors
   );
   const greatestRouteMetricToExit = getGreatestAtKey(
     "routeMetricToExit",
-    neighborData
+    neighbors
   );
 
-  const smallestLinkCost = getSmallestAtKey("linkCost", neighborData);
-  const greatestLinkCost = getGreatestAtKey("linkCost", neighborData);
+  const smallestLinkCost = getSmallestAtKey("linkCost", neighbors);
+  const greatestLinkCost = getGreatestAtKey("linkCost", neighbors);
 
-  const n = neighborData.map(neighbor => {
+  const n = neighbors.map(neighbor => {
     return {
       ...neighbor,
       normalizedCurrentDebt: logNormalize(
@@ -308,4 +316,4 @@ function NodeInfo({
   );
 }
 
-export default connect(["neighborData"])(Neighbors);
+export default connect(["neighbors", "neighborsError"])(Neighbors);
