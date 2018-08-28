@@ -29,6 +29,7 @@ class NetworkSettings extends Component {
         <Nav tabs>
           <NavItem>
             <NavLink
+              style={{ cursor: "pointer" }}
               className={classnames({ active: this.state.activeTab === "1" })}
               onClick={() => {
                 this.toggle("1");
@@ -39,6 +40,7 @@ class NetworkSettings extends Component {
           </NavItem>
           <NavItem>
             <NavLink
+              style={{ cursor: "pointer" }}
               className={classnames({ active: this.state.activeTab === "2" })}
               onClick={() => {
                 this.toggle("2");
