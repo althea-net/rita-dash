@@ -10,6 +10,7 @@ import logo from "../images/althea.png";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBan,
+  faMinusCircle,
   faRoute,
   faSignal,
   faSitemap,
@@ -17,6 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faBan);
+library.add(faMinusCircle);
 library.add(faRoute);
 library.add(faSignal);
 library.add(faSitemap);

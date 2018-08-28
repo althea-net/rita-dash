@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Exits from "./Exits";
+import DaoSelection from "./DaoSelection";
 
 class NetworkSettings extends Component {
   render() {
@@ -19,6 +20,7 @@ class NetworkSettings extends Component {
           exits from other companies if you prefer.
         </p>
         <Exits />
+        <DaoSelection />
       </div>
     );
   }

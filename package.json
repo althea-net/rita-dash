@@ -24,7 +24,8 @@
     "react-scripts": "1.1.1",
     "react-sigma": "^1.2.30",
     "react-stateful": "git+https://github.com/jtremback/react-stateful.git",
-    "reactstrap": "^5.0.0-beta"
+    "reactstrap": "^5.0.0-beta",
+    "web3": "^1.0.0-beta.35"
   },
   "scripts": {
     "start": "react-scripts start",
