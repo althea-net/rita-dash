@@ -25,14 +25,14 @@ class Exits extends Component {
   }
 
   render() {
-    const { exits, loading } = this.props.state;
+    const { exitsError, exits, loading } = this.props.state;
     const sort = (a, b) =>
       a.nickname.localeCompare(b.nickname, undefined, { sensitivity: "base" });
     exits.sort(sort);
 
     return (
       <div>
-        <Error />
+        <Error error={exitsError} />
         {loading && <Progress animated color="info" value="100" />}
         {exits.length > 0 && <ExitList exits={exits} />}
       </div>
@@ -261,4 +261,4 @@ class ConnectionError extends Component {
   }
 }
 
-export default connect(["exits", "loading"])(Exits);
+export default connect(["exits", "exitserror", "loading"])(Exits);

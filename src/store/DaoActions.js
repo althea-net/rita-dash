@@ -11,12 +11,12 @@ export default backend => {
       let daos = await backend.getSubnetDaos();
       if (daos instanceof Error) {
         return setState({
-          error: "Problem connecting to rita server",
+          daosError: "Unable to retrieve Subnet DAOs",
           daos: [],
           loading: false
         });
       }
-      setState({ error: null, daos, loading: false });
+      setState({ daosError: null, daos, loading: false });
     },
     removeSubnetDao: async ({ setState, state }, address) => {
       await backend.removeSubnetDao(address);

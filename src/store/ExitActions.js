@@ -7,12 +7,12 @@ export default backend => {
       let exits = await backend.getExits();
       if (exits instanceof Error) {
         return setState({
-          error: "Problem connecting to rita server",
+          exitsError: "Problem connecting to rita server",
           exits: [],
           loading: false
         });
       }
-      setState({ error: null, exits, loading: false });
+      setState({ exitsError: null, exits, loading: false });
     },
     registerExit: async ({ setState, state }, nickname, email) => {
       await backend.registerExit(nickname, email);

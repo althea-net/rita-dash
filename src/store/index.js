@@ -13,8 +13,9 @@ const wifiActions = WifiActions(backend);
 const store = {
   initialState: {
     daos: [],
-    error: null,
+    daosError: null,
     exits: [],
+    exitsError: null,
     loading: false,
     info: { balance: 0 },
     neighborData: [],
