@@ -25,7 +25,7 @@ export default backend => {
 
       exits.map(exit => {
         neighbors.map(n => {
-          n.nickname = n.nickname.replace(`"`, "");
+          n.nickname = n.nickname.replace(new RegExp(`"`, "g"), "");
           if (n.nickname === exit.exitSettings.id.meshIp) {
             n.nickname = exit.nickname;
             n.isExit = true;
