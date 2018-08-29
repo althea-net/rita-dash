@@ -261,4 +261,4 @@ class ConnectionError extends Component {
   }
 }
 
-export default connect(["exits", "exitserror", "loading"])(Exits);
+export default connect(["exits", "exitsError", "loading"])(Exits);
