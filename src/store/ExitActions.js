@@ -7,7 +7,7 @@ export default backend => {
       let exits = await backend.getExits();
       if (exits instanceof Error) {
         return setState({
-          exitsError: "Problem connecting to rita server",
+          exitsError: "Unable to get list of exits from rita server",
           exits: [],
           loading: false
         });

@@ -8,7 +8,7 @@ import Error from "./Error";
 
 class Neighbors extends Component {
   componentDidMount() {
-    actions.getNeighborData();
+    actions.getNeighbors();
   }
 
   render() {
