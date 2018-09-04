@@ -15,6 +15,10 @@ import {
   faSitemap,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
+import neighbors from "../images/neighbors.svg";
+import network from "../images/network.svg";
+import router from "../images/router.svg";
+import payments from "../images/payments.svg";
 
 library.add(faBan);
 library.add(faMinusCircle);
@@ -29,10 +33,10 @@ class App extends Component {
     this.state = {
       current: window.location.hash.substr(1),
       pages: {
-        neighbors: "Neighbors",
-        router_settings: "Router Settings",
-        network_settings: "Network Settings",
-        payments: "Payments"
+        neighbors: { title: "Neighbors", icon: neighbors },
+        router_settings: { title: "Router Settings", icon: router },
+        network_settings: { title: "Network Settings", icon: network },
+        payments: { title: "Payments", icon: payments }
       }
     };
   }
