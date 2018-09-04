@@ -101,7 +101,7 @@ class ExitListItem extends Component {
     let connected = exit.isReachable && exit.haveRoute;
     let pseudostate = state;
     if (state === "Registered") {
-      connected = exit.isTunnelWorking;
+      connected = exit.isTunnelWorking || !isSelected;
       pseudostate = connected && "Connected";
     }
     if (!message) message = "";
@@ -160,9 +160,8 @@ class ExitListItem extends Component {
             </Col>
             {pseudostate !== "Problem" && (
               <Col xs="12" md="6">
-                {isSelected ||
-                  !connected ||
-                  state !== "Registered" || (
+                {!isSelected &&
+                  state === "Registered" && (
                     <Button
                       color="success"
                       className="float-md-right"
