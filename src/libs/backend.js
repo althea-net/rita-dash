@@ -126,6 +126,10 @@ export default class Backend {
     await post("/wifi_settings/pass", { radio, pass: key });
   }
 
+  async getDebts() {
+    return get("/debts");
+  }
+
   async getExits() {
     return get("/exits");
   }

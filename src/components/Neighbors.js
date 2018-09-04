@@ -176,8 +176,8 @@ function clamp(num, min, max) {
 }
 
 function normalizeNeighbors(neighbors) {
-  const greatestCurrentDebt = getGreatestAtKey("currentDebt", neighbors);
-  const smallestCurrentDebt = getSmallestAtKey("currentDebt", neighbors);
+  const greatestCurrentDebt = getGreatestAtKey("debt", neighbors);
+  const smallestCurrentDebt = getSmallestAtKey("debt", neighbors);
 
   const smallestRouteMetricToExit = getSmallestAtKey(
     "routeMetricToExit",
@@ -195,7 +195,7 @@ function normalizeNeighbors(neighbors) {
     return {
       ...neighbor,
       normalizedCurrentDebt: logNormalize(
-        Math.abs(neighbor.currentDebt),
+        Math.abs(neighbor.debt),
         smallestCurrentDebt,
         greatestCurrentDebt
       ),
@@ -226,10 +226,12 @@ function NodeInfo({
 
   priceToExit,
 
-  currentDebt,
   normalizedCurrentDebt,
 
-  totalDebt
+  totalPaymentSent,
+  totalPaymentReceived,
+  debt,
+  incomingPayments
 }) {
   return (
     <div
@@ -244,7 +246,7 @@ function NodeInfo({
       <ConnectionLine
         thickness={10}
         dash={clamp(normalizedLinkCost * 100, 4, 96)}
-        scrollDirection={currentDebt}
+        scrollDirection={debt}
         scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
       />
       <div>
@@ -282,16 +284,16 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              {(currentDebt < 0 && (
+              {(debt < 0 && (
                 <LabelUnit
                   label="They are paying me"
-                  content={`${-currentDebt} ¢/sec.`}
+                  content={`${-debt} ¢/sec.`}
                 />
               )) ||
-                (currentDebt > 0 && (
+                (debt > 0 && (
                   <LabelUnit
                     label="I am paying them"
-                    content={`${currentDebt} ¢/sec.`}
+                    content={`${debt} ¢/sec.`}
                   />
                 ))}
               {routeMetricToExit < 10 && (
@@ -300,20 +302,26 @@ function NodeInfo({
                   content={`${priceToExit} ¢/gb`}
                 />
               )}
-              {(totalDebt < 0 && (
-                <LabelUnit label="Total earned" content={`$${-totalDebt}`} />
+              {(totalPaymentReceived > 0 && (
+                <LabelUnit
+                  label="Total earned"
+                  content={`♦ ${totalPaymentReceived}`}
+                />
               )) ||
-                (totalDebt > 0 && (
-                  <LabelUnit label="Total paid" content={`$${totalDebt}`} />
+                (totalPaymentSent > 0 && (
+                  <LabelUnit
+                    label="Total paid"
+                    content={`♦ ${totalPaymentSent}`}
+                  />
                 ))}
             </div>
           </CardBody>
         </Card>
       </div>
       <ConnectionLine
-        thickness={!(currentDebt < 0) ? 10 : 0}
+        thickness={!(debt < 0) ? 10 : 0}
         dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
-        scrollDirection={currentDebt}
+        scrollDirection={debt}
         scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
       />
       <h3 style={{ marginBottom: 0, marginLeft: 10 }}>
