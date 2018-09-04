@@ -19,10 +19,18 @@ const store = {
     exits: [],
     exitsError: null,
     loading: false,
-    info: { balance: 0 },
+    info: { balance: 0, version: "" },
     neighbors: [],
     neighborsError: null,
     page: "",
+    settings: {
+      network: {
+        ownIp: null
+      },
+      payment: {
+        ethAddress: null
+      }
+    },
     success: false,
     wifiSettings: []
   },
