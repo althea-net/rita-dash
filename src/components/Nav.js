@@ -22,8 +22,9 @@ class AltheaNav extends Component {
     return Object.keys(this.props.pages).map((p, i) => {
       let path = p.replace("_", "-");
       let active = path === this.props.current ? "active" : null;
-      let title = this.props.pages[p];
-      return { path, active, title };
+      let { icon, title } = this.props.pages[p];
+
+      return { path, active, title, icon };
     });
   };
 
@@ -33,7 +34,10 @@ class AltheaNav extends Component {
     return this.navItems().map((page, i) => {
       return (
         <NavItem style={padded} className={page.active} key={i}>
-          <NavLink href={"#" + page.path}>{page.title}</NavLink>
+          <NavLink href={"#" + page.path}>
+            <img src={page.icon} width="30" height="30" alt={page.title} />{" "}
+            {page.title}
+          </NavLink>
         </NavItem>
       );
     });
