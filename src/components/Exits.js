@@ -100,8 +100,8 @@ class ExitListItem extends Component {
     let { nickname, isSelected } = exit;
     let connected = exit.isReachable && exit.haveRoute;
     let pseudostate = state;
-    if (state === "Registered") {
-      connected = exit.isTunnelWorking || !isSelected;
+    if (state === "Registered" && isSelected) {
+      connected = exit.isTunnelWorking;
       pseudostate = connected && "Connected";
     }
     if (!message) message = "";
