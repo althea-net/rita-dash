@@ -1,8 +1,22 @@
+import { BigNumber } from "bignumber.js";
+
+BigNumber.config({ DECIMAL_PLACES: 6 });
+const wei = BigNumber("1000000000000000000");
+
 export default backend => {
   return {
     getNeighbors: async ({ setState, state }) => {
       if (!state.neighbors.length) {
         setState({ loading: true });
+      }
+
+      let debts = await backend.getDebts();
+
+      if (debts instanceof Error) {
+        return {
+          neighboursError: "Problem retrieving debts",
+          loading: false
+        };
       }
 
       let exits = await backend.getExits();
@@ -23,16 +37,33 @@ export default backend => {
         };
       }
 
-      exits.map(exit => {
-        neighbors.map(n => {
-          n.nickname = n.nickname.replace(new RegExp(`"`, "g"), "");
-          if (n.nickname === exit.exitSettings.id.meshIp) {
-            n.nickname = exit.nickname;
+      neighbors.map(n => {
+        n.nickname = n.nickname.replace(new RegExp(`"`, "g"), "");
+
+        debts.map(d => {
+          if (d.identity.meshIp === n.nickname) {
+            let pd = d.paymentDetails;
+            for (let k in pd) {
+              pd[k] = BigNumber(pd[k])
+                .dividedBy(wei)
+                .toString();
+            }
+            Object.assign(n, pd);
+          }
+
+          return d;
+        });
+
+        exits.map(e => {
+          if (n.nickname === e.exitSettings.id.meshIp) {
+            n.nickname = e.nickname;
             n.isExit = true;
           }
-          return n;
+
+          return e;
         });
-        return exit;
+
+        return n;
       });
 
       return { loading: false, neighbors };
