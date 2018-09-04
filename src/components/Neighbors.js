@@ -217,6 +217,7 @@ function normalizeNeighbors(neighbors) {
 
 function NodeInfo({
   nickname,
+  isExit,
 
   linkCost,
   normalizedLinkCost,
@@ -272,10 +273,12 @@ function NodeInfo({
                 label="Link to me"
                 content={metric2word(normalizedLinkCost)}
               />
-              <LabelUnit
-                label="Link to internet"
-                content={metric2word(normalizedRouteMetricToExit)}
-              />
+              {isExit || (
+                <LabelUnit
+                  label="Link to exit"
+                  content={metric2word(normalizedRouteMetricToExit)}
+                />
+              )}
             </div>
             <div
               style={{
@@ -284,10 +287,10 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              {(debt < 0 && (
+              {(incomingPayments > 0 && (
                 <LabelUnit
                   label="They are paying me"
-                  content={`${-debt} ¢/sec.`}
+                  content={`${incomingPayments} ¢/sec.`}
                 />
               )) ||
                 (debt > 0 && (
