@@ -22,25 +22,24 @@ class Neighbors extends Component {
         <h1>Neighbors</h1>
         <Error error={neighborsError} />
         {loading && <Progress animated color="info" value="100" />}
-        {peers.length > 0 && (
-          <Card style={{ padding: 10 }}>
-            <h2>Mesh Peers</h2>
-            {peers.map(n => (
-              <NodeInfo {...n} key={n.nickname} />
-            ))}
-          </Card>
-        )}
-        {exits.length > 0 && (
-          <Card style={{ padding: 10, marginTop: 10 }}>
-            <h2>Exits</h2>
-            {exits.map(n => (
-              <NodeInfo {...n} key={n.nickname} />
-            ))}
-          </Card>
-        )}
+        <NodeList nodes={peers} title="Mesh Peers" />
+        <NodeList nodes={exits} title="Exits" />
       </div>
     );
   }
+}
+
+function NodeList({ nodes, title }) {
+  return (
+    nodes.length > 0 && (
+      <Card style={{ marginBottom: 10, padding: 10 }}>
+        <h2>{title}</h2>
+        {nodes.map(n => (
+          <NodeInfo {...n} key={n.nickname} />
+        ))}
+      </Card>
+    )
+  );
 }
 
 function metric2word(metric) {
