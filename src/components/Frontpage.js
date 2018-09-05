@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { actions, connect } from "../store";
 import QR from "qrcode.react";
+import { Card, CardBody, CardTitle, Col, Row } from "reactstrap";
 
 class FrontPage extends Component {
   componentDidMount() {
@@ -19,17 +20,37 @@ class FrontPage extends Component {
         <p>You are running version {info.version}</p>
 
         <div>
-          <h2>Node Info</h2>
-          <span>IP address: {ownIp}</span>
-          <br />
-          <span>Ethereum address: {ethAddress}</span>
-          <br />
-          <QR
-            style={{ marginTop: 15 }}
-            size="150"
-            bgcolor="#ff0"
-            value={`althea://dao/add?ip_address=${ownIp}&eth_address=${ethAddress}`}
-          />
+          <Card>
+            <CardBody>
+              <Row>
+                <Col md="4">
+                  <QR
+                    style={{
+                      height: "100%",
+                      width: "100%",
+                      maxWidth: 300,
+                      paddingBottom: 15
+                    }}
+                    bgcolor="#ff0"
+                    value={`althea://dao/add?ip_address=${ownIp}&eth_address=${ethAddress}`}
+                  />
+                </Col>
+                <Col md="8" style={{ wordWrap: "break-word" }}>
+                  <CardTitle>Node Info</CardTitle>
+                  <p>
+                    <b>Mesh IP:</b> {ownIp}
+                  </p>
+                  <p>
+                    <b>Ethereum Address:</b> {ethAddress}
+                  </p>
+                  <p>
+                    Present this QR code to your local subnet DAO organizer to
+                    have your node added to the DAO.
+                  </p>
+                </Col>
+              </Row>
+            </CardBody>
+          </Card>
         </div>
       </div>
     );

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Col,
   Collapse,
   Nav,
   Navbar,
@@ -46,20 +45,16 @@ class AltheaNav extends Component {
   render() {
     return (
       <Navbar color="light" light expand="sm">
-        <Col md="1">
-          <NavbarToggler className="float-right" onClick={this.toggle} />
-          <NavbarBrand href="#">
-            <img src={logo} width="60px" alt="Althea Logo" />
-            Althea
-          </NavbarBrand>
-        </Col>
-        <Col md="11">
-          <Collapse isOpen={this.state.open} navbar>
-            <Nav navbar className="bg-light">
-              {this.renderNavItems()}
-            </Nav>
-          </Collapse>
-        </Col>
+        <NavbarToggler className="float-right" onClick={this.toggle} />
+        <NavbarBrand href="#">
+          <img src={logo} width="60px" alt="Althea Logo" />
+          Althea
+        </NavbarBrand>
+        <Collapse isOpen={this.state.open} navbar>
+          <Nav navbar className="bg-light">
+            {this.renderNavItems()}
+          </Nav>
+        </Collapse>
       </Navbar>
     );
   }
