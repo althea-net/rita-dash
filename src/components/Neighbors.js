@@ -14,7 +14,6 @@ class Neighbors extends Component {
   render() {
     const { loading, neighbors, neighborsError } = this.props.state;
     const normNeighbors = normalizeNeighbors(neighbors);
-    const exits = normNeighbors.filter(n => n.isExit);
     const peers = normNeighbors.filter(n => !n.isExit);
 
     return (
@@ -22,24 +21,12 @@ class Neighbors extends Component {
         <h1>Neighbors</h1>
         <Error error={neighborsError} />
         {loading && <Progress animated color="info" value="100" />}
-        <NodeList nodes={peers} title="Mesh Peers" />
-        <NodeList nodes={exits} title="Exits" />
+        {peers.map(n => (
+          <NodeInfo {...n} key={n.nickname} />
+        ))}
       </div>
     );
   }
-}
-
-function NodeList({ nodes, title }) {
-  return (
-    nodes.length > 0 && (
-      <Card style={{ marginBottom: 10, padding: 10 }}>
-        <h2>{title}</h2>
-        {nodes.map(n => (
-          <NodeInfo {...n} key={n.nickname} />
-        ))}
-      </Card>
-    )
-  );
 }
 
 function metric2word(metric) {
