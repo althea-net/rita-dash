@@ -220,6 +220,11 @@ function NodeInfo({
   debt,
   incomingPayments
 }) {
+  let s = nickname;
+  if (s.length > 12) {
+    s = `${s.substr(0, 4)}...${s.substr(s.length - 4)}`;
+  }
+
   return (
     <div
       style={{
@@ -246,7 +251,9 @@ function NodeInfo({
             style={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 15 }}
           >
             <CardTitle style={{ marginLeft: 10, marginRight: 10 }}>
-              {nickname}
+              <abbr title={nickname} style={{ textDecoration: "none" }}>
+                {s}
+              </abbr>
             </CardTitle>
             <div
               style={{
