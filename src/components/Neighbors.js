@@ -9,6 +9,11 @@ import Error from "./Error";
 class Neighbors extends Component {
   componentDidMount() {
     actions.getNeighbors();
+    this.timer = setInterval(actions.getNeighbors, 10000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   render() {
@@ -234,7 +239,6 @@ function NodeInfo({
       }}
     >
       <h3 style={{ marginBottom: 0, marginRight: 10 }}>Me</h3>
-      {/* linkCost: {linkCost} normalizedLinkCost: {normalizedLinkCost} */}
       <ConnectionLine
         thickness={10}
         dash={clamp(normalizedLinkCost * 100, 4, 96)}
@@ -280,33 +284,16 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              {(incomingPayments > 0 && (
-                <LabelUnit
-                  label="They are paying me"
-                  content={`${incomingPayments} ¢/sec.`}
-                />
-              )) ||
-                (debt > 0 && (
-                  <LabelUnit
-                    label="I am paying them"
-                    content={`${debt} ¢/sec.`}
-                  />
-                ))}
-              {routeMetricToExit < 10 && (
-                <LabelUnit
-                  label="Bandwidth price"
-                  content={`${priceToExit} ¢/gb`}
-                />
-              )}
+              <LabelUnit label="Price" content={`${priceToExit} ¢/gb`} />
               {(totalPaymentReceived > 0 && (
                 <LabelUnit
-                  label="Total earned"
+                  label="Payment Received"
                   content={`♦ ${totalPaymentReceived}`}
                 />
               )) ||
                 (totalPaymentSent > 0 && (
                   <LabelUnit
-                    label="Total paid"
+                    label="Payment Sent"
                     content={`♦ ${totalPaymentSent}`}
                   />
                 ))}
