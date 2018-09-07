@@ -9,7 +9,7 @@ import Error from "./Error";
 class Neighbors extends Component {
   componentDidMount() {
     actions.getNeighbors();
-    this.timer = setInterval(actions.getNeighbors, 10000);
+    this.timer = setInterval(actions.getNeighbors, 2000);
   }
 
   componentWillUnmount() {
@@ -242,8 +242,8 @@ function NodeInfo({
       <ConnectionLine
         thickness={10}
         dash={clamp(normalizedLinkCost * 100, 4, 96)}
-        scrollDirection={debt}
-        scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
+        scrollDirection={totalPaymentSent}
+        scrollSpeed={30}
       />
       <div>
         <Card
@@ -297,15 +297,16 @@ function NodeInfo({
                     content={`♦ ${totalPaymentSent}`}
                   />
                 ))}
+              <LabelUnit label="Current Debt" content={`♦ ${debt}`} />
             </div>
           </CardBody>
         </Card>
       </div>
       <ConnectionLine
-        thickness={!(debt < 0) ? 10 : 0}
+        thickness={10}
         dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
-        scrollDirection={debt}
-        scrollSpeed={(1.1 - normalizedCurrentDebt) * 30}
+        scrollDirection={totalPaymentSent}
+        scrollSpeed={30}
       />
       <h3 style={{ marginBottom: 0, marginLeft: 10 }}>
         <span role="img" aria-label="Globe">

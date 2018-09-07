@@ -1,6 +1,5 @@
 import { BigNumber } from "bignumber.js";
 
-BigNumber.config({ DECIMAL_PLACES: 6 });
 const wei = BigNumber("1000000000000000000");
 
 export default backend => {
@@ -19,14 +18,17 @@ export default backend => {
         };
       }
 
-      let exits = await backend.getExits();
+      let settings = await backend.getSettings();
 
-      if (exits instanceof Error) {
+      if (settings instanceof Error) {
         return {
-          neighboursError: "Problem retrieving exit information",
+          neighboursError: "Problem retrieving settings",
           loading: false
         };
       }
+
+      console.log(settings);
+      let exits = settings.exitClient.exits;
 
       let neighbors = await backend.getNeighbors();
 
@@ -46,6 +48,7 @@ export default backend => {
             for (let k in pd) {
               pd[k] = BigNumber(pd[k])
                 .dividedBy(wei)
+                .toFixed(12)
                 .toString();
             }
             Object.assign(n, pd);
@@ -54,14 +57,12 @@ export default backend => {
           return d;
         });
 
-        exits.map(e => {
-          if (n.nickname === e.exitSettings.id.meshIp) {
-            n.nickname = e.nickname;
+        for (let e in exits) {
+          if (n.nickname === exits[e].id.meshIp) {
+            n.nickname = exits[e].nickname;
             n.isExit = true;
           }
-
-          return e;
-        });
+        }
 
         return n;
       });
