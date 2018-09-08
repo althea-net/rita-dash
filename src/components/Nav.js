@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import {
+  ButtonDropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Collapse,
   Nav,
   Navbar,
@@ -9,9 +13,15 @@ import {
   NavLink
 } from "reactstrap";
 import logo from "../images/althea.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { translate } from "react-i18next";
 
 class AltheaNav extends Component {
   state = {};
+
+  drop = () => {
+    this.setState({ dropOpen: !this.state.dropOpen });
+  };
 
   toggle = () => {
     this.setState({ open: !this.state.open });
@@ -43,6 +53,8 @@ class AltheaNav extends Component {
   };
 
   render() {
+    let { i18n } = this.props;
+
     return (
       <Navbar color="light" light expand="sm">
         <NavbarToggler className="float-right" onClick={this.toggle} />
@@ -55,9 +67,29 @@ class AltheaNav extends Component {
             {this.renderNavItems()}
           </Nav>
         </Collapse>
+        <Nav>
+          <NavLink>
+            <ButtonDropdown isOpen={this.state.dropOpen} toggle={this.drop}>
+              <DropdownToggle caret>
+                <FontAwesomeIcon icon="globe-americas" size="lg" />
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem onClick={() => i18n.changeLanguage("en")}>
+                  EN
+                </DropdownItem>
+                <DropdownItem onClick={() => i18n.changeLanguage("es")}>
+                  ES
+                </DropdownItem>
+                <DropdownItem onClick={() => i18n.changeLanguage("fr")}>
+                  FR
+                </DropdownItem>
+              </DropdownMenu>
+            </ButtonDropdown>
+          </NavLink>
+        </Nav>
       </Navbar>
     );
   }
 }
 
-export default AltheaNav;
+export default translate("translations")(AltheaNav);

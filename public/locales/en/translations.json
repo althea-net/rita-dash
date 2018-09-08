@@ -1,0 +1,9 @@
+{
+  "ethereumAddress": "Ethereum Address:",
+  "meshIp": "Mesh IP:",
+  "neighbors": "Neighbors",
+  "nodeInfo": "Node Info",
+  "presentQR": "Present this QR code to your local subnet DAO organizer to have your node added to the DAO.",
+  "welcome": "Welcome to Althea",
+  "version": "You are running version {{version}}"
+} 

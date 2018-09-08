@@ -9,6 +9,7 @@ import { actions, connect } from "../store";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBan,
+  faGlobeAmericas,
   faMinusCircle,
   faRoute,
   faSignal,
@@ -21,6 +22,7 @@ import router from "../images/router.svg";
 import payments from "../images/payments.svg";
 
 library.add(faBan);
+library.add(faGlobeAmericas);
 library.add(faMinusCircle);
 library.add(faRoute);
 library.add(faSignal);

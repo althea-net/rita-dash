@@ -3,6 +3,7 @@ import { actions, connect } from "../store";
 import QR from "qrcode.react";
 import { Card, CardBody, CardTitle, Col, Progress, Row } from "reactstrap";
 import Error from "./Error";
+import { translate } from "react-i18next";
 
 class FrontPage extends Component {
   componentDidMount() {
@@ -14,10 +15,12 @@ class FrontPage extends Component {
     let { error, loading, info, settings } = this.props.state;
     let { ownIp } = settings.network;
     let { ethAddress } = settings.payment;
+    let { version } = info;
+    let { t } = this.props;
 
     return (
       <div>
-        <h1>Welcome to Althea</h1>
+        <h1>{t("welcome")}</h1>
 
         {error ? (
           <Error error={error} />
@@ -25,7 +28,7 @@ class FrontPage extends Component {
           <Progress animated color="info" value="100" />
         ) : (
           <div>
-            <p>You are running version {info.version}</p>
+            <p>{t("version", { version })}</p>
             <Card>
               <CardBody>
                 <Row>
@@ -42,17 +45,14 @@ class FrontPage extends Component {
                     />
                   </Col>
                   <Col md="8" style={{ wordWrap: "break-word" }}>
-                    <CardTitle>Node Info</CardTitle>
+                    <CardTitle>{t("nodeInfo")}</CardTitle>
                     <p>
-                      <b>Mesh IP:</b> {ownIp}
+                      <b>{t("meshIp")}</b> {ownIp}
                     </p>
                     <p>
-                      <b>Ethereum Address:</b> {ethAddress}
+                      <b>{t("ethereumAddress")}</b> {ethAddress}
                     </p>
-                    <p>
-                      Present this QR code to your local subnet DAO organizer to
-                      have your node added to the DAO.
-                    </p>
+                    <p>{t("presentQR")}</p>
                   </Col>
                 </Row>
               </CardBody>
@@ -64,4 +64,6 @@ class FrontPage extends Component {
   }
 }
 
-export default connect(["error", "loading", "info", "settings"])(FrontPage);
+export default translate("translations")(
+  connect(["error", "loading", "info", "settings"])(FrontPage)
+);
