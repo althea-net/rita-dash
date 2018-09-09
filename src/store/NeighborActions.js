@@ -13,7 +13,7 @@ export default backend => {
 
       if (debts instanceof Error) {
         return {
-          neighboursError: "Problem retrieving debts",
+          error: "Problem retrieving debts",
           loading: false
         };
       }
@@ -22,7 +22,7 @@ export default backend => {
 
       if (settings instanceof Error) {
         return {
-          neighboursError: "Problem retrieving settings",
+          error: "Problem retrieving settings",
           loading: false
         };
       }
@@ -34,7 +34,7 @@ export default backend => {
 
       if (neighbors instanceof Error) {
         return {
-          neighborsError: "Problem retrieving neighbors",
+          error: "Problem retrieving neighbors",
           loading: false
         };
       }

@@ -25,8 +25,12 @@ class RouterSettings extends Component {
     return (
       <div>
         <h1>Router Settings</h1>
-        {loading && <Progress animated color="info" value="100" />}
-        <Error />
+
+        {error ? (
+          <Error error={error} />
+        ) : (
+          loading && <Progress animated color="info" value="100" />
+        )}
         <div
           style={{
             display: "flex",

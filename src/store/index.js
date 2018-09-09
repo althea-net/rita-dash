@@ -16,6 +16,7 @@ const store = {
   initialState: {
     daos: [],
     daosError: null,
+    error: null,
     exits: [],
     exitsError: null,
     loading: false,
@@ -41,12 +42,34 @@ const store = {
     ...wifiActions,
     changePage: (_, page) => ({ page: page }),
 
-    getInfo: async () => {
-      return { info: await backend.getInfo() };
+    getInfo: async ({ setState, state }) => {
+      setState({ loading: true });
+
+      let info = await backend.getInfo();
+
+      if (info instanceof Error) {
+        return {
+          error: "Problem retrieving balance and version info",
+          loading: false
+        };
+      }
+
+      return { loading: false, info };
     },
 
     getSettings: async ({ setState, state }) => {
-      setState({ settings: await backend.getSettings() });
+      setState({ loading: true });
+
+      let settings = await backend.getSettings();
+
+      if (settings instanceof Error) {
+        return {
+          error: "Problem retrieving settings",
+          loading: false
+        };
+      }
+
+      return { loading: false, settings };
     }
   }
 };

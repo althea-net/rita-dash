@@ -17,15 +17,18 @@ class Neighbors extends Component {
   }
 
   render() {
-    const { loading, neighbors, neighborsError } = this.props.state;
+    const { error, loading, neighbors } = this.props.state;
     const normNeighbors = normalizeNeighbors(neighbors);
     const peers = normNeighbors.filter(n => !n.isExit);
 
     return (
       <div>
         <h1>Neighbors</h1>
-        <Error error={neighborsError} />
-        {loading && <Progress animated color="info" value="100" />}
+        {error ? (
+          <Error error={error} />
+        ) : (
+          loading && <Progress animated color="info" value="100" />
+        )}
         {peers.map(n => (
           <NodeInfo {...n} key={n.nickname} />
         ))}
@@ -317,4 +320,4 @@ function NodeInfo({
   );
 }
 
-export default connect(["loading", "neighbors", "neighborsError"])(Neighbors);
+export default connect(["error", "loading", "neighbors"])(Neighbors);
