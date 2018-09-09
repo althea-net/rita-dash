@@ -19,5 +19,17 @@
   "exits": "Exits",
   "subnetDaos": "Subnet DAO(s)",
   "exitNodesP1": "Exit nodes are like a combination of a VPN and a speedtest server. They keep your browsing history private and make sure that your traffic is always routed through the fastest path in the network at a given price.",
-  "exitNodesP2": "Exit nodes need to collect a bit of information about you (your email address), and you need to select an exit node in your region. Althea runs some exit nodes, but in the future you will be able to select exits from other companies if you prefer."
+  "exitNodesP2": "Exit nodes need to collect a bit of information about you (your email address), and you need to select an exit node in your region. Althea runs some exit nodes, but in the future you will be able to select exits from other companies if you prefer.",
+  "payments": "Payments",
+  "currentBalance": "Current Balance:",
+  "add1": "Add Ξ1 to balance",
+  "lowFunds": "When funds get low:",
+  "threshold": "Threshold",
+  "monthlyUse": "% of average monthly use",
+  "throttleSpeed": "Throttle speed",
+  "priceQuality": "Price/Quality tradeoff:",
+  "preferLow": "Prefer low price",
+  "preferHigh": "Prefer high price",
+  "highestAcceptable": "Highest acceptable price",
+  "centsPerGB": "cents/GB"
 } 
