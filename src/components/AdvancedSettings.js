@@ -12,6 +12,7 @@ import {
   ModalFooter,
   Progress
 } from "reactstrap";
+import { translate } from "react-i18next";
 
 class AdvancedSettings extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class AdvancedSettings extends Component {
 
   render() {
     let { loading } = this.props.state;
+    let { t } = this.props;
 
     return (
       <div>
@@ -50,7 +52,7 @@ class AdvancedSettings extends Component {
             margin: 10
           }}
         >
-          Advanced Settings
+          {t("advancedSettings")}
         </Button>
         <Modal
           isOpen={this.state.modal}
@@ -58,7 +60,7 @@ class AdvancedSettings extends Component {
           className={this.props.className}
         >
           <ModalHeader toggle={this.toggle}>
-            {this.props.radio} WiFi Settings
+            {this.props.radio} {t("wifiSettings")}
           </ModalHeader>
           <ModalBody>
             <Form>
@@ -71,7 +73,7 @@ class AdvancedSettings extends Component {
                       value={this.state.mesh}
                       checked={this.state.mesh}
                     />{" "}
-                    Enable Mesh Over Wifi
+                    {t("enableMesh")}
                   </Label>
                 </FormGroup>
               </FormGroup>
@@ -86,7 +88,7 @@ class AdvancedSettings extends Component {
               }}
               onClick={this.toggle}
             >
-              Close
+              {t("close")}
             </Button>
           </ModalFooter>
         </Modal>
@@ -95,4 +97,6 @@ class AdvancedSettings extends Component {
   }
 }
 
-export default connect(["loading"])(AdvancedSettings);
+export default translate("translations")(
+  connect(["loading"])(AdvancedSettings)
+);

@@ -39,7 +39,6 @@ class AltheaNav extends Component {
 
   renderNavItems = () => {
     let padded = { paddingLeft: 5, paddingRight: 5 };
-    console.log(this.navItems());
     return this.navItems().map((page, i) => {
       return (
         <NavItem style={padded} className={page.active} key={i}>

@@ -5,5 +5,14 @@
   "nodeInfo": "Node Info",
   "presentQR": "Present this QR code to your local subnet DAO organizer to have your node added to the DAO.",
   "welcome": "Welcome to Althea",
-  "version": "You are running version {{version}}"
+  "version": "You are running version {{version}}",
+  "routerSettings": "Router Settings",
+  "settingsSaved": "Settings Saved Successfully",
+  "ssid": "SSID",
+  "password": "Password",
+  "save": "Save",
+  "advancedSettings": "Advanced Settings",
+  "wifiSettings": "WiFi Settings",
+  "enableMesh": "Enable Mesh Over Wifi",
+  "close": "Close"
 } 

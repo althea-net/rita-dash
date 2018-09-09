@@ -1,19 +1,10 @@
 import React, { Component } from "react";
-import {
-  Alert,
-  Card,
-  CardBody,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Progress
-} from "reactstrap";
+import { Progress } from "reactstrap";
 import { actions, connect } from "../store";
 import "./RouterSettings.css";
-import AdvancedSettings from "./AdvancedSettings";
 import Error from "./Error";
+import { translate } from "react-i18next";
+import WifiSettingsForm from "./WifiSettingsForm";
 
 class RouterSettings extends Component {
   componentDidMount() {
@@ -22,9 +13,11 @@ class RouterSettings extends Component {
 
   render() {
     const { error, loading, wifiSettings } = this.props.state;
+    const { t } = this.props;
+
     return (
       <div>
-        <h1>Router Settings</h1>
+        <h1>{t("routerSettings")}</h1>
 
         {error ? (
           <Error error={error} />
@@ -54,135 +47,6 @@ class RouterSettings extends Component {
   }
 }
 
-class WifiSettingsForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fields: {
-        key: "",
-        ssid: ""
-      },
-      valid: {}
-    };
-    this.validators = {
-      ssid: value => value.length >= 8,
-      key: value => value.length >= 8
-    };
-  }
-
-  componentDidMount = () => {
-    this.setState({ fields: this.props.wifiSettings });
-  };
-
-  onFieldChange = e => {
-    const { name, value } = e.target;
-
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        [name]: value
-      },
-      valid: {
-        ...this.state.valid,
-        [name]: this.validators[name](value)
-      }
-    });
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    actions.saveWifiSetting(
-      this.state.fields,
-      this.props.wifiSettings.device.radioType
-    );
-  };
-
-  isFieldValid = name =>
-    this.state.fields[name] ? this.state.valid[name] : undefined;
-
-  render() {
-    let radio = this.props.wifiSettings.device.radioType;
-    let section = this.props.wifiSettings.device.sectionName;
-    let mesh = this.props.wifiSettings.mesh;
-    let { loading, success } = this.props.state;
-
-    return (
-      <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
-        <CardBody>
-          {success === radio && (
-            <Alert color="success">Settings Saved Successfully</Alert>
-          )}
-          {loading === radio && <Progress animated color="info" value="100" />}
-          <Form onSubmit={this.onSubmit}>
-            <Label
-              for="form"
-              style={{
-                marginBottom: "20px",
-                fontSize: "1.5em",
-                textAlign: "center"
-              }}
-            >
-              {radio}
-            </Label>
-
-            <FormGroup id="form">
-              <Label for="ssid">SSID</Label>
-              <Input
-                type="text"
-                name="ssid"
-                valid={this.isFieldValid("ssid")}
-                placeholder="min. 8 characters"
-                onChange={this.onFieldChange}
-                value={this.state.fields.ssid}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="password">Password</Label>
-              <Input
-                type="text"
-                name="key"
-                valid={this.isFieldValid("key")}
-                placeholder="min. 8 characters"
-                onChange={this.onFieldChange}
-                value={this.state.fields.key}
-              />
-            </FormGroup>
-
-            <FormGroup
-              style={{
-                display: "flex",
-                margin: -20,
-                marginTop: 0,
-                padding: 10
-              }}
-            >
-              <Button
-                color="primary"
-                style={{
-                  margin: 10
-                }}
-              >
-                Save
-              </Button>
-            </FormGroup>
-
-            <FormGroup
-              style={{
-                display: "flex",
-                margin: -20,
-                marginTop: 0,
-                padding: 10
-              }}
-            >
-              <AdvancedSettings radio={section} mesh={mesh} />
-            </FormGroup>
-          </Form>
-        </CardBody>
-      </Card>
-    );
-  }
-}
-
-export default connect(["error", "loading", "success", "wifiSettings"])(
-  RouterSettings
+export default translate("translations")(
+  connect(["error", "loading", "success", "wifiSettings"])(RouterSettings)
 );
