@@ -1,5 +1,7 @@
 import { BigNumber } from "bignumber.js";
+import i18n from "../i18n";
 
+const t = i18n.t.bind(i18n);
 const wei = BigNumber("1000000000000000000");
 
 export default backend => {
@@ -13,7 +15,7 @@ export default backend => {
 
       if (debts instanceof Error) {
         return {
-          error: "Problem retrieving debts",
+          error: t("debtsError"),
           loading: false
         };
       }
@@ -22,7 +24,7 @@ export default backend => {
 
       if (settings instanceof Error) {
         return {
-          error: "Problem retrieving settings",
+          error: t("settingsError"),
           loading: false
         };
       }
@@ -34,7 +36,7 @@ export default backend => {
 
       if (neighbors instanceof Error) {
         return {
-          error: "Problem retrieving neighbors",
+          error: t("neighborsError"),
           loading: false
         };
       }

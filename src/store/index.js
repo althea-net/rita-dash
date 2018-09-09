@@ -4,6 +4,7 @@ import DaoActions from "./DaoActions";
 import ExitActions from "./ExitActions";
 import NeighborActions from "./NeighborActions";
 import WifiActions from "./WifiActions";
+import i18n from "../i18n";
 
 const backend = new Backend();
 
@@ -11,6 +12,7 @@ const daoActions = DaoActions(backend);
 const exitActions = ExitActions(backend);
 const neighborActions = NeighborActions(backend);
 const wifiActions = WifiActions(backend);
+const t = i18n.t.bind(i18n);
 
 const store = {
   initialState: {
@@ -47,9 +49,9 @@ const store = {
 
       let info = await backend.getInfo();
 
-      if (info instanceof Error) {
+      if (1) {
         return {
-          error: "Problem retrieving balance and version info",
+          error: t("infoError"),
           loading: false
         };
       }

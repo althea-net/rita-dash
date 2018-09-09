@@ -1,3 +1,6 @@
+import i18n from "../i18n";
+const t = i18n.t.bind(i18n);
+
 export default backend => {
   return {
     getExits: async ({ setState, state }) => {
@@ -7,7 +10,7 @@ export default backend => {
       let exits = await backend.getExits();
       if (exits instanceof Error) {
         return setState({
-          exitsError: "Unable to get list of exits from rita server",
+          exitsError: t("exitsError"),
           exits: [],
           loading: false
         });
