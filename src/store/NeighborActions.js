@@ -29,7 +29,6 @@ export default backend => {
         };
       }
 
-      console.log(settings);
       let exits = settings.exitClient.exits;
 
       let neighbors = await backend.getNeighbors();

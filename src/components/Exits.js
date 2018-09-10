@@ -27,7 +27,6 @@ class Exits extends Component {
   render() {
     const { exitsError, exits, loading } = this.props.state;
     let { t } = this.props;
-    console.log("huh", t);
 
     const sort = (a, b) =>
       a.nickname.localeCompare(b.nickname, undefined, { sensitivity: "base" });
