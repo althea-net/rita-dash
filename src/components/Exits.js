@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Error from "./Error";
 import RegistrationForm from "./RegistrationForm";
 import VerifyForm from "./VerifyForm";
-import { translate } from "react-i18next";
 
 class Exits extends Component {
   componentDidMount() {
@@ -27,7 +26,8 @@ class Exits extends Component {
 
   render() {
     const { exitsError, exits, loading } = this.props.state;
-    const { t } = this.props;
+    let { t } = this.props;
+    console.log("huh", t);
 
     const sort = (a, b) =>
       a.nickname.localeCompare(b.nickname, undefined, { sensitivity: "base" });
@@ -184,10 +184,16 @@ class ExitListItem extends Component {
                     email=""
                     startRegistering={this.startRegistering}
                     stopRegistering={this.stopRegistering}
+                    t={t}
                   />
                 )}
                 {state === "Pending" && (
-                  <VerifyForm nickname={nickname} state={state} email="" />
+                  <VerifyForm
+                    nickname={nickname}
+                    state={state}
+                    email=""
+                    t={t}
+                  />
                 )}
               </Col>
             )}
@@ -270,6 +276,4 @@ class ConnectionError extends Component {
   }
 }
 
-export default translate("translations")(
-  connect(["exits", "exitsError", "loading"])(Exits)
-);
+export default connect(["exits", "exitsError", "loading"])(Exits);

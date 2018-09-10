@@ -69,15 +69,12 @@ class VerifyForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    // let scroll = window.scrollY;
-
     this.setState({ waiting: true });
 
     setTimeout(() => {
       this.setState({ timeout: true, waiting: false });
-      // TODO: Figure out why state is 'Pending' even after successful registration
-      // if (this.props.state !== "Registered") animatedScrollTo(scroll);
     }, 5000);
+
     actions.verifyExit(this.props.nickname, this.state.fields.code);
     animatedScrollTo(0);
   };

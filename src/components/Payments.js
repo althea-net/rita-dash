@@ -12,7 +12,6 @@ import {
   Label,
   Row
 } from "reactstrap";
-import { translate } from "react-i18next";
 import { actions, connect } from "../store";
 
 class Payments extends Component {
@@ -104,6 +103,4 @@ function PriceQuality() {
   );
 }
 
-export default translate("translations")(
-  connect(["settings", "info"])(Payments)
-);
+export default connect(["settings", "info"])(Payments);

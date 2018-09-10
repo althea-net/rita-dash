@@ -3,7 +3,6 @@ import { Progress } from "reactstrap";
 import { actions, connect } from "../store";
 import "./RouterSettings.css";
 import Error from "./Error";
-import { translate } from "react-i18next";
 import WifiSettingsForm from "./WifiSettingsForm";
 
 class RouterSettings extends Component {
@@ -38,6 +37,7 @@ class RouterSettings extends Component {
               <WifiSettingsForm
                 state={this.props.state}
                 key={i}
+                t={t}
                 wifiSettings={settings}
               />
             ))}
@@ -47,6 +47,6 @@ class RouterSettings extends Component {
   }
 }
 
-export default translate("translations")(
-  connect(["error", "loading", "success", "wifiSettings"])(RouterSettings)
+export default connect(["error", "loading", "success", "wifiSettings"])(
+  RouterSettings
 );

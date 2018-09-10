@@ -90,6 +90,7 @@ class RegistrationForm extends Component {
 
   render() {
     let { registering, waiting } = this.state;
+    let { t } = this.props;
 
     return waiting ? (
       <Card>
@@ -107,16 +108,16 @@ class RegistrationForm extends Component {
       <Card>
         <CardBody>
           <Form onSubmit={this.onSubmit} className="form-inline">
-            <h5>Register</h5>
+            <h5>{t("register")}</h5>
             <FormGroup id="form">
               <Label for="email" style={{ marginRight: 5 }}>
-                <b>Email</b>
+                <b>{t("email")}</b>
               </Label>
               <Input
-                label="Email"
+                label={t("email")}
                 type="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder={t("enterEmail")}
                 valid={this.isFieldValid("email") && this.state.blurred}
                 invalid={
                   !(this.isFieldValid("email") || !this.state.fields.email)
@@ -125,9 +126,7 @@ class RegistrationForm extends Component {
                 onBlur={this.onBlur}
                 value={this.state.fields.email || ""}
               />
-              <FormFeedback invalid="true">
-                A valid email is required
-              </FormFeedback>
+              <FormFeedback invalid="true">{t("emailRequired")}</FormFeedback>
             </FormGroup>
             <FormGroup
               style={{
@@ -144,7 +143,7 @@ class RegistrationForm extends Component {
                   margin: 3
                 }}
               >
-                Submit
+                {t("submit")}
               </Button>
               <Button
                 color="primary"
@@ -166,7 +165,7 @@ class RegistrationForm extends Component {
           margin: 10
         }}
       >
-        Register
+        {t("register")}
       </Button>
     );
   }

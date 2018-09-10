@@ -23,9 +23,11 @@ class NetworkSettings extends Component {
   }
 
   render() {
+    let { t } = this.props;
+
     return (
       <div>
-        <h1>Network Settings</h1>
+        <h1>{t("networkSettings")}</h1>
         <Nav tabs>
           <NavItem>
             <NavLink
@@ -35,7 +37,7 @@ class NetworkSettings extends Component {
                 this.toggle("1");
               }}
             >
-              Exits
+              {t("exits")}
             </NavLink>
           </NavItem>
           <NavItem>
@@ -46,31 +48,21 @@ class NetworkSettings extends Component {
                 this.toggle("2");
               }}
             >
-              Subnet DAO(s)
+              {t("subnetDaos")}
             </NavLink>
           </NavItem>
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
             <Card style={{ padding: 10, borderTop: "none" }}>
-              <p>
-                Exit nodes are like a combination of a VPN and a speedtest
-                server. They keep your browsing history private and make sure
-                that your traffic is always routed through the fastest path in
-                the network at a given price.
-              </p>
-              <p>
-                Exit nodes need to collect a bit of information about you (your
-                email address), and you need to select an exit node in your
-                region. Althea runs some exit nodes, but in the future you will
-                be able to select exits from other companies if you prefer.
-              </p>
-              <Exits />
+              <p>{t("exitNodesP1")}</p>
+              <p>{t("exitNodesP2")}</p>
+              <Exits t={t} />
             </Card>
           </TabPane>
           <TabPane tabId="2">
             <Card style={{ padding: 10, borderTop: "none" }}>
-              <DaoSelection />
+              <DaoSelection t={t} />
             </Card>
           </TabPane>
         </TabContent>

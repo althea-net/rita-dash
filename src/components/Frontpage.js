@@ -3,7 +3,6 @@ import { actions, connect } from "../store";
 import QR from "qrcode.react";
 import { Card, CardBody, CardTitle, Col, Progress, Row } from "reactstrap";
 import Error from "./Error";
-import { translate } from "react-i18next";
 
 class FrontPage extends Component {
   componentDidMount() {
@@ -64,6 +63,4 @@ class FrontPage extends Component {
   }
 }
 
-export default translate("translations")(
-  connect(["error", "loading", "info", "settings"])(FrontPage)
-);
+export default connect(["error", "loading", "info", "settings"])(FrontPage);

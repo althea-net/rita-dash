@@ -20,17 +20,18 @@ class Neighbors extends Component {
     const { error, loading, neighbors } = this.props.state;
     const normNeighbors = normalizeNeighbors(neighbors);
     const peers = normNeighbors.filter(n => !n.isExit);
+    const { t } = this.props;
 
     return (
       <div>
-        <h1>Neighbors</h1>
+        <h1>{t("neighbors")}</h1>
         {error ? (
           <Error error={error} />
         ) : (
           loading && <Progress animated color="info" value="100" />
         )}
         {peers.map(n => (
-          <NodeInfo {...n} key={n.nickname} />
+          <NodeInfo {...n} key={n.nickname} t={t} />
         ))}
       </div>
     );
@@ -226,7 +227,9 @@ function NodeInfo({
   totalPaymentSent,
   totalPaymentReceived,
   debt,
-  incomingPayments
+  incomingPayments,
+
+  t
 }) {
   let s = nickname;
   if (s.length > 12) {
@@ -270,12 +273,12 @@ function NodeInfo({
               }}
             >
               <LabelUnit
-                label="Link to me"
+                label={t("linkToMe")}
                 content={metric2word(normalizedLinkCost)}
               />
               {isExit || (
                 <LabelUnit
-                  label="Link to exit"
+                  label={t("linkToExit")}
                   content={metric2word(normalizedRouteMetricToExit)}
                 />
               )}
@@ -287,20 +290,20 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              <LabelUnit label="Price" content={`${priceToExit} ¢/gb`} />
+              <LabelUnit label={t("price")} content={`${priceToExit} ¢/gb`} />
               {(totalPaymentReceived > 0 && (
                 <LabelUnit
-                  label="Payment Received"
+                  label={t("paymentReceived")}
                   content={`♦ ${totalPaymentReceived}`}
                 />
               )) ||
                 (totalPaymentSent > 0 && (
                   <LabelUnit
-                    label="Payment Sent"
+                    label={t("paymentSent")}
                     content={`♦ ${totalPaymentSent}`}
                   />
                 ))}
-              <LabelUnit label="Current Debt" content={`♦ ${debt}`} />
+              <LabelUnit label={t("currentDebt")} content={`♦ ${debt}`} />
             </div>
           </CardBody>
         </Card>

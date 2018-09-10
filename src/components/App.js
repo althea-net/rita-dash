@@ -20,6 +20,7 @@ import neighbors from "../images/neighbors.svg";
 import network from "../images/network.svg";
 import router from "../images/router.svg";
 import payments from "../images/payments.svg";
+import { translate } from "react-i18next";
 
 library.add(faBan);
 library.add(faGlobeAmericas);
@@ -32,13 +33,14 @@ library.add(faSync);
 class App extends Component {
   constructor(props) {
     super(props);
+    let { t } = props;
     this.state = {
       current: window.location.hash.substr(1),
       pages: {
-        neighbors: { title: "Neighbors", icon: neighbors },
-        router_settings: { title: "Router Settings", icon: router },
-        network_settings: { title: "Network Settings", icon: network },
-        payments: { title: "Payments", icon: payments }
+        neighbors: { title: t("neighbors"), icon: neighbors },
+        router_settings: { title: t("routerSettings"), icon: router },
+        network_settings: { title: t("networkSettings"), icon: network },
+        payments: { title: t("payments"), icon: payments }
       }
     };
   }
@@ -68,12 +70,14 @@ class App extends Component {
       padding: 10
     };
 
+    const { i18n, t } = this.props;
+
     return (
       <div className="App">
-        <AltheaNav pages={pages} current={current} />
+        <AltheaNav pages={pages} current={current} i18n={i18n} t={t} />
         <div style={container}>
           <div style={main}>
-            <Page />
+            <Page t={t} />
           </div>
         </div>
       </div>
@@ -81,19 +85,19 @@ class App extends Component {
   }
 }
 
-const Page = connect(["page"])(({ state }) => {
+const Page = connect(["page"])(({ state, t }) => {
   switch (state.page) {
     case "router-settings":
-      return <RouterSettings />;
+      return <RouterSettings t={t} />;
     case "network-settings":
-      return <NetworkSettings />;
+      return <NetworkSettings t={t} />;
     case "neighbors":
-      return <Neighbors />;
+      return <Neighbors t={t} />;
     case "payments":
-      return <Payments />;
+      return <Payments t={t} />;
     default:
-      return <Frontpage />;
+      return <Frontpage t={t} />;
   }
 });
 
-export default App;
+export default translate("translations")(App);

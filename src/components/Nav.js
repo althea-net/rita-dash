@@ -14,7 +14,6 @@ import {
 } from "reactstrap";
 import logo from "../images/althea.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { translate } from "react-i18next";
 
 class AltheaNav extends Component {
   state = {};
@@ -71,6 +70,8 @@ class AltheaNav extends Component {
             <ButtonDropdown isOpen={this.state.dropOpen} toggle={this.drop}>
               <DropdownToggle caret>
                 <FontAwesomeIcon icon="globe-americas" size="lg" />
+                &nbsp;
+                {i18n.language.toUpperCase()}
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem onClick={() => i18n.changeLanguage("en")}>
@@ -78,9 +79,6 @@ class AltheaNav extends Component {
                 </DropdownItem>
                 <DropdownItem onClick={() => i18n.changeLanguage("es")}>
                   ES
-                </DropdownItem>
-                <DropdownItem onClick={() => i18n.changeLanguage("fr")}>
-                  FR
                 </DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
@@ -91,4 +89,4 @@ class AltheaNav extends Component {
   }
 }
 
-export default translate("translations")(AltheaNav);
+export default AltheaNav;

@@ -12,7 +12,6 @@ import {
   ModalFooter,
   Progress
 } from "reactstrap";
-import { translate } from "react-i18next";
 
 class AdvancedSettings extends Component {
   constructor(props) {
@@ -97,6 +96,4 @@ class AdvancedSettings extends Component {
   }
 }
 
-export default translate("translations")(
-  connect(["loading"])(AdvancedSettings)
-);
+export default connect(["loading"])(AdvancedSettings);
