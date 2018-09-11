@@ -3,6 +3,7 @@ import Exits from "./Exits";
 import DaoSelection from "./DaoSelection";
 import { Card, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
+import { connect } from "../store";
 
 class NetworkSettings extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class NetworkSettings extends Component {
   }
 
   render() {
-    let { t } = this.props;
+    let { t } = this.props.state;
 
     return (
       <div>
@@ -71,4 +72,4 @@ class NetworkSettings extends Component {
   }
 }
 
-export default NetworkSettings;
+export default connect(["t"])(NetworkSettings);

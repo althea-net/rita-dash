@@ -11,8 +11,7 @@ class RouterSettings extends Component {
   }
 
   render() {
-    const { error, loading, wifiSettings } = this.props.state;
-    const { t } = this.props;
+    const { error, loading, wifiSettings, t } = this.props.state;
 
     return (
       <div>
@@ -47,6 +46,6 @@ class RouterSettings extends Component {
   }
 }
 
-export default connect(["error", "loading", "success", "wifiSettings"])(
+export default connect(["error", "loading", "success", "wifiSettings", "t"])(
   RouterSettings
 );

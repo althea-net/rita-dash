@@ -4,7 +4,6 @@ import DaoActions from "./DaoActions";
 import ExitActions from "./ExitActions";
 import NeighborActions from "./NeighborActions";
 import WifiActions from "./WifiActions";
-import i18n from "../i18n";
 
 const backend = new Backend();
 
@@ -12,7 +11,6 @@ const daoActions = DaoActions(backend);
 const exitActions = ExitActions(backend);
 const neighborActions = NeighborActions(backend);
 const wifiActions = WifiActions(backend);
-const t = i18n.t.bind(i18n);
 
 const store = {
   initialState: {
@@ -35,6 +33,7 @@ const store = {
       }
     },
     success: false,
+    t: () => {},
     wifiSettings: []
   },
   actions: {
@@ -43,15 +42,18 @@ const store = {
     ...neighborActions,
     ...wifiActions,
     changePage: (_, page) => ({ page: page }),
+    init: async ({ setState, state }, t) => {
+      setState({ t });
+    },
 
     getInfo: async ({ setState, state }) => {
       setState({ loading: true });
 
       let info = await backend.getInfo();
 
-      if (1) {
+      if (info instanceof Error) {
         return {
-          error: t("infoError"),
+          error: state.t("infoError"),
           loading: false
         };
       }
@@ -66,7 +68,7 @@ const store = {
 
       if (settings instanceof Error) {
         return {
-          error: "Problem retrieving settings",
+          error: state.t("settingsError"),
           loading: false
         };
       }

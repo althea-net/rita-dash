@@ -12,11 +12,32 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
-import logo from "../images/althea.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { actions } from "../store";
+import logo from "../images/althea.png";
+import neighbors from "../images/neighbors.svg";
+import network from "../images/network.svg";
+import router from "../images/router.svg";
+import payments from "../images/payments.svg";
 
 class AltheaNav extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    const { t } = this.props;
+
+    this.pages = {
+      neighbors: { title: t("neighbors"), icon: neighbors },
+      router_settings: { title: t("routerSettings"), icon: router },
+      network_settings: { title: t("networkSettings"), icon: network },
+      payments: { title: t("payments"), icon: payments }
+    };
+
+    this.state = {};
+  }
+
+  componentDidMount() {
+    actions.init(this.props.t);
+  }
 
   drop = () => {
     this.setState({ dropOpen: !this.state.dropOpen });
@@ -27,10 +48,10 @@ class AltheaNav extends Component {
   };
 
   navItems = () => {
-    return Object.keys(this.props.pages).map((p, i) => {
+    return Object.keys(this.pages).map((p, i) => {
       let path = p.replace("_", "-");
       let active = path === this.props.current ? "active" : null;
-      let { icon, title } = this.props.pages[p];
+      let { icon, title } = this.pages[p];
 
       return { path, active, title, icon };
     });

@@ -1,6 +1,3 @@
-import i18n from "../i18n";
-const t = i18n.t.bind(i18n);
-
 export default backend => {
   return {
     addSubnetDao: async ({ setState, state }, address) => {
@@ -14,7 +11,7 @@ export default backend => {
       let daos = await backend.getSubnetDaos();
       if (daos instanceof Error) {
         return setState({
-          daosError: t("daoError"),
+          daosError: state.t("daoError"),
           daos: [],
           loading: false
         });

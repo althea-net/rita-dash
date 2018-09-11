@@ -15,7 +15,7 @@ class FrontPage extends Component {
     let { ownIp } = settings.network;
     let { ethAddress } = settings.payment;
     let { version } = info;
-    let { t } = this.props;
+    let { t } = this.props.state;
 
     return (
       <div>
@@ -63,4 +63,6 @@ class FrontPage extends Component {
   }
 }
 
-export default connect(["error", "loading", "info", "settings"])(FrontPage);
+export default connect(["error", "loading", "info", "settings", "t"])(
+  FrontPage
+);

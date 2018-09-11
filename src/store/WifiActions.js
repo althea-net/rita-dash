@@ -1,6 +1,3 @@
-import i18n from "../i18n";
-const t = i18n.t.bind(i18n);
-
 export default backend => {
   return {
     getWifiSettings: async ({ setState, state }) => {
@@ -8,7 +5,7 @@ export default backend => {
       let res = await backend.getWifiSettings();
       if (res instanceof Error) {
         return setState({
-          error: t("wifiError"),
+          error: state.t("wifiError"),
           exits: [],
           loading: false
         });
