@@ -16,7 +16,6 @@ import {
   faSitemap,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
-import { I18n } from "react-i18next";
 
 library.add(faBan);
 library.add(faGlobeAmericas);
@@ -60,18 +59,14 @@ class App extends Component {
     };
 
     return (
-      <I18n ns={"translations"}>
-        {(t, { i18n }) => (
-          <div className="App">
-            <AltheaNav current={current} i18n={i18n} t={t} />
-            <div style={container}>
-              <div style={main}>
-                <Page />
-              </div>
-            </div>
+      <div className="App">
+        <AltheaNav current={current} />
+        <div style={container}>
+          <div style={main}>
+            <Page />
           </div>
-        )}
-      </I18n>
+        </div>
+      </div>
     );
   }
 }

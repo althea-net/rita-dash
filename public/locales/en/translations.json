@@ -72,5 +72,7 @@
   "paymentSent": "Payment sent",
   "paymentReceived": "Payment received",
   "currentDebt": "Current debt",
-  "price": "Price"
+  "price": "Price",
+  "enterEthAddress": "Please enter a valid Ethereum address",
+  "addSubnetDao": "Add subnet DAO"
 }

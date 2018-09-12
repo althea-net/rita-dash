@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 import { actions } from "../store";
 import AdvancedSettings from "./AdvancedSettings";
+import { translate } from "react-i18next";
 
 class WifiSettingsForm extends Component {
   constructor(props) {
@@ -134,7 +135,7 @@ class WifiSettingsForm extends Component {
                 padding: 10
               }}
             >
-              <AdvancedSettings radio={section} mesh={mesh} t={t} />
+              <AdvancedSettings radio={section} mesh={mesh} />
             </FormGroup>
           </Form>
         </CardBody>
@@ -143,4 +144,4 @@ class WifiSettingsForm extends Component {
   }
 }
 
-export default WifiSettingsForm;
+export default translate()(WifiSettingsForm);

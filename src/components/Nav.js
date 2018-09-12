@@ -19,19 +19,11 @@ import neighbors from "../images/neighbors.svg";
 import network from "../images/network.svg";
 import router from "../images/router.svg";
 import payments from "../images/payments.svg";
+import { translate } from "react-i18next";
 
 class AltheaNav extends Component {
   constructor(props) {
     super(props);
-    const { t } = this.props;
-
-    this.pages = {
-      neighbors: { title: t("neighbors"), icon: neighbors },
-      router_settings: { title: t("routerSettings"), icon: router },
-      network_settings: { title: t("networkSettings"), icon: network },
-      payments: { title: t("payments"), icon: payments }
-    };
-
     this.state = {};
   }
 
@@ -48,10 +40,18 @@ class AltheaNav extends Component {
   };
 
   navItems = () => {
-    return Object.keys(this.pages).map((p, i) => {
+    let { t } = this.props;
+    let pages = {
+      neighbors: { title: t("neighbors"), icon: neighbors },
+      router_settings: { title: t("routerSettings"), icon: router },
+      network_settings: { title: t("networkSettings"), icon: network },
+      payments: { title: t("payments"), icon: payments }
+    };
+
+    return Object.keys(pages).map((p, i) => {
       let path = p.replace("_", "-");
       let active = path === this.props.current ? "active" : null;
-      let { icon, title } = this.pages[p];
+      let { icon, title } = pages[p];
 
       return { path, active, title, icon };
     });
@@ -72,7 +72,7 @@ class AltheaNav extends Component {
   };
 
   render() {
-    let { i18n } = this.props;
+    let { i18n, t } = this.props;
 
     return (
       <Navbar color="light" light expand="sm">
@@ -110,4 +110,4 @@ class AltheaNav extends Component {
   }
 }
 
-export default AltheaNav;
+export default translate()(AltheaNav);

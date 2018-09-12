@@ -3,6 +3,7 @@ import { actions, connect } from "../store";
 import QR from "qrcode.react";
 import { Card, CardBody, CardTitle, Col, Progress, Row } from "reactstrap";
 import Error from "./Error";
+import { translate } from "react-i18next";
 
 class FrontPage extends Component {
   componentDidMount() {
@@ -15,7 +16,7 @@ class FrontPage extends Component {
     let { ownIp } = settings.network;
     let { ethAddress } = settings.payment;
     let { version } = info;
-    let { t } = this.props.state;
+    let { t } = this.props;
 
     return (
       <div>
@@ -63,6 +64,6 @@ class FrontPage extends Component {
   }
 }
 
-export default connect(["error", "loading", "info", "settings", "t"])(
-  FrontPage
+export default connect(["error", "loading", "info", "settings"])(
+  translate()(FrontPage)
 );

@@ -3,7 +3,7 @@ import Exits from "./Exits";
 import DaoSelection from "./DaoSelection";
 import { Card, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
-import { connect } from "../store";
+import { translate } from "react-i18next";
 
 class NetworkSettings extends Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class NetworkSettings extends Component {
   }
 
   render() {
-    let { t } = this.props.state;
+    let { t } = this.props;
 
     return (
       <div>
@@ -58,12 +58,12 @@ class NetworkSettings extends Component {
             <Card style={{ padding: 10, borderTop: "none" }}>
               <p>{t("exitNodesP1")}</p>
               <p>{t("exitNodesP2")}</p>
-              <Exits t={t} />
+              <Exits />
             </Card>
           </TabPane>
           <TabPane tabId="2">
             <Card style={{ padding: 10, borderTop: "none" }}>
-              <DaoSelection t={t} />
+              <DaoSelection />
             </Card>
           </TabPane>
         </TabContent>
@@ -72,4 +72,4 @@ class NetworkSettings extends Component {
   }
 }
 
-export default connect(["t"])(NetworkSettings);
+export default translate()(NetworkSettings);

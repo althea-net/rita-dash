@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Error from "./Error";
 import RegistrationForm from "./RegistrationForm";
 import VerifyForm from "./VerifyForm";
+import { translate } from "react-i18next";
 
 class Exits extends Component {
   componentDidMount() {
@@ -183,16 +184,10 @@ class ExitListItem extends Component {
                     email=""
                     startRegistering={this.startRegistering}
                     stopRegistering={this.stopRegistering}
-                    t={t}
                   />
                 )}
                 {state === "Pending" && (
-                  <VerifyForm
-                    nickname={nickname}
-                    state={state}
-                    email=""
-                    t={t}
-                  />
+                  <VerifyForm nickname={nickname} state={state} email="" />
                 )}
               </Col>
             )}
@@ -275,4 +270,4 @@ class ConnectionError extends Component {
   }
 }
 
-export default connect(["exits", "exitsError", "loading"])(Exits);
+export default connect(["exits", "exitsError", "loading"])(translate()(Exits));

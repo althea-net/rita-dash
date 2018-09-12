@@ -13,6 +13,7 @@ import {
 } from "reactstrap";
 import { actions } from "../store";
 import animatedScrollTo from "animated-scroll-to";
+import { translate } from "react-i18next";
 
 class VerifyForm extends Component {
   constructor(props) {
@@ -84,6 +85,7 @@ class VerifyForm extends Component {
 
   render() {
     let { timeout, waiting } = this.state;
+    let { t } = this.props;
 
     return (
       <Card>
@@ -93,25 +95,20 @@ class VerifyForm extends Component {
               <h5>Register</h5>
               <Progress color="success" animated value="50" />
               <p style={{ marginTop: 10 }} className="text-center">
-                <b>Submitting verification code to exit...</b>
+                <b>{t("submittingCode")}</b>
               </p>
             </div>
           ) : (
             <Form onSubmit={this.onSubmit} className="form-inline">
               <h5>Register</h5>
               {timeout ? (
-                <Alert color="warning">
-                  Registration timed out possibly due to an invalid code
-                </Alert>
+                <Alert color="warning">{t("registrationTimeout")}</Alert>
               ) : (
-                <p>
-                  A six-digit registration code is being sent to your email
-                  address.
-                </p>
+                <p>{t("codeSent")}</p>
               )}
               <FormGroup id="form" className="form-inline">
                 <Label for="code" style={{ marginRight: 5 }}>
-                  <b>Code</b>
+                  <b>{t("code")}</b>
                 </Label>
                 <Input
                   type="text"
@@ -126,9 +123,7 @@ class VerifyForm extends Component {
                   onBlur={this.onBlur}
                   value={this.state.fields.code || ""}
                 />
-                <FormFeedback invalid="true">
-                  Please enter a valid 6-digit code
-                </FormFeedback>
+                <FormFeedback invalid="true">{t("enterCode")}</FormFeedback>
               </FormGroup>
 
               <FormGroup
@@ -146,7 +141,7 @@ class VerifyForm extends Component {
                     margin: 10
                   }}
                 >
-                  Verify
+                  {t("verify")}
                 </Button>
               </FormGroup>
             </Form>
@@ -157,4 +152,4 @@ class VerifyForm extends Component {
   }
 }
 
-export default VerifyForm;
+export default translate()(VerifyForm);

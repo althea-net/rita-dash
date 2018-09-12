@@ -5,6 +5,7 @@ import { Card, CardBody, CardTitle, Progress } from "reactstrap";
 
 import { actions, connect } from "../store";
 import Error from "./Error";
+import { translate } from "react-i18next";
 
 class Neighbors extends Component {
   componentDidMount() {
@@ -323,4 +324,6 @@ function NodeInfo({
   );
 }
 
-export default connect(["error", "loading", "neighbors"])(Neighbors);
+export default connect(["error", "loading", "neighbors"])(
+  translate()(Neighbors)
+);

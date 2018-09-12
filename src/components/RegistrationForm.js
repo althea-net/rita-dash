@@ -11,6 +11,7 @@ import {
   Progress
 } from "reactstrap";
 import { actions } from "../store";
+import { translate } from "react-i18next";
 
 const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -96,10 +97,10 @@ class RegistrationForm extends Component {
       <Card>
         <CardBody>
           <div>
-            <h5>Register</h5>
+            <h5>{t("register")}</h5>
             <Progress color="success" animated value="50" />
             <p style={{ marginTop: 10 }} className="text-center">
-              <b>Submitting email to exit...</b>
+              <b>{t("submittingEmail")}</b>
             </p>
           </div>
         </CardBody>
@@ -150,7 +151,7 @@ class RegistrationForm extends Component {
                 style={{ margin: 3 }}
                 onClick={this.stopRegistering}
               >
-                Cancel
+                {t("cancel")}
               </Button>
             </FormGroup>
           </Form>
@@ -171,4 +172,4 @@ class RegistrationForm extends Component {
   }
 }
 
-export default RegistrationForm;
+export default translate()(RegistrationForm);

@@ -4,6 +4,7 @@ import { actions, connect } from "../store";
 import "./RouterSettings.css";
 import Error from "./Error";
 import WifiSettingsForm from "./WifiSettingsForm";
+import { translate } from "react-i18next";
 
 class RouterSettings extends Component {
   componentDidMount() {
@@ -11,7 +12,8 @@ class RouterSettings extends Component {
   }
 
   render() {
-    const { error, loading, wifiSettings, t } = this.props.state;
+    const { error, loading, wifiSettings } = this.props.state;
+    const { t } = this.props;
 
     return (
       <div>
@@ -36,7 +38,6 @@ class RouterSettings extends Component {
               <WifiSettingsForm
                 state={this.props.state}
                 key={i}
-                t={t}
                 wifiSettings={settings}
               />
             ))}
@@ -46,6 +47,6 @@ class RouterSettings extends Component {
   }
 }
 
-export default connect(["error", "loading", "success", "wifiSettings", "t"])(
-  RouterSettings
+export default connect(["error", "loading", "success", "wifiSettings"])(
+  translate()(RouterSettings)
 );

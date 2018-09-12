@@ -13,6 +13,7 @@ import {
   Row
 } from "reactstrap";
 import { actions, connect } from "../store";
+import { translate } from "react-i18next";
 
 class Payments extends Component {
   componentDidMount() {
@@ -75,26 +76,28 @@ function LowFunds({ t }) {
   );
 }
 
-function PriceQuality() {
+function PriceQuality({ t }) {
   return (
     <Card style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
       <CardBody>
-        <h3>Price/Quality tradeoff:</h3>
+        <h3>{t("priceQuality")}</h3>
 
         <Form>
           <FormGroup>
             <Input type="range" />
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <small>Prefer low price</small>
-              <small>Prefer high quality</small>
+              <small>{t("preferLow")}</small>
+              <small>{t("preferHigh")}</small>
             </div>
           </FormGroup>
 
           <FormGroup>
-            <Label for="exampleEmail">Highest acceptable price</Label>
+            <Label for="exampleEmail">{t("highestAcceptable")}</Label>
             <InputGroup>
               <Input type="number" value="10" />
-              <InputGroupAddon addonType="append">cents/GB</InputGroupAddon>
+              <InputGroupAddon addonType="append">
+                {t("centsPerGB")}
+              </InputGroupAddon>
             </InputGroup>
           </FormGroup>
         </Form>
@@ -103,4 +106,4 @@ function PriceQuality() {
   );
 }
 
-export default connect(["settings", "info"])(Payments);
+export default connect(["settings", "info"])(translate()(Payments));
