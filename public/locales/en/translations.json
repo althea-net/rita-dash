@@ -74,5 +74,6 @@
   "currentDebt": "Current debt",
   "price": "Price",
   "enterEthAddress": "Please enter a valid Ethereum address",
-  "addSubnetDao": "Add subnet DAO"
+  "addSubnetDao": "Add subnet DAO",
+  "putAddress": "Put subnet DAO eth address here..."
 }
