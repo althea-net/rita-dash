@@ -19,11 +19,6 @@ export default backend => {
 
       await backend.setWifiSettings(setting);
       setState({ loading: false, success: radio });
-    },
-    toggleWifiMesh: async ({ setState, state }, radio, mesh) => {
-      setState({ loading: true });
-      await backend.toggleWifiMesh(radio, mesh);
-      setState({ loading: false });
     }
   };
 };

@@ -182,10 +182,6 @@ export default class Backend {
     return post(`/exits/${nickname}/select`);
   }
 
-  async toggleWifiMesh(radio, mesh) {
-    return post("/wifi_settings/mesh", { radio, mesh });
-  }
-
   async verifyExit(nickname, code) {
     return post(`/exits/${nickname}/verify/${code}`);
   }

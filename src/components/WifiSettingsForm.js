@@ -11,7 +11,6 @@ import {
   Progress
 } from "reactstrap";
 import { actions } from "../store";
-import AdvancedSettings from "./AdvancedSettings";
 import { translate } from "react-i18next";
 
 class WifiSettingsForm extends Component {
@@ -62,8 +61,6 @@ class WifiSettingsForm extends Component {
 
   render() {
     let radio = this.props.wifiSettings.device.radioType;
-    let section = this.props.wifiSettings.device.sectionName;
-    let mesh = this.props.wifiSettings.mesh;
     let { loading, success } = this.props.state;
     let { t } = this.props;
 
@@ -134,9 +131,7 @@ class WifiSettingsForm extends Component {
                 marginTop: 0,
                 padding: 10
               }}
-            >
-              <AdvancedSettings radio={section} mesh={mesh} />
-            </FormGroup>
+            />
           </Form>
         </CardBody>
       </Card>
