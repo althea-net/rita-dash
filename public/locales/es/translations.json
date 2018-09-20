@@ -74,5 +74,6 @@
   "price": "Precio",
   "enterEthAddress": "Por favor ingrese una dirección válida de Ethereum",
   "addSubnetDao": "Agregar subred Dao",
-  "putAddress": "Pon la dirección eth de la subred DAO aquí ..."
+  "putAddress": "Pon la dirección eth de la subred DAO aquí ...",
+  "submittingEmail": "Enviando un correo electrónico para salir ..."
 }
