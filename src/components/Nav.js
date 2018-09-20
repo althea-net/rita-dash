@@ -72,7 +72,7 @@ class AltheaNav extends Component {
   };
 
   render() {
-    let { i18n, t } = this.props;
+    let { i18n } = this.props;
 
     return (
       <Navbar color="light" light expand="sm">
