@@ -31,7 +31,7 @@
   "preferLow": "Prefiere precio bajo",
   "preferHigh": "Prefiere un precio alto",
   "highestAcceptable": "El precio más alto aceptable",
-  "centsPerGB": "centavos / GB",
+  "weiPerGB": "Ξ / GB",
   "infoError": "Problema al recuperar el saldo y la información de la versión",
   "settingsError": "Configuración de recuperación de problemas",
   "daoError": "No se pueden recuperar los DAO de subred",

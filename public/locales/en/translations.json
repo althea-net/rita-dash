@@ -31,7 +31,7 @@
   "preferLow": "Prefer low price",
   "preferHigh": "Prefer high price",
   "highestAcceptable": "Highest acceptable price",
-  "centsPerGB": "cents/GB",
+  "weiPerGB": "Ξ/GB",
   "infoError": "Problem retrieving balance and version info",
   "settingsError": "Problem retrieving settings",
   "daoError": "Unable to retrieve Subnet DAOs",

@@ -291,7 +291,7 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              <LabelUnit label={t("price")} content={`${priceToExit} ¢/gb`} />
+              <LabelUnit label={t("price")} content={`${priceToExit} Ξ/gb`} />
               {(totalPaymentReceived > 0 && (
                 <LabelUnit
                   label={t("paymentReceived")}

@@ -96,7 +96,7 @@ function PriceQuality({ t }) {
             <InputGroup>
               <Input type="number" value="10" />
               <InputGroupAddon addonType="append">
-                {t("centsPerGB")}
+                {t("weiPerGB")}
               </InputGroupAddon>
             </InputGroup>
           </FormGroup>
