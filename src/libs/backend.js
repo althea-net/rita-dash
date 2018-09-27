@@ -8,6 +8,7 @@ const base =
 
 async function get(url) {
   const res = await fetch(base + url);
+  if (!res.ok) return new Error(res.status);
   try {
     const json = await res.json();
     if (json && json.error) {

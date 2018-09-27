@@ -4,8 +4,10 @@ export default backend => {
       setState({ loading: true });
       let res = await backend.getWifiSettings();
       if (res instanceof Error) {
+        let error =
+          res.message === "502" ? state.t("serverError") : state.t("wifiError");
         return setState({
-          error: state.t("wifiError"),
+          error,
           exits: [],
           loading: false
         });
