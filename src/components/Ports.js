@@ -10,9 +10,7 @@ import {
 } from "reactstrap";
 import { connect, actions } from "../store";
 import { translate } from "react-i18next";
-import port1 from "../images/port1.png";
-import port2 from "../images/port2.png";
-import port3 from "../images/port3.png";
+import port from "../images/port.png";
 
 class Ports extends React.Component {
   componentDidMount = () => {
@@ -38,7 +36,7 @@ class Ports extends React.Component {
               return (
                 <Card>
                   <CardBody>
-                    <img src={port1} alt="Port 1" width="60px" />
+                    <img src={port} alt="Port 1" width="60px" />
                     <span
                       style={{
                         position: "absolute",
