@@ -1,5 +1,21 @@
 export default backend => {
   return {
+    getInterfaces: async ({ setState, state }) => {
+      setState({ loading: true });
+      let res = await backend.getInterfaces();
+      if (res instanceof Error) {
+        return setState({
+          error: state.t("interfacesError"),
+          interfaces: [],
+          loading: false
+        });
+      }
+      setState({ error: null, interfaces: res, loading: false });
+    },
+    setInterfaces: async ({ state, setState }, interfaces) => {
+      await backend.setInterfaces(interfaces);
+      setState({ loading: false });
+    },
     getWifiSettings: async ({ setState, state }) => {
       setState({ loading: true });
       let res = await backend.getWifiSettings();
@@ -8,7 +24,7 @@ export default backend => {
           res.message === "502" ? state.t("serverError") : state.t("wifiError");
         return setState({
           error,
-          exits: [],
+          wifiSettings: [],
           loading: false
         });
       }

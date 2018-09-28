@@ -115,6 +115,14 @@ export default class Backend {
     return post(`/dao_list/add/${address}`);
   }
 
+  async getInterfaces() {
+    return get("/interfaces");
+  }
+
+  async setInterface(iface, mode) {
+    await post("/interfaces", { interface: iface, mode });
+  }
+
   async getWifiSettings() {
     return get("/wifi_settings");
   }

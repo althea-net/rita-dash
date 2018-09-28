@@ -21,6 +21,7 @@ const store = {
     exitsError: null,
     loading: false,
     info: { balance: 0, version: "" },
+    interfaces: [],
     neighbors: [],
     neighborsError: null,
     page: "",
