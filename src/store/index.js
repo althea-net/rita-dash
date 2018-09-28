@@ -41,7 +41,7 @@ const store = {
     ...exitActions,
     ...neighborActions,
     ...wifiActions,
-    changePage: (_, page) => ({ page: page }),
+    changePage: (_, page) => ({ error: "", page: page }),
     init: async ({ setState, state }, t) => {
       setState({ t });
     },
