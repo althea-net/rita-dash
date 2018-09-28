@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../styles/BasicScroll.css";
 
-import { Card, CardBody, CardTitle, Progress } from "reactstrap";
+import { Alert, Card, CardBody, CardTitle, Progress } from "reactstrap";
 
 import { actions, connect } from "../store";
 import Error from "./Error";
@@ -31,6 +31,7 @@ class Neighbors extends Component {
         ) : (
           loading && <Progress animated color="info" value="100" />
         )}
+        {!peers.length && <Alert color="info">No peers found</Alert>}
         {peers.map(n => (
           <NodeInfo {...n} key={n.nickname} t={t} />
         ))}
