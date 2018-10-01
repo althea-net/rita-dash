@@ -13,7 +13,7 @@ class FrontPage extends Component {
 
   render() {
     let { error, loading, info, settings } = this.props.state;
-    let { ownIp } = settings.network;
+    let { meshIp } = settings.network;
     let { ethAddress } = settings.payment;
     let { version } = info;
     let { t } = this.props;
@@ -41,13 +41,13 @@ class FrontPage extends Component {
                         paddingBottom: 15
                       }}
                       bgcolor="#ff0"
-                      value={`althea://dao/add?ip_address=${ownIp}&eth_address=${ethAddress}`}
+                      value={`althea://dao/add?ip_address=${meshIp}&eth_address=${ethAddress}`}
                     />
                   </Col>
                   <Col md="8" style={{ wordWrap: "break-word" }}>
                     <CardTitle>{t("nodeInfo")}</CardTitle>
                     <p>
-                      <b>{t("meshIp")}</b> {ownIp}
+                      <b>{t("meshIp")}</b> {meshIp}
                     </p>
                     <p>
                       <b>{t("ethereumAddress")}</b> {ethAddress}

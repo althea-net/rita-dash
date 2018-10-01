@@ -14,7 +14,7 @@ const routerActions = RouterActions(backend);
 
 const initialSettings = {
   network: {
-    ownIp: null
+    meshIp: null
   },
   payment: {
     ethAddress: null

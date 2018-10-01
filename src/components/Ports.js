@@ -19,14 +19,15 @@ class Ports extends React.Component {
   };
 
   render() {
+    let { t } = this.props;
     let { interfaces, port } = this.props.state;
-    let modes = ["Mesh", "WAN", "LAN"];
+    let modes = [t("Mesh"), t("WAN"), t("LAN")];
     if (!interfaces)
       return <Alert color="info">No port interfaces found</Alert>;
 
     return (
       <div>
-        <h2 style={{ marginTop: 20 }}>Ports</h2>
+        <h2 style={{ marginTop: 20 }}>{t("ports")}</h2>
         <Row
           className="d-flex justify-content-center"
           style={{ marginBottom: 20 }}
@@ -72,9 +73,9 @@ class Ports extends React.Component {
               </CardHeader>
               <CardBody>
                 <p>
-                  Mode: <strong>{interfaces[port]}</strong>
+                  {t("mode")}: <strong>{interfaces[port]}</strong>
                 </p>
-                <p>Switch mode to:</p>
+                <p>{t("switchMode")}:</p>
 
                 {modes.map((mode, i) => {
                   return (
@@ -87,7 +88,7 @@ class Ports extends React.Component {
                       disabled={mode === interfaces[port]}
                       onClick={() => actions.setInterfaces(mode)}
                     >
-                      {mode} {mode === "WAN" && "(Gateway)"}
+                      {mode} {mode === "WAN" && t("(Gateway)")}
                     </Button>
                   );
                 })}

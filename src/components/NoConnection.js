@@ -12,7 +12,7 @@ import { translate } from "react-i18next";
 
 const NoConnection = ({ state, t }) => (
   <div>
-    <Modal isOpen={!state.settings || !state.settings.network.ownIp} centered>
+    <Modal isOpen={!state.settings || !state.settings.network.meshIp} centered>
       <ModalHeader>{t("noConnection")}</ModalHeader>
       <ModalBody>
         <Card>
