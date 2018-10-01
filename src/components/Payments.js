@@ -58,7 +58,12 @@ function LowFunds({ t }) {
           <FormGroup>
             <Label for="exampleEmail">{t("threshold")}</Label>
             <InputGroup>
-              <Input style={{ width: "5em" }} type="number" value="10" />
+              <Input
+                style={{ width: "5em" }}
+                type="number"
+                value="10"
+                readOnly
+              />
               <InputGroupAddon addonType="append">
                 {t("monthlyUse")}
               </InputGroupAddon>
@@ -94,7 +99,7 @@ function PriceQuality({ t }) {
           <FormGroup>
             <Label for="exampleEmail">{t("highestAcceptable")}</Label>
             <InputGroup>
-              <Input type="number" value="10" />
+              <Input type="number" value="10" readOnly />
               <InputGroupAddon addonType="append">
                 {t("weiPerGB")}
               </InputGroupAddon>
