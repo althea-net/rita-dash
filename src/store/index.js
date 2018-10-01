@@ -25,6 +25,7 @@ const store = {
     neighbors: null,
     neighborsError: null,
     page: "",
+    port: null,
     settings: {
       network: {
         ownIp: null

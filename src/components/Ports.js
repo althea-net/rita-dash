@@ -10,22 +10,15 @@ import {
 } from "reactstrap";
 import { connect, actions } from "../store";
 import { translate } from "react-i18next";
-import port from "../images/port.png";
+import portImage from "../images/port.png";
 
 class Ports extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      port: ""
-    };
-  }
-
   componentDidMount = () => {
     actions.getInterfaces();
   };
 
   render() {
-    let { interfaces } = this.props.state;
+    let { interfaces, port } = this.props.state;
     if (!interfaces) return null;
 
     return (
@@ -39,11 +32,17 @@ class Ports extends React.Component {
             .sort()
             .map((iface, i) => {
               if (iface[0] === "w") return null;
+              console.log(port, iface);
 
               return (
-                <Card>
+                <Card
+                  style={{ cursor: "pointer" }}
+                  onClick={() => actions.setPort(iface)}
+                  className={port === iface ? "bg-primary" : null}
+                  key={i}
+                >
                   <CardBody>
-                    <img src={port} alt="Port 1" width="60px" />
+                    <img src={portImage} alt={iface} width="60px" />
                     <span
                       style={{
                         position: "absolute",
@@ -90,6 +89,6 @@ class Ports extends React.Component {
   }
 }
 
-export default connect(["error", "loading", "success", "interfaces"])(
+export default connect(["error", "loading", "port", "success", "interfaces"])(
   translate()(Ports)
 );

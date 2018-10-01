@@ -10,12 +10,22 @@ export default backend => {
           loading: false
         });
       }
-      setState({ error: null, interfaces: res, loading: false });
+
+      let port = null;
+      if (Object.keys(res).length > 0) port = Object.keys(res).sort()[0];
+
+      setState({ error: null, interfaces: res, loading: false, port });
     },
+
     setInterfaces: async ({ state, setState }, interfaces) => {
       await backend.setInterfaces(interfaces);
       setState({ loading: false });
     },
+
+    setPort: async ({ state, setState }, port) => {
+      setState({ port: port });
+    },
+
     getWifiSettings: async ({ setState, state }) => {
       setState({ loading: true });
       let res = await backend.getWifiSettings();
@@ -30,6 +40,7 @@ export default backend => {
       }
       setState({ error: null, wifiSettings: res, loading: false });
     },
+
     saveWifiSetting: async ({ state, setState }, setting, radio) => {
       setState({
         loading: radio
