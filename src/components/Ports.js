@@ -19,6 +19,7 @@ class Ports extends React.Component {
 
   render() {
     let { interfaces, port } = this.props.state;
+    let modes = ["Mesh", "WAN", "LAN"];
     if (!interfaces) return null;
 
     return (
@@ -32,7 +33,6 @@ class Ports extends React.Component {
             .sort()
             .map((iface, i) => {
               if (iface[0] === "w") return null;
-              console.log(port, iface);
 
               return (
                 <Card
@@ -46,12 +46,13 @@ class Ports extends React.Component {
                     <span
                       style={{
                         position: "absolute",
-                        top: 30,
-                        left: 30,
+                        top: 25,
+                        left: 20,
                         fontWeight: "bold",
+                        textAlign: "center",
                         textShadow: "2px 2px #666",
                         color: "white",
-                        maxWidth: 100
+                        maxWidth: 60
                       }}
                     >
                       {iface} {interfaces[iface]}
@@ -65,21 +66,29 @@ class Ports extends React.Component {
           <Col sm={12} md={{ size: 8, offset: 2 }}>
             <Card>
               <CardHeader>
-                <CardTitle>Port 1</CardTitle>
+                <CardTitle>{port}</CardTitle>
               </CardHeader>
               <CardBody>
                 <p>
-                  Mode: <strong>Mesh</strong>
+                  Mode: <strong>{interfaces[port]}</strong>
                 </p>
                 <p>Switch mode to:</p>
 
-                <Button color="primary" style={{ marginRight: 15 }}>
-                  Mesh
-                </Button>
-                <Button color="primary" style={{ marginRight: 15 }}>
-                  WAN (Gateway)
-                </Button>
-                <Button color="primary">LAN</Button>
+                {modes.map((mode, i) => {
+                  return (
+                    <Button
+                      color={
+                        mode === interfaces[port] ? "secondary" : "primary"
+                      }
+                      key={i}
+                      style={{ marginRight: 15 }}
+                      disabled={mode === interfaces[port]}
+                      onClick={() => actions.setInterfaces(mode)}
+                    >
+                      {mode} {mode === "WAN" && "(Gateway)"}
+                    </Button>
+                  );
+                })}
               </CardBody>
             </Card>
           </Col>

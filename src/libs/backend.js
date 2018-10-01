@@ -6,15 +6,16 @@ const port = 4877;
 const base =
   process.env.REACT_APP_BACKEND_URL || `${protocol}//${hostname}:${port}`;
 
-async function get(url) {
+async function get(url, camel = true) {
   const res = await fetch(base + url);
   if (!res.ok) return new Error(res.status);
   try {
-    const json = await res.json();
+    let json = await res.json();
     if (json && json.error) {
       throw new Error(json.error);
     }
-    return cckd(json);
+    if (camel) json = cckd(json);
+    return json;
   } catch (e) {
     return e;
   }
@@ -116,7 +117,7 @@ export default class Backend {
   }
 
   async getInterfaces() {
-    return get("/interfaces");
+    return get("/interfaces", false);
   }
 
   async setInterface(iface, mode) {

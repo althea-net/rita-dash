@@ -65,76 +65,80 @@ class WifiSettingsForm extends Component {
     let { t } = this.props;
 
     return (
-      <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
-        <CardBody>
-          {success === radio && (
-            <Alert color="success">{t("settingsSaved")}</Alert>
-          )}
-          {loading === radio && <Progress animated color="info" value="100" />}
-          <Form onSubmit={this.onSubmit}>
-            <Label
-              for="form"
-              style={{
-                marginBottom: "20px",
-                fontSize: "1.5em",
-                textAlign: "center"
-              }}
-            >
-              {radio}
-            </Label>
-
-            <FormGroup id="form">
-              <Label for="ssid">{t("ssid")}</Label>
-              <Input
-                type="text"
-                name="ssid"
-                valid={this.isFieldValid("ssid")}
-                placeholder="min. 8 characters"
-                onChange={this.onFieldChange}
-                value={this.state.fields.ssid}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="password">{t("password")}</Label>
-              <Input
-                type="text"
-                name="key"
-                valid={this.isFieldValid("key")}
-                placeholder="min. 8 characters"
-                onChange={this.onFieldChange}
-                value={this.state.fields.key}
-              />
-            </FormGroup>
-
-            <FormGroup
-              style={{
-                display: "flex",
-                margin: -20,
-                marginTop: 0,
-                padding: 10
-              }}
-            >
-              <Button
-                color="primary"
+      <React.Fragment>
+        <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
+          <CardBody>
+            {success === radio && (
+              <Alert color="success">{t("settingsSaved")}</Alert>
+            )}
+            {loading === radio && (
+              <Progress animated color="info" value="100" />
+            )}
+            <Form onSubmit={this.onSubmit}>
+              <Label
+                for="form"
                 style={{
-                  margin: 10
+                  marginBottom: "20px",
+                  fontSize: "1.5em",
+                  textAlign: "center"
                 }}
               >
-                {t("save")}
-              </Button>
-            </FormGroup>
+                {radio}
+              </Label>
 
-            <FormGroup
-              style={{
-                display: "flex",
-                margin: -20,
-                marginTop: 0,
-                padding: 10
-              }}
-            />
-          </Form>
-        </CardBody>
-      </Card>
+              <FormGroup id="form">
+                <Label for="ssid">{t("ssid")}</Label>
+                <Input
+                  type="text"
+                  name="ssid"
+                  valid={this.isFieldValid("ssid")}
+                  placeholder="min. 8 characters"
+                  onChange={this.onFieldChange}
+                  value={this.state.fields.ssid}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="password">{t("password")}</Label>
+                <Input
+                  type="text"
+                  name="key"
+                  valid={this.isFieldValid("key")}
+                  placeholder="min. 8 characters"
+                  onChange={this.onFieldChange}
+                  value={this.state.fields.key}
+                />
+              </FormGroup>
+
+              <FormGroup
+                style={{
+                  display: "flex",
+                  margin: -20,
+                  marginTop: 0,
+                  padding: 10
+                }}
+              >
+                <Button
+                  color="primary"
+                  style={{
+                    margin: 10
+                  }}
+                >
+                  {t("save")}
+                </Button>
+              </FormGroup>
+
+              <FormGroup
+                style={{
+                  display: "flex",
+                  margin: -20,
+                  marginTop: 0,
+                  padding: 10
+                }}
+              />
+            </Form>
+          </CardBody>
+        </Card>
+      </React.Fragment>
     );
   }
 }
