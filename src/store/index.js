@@ -21,7 +21,7 @@ const store = {
     exitsError: null,
     loading: false,
     info: { balance: 0, version: "" },
-    interfaces: [],
+    interfaces: null,
     neighbors: null,
     neighborsError: null,
     page: "",
@@ -36,7 +36,7 @@ const store = {
     },
     success: false,
     t: () => {},
-    wifiSettings: []
+    wifiSettings: null
   },
   actions: {
     ...daoActions,

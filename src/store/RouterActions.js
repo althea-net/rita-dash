@@ -6,7 +6,7 @@ export default backend => {
       if (res instanceof Error) {
         return setState({
           error: state.t("interfacesError"),
-          interfaces: [],
+          interfaces: null,
           loading: false
         });
       }
@@ -36,7 +36,7 @@ export default backend => {
           res.message === "502" ? state.t("serverError") : state.t("wifiError");
         return setState({
           error,
-          wifiSettings: [],
+          wifiSettings: null,
           loading: false
         });
       }

@@ -31,6 +31,7 @@
     "react-sigma": "^1.2.30",
     "react-stateful": "git+https://github.com/jtremback/react-stateful.git",
     "reactstrap": "^5.0.0-beta",
+    "styled-components": "^3.4.9",
     "web3": "^1.0.0-beta.35"
   },
   "scripts": {

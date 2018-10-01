@@ -10,7 +10,7 @@ import {
   Label,
   Progress
 } from "reactstrap";
-import { actions } from "../store";
+import { actions, connect } from "../store";
 import { translate } from "react-i18next";
 
 class WifiSettingsForm extends Component {
@@ -143,4 +143,4 @@ class WifiSettingsForm extends Component {
   }
 }
 
-export default translate()(WifiSettingsForm);
+export default connect(["loading", "success"])(translate()(WifiSettingsForm));

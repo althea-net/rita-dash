@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -20,7 +21,8 @@ class Ports extends React.Component {
   render() {
     let { interfaces, port } = this.props.state;
     let modes = ["Mesh", "WAN", "LAN"];
-    if (!interfaces) return null;
+    if (!interfaces)
+      return <Alert color="info">No port interfaces found</Alert>;
 
     return (
       <div>
