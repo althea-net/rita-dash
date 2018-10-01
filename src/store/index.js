@@ -3,14 +3,14 @@ import Backend from "../libs/backend";
 import DaoActions from "./DaoActions";
 import ExitActions from "./ExitActions";
 import NeighborActions from "./NeighborActions";
-import WifiActions from "./WifiActions";
+import RouterActions from "./RouterActions";
 
 const backend = new Backend();
 
 const daoActions = DaoActions(backend);
 const exitActions = ExitActions(backend);
 const neighborActions = NeighborActions(backend);
-const wifiActions = WifiActions(backend);
+const routerActions = RouterActions(backend);
 
 const store = {
   initialState: {
@@ -42,7 +42,7 @@ const store = {
     ...daoActions,
     ...exitActions,
     ...neighborActions,
-    ...wifiActions,
+    ...routerActions,
     changePage: (_, page) => ({ error: "", page: page }),
     init: async ({ setState, state }, t) => {
       setState({ t });
