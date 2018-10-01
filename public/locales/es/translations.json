@@ -77,5 +77,7 @@
   "enterEthAddress": "Por favor ingrese una dirección válida de Ethereum",
   "addSubnetDao": "Agregar subred Dao",
   "putAddress": "Pon la dirección eth de la subred DAO aquí ...",
-  "submittingEmail": "Enviando un correo electrónico para salir ..."
+  "submittingEmail": "Enviando un correo electrónico para salir ...",
+  "noConnection": "Esperando la conexión",
+  "noSettings": "No se puede obtener la configuración del enrutador. ¿Está corriendo Rita?"
 }

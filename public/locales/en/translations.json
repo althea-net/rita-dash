@@ -77,5 +77,6 @@
   "enterEthAddress": "Please enter a valid Ethereum address",
   "addSubnetDao": "Add subnet DAO",
   "putAddress": "Put subnet DAO eth address here...",
-  "submittingEmail": "Submitting email to exit..."
+  "submittingEmail": "Submitting email to exit...",
+  "noSettings": "Waiting for Connection"
 }

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import AltheaNav from "./Nav";
-import Frontpage from "./Frontpage.js";
-import Neighbors from "./Neighbors.js";
-import RouterSettings from "./RouterSettings.js";
-import NetworkSettings from "./NetworkSettings.js";
-import Payments from "./Payments.js";
+import Frontpage from "./Frontpage";
+import Neighbors from "./Neighbors";
+import RouterSettings from "./RouterSettings";
+import NetworkSettings from "./NetworkSettings";
+import Payments from "./Payments";
+import NoConnection from "./NoConnection";
 import { actions, connect } from "../store";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -36,6 +37,12 @@ class App extends Component {
   componentDidMount() {
     this.onHashChange();
     window.addEventListener("hashchange", this.onHashChange, false);
+    actions.getSettings();
+    this.timer = setInterval(actions.getSettings, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   onHashChange = () => {
@@ -61,6 +68,7 @@ class App extends Component {
     return (
       <div className="App">
         <AltheaNav current={current} />
+        <NoConnection />
         <div style={container}>
           <div style={main}>
             <Page />

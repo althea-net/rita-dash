@@ -26,19 +26,18 @@ class Exits extends Component {
   }
 
   render() {
-    const { exitsError, exits, loading } = this.props.state;
+    const { exitsError, exits } = this.props.state;
     let { t } = this.props;
 
     const sort = (a, b) =>
       a.nickname.localeCompare(b.nickname, undefined, { sensitivity: "base" });
-    exits.sort(sort);
+    if (exits) exits.sort(sort);
 
     return (
       <div>
         <Error error={exitsError} />
-        {!exitsError &&
-          loading && <Progress animated color="info" value="100" />}
-        {exits.length > 0 && <ExitList exits={exits} t={t} />}
+        {!exits && <Progress animated color="info" value="100" />}
+        {exits && <ExitList exits={exits} t={t} />}
       </div>
     );
   }
@@ -271,4 +270,4 @@ class ConnectionError extends Component {
   }
 }
 
-export default connect(["exits", "exitsError", "loading"])(translate()(Exits));
+export default connect(["exits", "exitsError"])(translate()(Exits));

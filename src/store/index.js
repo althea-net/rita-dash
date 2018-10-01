@@ -12,13 +12,23 @@ const exitActions = ExitActions(backend);
 const neighborActions = NeighborActions(backend);
 const routerActions = RouterActions(backend);
 
+const initialSettings = {
+  network: {
+    ownIp: null
+  },
+  payment: {
+    ethAddress: null
+  }
+};
+
 const store = {
   initialState: {
     daos: [],
     daosError: null,
     error: null,
-    exits: [],
+    exits: null,
     exitsError: null,
+    loadingSettings: false,
     loading: false,
     info: { balance: 0, version: "" },
     interfaces: null,
@@ -26,14 +36,7 @@ const store = {
     neighborsError: null,
     page: "",
     port: null,
-    settings: {
-      network: {
-        ownIp: null
-      },
-      payment: {
-        ethAddress: null
-      }
-    },
+    settings: initialSettings,
     success: false,
     t: () => {},
     wifiSettings: null
@@ -43,7 +46,7 @@ const store = {
     ...exitActions,
     ...neighborActions,
     ...routerActions,
-    changePage: (_, page) => ({ error: "", page: page }),
+    changePage: (_, page) => ({ error: "", loading: false, page: page }),
     init: async ({ setState, state }, t) => {
       setState({ t });
     },
@@ -64,18 +67,20 @@ const store = {
     },
 
     getSettings: async ({ setState, state }) => {
-      setState({ loading: true });
-
       let settings = await backend.getSettings();
+      if (state.loadingSettings) return;
+
+      setState({ loadingSettings: true });
 
       if (settings instanceof Error) {
         return {
           error: state.t("settingsError"),
-          loading: false
+          loadingSettings: false,
+          settings: initialSettings
         };
       }
 
-      return { loading: false, settings };
+      return { error: null, loadingSettings: false, settings };
     }
   }
 };

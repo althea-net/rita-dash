@@ -3,14 +3,15 @@ const actions = backend => {
     getExits: async ({ setState, state }) => {
       if (state.loading) return;
 
-      if (!state.exits.length) {
+      if (!state.exits) {
         setState({ loading: true });
       }
+
       let exits = await backend.getExits();
       if (exits instanceof Error) {
         return setState({
           exitsError: state.t("exitsError"),
-          exits: [],
+          exits: null,
           loading: false
         });
       }

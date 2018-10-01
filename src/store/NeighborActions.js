@@ -16,16 +16,7 @@ export default backend => {
         };
       }
 
-      let settings = await backend.getSettings();
-
-      if (settings instanceof Error) {
-        return {
-          error: state.t("settingsError"),
-          loading: false
-        };
-      }
-
-      let exits = settings.exitClient.exits;
+      let exits = state.settings.exitClient.exits;
 
       let neighbors = await backend.getNeighbors();
 
