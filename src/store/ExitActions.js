@@ -1,6 +1,8 @@
-export default backend => {
+const actions = backend => {
   return {
     getExits: async ({ setState, state }) => {
+      if (state.loading) return;
+
       if (!state.exits.length) {
         setState({ loading: true });
       }
@@ -33,3 +35,5 @@ export default backend => {
     }
   };
 };
+
+export default actions;

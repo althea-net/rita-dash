@@ -22,7 +22,7 @@ const store = {
     loading: false,
     info: { balance: 0, version: "" },
     interfaces: [],
-    neighbors: [],
+    neighbors: null,
     neighborsError: null,
     page: "",
     settings: {

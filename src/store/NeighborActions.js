@@ -4,9 +4,8 @@ const wei = BigNumber("1000000000000000000");
 export default backend => {
   return {
     getNeighbors: async ({ setState, state }) => {
-      if (!state.neighbors.length) {
-        setState({ loading: true });
-      }
+      if (state.loading) return;
+      setState({ loading: true, neighbors: state.neighbors || [] });
 
       let debts = await backend.getDebts();
 

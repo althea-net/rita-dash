@@ -36,7 +36,8 @@ class Exits extends Component {
     return (
       <div>
         <Error error={exitsError} />
-        {loading && <Progress animated color="info" value="100" />}
+        {!exitsError &&
+          loading && <Progress animated color="info" value="100" />}
         {exits.length > 0 && <ExitList exits={exits} t={t} />}
       </div>
     );

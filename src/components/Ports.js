@@ -13,6 +13,13 @@ import { translate } from "react-i18next";
 import port from "../images/port.png";
 
 class Ports extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      port: ""
+    };
+  }
+
   componentDidMount = () => {
     actions.getInterfaces();
   };
