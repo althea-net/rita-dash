@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { actions, connect } from "../store";
 import WifiSettingsForm from "./WifiSettingsForm";
 import styled from "styled-components";
-import { Alert } from "reactstrap";
+import { Alert, Progress } from "reactstrap";
 
 const WifiContainer = styled.div`
   display: flex;
@@ -12,18 +12,27 @@ const WifiContainer = styled.div`
 `;
 
 class Wifi extends Component {
-  componentDidMount() {
+  componentDidMount = () => {
     actions.getWifiSettings();
-  }
+    this.timer = setInterval(actions.getWifiSettings, 5000);
+  };
+
+  componentWillUnmount = () => {
+    clearInterval(this.timer);
+  };
 
   render() {
-    const { wifiSettings } = this.props.state;
+    const { loading, wifiSettings } = this.props.state;
     if (!wifiSettings)
-      return (
-        <Alert color="info">
-          No Wifi settings found, the device may not support Wifi
-        </Alert>
-      );
+      if (loading) {
+        return <Progress animated color="info" value={100} />;
+      } else {
+        return (
+          <Alert color="info">
+            No Wifi settings found, the device may not support Wifi
+          </Alert>
+        );
+      }
 
     return (
       <React.Fragment>
@@ -42,4 +51,4 @@ class Wifi extends Component {
   }
 }
 
-export default connect(["wifiSettings"])(Wifi);
+export default connect(["loading", "wifiSettings"])(Wifi);

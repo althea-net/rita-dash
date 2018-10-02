@@ -1,23 +1,29 @@
 export default backend => {
   return {
     getInterfaces: async ({ setState, state }) => {
-      setState({ loading: true });
+      if (state.loadingInterfaces) return;
+
+      setState({ loadingInterfaces: true });
+
       let res = await backend.getInterfaces();
       if (res instanceof Error) {
         return setState({
           error: state.t("interfacesError"),
           interfaces: null,
-          loading: false
+          loadingInterfaces: false
         });
       }
 
-      let port = null;
-      if (Object.keys(res).length > 0) port = Object.keys(res).sort()[0];
+      let port = state.port;
+      if (!port && Object.keys(res).length > 0) {
+        port = Object.keys(res).sort()[0];
+        setState({ port });
+      }
 
-      setState({ error: null, interfaces: res, loading: false, port });
+      return { error: null, interfaces: res, loadingInterfaces: false };
     },
 
-    setInterfaces: async ({ state, setState }, mode) => {
+    setInterface: async ({ state, setState }, mode) => {
       let interfaces = state.interfaces;
       interfaces[state.port] = mode;
       setState({ interfaces });
@@ -25,11 +31,14 @@ export default backend => {
     },
 
     setPort: async ({ state, setState }, port) => {
-      setState({ port: port });
+      return { port };
     },
 
     getWifiSettings: async ({ setState, state }) => {
+      if (state.loading) return;
+
       setState({ loading: true });
+
       let res = await backend.getWifiSettings();
       if (res instanceof Error) {
         let error =
@@ -40,7 +49,8 @@ export default backend => {
           loading: false
         });
       }
-      setState({ error: null, wifiSettings: res, loading: false });
+
+      return { error: null, wifiSettings: res, loading: false };
     },
 
     saveWifiSetting: async ({ state, setState }, setting, radio) => {
@@ -49,7 +59,7 @@ export default backend => {
       });
 
       await backend.setWifiSettings(setting);
-      setState({ loading: false, success: radio });
+      return { loading: false, success: radio };
     }
   };
 };

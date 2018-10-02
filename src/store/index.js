@@ -28,6 +28,7 @@ const store = {
     error: null,
     exits: null,
     exitsError: null,
+    loadingInterfaces: false,
     loadingSettings: false,
     loading: false,
     info: { balance: 0, version: "" },
