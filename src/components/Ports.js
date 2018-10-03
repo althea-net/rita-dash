@@ -38,17 +38,19 @@ class Ports extends React.Component {
   };
 
   setInterface = mode => {
+    this.setState({ mode });
+
     let { interfaces } = this.props.state;
-    let warning = mode === "WAN" && Object.values(interfaces).includes("WAN");
+    let warning = mode !== "Mesh" && Object.values(interfaces).includes(mode);
     if (warning) return this.setState({ warning });
 
-    this.setState({ mode, modal: true });
+    this.setState({ modal: true });
   };
 
   render() {
     let { t } = this.props;
     let { loadingInterfaces, interfaces, port } = this.props.state;
-    let { modal, warning } = this.state;
+    let { mode, modal, warning } = this.state;
     let modes = [t("Mesh"), t("WAN"), t("LAN")];
 
     if (!interfaces)
@@ -118,7 +120,7 @@ class Ports extends React.Component {
               <CardBody>
                 {warning && (
                   <Alert color="danger">
-                    There can be only one WAN interface
+                    There can be only one {mode} interface
                   </Alert>
                 )}
                 <p>
