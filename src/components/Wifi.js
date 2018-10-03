@@ -3,6 +3,7 @@ import { actions, connect } from "../store";
 import WifiSettingsForm from "./WifiSettingsForm";
 import styled from "styled-components";
 import { Alert, Progress } from "reactstrap";
+import { translate } from "react-i18next";
 
 const WifiContainer = styled.div`
   display: flex;
@@ -22,20 +23,17 @@ class Wifi extends Component {
   };
 
   render() {
+    let { t } = this.props;
     const { wifiError, loading, wifiSettings } = this.props.state;
+
     if (!wifiSettings)
       if (loading && !wifiError)
         return <Progress animated color="info" value={100} />;
-      else
-        return (
-          <Alert color="info">
-            No Wifi settings found, the device may not support Wifi
-          </Alert>
-        );
+      else return <Alert color="info">{t("noWifi")}</Alert>;
 
     return (
       <React.Fragment>
-        <h2>Wifi</h2>
+        <h2>{t("wifi")}</h2>
         <WifiContainer>
           {wifiSettings.map((settings, i) => (
             <WifiSettingsForm
@@ -50,4 +48,6 @@ class Wifi extends Component {
   }
 }
 
-export default connect(["wifiError", "loading", "wifiSettings"])(Wifi);
+export default connect(["wifiError", "loading", "wifiSettings"])(
+  translate()(Wifi)
+);

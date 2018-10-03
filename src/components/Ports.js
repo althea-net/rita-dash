@@ -56,7 +56,7 @@ class Ports extends React.Component {
     if (!interfaces)
       if (loadingInterfaces !== null && !loadingInterfaces) {
         console.log("Alert");
-        return <Alert color="info">No port interfaces found</Alert>;
+        return <Alert color="info">{t("noInterfaces")}</Alert>;
       } else return <Progress animated color="info" value={100} />;
 
     let sorted = Object.keys(interfaces).sort();
@@ -119,9 +119,7 @@ class Ports extends React.Component {
               </CardHeader>
               <CardBody>
                 {warning && (
-                  <Alert color="danger">
-                    There can be only one {mode} interface
-                  </Alert>
+                  <Alert color="danger">{t("onlyOne", { mode })}</Alert>
                 )}
                 <p>
                   {t("mode")}: <strong>{interfaces[port]}</strong>

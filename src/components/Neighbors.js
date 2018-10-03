@@ -31,7 +31,7 @@ class Neighbors extends Component {
     return (
       <div>
         <h1>{t("neighbors")}</h1>
-        {!peers.length && <Alert color="info">No peers found</Alert>}
+        {!peers.length && <Alert color="info">{t("noPeers")}</Alert>}
         {error && <Error error={error} />}
         {peers.map(n => (
           <NodeInfo {...n} key={n.nickname} t={t} />

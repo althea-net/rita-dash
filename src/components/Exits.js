@@ -249,7 +249,7 @@ class ConnectionError extends Component {
     return (
       connected || (
         <div style={{ marginTop: 5, marginBottom: 5 }}>
-          Unable to reach exit.{" "}
+          {t("unableToReachExit")}
           <a href="#debug" onClick={this.debug}>
             {t("debuggingMessage", { show: this.state.show ? "Hide" : "View" })}
           </a>
