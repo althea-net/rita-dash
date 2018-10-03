@@ -1,16 +1,13 @@
 import { initStore } from "react-stateful";
 import Backend from "../libs/backend";
-import DaoActions from "./DaoActions";
-import ExitActions from "./ExitActions";
-import NeighborActions from "./NeighborActions";
-import RouterActions from "./RouterActions";
+import {
+  DaoActions,
+  ExitActions,
+  NeighborActions,
+  RouterActions
+} from "./actions";
 
 const backend = new Backend();
-
-const daoActions = DaoActions(backend);
-const exitActions = ExitActions(backend);
-const neighborActions = NeighborActions(backend);
-const routerActions = RouterActions(backend);
 
 const initialSettings = {
   network: {
@@ -43,10 +40,11 @@ const store = {
     wifiSettings: null
   },
   actions: {
-    ...daoActions,
-    ...exitActions,
-    ...neighborActions,
-    ...routerActions,
+    ...DaoActions(backend),
+    ...ExitActions(backend),
+    ...NeighborActions(backend),
+    ...RouterActions(backend),
+
     changePage: (_, page) => ({ error: "", loading: false, page: page }),
     init: async ({ setState, state }, t) => {
       setState({ t });
