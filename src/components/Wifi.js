@@ -22,17 +22,16 @@ class Wifi extends Component {
   };
 
   render() {
-    const { loading, wifiSettings } = this.props.state;
+    const { wifiError, loading, wifiSettings } = this.props.state;
     if (!wifiSettings)
-      if (loading) {
+      if (loading && !wifiError)
         return <Progress animated color="info" value={100} />;
-      } else {
+      else
         return (
           <Alert color="info">
             No Wifi settings found, the device may not support Wifi
           </Alert>
         );
-      }
 
     return (
       <React.Fragment>
@@ -51,4 +50,4 @@ class Wifi extends Component {
   }
 }
 
-export default connect(["loading", "wifiSettings"])(Wifi);
+export default connect(["wifiError", "loading", "wifiSettings"])(Wifi);

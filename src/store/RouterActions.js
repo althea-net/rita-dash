@@ -41,16 +41,22 @@ export default backend => {
 
       let res = await backend.getWifiSettings();
       if (res instanceof Error) {
-        let error =
-          res.message === "502" ? state.t("serverError") : state.t("wifiError");
+        let wifiError, loading;
+        if (res.message === "502") {
+          wifiError = state.t("serverwifiError");
+          loading = null;
+        } else {
+          wifiError = state.t("wifiwifiError");
+          loading = false;
+        }
         return setState({
-          error,
+          wifiError,
           wifiSettings: null,
-          loading: false
+          loading
         });
       }
 
-      return { error: null, wifiSettings: res, loading: false };
+      return { wifiError: null, wifiSettings: res, loading: false };
     },
 
     saveWifiSetting: async ({ state, setState }, setting, radio) => {

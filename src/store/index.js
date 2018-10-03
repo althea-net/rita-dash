@@ -25,9 +25,9 @@ const store = {
     error: null,
     exits: null,
     exitsError: null,
-    loadingInterfaces: false,
+    loadingInterfaces: null,
     loadingSettings: false,
-    loading: false,
+    loading: null,
     info: { balance: 0, version: "" },
     interfaces: null,
     neighbors: null,
@@ -37,6 +37,7 @@ const store = {
     settings: initialSettings,
     success: false,
     t: () => {},
+    wifiError: null,
     wifiSettings: null
   },
   actions: {

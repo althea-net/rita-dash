@@ -12,7 +12,9 @@ class RouterSettings extends Component {
         <h1>{t("routerSettings")}</h1>
 
         <Ports />
-        <Wifi />
+        <div style={{ marginTop: 20 }}>
+          <Wifi />
+        </div>
       </div>
     );
   }

@@ -52,9 +52,10 @@ class Ports extends React.Component {
     let modes = [t("Mesh"), t("WAN"), t("LAN")];
 
     if (!interfaces)
-      if (loadingInterfaces)
-        return <Progress animated color="info" value={100} />;
-      else return <Alert color="info">No port interfaces found</Alert>;
+      if (loadingInterfaces !== null && !loadingInterfaces) {
+        console.log("Alert");
+        return <Alert color="info">No port interfaces found</Alert>;
+      } else return <Progress animated color="info" value={100} />;
 
     let sorted = Object.keys(interfaces).sort();
 
