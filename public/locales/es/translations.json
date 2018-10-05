@@ -41,6 +41,7 @@
   "neighborsError": "Problemas para recuperar vecinos",
   "networkSettings": "Configuración de la red",
   "noConnection": "Esperando la conexión",
+  "noDevice": "No se puede determinar el modelo del dispositivo enrutador",
   "noInterfaces": "No se encontraron interfaces de puerto",
   "noPeers": "No se encontraron pares",
   "noSettings": "No se puede obtener la configuración del enrutador. ¿Está corriendo Rita?",

@@ -41,6 +41,7 @@
   "neighborsError": "Problem retrieving neighbors", 
   "networkSettings": "Network Settings",
   "noConnection": "Waiting for Connection",
+  "noDevice": "Unable to determine the router device model",
   "noInterfaces": "No port interfaces found",
   "noPeers": "No peers found",
   "noSettings": "Unable to fetch router settings. Is rita running?",

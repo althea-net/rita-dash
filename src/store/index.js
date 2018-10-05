@@ -28,7 +28,7 @@ const store = {
     loadingInterfaces: null,
     loadingSettings: false,
     loading: null,
-    info: { balance: 0, version: "" },
+    info: { balance: 0, device: null, version: "" },
     interfaces: null,
     neighbors: null,
     neighborsError: null,

@@ -1,16 +1,11 @@
 import React, { Component } from "react";
-import { actions, connect } from "../store";
+import { connect } from "../store";
 import QR from "qrcode.react";
 import { Card, CardBody, CardTitle, Col, Progress, Row } from "reactstrap";
 import Error from "./Error";
 import { translate } from "react-i18next";
 
 class FrontPage extends Component {
-  componentDidMount() {
-    actions.getInfo();
-    actions.getSettings();
-  }
-
   render() {
     let { error, loading, info, settings } = this.props.state;
     let { meshIp } = settings.network;

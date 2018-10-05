@@ -38,6 +38,7 @@ class App extends Component {
     this.onHashChange();
     window.addEventListener("hashchange", this.onHashChange, false);
     actions.getSettings();
+    actions.getInfo();
     this.timer = setInterval(actions.getSettings, 5000);
   }
 

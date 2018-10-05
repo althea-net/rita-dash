@@ -17,6 +17,7 @@ import {
 import { connect, actions } from "../store";
 import { translate } from "react-i18next";
 import portImage from "../images/port.png";
+import portOrderings from "../portOrderings";
 
 class Ports extends React.Component {
   constructor() {
@@ -49,17 +50,17 @@ class Ports extends React.Component {
 
   render() {
     let { t } = this.props;
-    let { loadingInterfaces, interfaces, port } = this.props.state;
+    let { info, loadingInterfaces, interfaces, port } = this.props.state;
     let { mode, modal, warning } = this.state;
+    let { device } = info;
     let modes = [t("Mesh"), t("WAN"), t("LAN")];
 
     if (!interfaces)
       if (loadingInterfaces !== null && !loadingInterfaces) {
-        console.log("Alert");
         return <Alert color="info">{t("noInterfaces")}</Alert>;
       } else return <Progress animated color="info" value={100} />;
 
-    let sorted = Object.keys(interfaces).sort();
+    if (!device) return <Alert color="danger">{t("noDevice")}</Alert>;
 
     return (
       <div>
@@ -77,9 +78,7 @@ class Ports extends React.Component {
           className="d-flex justify-content-center"
           style={{ marginBottom: 20 }}
         >
-          {sorted.map((iface, i) => {
-            if (iface[0] === "w") return null;
-
+          {portOrderings[device].map((iface, i) => {
             return (
               <Card
                 style={{ cursor: "pointer" }}
@@ -175,6 +174,7 @@ const Confirm = ({ cancel, confirm, show, t }) => (
 
 export default connect([
   "error",
+  "info",
   "loadingInterfaces",
   "port",
   "success",
