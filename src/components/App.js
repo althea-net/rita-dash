@@ -1,26 +1,25 @@
 import React, { Component } from "react";
 import AltheaNav from "./Nav";
-import Frontpage from "./Frontpage.js";
-import Neighbors from "./Neighbors.js";
-import RouterSettings from "./RouterSettings.js";
-import NetworkSettings from "./NetworkSettings.js";
-import Payments from "./Payments.js";
+import Frontpage from "./Frontpage";
+import Neighbors from "./Neighbors";
+import RouterSettings from "./RouterSettings";
+import NetworkSettings from "./NetworkSettings";
+import Payments from "./Payments";
+import NoConnection from "./NoConnection";
 import { actions, connect } from "../store";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBan,
+  faGlobeAmericas,
   faMinusCircle,
   faRoute,
   faSignal,
   faSitemap,
   faSync
 } from "@fortawesome/free-solid-svg-icons";
-import neighbors from "../images/neighbors.svg";
-import network from "../images/network.svg";
-import router from "../images/router.svg";
-import payments from "../images/payments.svg";
 
 library.add(faBan);
+library.add(faGlobeAmericas);
 library.add(faMinusCircle);
 library.add(faRoute);
 library.add(faSignal);
@@ -31,19 +30,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      current: window.location.hash.substr(1),
-      pages: {
-        neighbors: { title: "Neighbors", icon: neighbors },
-        router_settings: { title: "Router Settings", icon: router },
-        network_settings: { title: "Network Settings", icon: network },
-        payments: { title: "Payments", icon: payments }
-      }
+      current: window.location.hash.substr(1)
     };
   }
 
   componentDidMount() {
     this.onHashChange();
     window.addEventListener("hashchange", this.onHashChange, false);
+    actions.getSettings();
+    actions.getInfo();
+    this.timer = setInterval(actions.getSettings, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   onHashChange = () => {
@@ -53,7 +53,7 @@ class App extends Component {
   };
 
   render() {
-    let { current, pages } = this.state;
+    let { current } = this.state;
     let container = {
       display: "flex",
       alignItems: "center",
@@ -68,7 +68,8 @@ class App extends Component {
 
     return (
       <div className="App">
-        <AltheaNav pages={pages} current={current} />
+        <AltheaNav current={current} />
+        <NoConnection />
         <div style={container}>
           <div style={main}>
             <Page />
@@ -79,7 +80,7 @@ class App extends Component {
   }
 }
 
-const Page = connect(["page"])(({ state }) => {
+const Page = connect(["page"])(({ state, t }) => {
   switch (state.page) {
     case "router-settings":
       return <RouterSettings />;

@@ -11,7 +11,7 @@ export default backend => {
       let daos = await backend.getSubnetDaos();
       if (daos instanceof Error) {
         return setState({
-          daosError: "Unable to retrieve Subnet DAOs",
+          daosError: state.t("daoError"),
           daos: [],
           loading: false
         });

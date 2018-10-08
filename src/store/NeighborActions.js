@@ -1,40 +1,28 @@
 import { BigNumber } from "bignumber.js";
-
 const wei = BigNumber("1000000000000000000");
 
 export default backend => {
   return {
     getNeighbors: async ({ setState, state }) => {
-      if (!state.neighbors.length) {
-        setState({ loading: true });
-      }
+      if (state.loading) return;
+      setState({ loading: true, neighbors: state.neighbors || [] });
 
       let debts = await backend.getDebts();
 
       if (debts instanceof Error) {
         return {
-          neighboursError: "Problem retrieving debts",
+          error: state.t("debtsError"),
           loading: false
         };
       }
 
-      let settings = await backend.getSettings();
-
-      if (settings instanceof Error) {
-        return {
-          neighboursError: "Problem retrieving settings",
-          loading: false
-        };
-      }
-
-      console.log(settings);
-      let exits = settings.exitClient.exits;
+      let exits = state.settings.exitClient.exits;
 
       let neighbors = await backend.getNeighbors();
 
       if (neighbors instanceof Error) {
         return {
-          neighborsError: "Problem retrieving neighbors",
+          error: state.t("neighborsError"),
           loading: false
         };
       }

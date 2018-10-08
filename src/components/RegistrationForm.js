@@ -11,6 +11,7 @@ import {
   Progress
 } from "reactstrap";
 import { actions } from "../store";
+import { translate } from "react-i18next";
 
 const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -90,15 +91,16 @@ class RegistrationForm extends Component {
 
   render() {
     let { registering, waiting } = this.state;
+    let { t } = this.props;
 
     return waiting ? (
       <Card>
         <CardBody>
           <div>
-            <h5>Register</h5>
+            <h5>{t("register")}</h5>
             <Progress color="success" animated value="50" />
             <p style={{ marginTop: 10 }} className="text-center">
-              <b>Submitting email to exit...</b>
+              <b>{t("submittingEmail")}</b>
             </p>
           </div>
         </CardBody>
@@ -107,16 +109,16 @@ class RegistrationForm extends Component {
       <Card>
         <CardBody>
           <Form onSubmit={this.onSubmit} className="form-inline">
-            <h5>Register</h5>
+            <h5>{t("register")}</h5>
             <FormGroup id="form">
               <Label for="email" style={{ marginRight: 5 }}>
-                <b>Email</b>
+                <b>{t("email")}</b>
               </Label>
               <Input
-                label="Email"
+                label={t("email")}
                 type="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder={t("enterEmail")}
                 valid={this.isFieldValid("email") && this.state.blurred}
                 invalid={
                   !(this.isFieldValid("email") || !this.state.fields.email)
@@ -125,9 +127,7 @@ class RegistrationForm extends Component {
                 onBlur={this.onBlur}
                 value={this.state.fields.email || ""}
               />
-              <FormFeedback invalid="true">
-                A valid email is required
-              </FormFeedback>
+              <FormFeedback invalid="true">{t("emailRequired")}</FormFeedback>
             </FormGroup>
             <FormGroup
               style={{
@@ -144,14 +144,14 @@ class RegistrationForm extends Component {
                   margin: 3
                 }}
               >
-                Submit
+                {t("submit")}
               </Button>
               <Button
                 color="primary"
                 style={{ margin: 3 }}
                 onClick={this.stopRegistering}
               >
-                Cancel
+                {t("cancel")}
               </Button>
             </FormGroup>
           </Form>
@@ -166,10 +166,10 @@ class RegistrationForm extends Component {
           margin: 10
         }}
       >
-        Register
+        {t("register")}
       </Button>
     );
   }
 }
 
-export default RegistrationForm;
+export default translate()(RegistrationForm);

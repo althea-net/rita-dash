@@ -6,14 +6,16 @@ const port = 4877;
 const base =
   process.env.REACT_APP_BACKEND_URL || `${protocol}//${hostname}:${port}`;
 
-async function get(url) {
+async function get(url, camel = true) {
   const res = await fetch(base + url);
+  if (!res.ok) return new Error(res.status);
   try {
-    const json = await res.json();
+    let json = await res.json();
     if (json && json.error) {
       throw new Error(json.error);
     }
-    return cckd(json);
+    if (camel) json = cckd(json);
+    return json;
   } catch (e) {
     return e;
   }
@@ -114,6 +116,14 @@ export default class Backend {
     return post(`/dao_list/add/${address}`);
   }
 
+  async getInterfaces() {
+    return get("/interfaces", false);
+  }
+
+  async setInterface(iface, mode) {
+    await post("/interfaces", { interface: iface, mode });
+  }
+
   async getWifiSettings() {
     return get("/wifi_settings");
   }
@@ -180,10 +190,6 @@ export default class Backend {
 
   async selectExit(nickname) {
     return post(`/exits/${nickname}/select`);
-  }
-
-  async toggleWifiMesh(radio, mesh) {
-    return post("/wifi_settings/mesh", { radio, mesh });
   }
 
   async verifyExit(nickname, code) {

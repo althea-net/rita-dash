@@ -1,14 +1,17 @@
-export default backend => {
+const actions = backend => {
   return {
     getExits: async ({ setState, state }) => {
-      if (!state.exits.length) {
+      if (state.loading) return;
+
+      if (!state.exits) {
         setState({ loading: true });
       }
+
       let exits = await backend.getExits();
       if (exits instanceof Error) {
         return setState({
-          exitsError: "Unable to get list of exits from rita server",
-          exits: [],
+          exitsError: state.t("exitsError"),
+          exits: null,
           loading: false
         });
       }
@@ -33,3 +36,5 @@ export default backend => {
     }
   };
 };
+
+export default actions;

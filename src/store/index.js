@@ -1,52 +1,86 @@
 import { initStore } from "react-stateful";
 import Backend from "../libs/backend";
-import DaoActions from "./DaoActions";
-import ExitActions from "./ExitActions";
-import NeighborActions from "./NeighborActions";
-import WifiActions from "./WifiActions";
+import {
+  DaoActions,
+  ExitActions,
+  NeighborActions,
+  RouterActions
+} from "./actions";
 
 const backend = new Backend();
 
-const daoActions = DaoActions(backend);
-const exitActions = ExitActions(backend);
-const neighborActions = NeighborActions(backend);
-const wifiActions = WifiActions(backend);
+const initialSettings = {
+  network: {
+    meshIp: null
+  },
+  payment: {
+    ethAddress: null
+  }
+};
 
 const store = {
   initialState: {
     daos: [],
     daosError: null,
-    exits: [],
+    error: null,
+    exits: null,
     exitsError: null,
-    loading: false,
-    info: { balance: 0, version: "" },
-    neighbors: [],
+    loadingInterfaces: null,
+    loadingSettings: false,
+    loading: null,
+    info: { balance: 0, device: null, version: "" },
+    interfaces: null,
+    neighbors: null,
     neighborsError: null,
     page: "",
-    settings: {
-      network: {
-        ownIp: null
-      },
-      payment: {
-        ethAddress: null
-      }
-    },
+    port: null,
+    settings: initialSettings,
     success: false,
-    wifiSettings: []
+    t: () => {},
+    wifiError: null,
+    wifiSettings: null
   },
   actions: {
-    ...daoActions,
-    ...exitActions,
-    ...neighborActions,
-    ...wifiActions,
-    changePage: (_, page) => ({ page: page }),
+    ...DaoActions(backend),
+    ...ExitActions(backend),
+    ...NeighborActions(backend),
+    ...RouterActions(backend),
 
-    getInfo: async () => {
-      return { info: await backend.getInfo() };
+    changePage: (_, page) => ({ error: "", loading: false, page: page }),
+    init: async ({ setState, state }, t) => {
+      setState({ t });
+    },
+
+    getInfo: async ({ setState, state }) => {
+      setState({ loading: true });
+
+      let info = await backend.getInfo();
+
+      if (info instanceof Error) {
+        return {
+          error: state.t("infoError"),
+          loading: false
+        };
+      }
+
+      return { loading: false, info };
     },
 
     getSettings: async ({ setState, state }) => {
-      setState({ settings: await backend.getSettings() });
+      let settings = await backend.getSettings();
+      if (state.loadingSettings) return;
+
+      setState({ loadingSettings: true });
+
+      if (settings instanceof Error) {
+        return {
+          error: state.t("settingsError"),
+          loadingSettings: false,
+          settings: initialSettings
+        };
+      }
+
+      return { error: null, loadingSettings: false, settings };
     }
   }
 };

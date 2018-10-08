@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Error from "./Error";
 import RegistrationForm from "./RegistrationForm";
 import VerifyForm from "./VerifyForm";
+import { translate } from "react-i18next";
 
 class Exits extends Component {
   componentDidMount() {
@@ -25,25 +26,27 @@ class Exits extends Component {
   }
 
   render() {
-    const { exitsError, exits, loading } = this.props.state;
+    const { exitsError, exits } = this.props.state;
+    let { t } = this.props;
+
     const sort = (a, b) =>
       a.nickname.localeCompare(b.nickname, undefined, { sensitivity: "base" });
-    exits.sort(sort);
+    if (exits) exits.sort(sort);
 
     return (
       <div>
         <Error error={exitsError} />
-        {loading && <Progress animated color="info" value="100" />}
-        {exits.length > 0 && <ExitList exits={exits} />}
+        {!exits && <Progress animated color="info" value="100" />}
+        {exits && <ExitList exits={exits} t={t} />}
       </div>
     );
   }
 }
 
-function ExitList({ exits }) {
+function ExitList({ exits, t }) {
   let selected;
   function item(exit, i) {
-    return <ExitListItem exit={exit} key={i} />;
+    return <ExitListItem exit={exit} key={i} t={t} />;
   }
 
   let unselected = exits
@@ -66,11 +69,11 @@ function ExitList({ exits }) {
     <div>
       {selected && (
         <div>
-          <h2>Selected Exit</h2>
+          <h2>{t("selectedExit")}</h2>
           <ListGroup>{item(selected, 0)}</ListGroup>
         </div>
       )}
-      <h2>Available Exits</h2>
+      <h2>{t("availableExits")}</h2>
       <ListGroup>{unselected}</ListGroup>
     </div>
   );
@@ -100,6 +103,8 @@ class ExitListItem extends Component {
     let { nickname, isSelected } = exit;
     let connected = exit.isReachable && exit.haveRoute;
     let pseudostate = state;
+    let { t } = this.props;
+
     if (state === "Registered" && isSelected) {
       connected = exit.isTunnelWorking;
       pseudostate = connected && "Connected";
@@ -135,13 +140,13 @@ class ExitListItem extends Component {
                 {
                   {
                     New: "",
-                    GotInfo: "Unregistered",
-                    Registering: "Registering",
-                    Pending: "Registering",
-                    Registered: "Registered",
-                    Connected: "Connected",
-                    Problem: "Connection problem",
-                    Denied: "Registration denied"
+                    GotInfo: t("stateUnregistered"),
+                    Registering: t("stateRegistering"),
+                    Pending: t("stateRegistering"),
+                    Registered: t("stateRegistered"),
+                    Connected: t("stateConnected"),
+                    Problem: t("stateProblem"),
+                    Denied: t("stateDenied")
                   }[pseudostate]
                 }
               </Col>
@@ -156,7 +161,7 @@ class ExitListItem extends Component {
             <Col xs="12" md={pseudostate === "Problem" ? 12 : 6}>
               <div>{description}</div>
               {state === "Denied" && <div>{message}</div>}
-              <ConnectionError connected={connected} exit={exit} />
+              <ConnectionError connected={connected} exit={exit} t={t} />
             </Col>
             {pseudostate !== "Problem" && (
               <Col xs="12" md="6">
@@ -169,7 +174,7 @@ class ExitListItem extends Component {
                         actions.selectExit(nickname);
                       }}
                     >
-                      Connect
+                      {t("connect")}
                     </Button>
                   )}
                 {(state === "GotInfo" || state === "Registering") && (
@@ -208,7 +213,7 @@ class ExitListItem extends Component {
                     marginRight: "5px"
                   }}
                 />
-                Reset
+                {t("reset")}
               </span>
             )}
           </Row>
@@ -235,23 +240,28 @@ class ConnectionError extends Component {
   render() {
     let connected = this.props.connected;
     let { isReachable, haveRoute, isTunnelWorking } = this.props.exit;
+    let { state } = this.props.exit.exitSettings;
+    let reachable = isReachable.toString();
+    let route = haveRoute.toString();
+    let tunnel = isTunnelWorking.toString();
+    let { t } = this.props;
 
     return (
       connected || (
         <div style={{ marginTop: 5, marginBottom: 5 }}>
-          Unable to reach exit.{" "}
+          {t("unableToReachExit")}
           <a href="#debug" onClick={this.debug}>
-            {this.state.show ? "Hide" : "View"} advanced debugging message
+            {t("debuggingMessage", { show: this.state.show ? "Hide" : "View" })}
           </a>
           {this.state.show && (
             <pre style={{ background: "#ddd", padding: "10px" }}>
-              state: {this.props.exit.exitSettings.state}
+              {t("debugState", { state })}
               <br />
-              is_reachable: {isReachable.toString()}
+              {t("debugReachable", { reachable })}
               <br />
-              have_route: {haveRoute.toString()}
+              {t("debugRoute", { route })}
               <br />
-              is_tunnel_working: {isTunnelWorking.toString()}
+              {t("debugTunnel", { tunnel })}
             </pre>
           )}
         </div>
@@ -260,4 +270,4 @@ class ConnectionError extends Component {
   }
 }
 
-export default connect(["exits", "exitsError", "loading"])(Exits);
+export default connect(["exits", "exitsError"])(translate()(Exits));

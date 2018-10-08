@@ -12,8 +12,8 @@ import {
   Label,
   Row
 } from "reactstrap";
-
 import { actions, connect } from "../store";
+import { translate } from "react-i18next";
 
 class Payments extends Component {
   componentDidMount() {
@@ -23,22 +23,24 @@ class Payments extends Component {
 
   render() {
     const { info, settings } = this.props.state;
+    const { t } = this.props;
+
     if (!(info && settings)) return null;
     return (
       <div>
-        <h1>Payments</h1>
+        <h1>{t("payments")}</h1>
         <div className="text-center">
-          <h2>Current Balance:</h2>
+          <h2>{t("currentBalance")}</h2>
           <h3>&Xi; {Math.max(0, info.balance)}</h3>
-          <Button color="primary">Add &Xi;1 to balance</Button>
+          <Button color="primary">{t("add1")}</Button>
         </div>
 
         <Row style={{ opacity: 0.3 }}>
           <Col md="6">
-            <LowFunds />
+            <LowFunds t={t} />
           </Col>
           <Col md="6">
-            <PriceQuality />
+            <PriceQuality t={t} />
           </Col>
         </Row>
       </div>
@@ -46,36 +48,31 @@ class Payments extends Component {
   }
 }
 
-function LowFunds() {
+function LowFunds({ t }) {
   return (
     <Card style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
       <CardBody>
-        <h3>When funds get low:</h3>
+        <h3>{t("lowFunds")}</h3>
 
         <Form>
           <FormGroup>
-            <Label for="exampleEmail">Threshold</Label>
+            <Label for="exampleEmail">{t("threshold")}</Label>
             <InputGroup>
-              <Input style={{ width: "5em" }} type="number" value="10" />
+              <Input
+                style={{ width: "5em" }}
+                type="number"
+                value="10"
+                readOnly
+              />
               <InputGroupAddon addonType="append">
-                % of average monthly use
+                {t("monthlyUse")}
               </InputGroupAddon>
             </InputGroup>
           </FormGroup>
 
-          {/* <FormGroup check style={{ marginBottom: ".5rem" }}>
-          <Label check>
-            <Input type="checkbox" /> Send an email to this address:
-          </Label>
-          </FormGroup>
-
-          <FormGroup>
-            <Input type="email" name="email" id="exampleEmail" />
-          </FormGroup> */}
-
           <FormGroup check>
             <Label check>
-              <Input type="checkbox" /> Throttle speed
+              <Input type="checkbox" /> {t("throttleSpeed")}
             </Label>
           </FormGroup>
         </Form>
@@ -84,26 +81,28 @@ function LowFunds() {
   );
 }
 
-function PriceQuality() {
+function PriceQuality({ t }) {
   return (
     <Card style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
       <CardBody>
-        <h3>Price/Quality tradeoff:</h3>
+        <h3>{t("priceQuality")}</h3>
 
         <Form>
           <FormGroup>
             <Input type="range" />
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <small>Prefer low price</small>
-              <small>Prefer high quality</small>
+              <small>{t("preferLow")}</small>
+              <small>{t("preferHigh")}</small>
             </div>
           </FormGroup>
 
           <FormGroup>
-            <Label for="exampleEmail">Highest acceptable price</Label>
+            <Label for="exampleEmail">{t("highestAcceptable")}</Label>
             <InputGroup>
-              <Input type="number" value="10" />
-              <InputGroupAddon addonType="append">cents/GB</InputGroupAddon>
+              <Input type="number" value="10" readOnly />
+              <InputGroupAddon addonType="append">
+                {t("weiPerGB")}
+              </InputGroupAddon>
             </InputGroup>
           </FormGroup>
         </Form>
@@ -112,4 +111,4 @@ function PriceQuality() {
   );
 }
 
-export default connect(["settings", "info"])(Payments);
+export default connect(["settings", "info"])(translate()(Payments));

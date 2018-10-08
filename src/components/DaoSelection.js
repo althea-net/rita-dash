@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { actions, connect } from "../store";
 import web3 from "web3";
 import Error from "./Error";
+import { translate } from "react-i18next";
 
 class DaoSelection extends Component {
   constructor(props) {
@@ -40,10 +41,11 @@ class DaoSelection extends Component {
 
   render() {
     let { daos, daosError } = this.props.state;
+    let { t } = this.props;
 
     return (
       <div>
-        <h2>Subnet DAO(s)</h2>
+        <h2>{t("subnetDaos")}</h2>
         {daosError ? (
           <Error error={daosError} />
         ) : (
@@ -53,7 +55,7 @@ class DaoSelection extends Component {
                 <Row>
                   <Col md="9">
                     <Input
-                      placeholder="Put subnet DAO eth address here..."
+                      placeholder={t("putAddress")}
                       onChange={this.addressUpdated}
                       valid={this.state.valid}
                       invalid={!(this.state.valid || !this.state.address)}
@@ -66,10 +68,10 @@ class DaoSelection extends Component {
                       className="float-right"
                       onClick={this.addSubnetDao}
                     >
-                      Add subnet DAO
+                      {t("addSubnetDao")}
                     </Button>
                     <FormFeedback invalid="true">
-                      Please enter a valid Ethereum address
+                      {t("enterEthAddress")}
                     </FormFeedback>
                   </Col>
                 </Row>
@@ -87,7 +89,7 @@ class DaoSelection extends Component {
                       }}
                     >
                       <FontAwesomeIcon icon="minus-circle" color="black" />
-                      &nbsp; Remove
+                      &nbsp; {t("remove")}
                     </Button>
                     {address}
                   </ListGroupItem>
@@ -101,4 +103,4 @@ class DaoSelection extends Component {
   }
 }
 
-export default connect(["daos", "daosError"])(DaoSelection);
+export default connect(["daos", "daosError"])(translate()(DaoSelection));
