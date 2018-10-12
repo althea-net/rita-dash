@@ -29,8 +29,8 @@ class Neighbors extends Component {
     console.log(neighbors.length);
 
     return (
-      <div>
-        <h1>{t("neighbors")}</h1>
+      <div id="neighbors-main">
+        <h1 id="neighbors-title">{t("neighbors")}</h1>
         {!peers.length && <Alert color="info">{t("noPeers")}</Alert>}
         {error && <Error error={error} />}
         {peers.map(n => (

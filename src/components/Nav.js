@@ -62,7 +62,7 @@ class AltheaNav extends Component {
     return this.navItems().map((page, i) => {
       return (
         <NavItem style={padded} className={page.active} key={i}>
-          <NavLink href={"#" + page.path}>
+          <NavLink href={"#" + page.path} id={page.path}>
             <img src={page.icon} width="30" height="30" alt={page.title} />{" "}
             {page.title}
           </NavLink>
@@ -77,7 +77,7 @@ class AltheaNav extends Component {
     return (
       <Navbar color="light" light expand="sm">
         <NavbarToggler className="float-right" onClick={this.toggle} />
-        <NavbarBrand href="#">
+        <NavbarBrand id="althea-home" href="#">
           <img src={logo} width="60px" alt="Althea Logo" />
           Althea
         </NavbarBrand>

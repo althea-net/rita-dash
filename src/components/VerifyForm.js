@@ -85,7 +85,7 @@ class VerifyForm extends Component {
 
   render() {
     let { timeout, waiting } = this.state;
-    let { t } = this.props;
+    let { id, t } = this.props;
 
     return (
       <Card>
@@ -111,6 +111,7 @@ class VerifyForm extends Component {
                   <b>{t("code")}</b>
                 </Label>
                 <Input
+                  id={id + "-code"}
                   type="text"
                   name="code"
                   placeholder="Enter 6 digit code"

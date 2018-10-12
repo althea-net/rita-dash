@@ -91,7 +91,7 @@ class RegistrationForm extends Component {
 
   render() {
     let { registering, waiting } = this.state;
-    let { t } = this.props;
+    let { id, t } = this.props;
 
     return waiting ? (
       <Card>
@@ -115,6 +115,7 @@ class RegistrationForm extends Component {
                 <b>{t("email")}</b>
               </Label>
               <Input
+                id={id + "-email"}
                 label={t("email")}
                 type="email"
                 name="email"
@@ -138,6 +139,7 @@ class RegistrationForm extends Component {
               }}
             >
               <Button
+                id={id + "-submit"}
                 color={this.isFieldValid("email") ? "primary" : "secondary"}
                 disabled={!this.isFieldValid("email") || waiting}
                 style={{
@@ -147,6 +149,7 @@ class RegistrationForm extends Component {
                 {t("submit")}
               </Button>
               <Button
+                id={id + "-cancel"}
                 color="primary"
                 style={{ margin: 3 }}
                 onClick={this.stopRegistering}
@@ -159,6 +162,7 @@ class RegistrationForm extends Component {
       </Card>
     ) : (
       <Button
+        id={id + "-register"}
         color="primary"
         className="float-lg-right"
         onClick={this.startRegistering}

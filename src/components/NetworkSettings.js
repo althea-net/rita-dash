@@ -27,8 +27,8 @@ class NetworkSettings extends Component {
     let { t } = this.props;
 
     return (
-      <div>
-        <h1>{t("networkSettings")}</h1>
+      <div id="network-settings-main">
+        <h1 id="network-settings-title">{t("networkSettings")}</h1>
         <Nav tabs>
           <NavItem>
             <NavLink

@@ -104,6 +104,7 @@ class ExitListItem extends Component {
     let connected = exit.isReachable && exit.haveRoute;
     let pseudostate = state;
     let { t } = this.props;
+    let id = nickname.toLowerCase().replace(" ", "-");
 
     if (state === "Registered" && isSelected) {
       connected = exit.isTunnelWorking;
@@ -117,7 +118,7 @@ class ExitListItem extends Component {
     }
 
     return (
-      <div>
+      <div id={id}>
         <ListGroupItem
           color={
             {
@@ -179,6 +180,7 @@ class ExitListItem extends Component {
                   )}
                 {(state === "GotInfo" || state === "Registering") && (
                   <RegistrationForm
+                    id={id}
                     nickname={nickname}
                     state={state}
                     email=""
@@ -187,7 +189,12 @@ class ExitListItem extends Component {
                   />
                 )}
                 {state === "Pending" && (
-                  <VerifyForm nickname={nickname} state={state} email="" />
+                  <VerifyForm
+                    id={id}
+                    nickname={nickname}
+                    state={state}
+                    email=""
+                  />
                 )}
               </Col>
             )}
@@ -195,6 +202,7 @@ class ExitListItem extends Component {
           <Row>
             {state !== "New" && (
               <span
+                id={id + "-reset"}
                 style={{
                   color: "#999",
                   cursor: "pointer",

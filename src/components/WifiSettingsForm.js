@@ -90,6 +90,7 @@ class WifiSettingsForm extends Component {
                 <Label for="ssid">{t("ssid")}</Label>
                 <Input
                   type="text"
+                  id={radio + "-ssid"}
                   name="ssid"
                   valid={this.isFieldValid("ssid")}
                   placeholder="min. 8 characters"
@@ -101,6 +102,7 @@ class WifiSettingsForm extends Component {
                 <Label for="password">{t("password")}</Label>
                 <Input
                   type="text"
+                  id={radio + "-pass"}
                   name="key"
                   valid={this.isFieldValid("key")}
                   placeholder="min. 8 characters"
@@ -118,6 +120,7 @@ class WifiSettingsForm extends Component {
                 }}
               >
                 <Button
+                  id={radio + "-submit"}
                   color="primary"
                   style={{
                     margin: 10

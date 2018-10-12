@@ -14,7 +14,7 @@ class FrontPage extends Component {
     let { t } = this.props;
 
     return (
-      <div>
+      <div id="front-page-main">
         <h1>{t("welcome")}</h1>
 
         {error ? (
@@ -23,7 +23,7 @@ class FrontPage extends Component {
           <Progress animated color="info" value="100" />
         ) : (
           <div>
-            <p>{t("version", { version })}</p>
+            <p id="version">{t("version", { version })}</p>
             <Card>
               <CardBody>
                 <Row>

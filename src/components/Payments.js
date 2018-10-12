@@ -27,8 +27,8 @@ class Payments extends Component {
 
     if (!(info && settings)) return null;
     return (
-      <div>
-        <h1>{t("payments")}</h1>
+      <div id="payments-main">
+        <h1 id="payments-title">{t("payments")}</h1>
         <div className="text-center">
           <h2>{t("currentBalance")}</h2>
           <h3>&Xi; {Math.max(0, info.balance)}</h3>

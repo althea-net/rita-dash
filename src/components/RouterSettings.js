@@ -8,8 +8,8 @@ class RouterSettings extends Component {
     const { t } = this.props;
 
     return (
-      <div>
-        <h1>{t("routerSettings")}</h1>
+      <div id="router-settings-main">
+        <h1 id="router-settings-title">{t("routerSettings")}</h1>
 
         <Ports />
         <div style={{ marginTop: 20 }}>
