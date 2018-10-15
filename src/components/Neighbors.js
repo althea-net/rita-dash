@@ -26,7 +26,6 @@ class Neighbors extends Component {
     const peers = normNeighbors.filter(n => !n.isExit);
 
     const { t } = this.props;
-    console.log(neighbors.length);
 
     return (
       <div id="neighbors-main">

@@ -15,12 +15,14 @@ import { actions, connect } from "../store";
 import web3 from "web3";
 import Error from "./Error";
 import { translate } from "react-i18next";
+import QrReader from "react-qr-reader";
 
 class DaoSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
       address: "",
+      joining: false,
       valid: false
     };
     this.web3 = new web3();
@@ -39,9 +41,22 @@ class DaoSelection extends Component {
     this.setState({ address: "" });
   };
 
+  startJoining = () => {
+    this.setState({ joining: true });
+  };
+
+  handleScan = result => {
+    if (result) this.setState({ ipAddress: result });
+  };
+
+  handleError = err => {
+    console.error(err);
+  };
+
   render() {
     let { daos, daosError } = this.props.state;
     let { t } = this.props;
+    let { joining } = this.state;
 
     return (
       <div>
@@ -96,6 +111,13 @@ class DaoSelection extends Component {
                 );
               })}
             </ListGroup>
+            {joining ? (
+              <QrReader onScan={this.handleScan} onError={this.handleError} />
+            ) : (
+              <Button color="primary" onClick={this.startJoining}>
+                Join Subnet DAO with QR code
+              </Button>
+            )}
           </div>
         )}
       </div>
