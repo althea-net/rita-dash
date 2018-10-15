@@ -56,7 +56,7 @@ class Ports extends React.Component {
     let modes = [t("Mesh"), t("WAN"), t("LAN")];
 
     if (!interfaces)
-      if (loadingInterfaces !== null && !loadingInterfaces) {
+      if (loadingInterfaces === false) {
         return <Alert color="info">{t("noInterfaces")}</Alert>;
       } else return <Progress animated color="info" value={100} />;
 
