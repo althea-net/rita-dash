@@ -3,7 +3,8 @@ export default backend => {
     getInterfaces: async ({ setState, state }) => {
       if (state.loadingInterfaces) return;
 
-      setState({ loadingInterfaces: true });
+      if (state.loadingInterfaces === null)
+        setState({ loadingInterfaces: true });
 
       let res = await backend.getInterfaces();
       if (res instanceof Error) {
