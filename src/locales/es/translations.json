@@ -90,5 +90,6 @@
   "wifi": "Wifi",
   "wifiError": "La configuración de Wifi no pudo ser analizada. El enrutador puede no ser compatible con WiFi.",
   "wifiError": "Wifi settings could not be parsed. The router may not support Wifi.",
-  "wifiSettings": "Configuración de WiFi"
+  "wifiSettings": "Configuración de WiFi",
+  "wireguardPublicKey": "Llave pública de WireGuard"
 }

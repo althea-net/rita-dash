@@ -90,5 +90,6 @@
   "welcome": "Welcome to Althea",
   "wifi": "Wifi",
   "wifiError": "Wifi settings could not be parsed. The router may not support Wifi.",
-  "wifiSettings": "WiFi Settings"
+  "wifiSettings": "WiFi Settings",
+  "wireguardPublicKey": "WireGuard Public Key"
 }

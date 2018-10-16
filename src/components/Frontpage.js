@@ -8,7 +8,7 @@ import { translate } from "react-i18next";
 class FrontPage extends Component {
   render() {
     let { error, loading, info, settings } = this.props.state;
-    let { meshIp } = settings.network;
+    let { meshIp, wgPublicKey } = settings.network;
     let { ethAddress } = settings.payment;
     let { version } = info;
     let { t } = this.props;
@@ -36,7 +36,11 @@ class FrontPage extends Component {
                         paddingBottom: 15
                       }}
                       bgcolor="#ff0"
-                      value={`althea://dao/add?ip_address=${meshIp}&eth_address=${ethAddress}`}
+                      value={JSON.stringify({
+                        meshIp,
+                        ethAddress,
+                        wgPublicKey
+                      })}
                     />
                   </Col>
                   <Col md="8" style={{ wordWrap: "break-word" }}>
@@ -46,6 +50,9 @@ class FrontPage extends Component {
                     </p>
                     <p>
                       <b>{t("ethereumAddress")}</b> {ethAddress}
+                    </p>
+                    <p>
+                      <b>{t("wireguardPublicKey")}</b> {wgPublicKey}
                     </p>
                     <p>{t("presentQR")}</p>
                   </Col>
