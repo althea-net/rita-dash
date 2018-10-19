@@ -39,7 +39,7 @@ class App extends Component {
     window.addEventListener("hashchange", this.onHashChange, false);
     actions.getSettings();
     actions.getInfo();
-    this.timer = setInterval(actions.getSettings, 5000);
+    this.timer = setInterval(actions.getVersion, 5000);
   }
 
   componentWillUnmount() {

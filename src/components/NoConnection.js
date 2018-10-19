@@ -12,12 +12,12 @@ import { translate } from "react-i18next";
 
 const NoConnection = ({ state, t }) => (
   <div>
-    <Modal isOpen={!state.settings || !state.settings.network.meshIp} centered>
+    <Modal isOpen={!state.version} centered>
       <ModalHeader>{t("noConnection")}</ModalHeader>
       <ModalBody>
         <Card>
           <CardBody>
-            {t("noSettings")}
+            {t("noRita")}
             <Progress value={100} animated color="danger" />
           </CardBody>
         </Card>
@@ -26,4 +26,4 @@ const NoConnection = ({ state, t }) => (
   </div>
 );
 
-export default connect(["settings"])(translate()(NoConnection));
+export default connect(["version"])(translate()(NoConnection));

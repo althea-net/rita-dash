@@ -44,7 +44,7 @@
   "noDevice": "No se puede determinar el modelo del dispositivo enrutador",
   "noInterfaces": "No se encontraron interfaces de puerto",
   "noPeers": "No se encontraron pares",
-  "noSettings": "No se puede obtener la configuración del enrutador. ¿Está corriendo Rita?",
+  "noRita": "No se puede contactar con el enrutador. ¿Está corriendo Rita?",
   "noWifi": "No se han encontrado ajustes de Wifi, es posible que el dispositivo no admita Wifi",
   "nodeInfo": "Información del nodo",
   "onlyOne": "Solo puede haber una interfaz {{mode}}",

@@ -44,7 +44,7 @@
   "noDevice": "Unable to determine the router device model",
   "noInterfaces": "No port interfaces found",
   "noPeers": "No peers found",
-  "noSettings": "Unable to fetch router settings. Is rita running?",
+  "noRita": "Unable to contact router. Is rita running?",
   "noWifi": "No Wifi settings found, the device may not support Wifi",
   "nodeInfo": "Node Info",
   "onlyOne": "There can be only one {{mode}} interface",

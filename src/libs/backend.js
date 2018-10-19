@@ -156,6 +156,12 @@ export default class Backend {
     return get("/settings");
   }
 
+  async getVersion() {
+    const res = await fetch(base + "/version");
+    if (!res.ok) return new Error(res.status);
+    return res;
+  }
+
   async getInfo() {
     return get("/info");
   }

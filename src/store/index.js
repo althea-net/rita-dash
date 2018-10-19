@@ -28,6 +28,7 @@ const store = {
     initializing: true,
     loadingInterfaces: null,
     loadingSettings: false,
+    loadingVersion: false,
     loading: null,
     info: { balance: 0, device: null, version: "" },
     interfaces: null,
@@ -38,6 +39,8 @@ const store = {
     settings: initialSettings,
     success: false,
     t: () => {},
+    version: true,
+    versionError: null,
     wifiError: null,
     wifiSettings: null
   },
@@ -88,6 +91,22 @@ const store = {
       }
 
       return { error: null, loadingSettings: false, settings };
+    },
+
+    getVersion: async ({ setState, state }) => {
+      if (state.loadingVersion) return;
+      setState({ loadingVersion: true });
+
+      let version = await backend.getVersion();
+
+      if (version instanceof Error) {
+        return {
+          loadingVersion: false,
+          version: false
+        };
+      }
+
+      return { loadingVersion: false, version: true };
     }
   }
 };
