@@ -15,7 +15,7 @@ const WifiContainer = styled.div`
 class Wifi extends Component {
   componentDidMount = () => {
     actions.getWifiSettings();
-    this.timer = setInterval(actions.getWifiSettings, 5000);
+    this.timer = setInterval(actions.getWifiSettings, 10000);
   };
 
   componentWillUnmount = () => {

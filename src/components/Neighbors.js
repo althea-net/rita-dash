@@ -10,7 +10,7 @@ import { translate } from "react-i18next";
 class Neighbors extends Component {
   componentDidMount() {
     actions.getNeighbors();
-    this.timer = setInterval(actions.getNeighbors, 2000);
+    this.timer = setInterval(actions.getNeighbors, 10000);
   }
 
   componentWillUnmount() {

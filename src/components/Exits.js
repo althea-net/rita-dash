@@ -18,7 +18,7 @@ import { translate } from "react-i18next";
 class Exits extends Component {
   componentDidMount() {
     actions.getExits();
-    this.timer = setInterval(actions.getExits, 5000);
+    this.timer = setInterval(actions.getExits, 10000);
   }
 
   componentWillUnmount() {
