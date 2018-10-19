@@ -24,11 +24,13 @@ class Wifi extends Component {
 
   render() {
     let { t } = this.props;
-    const { wifiError, loading, wifiSettings } = this.props.state;
+    const { firstLoad, wifiError, loading, wifiSettings } = this.props.state;
 
     if (!wifiSettings)
       if (loading && !wifiError)
-        return <Progress animated color="info" value={100} />;
+        return firstLoad ? (
+          <Progress animated color="info" value={100} />
+        ) : null;
       else return <Alert color="info">{t("noWifi")}</Alert>;
 
     return (
@@ -48,6 +50,6 @@ class Wifi extends Component {
   }
 }
 
-export default connect(["wifiError", "loading", "wifiSettings"])(
+export default connect(["firstLoad", "wifiError", "loading", "wifiSettings"])(
   translate()(Wifi)
 );

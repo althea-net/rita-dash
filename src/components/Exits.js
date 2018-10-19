@@ -26,7 +26,7 @@ class Exits extends Component {
   }
 
   render() {
-    const { exitsError, exits } = this.props.state;
+    const { firstLoad, exitsError, exits } = this.props.state;
     let { t } = this.props;
 
     const sort = (a, b) =>
@@ -36,7 +36,7 @@ class Exits extends Component {
     return (
       <div>
         <Error error={exitsError} />
-        {!exits && <Progress animated color="info" value="100" />}
+        {firstLoad && <Progress animated color="info" value="100" />}
         {exits && <ExitList exits={exits} t={t} />}
       </div>
     );
@@ -278,4 +278,6 @@ class ConnectionError extends Component {
   }
 }
 
-export default connect(["exits", "exitsError"])(translate()(Exits));
+export default connect(["firstLoad", "exits", "exitsError"])(
+  translate()(Exits)
+);
