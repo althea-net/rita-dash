@@ -50,7 +50,13 @@ class Ports extends React.Component {
 
   render() {
     let { t } = this.props;
-    let { info, loadingInterfaces, interfaces, port } = this.props.state;
+    let {
+      initializing,
+      info,
+      loadingInterfaces,
+      interfaces,
+      port
+    } = this.props.state;
     let { mode, modal, warning } = this.state;
     let { device } = info;
     let modes = [t("Mesh"), t("WAN"), t("LAN")];
@@ -58,7 +64,10 @@ class Ports extends React.Component {
     if (!interfaces)
       if (loadingInterfaces === false) {
         return <Alert color="info">{t("noInterfaces")}</Alert>;
-      } else return <Progress animated color="info" value={100} />;
+      } else
+        return initializing ? (
+          <Progress animated color="info" value={100} />
+        ) : null;
 
     if (!device) return <Alert color="danger">{t("noDevice")}</Alert>;
 
@@ -174,6 +183,7 @@ const Confirm = ({ cancel, confirm, show, t }) => (
 
 export default connect([
   "error",
+  "initializing",
   "info",
   "loadingInterfaces",
   "port",

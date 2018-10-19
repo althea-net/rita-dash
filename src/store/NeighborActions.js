@@ -5,13 +5,14 @@ export default backend => {
   return {
     getNeighbors: async ({ setState, state }) => {
       if (state.loading) return;
-      setState({ loading: true, neighbors: state.neighbors || [] });
+      setState({ loading: true });
 
       let debts = await backend.getDebts();
 
       if (debts instanceof Error) {
         return {
           error: state.t("debtsError"),
+          initializing: false,
           loading: false
         };
       }
@@ -23,6 +24,8 @@ export default backend => {
       if (neighbors instanceof Error) {
         return {
           error: state.t("neighborsError"),
+          initializing: false,
+          neighbors: [],
           loading: false
         };
       }
@@ -55,7 +58,7 @@ export default backend => {
         return n;
       });
 
-      return { loading: false, neighbors };
+      return { initializing: false, loading: false, neighbors };
     }
   };
 };

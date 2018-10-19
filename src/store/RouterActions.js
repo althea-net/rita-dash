@@ -2,14 +2,13 @@ export default backend => {
   return {
     getInterfaces: async ({ setState, state }) => {
       if (state.loadingInterfaces) return;
-
-      if (state.loadingInterfaces === null)
-        setState({ loadingInterfaces: true });
+      setState({ loadingInterfaces: true });
 
       let res = await backend.getInterfaces();
       if (res instanceof Error) {
         return setState({
           error: state.t("interfacesError"),
+          initializing: false,
           interfaces: null,
           loadingInterfaces: false
         });
@@ -21,7 +20,12 @@ export default backend => {
         setState({ port });
       }
 
-      return { error: null, interfaces: res, loadingInterfaces: false };
+      return {
+        error: null,
+        initializing: false,
+        interfaces: res,
+        loadingInterfaces: false
+      };
     },
 
     setInterface: async ({ state, setState }, mode) => {
@@ -51,13 +55,19 @@ export default backend => {
           loading = false;
         }
         return setState({
+          initializing: false,
           wifiError,
           wifiSettings: null,
           loading
         });
       }
 
-      return { wifiError: null, wifiSettings: res, loading: false };
+      return {
+        initializing: false,
+        wifiError: null,
+        wifiSettings: res,
+        loading: false
+      };
     },
 
     saveWifiSetting: async ({ state, setState }, setting, radio) => {

@@ -25,6 +25,7 @@ const store = {
     error: null,
     exits: null,
     exitsError: null,
+    initializing: true,
     loadingInterfaces: null,
     loadingSettings: false,
     loading: null,
@@ -46,7 +47,13 @@ const store = {
     ...NeighborActions(backend),
     ...RouterActions(backend),
 
-    changePage: (_, page) => ({ error: "", loading: false, page: page }),
+    changePage: (_, page) => ({
+      error: "",
+      initializing: true,
+      loading: false,
+      page: page
+    }),
+
     init: async ({ setState, state }, t) => {
       setState({ t });
     },
@@ -67,10 +74,10 @@ const store = {
     },
 
     getSettings: async ({ setState, state }) => {
-      let settings = await backend.getSettings();
       if (state.loadingSettings) return;
-
       setState({ loadingSettings: true });
+
+      let settings = await backend.getSettings();
 
       if (settings instanceof Error) {
         return {

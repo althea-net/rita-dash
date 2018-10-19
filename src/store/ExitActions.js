@@ -2,20 +2,24 @@ const actions = backend => {
   return {
     getExits: async ({ setState, state }) => {
       if (state.loading) return;
-
-      if (!state.exits) {
-        setState({ loading: true });
-      }
+      setState({ loading: true });
 
       let exits = await backend.getExits();
       if (exits instanceof Error) {
         return setState({
           exitsError: state.t("exitsError"),
           exits: null,
+          initializing: false,
           loading: false
         });
       }
-      setState({ exitsError: null, exits, loading: false });
+
+      setState({
+        exitsError: null,
+        exits,
+        initializing: false,
+        loading: false
+      });
     },
     registerExit: async ({ setState, state }, nickname, email) => {
       await backend.registerExit(nickname, email);
