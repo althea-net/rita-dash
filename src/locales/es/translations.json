@@ -78,7 +78,7 @@
   "submit": "Enviar",
   "submittingCode": "Enviar código de verificación para salir ...",
   "submittingEmail": "Enviando un correo electrónico para salir ...",
-  "subnetDaos": "Subnet DAO(s)",
+  "subnetDao": "Subnet DAO",
   "switchMode": "Cambia el modo a",
   "threshold": "Límite",
   "throttleSpeed": "Velocidad del acelerador",

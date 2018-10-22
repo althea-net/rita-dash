@@ -116,6 +116,14 @@ export default class Backend {
     return post(`/dao_list/add/${address}`);
   }
 
+  async getMeshIp() {
+    return get("/mesh_ip");
+  }
+
+  async setMeshIp(mesh_ip) {
+    return post("/mesh_ip", { mesh_ip });
+  }
+
   async getInterfaces() {
     return get("/interfaces", false);
   }
