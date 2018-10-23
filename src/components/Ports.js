@@ -7,10 +7,6 @@ import {
   CardHeader,
   CardTitle,
   Col,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
   Progress,
   Row
 } from "reactstrap";
@@ -18,6 +14,7 @@ import { connect, actions } from "../store";
 import { translate } from "react-i18next";
 import portImage from "../images/port.png";
 import portOrderings from "../portOrderings";
+import Confirm from "./Confirm";
 
 class Ports extends React.Component {
   constructor() {
@@ -157,29 +154,6 @@ class Ports extends React.Component {
     );
   }
 }
-
-const Confirm = ({ cancel, confirm, show, t }) => (
-  <div>
-    <Modal isOpen={show} centered>
-      <ModalHeader>{t("Are you sure?")}</ModalHeader>
-      <ModalBody>
-        <Alert color="warning">
-          This action will interrupt the connection to the router and require
-          this page to be refreshed.
-        </Alert>
-        <p>Do you wish to proceed?</p>
-      </ModalBody>
-      <ModalFooter>
-        <Button color="primary" onClick={confirm}>
-          Yes
-        </Button>
-        <Button color="secondary" onClick={cancel}>
-          No
-        </Button>
-      </ModalFooter>
-    </Modal>
-  </div>
-);
 
 export default connect([
   "error",

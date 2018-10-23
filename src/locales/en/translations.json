@@ -86,6 +86,7 @@
   "unableToReachExit": "Unable to reach exit.",
   "verify": "Verify",
   "version": "You are running version {{version}}",
+  "waiting": "Waiting {{seconds}} seconds for the router to come back online",
   "weiPerGB": "Ξ/GB",
   "welcome": "Welcome to Althea",
   "wifi": "Wifi",

@@ -43,6 +43,7 @@ const store = {
     t: () => {},
     version: true,
     versionError: null,
+    waiting: 0,
     wifiError: null,
     wifiSettings: null
   },
@@ -109,6 +110,20 @@ const store = {
       }
 
       return { loadingVersion: false, version: true };
+    },
+
+    startWaiting: async ({ setState, state }) => {
+      let seconds = 120;
+      let i = setInterval(async () => {
+        --seconds;
+        setState({ waiting: seconds });
+        if (seconds <= 0) {
+          setState({ waiting: false });
+          clearInterval(i);
+        }
+      }, 1000);
+
+      return { waiting: seconds };
     }
   }
 };
