@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import { actions, connect } from "../store";
 import web3 from "web3";
+import Confirm from "./Confirm";
 import Error from "./Error";
 import { translate } from "react-i18next";
 import QrReader from "react-qr-reader";
@@ -29,6 +30,7 @@ class DaoSelection extends Component {
         ipAddress: ""
       },
       joining: false,
+      confirming: false,
       valid: {
         contractAddress: true,
         ipAddress: true
@@ -119,7 +121,7 @@ class DaoSelection extends Component {
     let { ethAddress } = settings.payment;
     let { t } = this.props;
     let { contractAddress, ipAddress } = this.state.fields;
-    let { joining } = this.state;
+    let { confirming, joining } = this.state;
 
     if (!ipAddress) ipAddress = settings.network.meshIp;
     if (daos && daos.length) {
@@ -157,6 +159,16 @@ class DaoSelection extends Component {
                     Scan QR Code to fill in Subnet Details
                   </Button>
                 )}
+                <Confirm
+                  show={confirming}
+                  t={t}
+                  cancel={() => this.setState({ confirming: false })}
+                  confirm={() => {
+                    actions.startWaiting();
+                    actions.joinSubnetDao(contractAddress, ipAddress);
+                    this.setState({ confirming: false });
+                  }}
+                />
                 <Form style={{ marginTop: 15 }}>
                   <FormGroup>
                     <Input
@@ -198,9 +210,7 @@ class DaoSelection extends Component {
                     <Button
                       color="primary"
                       className="float-right"
-                      onClick={() =>
-                        actions.joinSubnetDao(contractAddress, ipAddress)
-                      }
+                      onClick={() => this.setState({ confirming: true })}
                     >
                       Join
                     </Button>

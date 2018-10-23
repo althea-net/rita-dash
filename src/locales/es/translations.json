@@ -85,6 +85,7 @@
   "unableToReachExit": "No se puede llegar a la salida.",
   "verify": "Verificar",
   "version": "Estás ejecutando la versión {{version}}",
+  "waiting": "Esperando {{seconds}} segundos para que el enrutador vuelva a estar en línea",
   "weiPerGB": "Ξ / GB",
   "welcome": "Bienvenido a Althea",
   "wifi": "Wifi",
