@@ -10,7 +10,7 @@ import {
   Progress,
   Row
 } from "reactstrap";
-import { connect, actions } from "../store";
+import { connect, actions, getState } from "../store";
 import { translate } from "react-i18next";
 import portImage from "../images/port.png";
 import portOrderings from "../portOrderings";
@@ -75,6 +75,15 @@ class Ports extends React.Component {
           t={t}
           cancel={() => this.setState({ modal: false })}
           confirm={() => {
+            actions.startWaiting();
+
+            let i = setInterval(async () => {
+              actions.keepWaiting();
+              if (getState().waiting <= 0) {
+                clearInterval(i);
+              }
+            }, 1000);
+
             actions.setInterface(this.state.mode);
             this.setState({ modal: false });
           }}

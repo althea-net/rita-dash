@@ -113,17 +113,13 @@ const store = {
     },
 
     startWaiting: async ({ setState, state }) => {
-      let seconds = 120;
-      let i = setInterval(async () => {
-        --seconds;
-        setState({ waiting: seconds });
-        if (seconds <= 0) {
-          setState({ waiting: false });
-          clearInterval(i);
-        }
-      }, 1000);
+      return { waiting: 120 };
+    },
 
-      return { waiting: seconds };
+    keepWaiting: async ({ setState, state }) => {
+      let { waiting } = state;
+      --waiting;
+      return { waiting };
     }
   }
 };

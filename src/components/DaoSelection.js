@@ -8,7 +8,7 @@ import {
   FormFeedback,
   Input
 } from "reactstrap";
-import { actions, connect } from "../store";
+import { actions, connect, getState } from "../store";
 import web3 from "web3";
 import Confirm from "./Confirm";
 import Error from "./Error";
@@ -165,7 +165,16 @@ class DaoSelection extends Component {
                   cancel={() => this.setState({ confirming: false })}
                   confirm={() => {
                     actions.startWaiting();
+
+                    let i = setInterval(async () => {
+                      actions.keepWaiting();
+                      if (getState().waiting <= 0) {
+                        clearInterval(i);
+                      }
+                    }, 1000);
+
                     actions.joinSubnetDao(contractAddress, ipAddress);
+
                     this.setState({ confirming: false });
                   }}
                 />
