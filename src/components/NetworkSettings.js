@@ -49,7 +49,7 @@ class NetworkSettings extends Component {
                 this.toggle("2");
               }}
             >
-              {t("subnetDaos")}
+              {t("subnetDao")}
             </NavLink>
           </NavItem>
         </Nav>

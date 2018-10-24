@@ -27,11 +27,13 @@ const store = {
     exitsError: null,
     initializing: true,
     loadingInterfaces: null,
+    loadingIp: null,
     loadingSettings: false,
     loadingVersion: false,
     loading: null,
     info: { balance: 0, device: null, version: "" },
     interfaces: null,
+    meshIp: "",
     neighbors: null,
     neighborsError: null,
     page: "",
@@ -41,6 +43,7 @@ const store = {
     t: () => {},
     version: true,
     versionError: null,
+    waiting: 0,
     wifiError: null,
     wifiSettings: null
   },
@@ -107,6 +110,16 @@ const store = {
       }
 
       return { loadingVersion: false, version: true };
+    },
+
+    startWaiting: async ({ setState, state }) => {
+      return { waiting: 120 };
+    },
+
+    keepWaiting: async ({ setState, state }) => {
+      let { waiting } = state;
+      --waiting;
+      return { waiting };
     }
   }
 };

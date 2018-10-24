@@ -2,7 +2,7 @@ const actions = backend => {
   return {
     getExits: async ({ setState, state }) => {
       if (state.loading) return;
-      setState({ loading: true });
+      setState({ initializing: false, loading: true });
 
       let exits = await backend.getExits();
       if (exits instanceof Error) {

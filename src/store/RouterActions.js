@@ -2,7 +2,7 @@ export default backend => {
   return {
     getInterfaces: async ({ setState, state }) => {
       if (state.loadingInterfaces) return;
-      setState({ loadingInterfaces: true });
+      setState({ initializing: false, loadingInterfaces: true });
 
       let res = await backend.getInterfaces();
       if (res instanceof Error) {
@@ -42,7 +42,7 @@ export default backend => {
     getWifiSettings: async ({ setState, state }) => {
       if (state.loading) return;
 
-      setState({ loading: true });
+      setState({ initializing: false, loading: true });
 
       let res = await backend.getWifiSettings();
       if (res instanceof Error) {

@@ -20,6 +20,7 @@ class Neighbors extends Component {
   render() {
     const { error, initializing, neighbors } = this.props.state;
     const { t } = this.props;
+
     let normNeighbors = [];
     let peers = [];
 
