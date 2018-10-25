@@ -11,9 +11,9 @@ class RouterSettings extends Component {
       <div id="router-settings-main">
         <h1 id="router-settings-title">{t("routerSettings")}</h1>
 
-        <Ports />
+        <Wifi />
         <div style={{ marginTop: 20 }}>
-          <Wifi />
+          <Ports />
         </div>
       </div>
     );
