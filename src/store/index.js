@@ -109,7 +109,7 @@ const store = {
         };
       }
 
-      return { loadingVersion: false, version: true };
+      return { waiting: 0, loadingVersion: false, version: true };
     },
 
     startWaiting: async ({ setState, state }) => {
