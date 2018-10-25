@@ -28,7 +28,7 @@ class Ports extends React.Component {
 
   componentDidMount = () => {
     actions.getInterfaces();
-    this.timer = setInterval(actions.getInterfaces, 5000);
+    this.timer = setInterval(actions.getInterfaces, 10000);
   };
 
   componentWillUnmount = () => {
