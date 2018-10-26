@@ -10,7 +10,6 @@ import { BigNumber } from "bignumber.js";
 
 const weiPerEth = BigNumber("1000000000000000000");
 const bytesPerGb = BigNumber("1000000000");
-const maxu16 = 2 ** 16 - 1;
 const maxu32 = 2 ** 32 - 1;
 
 class Neighbors extends Component {
@@ -27,12 +26,10 @@ class Neighbors extends Component {
     const { error, initializing, neighbors } = this.props.state;
     const { t } = this.props;
 
-    let normNeighbors = [];
     let peers = [];
 
     if (neighbors) {
-      normNeighbors = normalizeNeighbors(neighbors);
-      peers = normNeighbors.filter(n => !n.isExit);
+      peers = normalizeNeighbors(neighbors.filter(n => !n.isExit));
     }
 
     return (
@@ -65,9 +62,7 @@ function metric2word(metric) {
   }
 
   if (metric > 0.25) {
-    if (metric > 3) {
-      return "●●●○";
-    }
+    return "●●●○";
   }
 
   return "●●●●";
@@ -134,6 +129,7 @@ function ConnectionLine({
 }
 
 function normalize(current, smallest, greatest) {
+  if (greatest === smallest) return 0;
   return greatest && (current - smallest) / (greatest - smallest);
 }
 
@@ -141,6 +137,7 @@ function logNormalize(current, smallest, greatest) {
   if (current === Infinity || current === -Infinity) {
     return current;
   }
+
   return (
     Math.log(Math.abs(normalize(current, smallest, greatest) * 10) + 1) /
     Math.log(11)
@@ -265,8 +262,8 @@ function NodeInfo({
       <h3 style={{ marginBottom: 0, marginRight: 10 }}>Me</h3>
       <ConnectionLine
         thickness={10}
-        dash={80}
-        scrollDirection={debt}
+        dash={clamp(normalizedLinkCost * 100, 4, 96)}
+        scrollDirection={totalPaymentSent}
         scrollSpeed={30}
       />
       <div>
@@ -290,7 +287,6 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              {/*
               <LabelUnit
                 label={t("linkToMe")}
                 content={metric2word(normalizedLinkCost)}
@@ -299,7 +295,6 @@ function NodeInfo({
                 label={t("linkToExit")}
                 content={metric2word(normalizedRouteMetricToExit)}
               />
-              */}
             </div>
             <div
               style={{
@@ -326,16 +321,13 @@ function NodeInfo({
                     content={`♦ ${totalPaymentSent}`}
                   />
                 ))}
-              {/*
-              <LabelUnit label={t("currentDebt")} content={`♦ ${debt}`} />
-              */}
             </div>
           </CardBody>
         </Card>
       </div>
       <ConnectionLine
         thickness={10}
-        dash={80}
+        dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
         scrollDirection={totalPaymentSent}
         scrollSpeed={30}
       />
