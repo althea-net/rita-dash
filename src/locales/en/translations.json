@@ -42,6 +42,7 @@
   "networkSettings": "Network Settings",
   "noConnection": "Waiting for Connection",
   "noDevice": "Unable to determine the router device model",
+  "noExits": "No exits could be contacted",
   "noInterfaces": "No port interfaces found",
   "noPeers": "No peers found",
   "noRita": "Unable to contact router. Is rita running?",

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Alert,
   Button,
   Col,
   ListGroup,
@@ -74,8 +75,14 @@ function ExitList({ exits, t }) {
           <ListGroup>{item(selected, 0)}</ListGroup>
         </div>
       )}
-      <h2>{t("availableExits")}</h2>
-      <ListGroup>{unselected}</ListGroup>
+      {unselected.length ? (
+        <React.Fragment>
+          <h2>{t("availableExits")}</h2>
+          <ListGroup>{unselected}</ListGroup>
+        </React.Fragment>
+      ) : (
+        <Alert color="danger">{t("noExits")}</Alert>
+      )}
     </div>
   );
 }
