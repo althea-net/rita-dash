@@ -58,7 +58,13 @@ export default backend => {
         return n;
       });
 
-      return { initializing: false, loading: false, neighbors };
+      return {
+        error: null,
+        debtsError: null,
+        initializing: false,
+        loading: false,
+        neighbors
+      };
     }
   };
 };

@@ -6,6 +6,12 @@ import { Alert, Card, CardBody, CardTitle, Progress } from "reactstrap";
 import { actions, connect } from "../store";
 import Error from "./Error";
 import { translate } from "react-i18next";
+import { BigNumber } from "bignumber.js";
+
+const weiPerEth = BigNumber("1000000000000000000");
+const bytesPerGb = BigNumber("1000000000");
+const maxu16 = 2 ** 16 - 1;
+const maxu32 = 2 ** 32 - 1;
 
 class Neighbors extends Component {
   componentDidMount() {
@@ -243,6 +249,11 @@ function NodeInfo({
     s = `${s.substr(0, 4)}...${s.substr(s.length - 4)}`;
   }
 
+  let priceEthPerGB = BigNumber(priceToExit.toString())
+    .times(bytesPerGb)
+    .div(weiPerEth)
+    .toFixed(8);
+
   return (
     <div
       style={{
@@ -254,8 +265,8 @@ function NodeInfo({
       <h3 style={{ marginBottom: 0, marginRight: 10 }}>Me</h3>
       <ConnectionLine
         thickness={10}
-        dash={clamp(normalizedLinkCost * 100, 4, 96)}
-        scrollDirection={totalPaymentSent}
+        dash={80}
+        scrollDirection={debt}
         scrollSpeed={30}
       />
       <div>
@@ -279,16 +290,16 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
+              {/*
               <LabelUnit
                 label={t("linkToMe")}
                 content={metric2word(normalizedLinkCost)}
               />
-              {isExit || (
-                <LabelUnit
-                  label={t("linkToExit")}
-                  content={metric2word(normalizedRouteMetricToExit)}
-                />
-              )}
+              <LabelUnit
+                label={t("linkToExit")}
+                content={metric2word(normalizedRouteMetricToExit)}
+              />
+              */}
             </div>
             <div
               style={{
@@ -297,7 +308,12 @@ function NodeInfo({
                 flexWrap: "wrap"
               }}
             >
-              <LabelUnit label={t("price")} content={`${priceToExit} Ξ/gb`} />
+              {priceToExit < maxu32 && (
+                <LabelUnit
+                  label={t("price")}
+                  content={`${priceEthPerGB} ♦/GB`}
+                />
+              )}
               {(totalPaymentReceived > 0 && (
                 <LabelUnit
                   label={t("paymentReceived")}
@@ -310,14 +326,16 @@ function NodeInfo({
                     content={`♦ ${totalPaymentSent}`}
                   />
                 ))}
+              {/*
               <LabelUnit label={t("currentDebt")} content={`♦ ${debt}`} />
+              */}
             </div>
           </CardBody>
         </Card>
       </div>
       <ConnectionLine
         thickness={10}
-        dash={clamp(normalizedRouteMetricToExit * 100, 4, 96)}
+        dash={80}
         scrollDirection={totalPaymentSent}
         scrollSpeed={30}
       />
