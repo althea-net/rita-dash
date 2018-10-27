@@ -109,6 +109,7 @@ class ExitListItem extends Component {
     let exit = this.props.exit;
     let { description, message, state } = exit.exitSettings;
     let { nickname, isSelected } = exit;
+    let { verifMode } = exit.exitSettings.generalDetails;
     let connected = exit.isReachable && exit.haveRoute;
     let pseudostate = state;
     let { t } = this.props;
@@ -120,10 +121,6 @@ class ExitListItem extends Component {
     }
     if (!message) message = "";
     if (!connected) pseudostate = "Problem";
-
-    if (this.state.registering && state === "GotInfo") {
-      pseudostate = "Registering";
-    }
 
     return (
       <div id={id}>
@@ -192,6 +189,7 @@ class ExitListItem extends Component {
                     nickname={nickname}
                     state={state}
                     email=""
+                    verifMode={verifMode}
                     startRegistering={this.startRegistering}
                     stopRegistering={this.stopRegistering}
                   />

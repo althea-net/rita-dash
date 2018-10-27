@@ -23,6 +23,7 @@ const actions = backend => {
     },
     registerExit: async ({ setState, state }, nickname, email) => {
       await backend.registerExit(nickname, email);
+      if (!email) await backend.selectExit(nickname);
       setState({ exits: await backend.getExits() });
     },
     resetExit: async ({ setState, state }, nickname) => {

@@ -175,13 +175,17 @@ export default class Backend {
   }
 
   async registerExit(nickname, email) {
-    await post(`/settings`, {
-      exit_client: {
-        reg_details: {
-          email: email
+    if (email) {
+      await post(`/settings`, {
+        exit_client: {
+          reg_details: {
+            email: email
+          }
         }
-      }
-    });
+      });
+    } else {
+      await post(`/exits/${nickname}/register`);
+    }
 
     return post(`/exits/${nickname}/register`);
   }
