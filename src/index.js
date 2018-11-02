@@ -13,3 +13,14 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+
+if (
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
+) {
+  let tag = document.createElement("script");
+  tag.type = "text/javascript";
+  document.body.appendChild(tag);
+  tag.src = "cordova.js";
+}

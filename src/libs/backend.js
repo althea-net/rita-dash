@@ -1,7 +1,13 @@
 // @ts-check
 import cckd from "camelcase-keys-deep";
 
-const { protocol, hostname } = window.location;
+let { protocol, hostname } = window.location;
+
+if (protocol === "file:") {
+  protocol = "http:";
+  hostname = "192.168.10.1";
+}
+
 const port = 4877;
 const base =
   process.env.REACT_APP_BACKEND_URL || `${protocol}//${hostname}:${port}`;

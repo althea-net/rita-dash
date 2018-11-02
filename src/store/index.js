@@ -38,6 +38,7 @@ const store = {
     neighborsError: null,
     page: "",
     port: null,
+    scanning: false,
     settings: initialSettings,
     success: false,
     t: () => {},
@@ -120,6 +121,20 @@ const store = {
       let { waiting } = state;
       --waiting;
       return { waiting };
+    },
+
+    startScanning: async ({ setState, state }) => {
+      document.querySelector(".App").style.display = "none";
+      return { scanning: true };
+    },
+
+    stopScanning: async ({ setState, state }) => {
+      window.QRScanner.destroy(s => {
+        document.querySelector(".App").style.display = "block";
+        document.querySelector("body").style.backgroundColor = "white";
+      });
+
+      return { scanning: false };
     }
   }
 };
