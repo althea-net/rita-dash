@@ -43,14 +43,19 @@
   "scripts": {
     "start": "PORT=3005 react-scripts start",
     "build": "react-scripts build && rm build/static/**/*.map",
+    "buildAndroid": "cd cordova && cordova build android",
+    "buildiOS": "cd cordova && cordova build ios",
+    "buildElectron": "electron-packager . --all",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "homepage": ".",
   "devDependencies": {
     "concurrently": "^4.0.1",
+    "cordova": "^8.1.2",
     "electron": "^3.0.6",
     "electron-builder": "^20.29.0",
+    "electron-packager": "^12.2.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "^2.50.0",
     "eslint-plugin-import": "^2.13.0",
