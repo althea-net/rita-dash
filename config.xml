@@ -27,4 +27,5 @@
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.0" />
     <engine name="android" spec="^7.1.1" />
     <engine name="ios" spec="~4.5.5" />
+    <plugin name="cordova-plugin-add-swift-support" spec="^1.7.2" />
 </widget>
