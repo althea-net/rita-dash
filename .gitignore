@@ -22,6 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
 /cordova
 /platforms
 /plugins
+
+althea-*
+*.apk
