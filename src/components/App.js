@@ -6,6 +6,7 @@ import RouterSettings from "./RouterSettings";
 import NetworkSettings from "./NetworkSettings";
 import Payments from "./Payments";
 import NoConnection from "./NoConnection";
+import CameraUI from "./CameraUI";
 import { actions, connect } from "../store";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -67,15 +68,18 @@ class App extends Component {
     };
 
     return (
-      <div className="App">
-        <AltheaNav current={current} />
-        <NoConnection />
-        <div style={container}>
-          <div style={main}>
-            <Page />
+      <React.Fragment>
+        <div className="App">
+          <AltheaNav current={current} />
+          <NoConnection />
+          <div style={container}>
+            <div style={main}>
+              <Page />
+            </div>
           </div>
         </div>
-      </div>
+        <CameraUI />
+      </React.Fragment>
     );
   }
 }

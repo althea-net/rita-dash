@@ -76,12 +76,37 @@ class DaoSelection extends Component {
   };
 
   startJoining = () => {
+    if (typeof window.QRScanner !== "undefined") {
+      window.QRScanner.prepare(err => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        window.QRScanner.show(() => {
+          document.querySelector(".App").style.display = "none";
+          actions.startScanning();
+
+          window.QRScanner.scan((err, res) => {
+            if (err) {
+              console.log(err);
+            } else {
+              this.handleScan(res);
+            }
+
+            actions.stopScanning();
+          });
+        });
+      });
+    } else {
+      this.setState({ joining: true });
+    }
+
     this.setState({
       fields: {
         contractAddress: "",
         ipAddress: ""
-      },
-      joining: true
+      }
     });
   };
 
@@ -148,6 +173,7 @@ class DaoSelection extends Component {
             </Card>
             <Card>
               <CardBody>
+                <div id="viewer" style={{ width: "300px" }} />
                 {joining ? (
                   <QrReader
                     onScan={this.handleScan}
