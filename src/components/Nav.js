@@ -101,6 +101,9 @@ class AltheaNav extends Component {
                 <DropdownItem onClick={() => i18n.changeLanguage("es")}>
                   ES
                 </DropdownItem>
+                <DropdownItem onClick={() => i18n.changeLanguage("fr")}>
+                  FR
+                </DropdownItem>
               </DropdownMenu>
             </ButtonDropdown>
           </NavLink>

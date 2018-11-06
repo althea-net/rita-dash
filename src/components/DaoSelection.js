@@ -172,10 +172,7 @@ class DaoSelection extends Component {
           <div>
             <Card>
               <CardBody>
-                <p>
-                  Present this QR code to the Subnet DAO organizer to have them
-                  record your router's Ethereum wallet address
-                </p>
+                <p>{t("presentQR")}</p>
                 {ethAddress && (
                   <QrCode value={JSON.stringify({ ethAddress })} />
                 )}
@@ -192,7 +189,7 @@ class DaoSelection extends Component {
                   />
                 ) : (
                   <Button color="primary" onClick={this.startJoining}>
-                    Scan QR Code to fill in Subnet Details
+                    {t("scanQR")}
                   </Button>
                 )}
                 <Confirm
