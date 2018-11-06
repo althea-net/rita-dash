@@ -73,6 +73,16 @@ class DaoSelection extends Component {
         [name]: this.validators[name](value)
       }
     });
+
+    let ipAddress = new Address6(this.state.fields.ipAddress);
+    if (ipAddress.isValid()) {
+      ipAddress = ipAddress.canonicalForm();
+      this.setState({
+        fields: {
+          ipAddress
+        }
+      });
+    }
   };
 
   startJoining = () => {
