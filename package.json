@@ -16,7 +16,6 @@
     "camelcase-keys-deep": "0.1.0",
     "core-util-is": "^1.0.2",
     "cross-env": "^5.2.0",
-    "debounce": "^1.2.0",
     "eslint": "^4.19.1",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "i": "^0.3.6",
@@ -70,8 +69,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
-    "prettier": "1.14.0",
-    "wait-on": "^3.1.0"
+    "prettier": "1.14.0"
   },
   "cordova": {
     "plugins": {
