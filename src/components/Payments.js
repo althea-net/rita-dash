@@ -14,6 +14,8 @@ import {
 } from "reactstrap";
 import { actions, connect } from "../store";
 import { translate } from "react-i18next";
+import PriceForm from "./PriceForm";
+import QualityForm from "./QualityForm";
 
 class Payments extends Component {
   componentDidMount() {
@@ -29,18 +31,30 @@ class Payments extends Component {
     return (
       <div id="payments-main">
         <h1 id="payments-title">{t("payments")}</h1>
-        <div className="text-center">
-          <h2>{t("currentBalance")}</h2>
-          <h3>&Xi; {Math.max(0, info.balance)}</h3>
-          <Button color="primary">{t("add1")}</Button>
-        </div>
 
-        <Row style={{ opacity: 0.3 }}>
+        <Row style={{ marginBottom: 15 }}>
           <Col md="6">
-            <LowFunds t={t} />
+            <PriceForm />
           </Col>
           <Col md="6">
-            <PriceQuality t={t} />
+            <QualityForm />
+          </Col>
+        </Row>
+
+        <Row style={{ opacity: 0.3 }}>
+          <Col>
+            <Card style={{ height: "100%" }}>
+              <CardBody>
+                <div className="text-center">
+                  <h2>{t("currentBalance")}</h2>
+                  <h3>&Xi; {Math.max(0, info.balance)}</h3>
+                  <Button color="primary">{t("add1")}</Button>
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col>
+            <LowFunds t={t} />
           </Col>
         </Row>
       </div>
@@ -50,7 +64,7 @@ class Payments extends Component {
 
 function LowFunds({ t }) {
   return (
-    <Card style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
+    <Card>
       <CardBody>
         <h3>{t("lowFunds")}</h3>
 
@@ -81,34 +95,4 @@ function LowFunds({ t }) {
   );
 }
 
-function PriceQuality({ t }) {
-  return (
-    <Card style={{ flex: 1, minWidth: 300, maxWidth: 400, margin: 10 }}>
-      <CardBody>
-        <h3>{t("priceQuality")}</h3>
-
-        <Form>
-          <FormGroup>
-            <Input type="range" />
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <small>{t("preferLow")}</small>
-              <small>{t("preferHigh")}</small>
-            </div>
-          </FormGroup>
-
-          <FormGroup>
-            <Label for="exampleEmail">{t("highestAcceptable")}</Label>
-            <InputGroup>
-              <Input type="number" value="10" readOnly />
-              <InputGroupAddon addonType="append">
-                {t("weiPerGB")}
-              </InputGroupAddon>
-            </InputGroup>
-          </FormGroup>
-        </Form>
-      </CardBody>
-    </Card>
-  );
-}
-
-export default connect(["settings", "info"])(translate()(Payments));
+export default connect(["info", "settings"])(translate()(Payments));
