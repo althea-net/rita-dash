@@ -43,9 +43,11 @@
     "start": "PORT=3005 react-scripts start",
     "start-prod": "cross-env NODE_ENV=production electron electron.js",
     "build": "react-scripts build && rm build/static/**/*.map",
-    "buildAndroid": "cd cordova && cordova build android",
-    "buildiOS": "cd cordova && cordova build ios",
-    "buildElectron": "electron-packager . --all",
+    "package-android": "cordova build android",
+    "package-ios": "cordova build ios --release --buildFlag=\"-useModernBuildSystem=0\"",
+    "package-linux": "electron-packager . Althea --platform=linux --arch=x64 --icon=public/icons/png/1024x1024.png --prune=true",
+    "package-mac": "electron-packager . Althea --osx-sign.identity=\"Mac Developer: Adam Soltys (256XBSY5HB)\" --overwrite --platform=darwin --arch=x64 --icon=public/icons/mac/althea.icns --prune=true",
+    "package-windows": "electron-packager . Althea --overwrite --asar=true --platform=win32 --arch=ia32 --icon=public/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=Althea --version-string.FileDescription=Althea --version-string.ProductName=\"Althea\"",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -67,13 +69,13 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
-    "prettier": "1.14.0",
-    "wait-on": "^3.1.0"
+    "prettier": "1.14.0"
   },
   "cordova": {
     "plugins": {
       "cordova-plugin-add-swift-support": {},
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-qrscanner": {}
     },
     "platforms": [
       "android",

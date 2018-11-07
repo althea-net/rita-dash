@@ -4,7 +4,8 @@ import {
   DaoActions,
   ExitActions,
   NeighborActions,
-  RouterActions
+  RouterActions,
+  PaymentActions
 } from "./actions";
 
 const backend = new Backend();
@@ -25,6 +26,8 @@ const store = {
     error: null,
     exits: null,
     exitsError: null,
+    factor: 0,
+    factorError: null,
     initializing: true,
     loadingInterfaces: null,
     loadingIp: null,
@@ -38,6 +41,8 @@ const store = {
     neighborsError: null,
     page: "",
     port: null,
+    price: 0,
+    priceError: null,
     scanning: false,
     settings: initialSettings,
     success: false,
@@ -52,6 +57,7 @@ const store = {
     ...DaoActions(backend),
     ...ExitActions(backend),
     ...NeighborActions(backend),
+    ...PaymentActions(backend),
     ...RouterActions(backend),
 
     changePage: (_, page) => ({

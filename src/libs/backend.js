@@ -28,7 +28,7 @@ async function get(url, camel = true) {
 }
 
 async function post(url, json) {
-  await fetch(base + url, {
+  const res = await fetch(base + url, {
     method: "POST",
     body: JSON.stringify(json),
     headers: {
@@ -36,6 +36,8 @@ async function post(url, json) {
       "Content-Type": "application/json"
     }
   });
+
+  if (!res.ok) return new Error(res.status);
 }
 
 export default class Backend {
@@ -158,16 +160,24 @@ export default class Backend {
     return get("/exits");
   }
 
-  async getSubnetDaos() {
-    return get("/dao_list");
+  async getFactor() {
+    return get("/metric_factor");
   }
 
   async getNeighbors() {
     return get("/neighbors");
   }
 
+  async getPrice() {
+    return get("/local_fee");
+  }
+
   async getSettings() {
     return get("/settings");
+  }
+
+  async getSubnetDaos() {
+    return get("/dao_list");
   }
 
   async getVersion() {
@@ -214,6 +224,14 @@ export default class Backend {
 
   async selectExit(nickname) {
     return post(`/exits/${nickname}/select`);
+  }
+
+  async setFactor(factor) {
+    return post(`/metric_factor/${factor}`);
+  }
+
+  async setPrice(price) {
+    return post(`/local_fee/${price}`);
   }
 
   async verifyExit(nickname, code) {

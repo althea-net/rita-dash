@@ -7,11 +7,8 @@
     <author email="hello@altheamesh.com" href="https://althea.org">
         Althea
     </author>
-
     <icon height="72" src="althea-72.png" width="72" />
-
     <content src="index.html" />
-
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -19,10 +16,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-
-    <engine name="android" spec="^7.1.1" />
     <engine name="ios" spec="^4.5.5" />
-
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
@@ -30,8 +24,8 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-
     <plugin name="cordova-plugin-add-swift-support" spec="^1.7.2" />
     <plugin name="cordova-plugin-qrscanner" spec="https://github.com/asoltys/cordova-plugin-qrscanner" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
+    <engine name="android" spec="~7.1.1" />
 </widget>
