@@ -28,7 +28,7 @@ async function get(url, camel = true) {
 }
 
 async function post(url, json) {
-  await fetch(base + url, {
+  const res = await fetch(base + url, {
     method: "POST",
     body: JSON.stringify(json),
     headers: {
@@ -36,6 +36,8 @@ async function post(url, json) {
       "Content-Type": "application/json"
     }
   });
+
+  if (!res.ok) return new Error(res.status);
 }
 
 export default class Backend {

@@ -16,6 +16,7 @@ import { actions, connect } from "../store";
 import { translate } from "react-i18next";
 import PriceForm from "./PriceForm";
 import QualityForm from "./QualityForm";
+import Error from "./Error";
 
 class Payments extends Component {
   componentDidMount() {
@@ -24,13 +25,16 @@ class Payments extends Component {
   }
 
   render() {
-    const { info, settings } = this.props.state;
+    const { info, factorError, priceError, settings } = this.props.state;
     const { t } = this.props;
 
     if (!(info && settings)) return null;
     return (
       <div id="payments-main">
         <h1 id="payments-title">{t("payments")}</h1>
+
+        <Error error={factorError} />
+        <Error error={priceError} />
 
         <Row style={{ marginBottom: 15 }}>
           <Col md="6">
@@ -95,4 +99,6 @@ function LowFunds({ t }) {
   );
 }
 
-export default connect(["info", "settings"])(translate()(Payments));
+export default connect(["factorError", "priceError", "info", "settings"])(
+  translate()(Payments)
+);

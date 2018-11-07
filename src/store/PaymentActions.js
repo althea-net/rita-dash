@@ -1,21 +1,47 @@
 export default backend => {
   return {
     getFactor: async ({ setState, state }) => {
-      let { metricFactor } = await backend.getFactor();
-      return { factor: metricFactor };
+      let res = await backend.getFactor();
+
+      if (res instanceof Error) {
+        return setState({
+          factorError: state.t("factorError")
+        });
+      }
+
+      return { factor: res.metricFactor };
     },
 
     getPrice: async ({ setState, state }) => {
-      let { localFee } = await backend.getPrice();
-      return { price: localFee };
+      let res = await backend.getPrice();
+
+      if (res instanceof Error) {
+        return setState({
+          priceError: state.t("priceError")
+        });
+      }
+
+      return { price: res.localFee };
     },
 
     setFactor: async ({ setState, state }, factor) => {
-      await backend.setFactor(factor);
+      let res = await backend.setFactor(factor);
+
+      if (res instanceof Error) {
+        return setState({
+          factorError: state.t("factorSetError")
+        });
+      }
     },
 
     setPrice: async ({ setState, state }, price) => {
-      await backend.setPrice(price);
+      let res = await backend.setPrice(price);
+
+      if (res instanceof Error) {
+        return setState({
+          priceError: state.t("priceSetError")
+        });
+      }
     }
   };
 };

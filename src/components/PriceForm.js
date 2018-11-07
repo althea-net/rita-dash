@@ -41,7 +41,9 @@ class PriceForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    actions.setPrice(this.state.price);
+    let price = this.state.price;
+    if (!price) price = this.props.state.price;
+    actions.setPrice(price);
   };
 
   render() {
