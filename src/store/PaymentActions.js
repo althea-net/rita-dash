@@ -1,3 +1,8 @@
+import { BigNumber } from "bignumber.js";
+
+const weiPerEth = BigNumber("1000000000000000000");
+const bytesPerGb = BigNumber("1000000000");
+
 export default backend => {
   return {
     getFactor: async ({ setState, state }) => {
@@ -21,7 +26,12 @@ export default backend => {
         });
       }
 
-      return { price: res.localFee };
+      let price = BigNumber(res.localFee.toString())
+        .times(bytesPerGb)
+        .div(weiPerEth)
+        .toFixed(8);
+
+      return { price };
     },
 
     setFactor: async ({ setState, state }, factor) => {
@@ -35,7 +45,12 @@ export default backend => {
     },
 
     setPrice: async ({ setState, state }, price) => {
-      let res = await backend.setPrice(price);
+      let priceWei = BigNumber(price.toString())
+        .times(weiPerEth)
+        .div(bytesPerGb)
+        .toFixed(0);
+
+      let res = await backend.setPrice(priceWei);
 
       if (res instanceof Error) {
         return setState({

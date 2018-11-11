@@ -78,7 +78,6 @@ function LowFunds({ t }) {
             <InputGroup>
               <Input
                 style={{ width: "5em" }}
-                type="number"
                 value="10"
                 readOnly
               />
