@@ -40,22 +40,22 @@ class Payments extends Component {
           <Col md="6">
             <PriceForm />
           </Col>
-          <Col md="6">
-            <QualityForm />
-          </Col>
-        </Row>
-
-        <Row style={{ opacity: 0.3 }}>
           <Col>
             <Card style={{ height: "100%" }}>
               <CardBody>
                 <div className="text-center">
                   <h2>{t("currentBalance")}</h2>
-                  <h3>&Xi; {Math.max(0, info.balance)}</h3>
+                  <h3>♦ {Math.max(0, info.balance)}</h3>
                   <Button color="primary">{t("add1")}</Button>
                 </div>
               </CardBody>
             </Card>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md="6">
+            <QualityForm />
           </Col>
           <Col>
             <LowFunds t={t} />
@@ -74,23 +74,13 @@ function LowFunds({ t }) {
 
         <Form>
           <FormGroup>
-            <Label for="exampleEmail">{t("threshold")}</Label>
+            <Label>Throttle threshold:</Label>
             <InputGroup>
-              <Input
-                style={{ width: "5em" }}
-                value="10"
-                readOnly
-              />
+              <Input style={{ width: "5em" }} value="10" />
               <InputGroupAddon addonType="append">
                 {t("monthlyUse")}
               </InputGroupAddon>
             </InputGroup>
-          </FormGroup>
-
-          <FormGroup check>
-            <Label check>
-              <Input type="checkbox" /> {t("throttleSpeed")}
-            </Label>
           </FormGroup>
         </Form>
       </CardBody>
