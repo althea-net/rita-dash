@@ -40,7 +40,13 @@ class Payments extends Component {
           <Col md="6">
             <PriceForm />
           </Col>
-          <Col>
+          <Col md="6">
+            <QualityForm />
+          </Col>
+        </Row>
+
+        <Row style={{ opacity: 0.3 }}>
+          <Col md="6">
             <Card style={{ height: "100%" }}>
               <CardBody>
                 <div className="text-center">
@@ -50,12 +56,6 @@ class Payments extends Component {
                 </div>
               </CardBody>
             </Card>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col md="6">
-            <QualityForm />
           </Col>
           <Col>
             <LowFunds t={t} />
