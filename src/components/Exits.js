@@ -107,13 +107,15 @@ class ExitListItem extends Component {
 
   render() {
     let exit = this.props.exit;
-    let { description, message, state } = exit.exitSettings;
+    let { description, generalDetails, message, state } = exit.exitSettings;
     let { nickname, isSelected } = exit;
-    let { verifMode } = exit.exitSettings.generalDetails;
+    let { verifMode } = "On";
     let connected = exit.isReachable && exit.haveRoute;
     let pseudostate = state;
     let { t } = this.props;
     let id = nickname.toLowerCase().replace(" ", "-");
+
+    if (generalDetails) verifMode = generalDetails.verifMode;
 
     if (state === "Registered" && isSelected) {
       connected = exit.isTunnelWorking;
