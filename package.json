@@ -37,7 +37,9 @@
     "react-stateful": "git+https://github.com/jtremback/react-stateful.git",
     "reactstrap": "^5.0.0-beta",
     "styled-components": "^3.4.9",
-    "web3": "^1.0.0-beta.35"
+    "web3": "^1.0.0-beta.35",
+    "cordova-ios": "^4.5.5",
+    "cordova-android": "~7.1.1"
   },
   "scripts": {
     "start": "PORT=3005 react-scripts start",

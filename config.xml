@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="org.althea" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="org.althea" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Althea</name>
     <description>
         The Althea Router Dashboard
@@ -16,7 +16,6 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <engine name="ios" spec="^4.5.5" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
@@ -28,4 +27,5 @@
     <plugin name="cordova-plugin-qrscanner" spec="https://github.com/asoltys/cordova-plugin-qrscanner" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <engine name="android" spec="~7.1.1" />
+    <engine name="ios" spec="^4.5.5" />
 </widget>
