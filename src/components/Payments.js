@@ -17,12 +17,24 @@ import { translate } from "react-i18next";
 import PriceForm from "./PriceForm";
 import QualityForm from "./QualityForm";
 import Error from "./Error";
+import Deposit from "./Deposit";
 
 class Payments extends Component {
+  constructor() {
+    super();
+    this.state = {
+      depositing: false
+    };
+  }
+
   componentDidMount() {
     actions.getInfo();
     actions.getSettings();
   }
+
+  startDepositing = () => {
+    actions.startDepositing();
+  };
 
   render() {
     const { info, factorError, priceError, settings } = this.props.state;
@@ -35,6 +47,9 @@ class Payments extends Component {
 
         <Error error={factorError} />
         <Error error={priceError} />
+
+        <Deposit depositing={this.state.depositing} />
+        <span>{this.state.depositing.toString()}</span>
 
         <Row style={{ marginBottom: 15 }}>
           <Col md="6">
@@ -52,7 +67,9 @@ class Payments extends Component {
                 <div className="text-center">
                   <h2>{t("currentBalance")}</h2>
                   <h3>♦ {Math.max(0, info.balance)}</h3>
-                  <Button color="primary">{t("add1")}</Button>
+                  <Button color="primary" onClick={this.startDepositing}>
+                    {t("add1")}
+                  </Button>
                 </div>
               </CardBody>
             </Card>
@@ -76,7 +93,7 @@ function LowFunds({ t }) {
           <FormGroup>
             <Label>Throttle threshold:</Label>
             <InputGroup>
-              <Input style={{ width: "5em" }} value="10" />
+              <Input style={{ width: "5em" }} value={10} readOnly />
               <InputGroupAddon addonType="append">
                 {t("monthlyUse")}
               </InputGroupAddon>

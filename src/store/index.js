@@ -23,6 +23,7 @@ const store = {
   initialState: {
     daos: [],
     daosError: null,
+    depositing: false,
     error: null,
     exits: null,
     exitsError: null,
@@ -117,6 +118,10 @@ const store = {
       }
 
       return { waiting: 0, loadingVersion: false, version: true };
+    },
+
+    startDepositing: async ({ setState, state }) => {
+      return { depositing: true };
     },
 
     startWaiting: async ({ setState, state }) => {
