@@ -1,15 +1,41 @@
 import React, { Component } from "react";
 import { connect } from "../store";
 import QR from "qrcode.react";
-import { Card, CardBody, CardTitle, Col, Progress, Row } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Col,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Label,
+  Progress,
+  Row
+} from "reactstrap";
 import Error from "./Error";
 import { translate } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class FrontPage extends Component {
+  constructor(props) {
+    super();
+
+    this.state = {
+      qrvalue: ""
+    };
+  }
+
+  setQr(qrvalue) {
+    this.setState({ qrvalue });
+  }
+
   render() {
     let { error, loading, info, settings } = this.props.state;
     let { meshIp, wgPublicKey } = settings.network;
     let { address, version } = info;
+    let { qrvalue } = this.state;
     let { t } = this.props;
 
     return (
@@ -25,37 +51,66 @@ class FrontPage extends Component {
             <p id="version">{t("version", { version })}</p>
             <Card>
               <CardBody>
-                <Row>
-                  <Col md="4">
+                <CardTitle>{t("nodeInfo")}</CardTitle>
+                {qrvalue && (
+                  <div className="text-center">
                     <QR
                       style={{
-                        height: "100%",
-                        width: "100%",
-                        maxWidth: 300,
-                        paddingBottom: 15
+                        height: "auto",
+                        width: "50%"
                       }}
-                      bgcolor="#ff0"
-                      value={JSON.stringify({
-                        meshIp,
-                        address,
-                        wgPublicKey
-                      })}
+                      value={qrvalue}
                     />
-                  </Col>
-                  <Col md="8" style={{ wordWrap: "break-word" }}>
-                    <CardTitle>{t("nodeInfo")}</CardTitle>
-                    <p>
-                      <b>{t("meshIp")}</b> {meshIp}
-                    </p>
-                    <p>
-                      <b>{t("ethereumAddress")}</b> {address}
-                    </p>
-                    <p>
-                      <b>{t("wireguardPublicKey")}</b> {wgPublicKey}
-                    </p>
-                    <p>{t("presentQR")}</p>
-                  </Col>
-                </Row>
+                  </div>
+                )}
+                <Label>
+                  <b>{t("meshIp")}</b>
+                </Label>
+                <InputGroup>
+                  <Input readOnly value={meshIp} />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.setQr(meshIp);
+                      }}
+                    >
+                      <FontAwesomeIcon icon="qrcode" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+                <Label>
+                  <b>{t("ethereumAddress")}</b>
+                </Label>
+                <InputGroup>
+                  <Input readOnly value={address} />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.setQr(address);
+                      }}
+                    >
+                      <FontAwesomeIcon icon="qrcode" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+                <Label>
+                  <b>{t("wireguardPublicKey")}</b>
+                </Label>
+                <InputGroup>
+                  <Input readOnly value={wgPublicKey} />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.setQr(wgPublicKey);
+                      }}
+                    >
+                      <FontAwesomeIcon icon="qrcode" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
               </CardBody>
             </Card>
           </div>

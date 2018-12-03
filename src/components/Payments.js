@@ -45,7 +45,7 @@ class Payments extends Component {
           </Col>
         </Row>
 
-        <Row style={{ opacity: 0.3 }}>
+        <Row>
           <Col md="6">
             <Card style={{ height: "100%" }}>
               <CardBody>
