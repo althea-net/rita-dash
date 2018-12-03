@@ -9,8 +9,7 @@ class FrontPage extends Component {
   render() {
     let { error, loading, info, settings } = this.props.state;
     let { meshIp, wgPublicKey } = settings.network;
-    let { ethAddress } = settings.payment;
-    let { version } = info;
+    let { address, version } = info;
     let { t } = this.props;
 
     return (
@@ -38,7 +37,7 @@ class FrontPage extends Component {
                       bgcolor="#ff0"
                       value={JSON.stringify({
                         meshIp,
-                        ethAddress,
+                        address,
                         wgPublicKey
                       })}
                     />
@@ -49,7 +48,7 @@ class FrontPage extends Component {
                       <b>{t("meshIp")}</b> {meshIp}
                     </p>
                     <p>
-                      <b>{t("ethereumAddress")}</b> {ethAddress}
+                      <b>{t("ethereumAddress")}</b> {address}
                     </p>
                     <p>
                       <b>{t("wireguardPublicKey")}</b> {wgPublicKey}
