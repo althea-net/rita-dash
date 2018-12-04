@@ -17,7 +17,9 @@ import { translate } from "react-i18next";
 import PriceForm from "./PriceForm";
 import QualityForm from "./QualityForm";
 import Error from "./Error";
+import Success from "./Success";
 import Deposit from "./Deposit";
+import Withdraw from "./Withdraw";
 import { BigNumber } from "bignumber.js";
 
 const weiPerEth = BigNumber("1000000000000000000");
@@ -31,16 +33,22 @@ class Payments extends Component {
   }
 
   componentDidMount() {
-    actions.getInfo();
     actions.getSettings();
+    this.timer = setInterval(actions.getInfo, 10000);
   }
 
-  startDepositing = () => {
-    actions.startDepositing();
-  };
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
   render() {
-    const { info, factorError, priceError, settings } = this.props.state;
+    const {
+      info,
+      factorError,
+      priceError,
+      settings,
+      withdrawalSuccess
+    } = this.props.state;
     const { t } = this.props;
 
     let balance = BigNumber(info.balance.toString())
@@ -54,8 +62,10 @@ class Payments extends Component {
 
         <Error error={factorError} />
         <Error error={priceError} />
+        <Success message={withdrawalSuccess} />
 
         <Deposit depositing={this.state.depositing} />
+        <Withdraw withdrawing={this.state.withdrawing} />
 
         <Row style={{ marginBottom: 15 }}>
           <Col md="6">
@@ -73,8 +83,15 @@ class Payments extends Component {
                 <div className="text-center">
                   <h2>{t("currentBalance")}</h2>
                   <h3>♦ {balance}</h3>
-                  <Button color="primary" onClick={this.startDepositing}>
+                  <Button color="primary" onClick={actions.startDepositing}>
                     {t("add1")}
+                  </Button>
+                  <Button
+                    className="ml-2"
+                    color="primary"
+                    onClick={actions.startWithdrawing}
+                  >
+                    {t("withdraw")}
                   </Button>
                 </div>
               </CardBody>
@@ -111,6 +128,10 @@ function LowFunds({ t }) {
   );
 }
 
-export default connect(["factorError", "priceError", "info", "settings"])(
-  translate()(Payments)
-);
+export default connect([
+  "factorError",
+  "priceError",
+  "withdrawalSuccess",
+  "info",
+  "settings"
+])(translate()(Payments));

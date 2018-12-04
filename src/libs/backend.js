@@ -38,6 +38,7 @@ async function post(url, json) {
   });
 
   if (!res.ok) return new Error(res.status);
+  return res.json();
 }
 
 export default class Backend {
@@ -232,6 +233,10 @@ export default class Backend {
 
   async setPrice(price) {
     return post(`/local_fee/${price}`);
+  }
+
+  async withdraw(address, amount) {
+    return post(`/withdraw/${address}/${amount}`);
   }
 
   async verifyExit(nickname, code) {

@@ -38,7 +38,7 @@ const Deposit = ({ state, t }) => {
                 }}
                 value={state.info.address}
               />
-              {state.info.address}
+              <h3 className="p-4">{state.info.address}</h3>
             </CardBody>
             <CardFooter className="text-right">
               <Button onClick={actions.stopDepositing}>Close</Button>

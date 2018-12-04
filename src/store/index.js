@@ -52,7 +52,10 @@ const store = {
     versionError: null,
     waiting: 0,
     wifiError: null,
-    wifiSettings: null
+    wifiSettings: null,
+    withdrawing: false,
+    withdrawalError: null,
+    withdrawalSuccess: false
   },
   actions: {
     ...DaoActions(backend),
@@ -118,14 +121,6 @@ const store = {
       }
 
       return { waiting: 0, loadingVersion: false, version: true };
-    },
-
-    startDepositing: async ({ setState, state }) => {
-      return { depositing: true };
-    },
-
-    stopDepositing: async ({ setState, state }) => {
-      return { depositing: false };
     },
 
     startWaiting: async ({ setState, state }) => {

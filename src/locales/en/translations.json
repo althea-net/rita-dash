@@ -1,7 +1,9 @@
 {
   "add1": "Add funds",
+  "address": "Address",
   "addSubnetDao": "Add subnet DAO",
   "advancedSettings": "Advanced Settings",
+  "amount": "Amount",
   "availableExits": "Available Exits",
   "cancel": "Cancel",
   "close": "Close",
@@ -21,6 +23,7 @@
   "email": "Email",
   "emailRequired": "A valid email is required",
   "enableMesh": "Enable Mesh Over Wifi",
+  "enterAmount": "Please enter an amount in Ether",
   "enterCode": "Please enter a valid 6-digit code",
   "enterEmail": "Please enter your email address", 
   "enterEthAddress": "Please enter a valid Ethereum address",
@@ -101,5 +104,6 @@
   "wifi": "Wifi",
   "wifiError": "Wifi settings could not be parsed. The router may not support Wifi.",
   "wifiSettings": "WiFi Settings",
-  "wireguardPublicKey": "WireGuard Public Key"
+  "wireguardPublicKey": "WireGuard Public Key",
+  "withdraw": "Withdraw"
 }

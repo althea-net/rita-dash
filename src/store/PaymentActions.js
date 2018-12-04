@@ -57,6 +57,39 @@ export default backend => {
           priceError: state.t("priceSetError")
         });
       }
+    },
+
+    startDepositing: async ({ setState, state }) => {
+      return { depositing: true };
+    },
+
+    stopDepositing: async ({ setState, state }) => {
+      return { depositing: false };
+    },
+
+    startWithdrawing: async ({ setState, state }) => {
+      return { withdrawing: true };
+    },
+
+    stopWithdrawing: async ({ setState, state }) => {
+      return { withdrawing: false };
+    },
+
+    withdraw: async ({ setState, state }, address, amount) => {
+      let res = await backend.withdraw(address, amount);
+
+      if (res instanceof Error) {
+        return setState({
+          withdrawalError: state.t("withdrawalError")
+        });
+      }
+
+      let txid = res.replace("txid:", "");
+
+      return {
+        withdrawalSuccess: `Withdrawal completed with txid: ${txid}`,
+        withdrawing: false
+      };
     }
   };
 };
