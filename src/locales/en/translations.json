@@ -17,6 +17,7 @@
   "debugState": "state: {{state}}",
   "debugTunnel": "has tunnel: {{tunnel}}",
   "debuggingMessage": "{{show}} advanced debugging message",
+  "depositFunds": "Deposit Funds",
   "email": "Email",
   "emailRequired": "A valid email is required",
   "enableMesh": "Enable Mesh Over Wifi",

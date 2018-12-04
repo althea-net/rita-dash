@@ -124,6 +124,10 @@ const store = {
       return { depositing: true };
     },
 
+    stopDepositing: async ({ setState, state }) => {
+      return { depositing: false };
+    },
+
     startWaiting: async ({ setState, state }) => {
       return { waiting: 120 };
     },

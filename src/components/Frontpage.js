@@ -5,14 +5,12 @@ import {
   Card,
   CardBody,
   CardTitle,
-  Col,
   Input,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
   Label,
-  Progress,
-  Row
+  Progress
 } from "reactstrap";
 import Error from "./Error";
 import { translate } from "react-i18next";

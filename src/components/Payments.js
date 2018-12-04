@@ -18,6 +18,9 @@ import PriceForm from "./PriceForm";
 import QualityForm from "./QualityForm";
 import Error from "./Error";
 import Deposit from "./Deposit";
+import { BigNumber } from "bignumber.js";
+
+const weiPerEth = BigNumber("1000000000000000000");
 
 class Payments extends Component {
   constructor() {
@@ -40,6 +43,10 @@ class Payments extends Component {
     const { info, factorError, priceError, settings } = this.props.state;
     const { t } = this.props;
 
+    let balance = BigNumber(info.balance.toString())
+      .div(weiPerEth)
+      .toFixed(8);
+
     if (!(info && settings)) return null;
     return (
       <div id="payments-main">
@@ -49,7 +56,6 @@ class Payments extends Component {
         <Error error={priceError} />
 
         <Deposit depositing={this.state.depositing} />
-        <span>{this.state.depositing.toString()}</span>
 
         <Row style={{ marginBottom: 15 }}>
           <Col md="6">
@@ -66,7 +72,7 @@ class Payments extends Component {
               <CardBody>
                 <div className="text-center">
                   <h2>{t("currentBalance")}</h2>
-                  <h3>♦ {Math.max(0, info.balance)}</h3>
+                  <h3>♦ {balance}</h3>
                   <Button color="primary" onClick={this.startDepositing}>
                     {t("add1")}
                   </Button>
