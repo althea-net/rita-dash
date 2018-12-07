@@ -101,7 +101,7 @@ class Withdraw extends React.Component {
     return (
       <div>
         <Modal isOpen={withdrawing}>
-          <ModalHeader>{t("depositFunds")}</ModalHeader>
+          <ModalHeader>{t("withdraw")}</ModalHeader>
           <ModalBody>
             <Card>
               <CardBody className="text-center">
