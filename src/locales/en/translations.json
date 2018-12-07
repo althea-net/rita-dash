@@ -4,6 +4,7 @@
   "addSubnetDao": "Add subnet DAO",
   "advancedSettings": "Advanced Settings",
   "amount": "Amount",
+  "amountRequired": "Please enter an amount between 0 and {{balance}}",
   "availableExits": "Available Exits",
   "cancel": "Cancel",
   "close": "Close",
@@ -105,5 +106,6 @@
   "wifiError": "Wifi settings could not be parsed. The router may not support Wifi.",
   "wifiSettings": "WiFi Settings",
   "wireguardPublicKey": "WireGuard Public Key",
-  "withdraw": "Withdraw"
+  "withdraw": "Withdraw",
+  "withdrawalError": "An error occurred, your withdrawal could not be completed"
 }

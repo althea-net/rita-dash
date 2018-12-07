@@ -34,7 +34,7 @@ class Withdraw extends React.Component {
     };
     this.validators = {
       address: a => web3.utils.isAddress(a),
-      amount: a => !isNaN(a)
+      amount: a => !isNaN(a) && a > 0 && a < this.props.state.info.balance
     };
   }
 
@@ -78,9 +78,19 @@ class Withdraw extends React.Component {
   isFieldValid = name =>
     this.state.fields[name] ? this.state.valid[name] : false;
 
+  allValid = () => {
+    let valid = true;
+    for (let f in this.state.fields) {
+      valid = valid && this.validators[f](this.state.fields[f]);
+    }
+    return valid;
+  };
+
   onSubmit = async e => {
     e.preventDefault();
     let { address, amount } = this.state.fields;
+
+    if (!this.allValid()) return;
 
     amount = BigNumber(amount.toString())
       .times(weiPerEth)
@@ -158,7 +168,7 @@ class Withdraw extends React.Component {
                       value={this.state.fields.amount || ""}
                     />
                     <FormFeedback invalid="true">
-                      {t("amountRequired")}
+                      {t("amountRequired", { balance })}
                     </FormFeedback>
                   </FormGroup>
                   <FormGroup
