@@ -65,7 +65,7 @@ class FrontPage extends Component {
                   <b>{t("meshIp")}</b>
                 </Label>
                 <InputGroup>
-                  <Input readOnly value={meshIp} />
+                  <Input readOnly value={meshIp || ""} />
                   <InputGroupAddon addonType="append">
                     <InputGroupText
                       style={{ cursor: "pointer" }}
@@ -81,7 +81,7 @@ class FrontPage extends Component {
                   <b>{t("ethereumAddress")}</b>
                 </Label>
                 <InputGroup>
-                  <Input readOnly value={address} />
+                  <Input readOnly value={address || ""} />
                   <InputGroupAddon addonType="append">
                     <InputGroupText
                       style={{ cursor: "pointer" }}
@@ -97,7 +97,7 @@ class FrontPage extends Component {
                   <b>{t("wireguardPublicKey")}</b>
                 </Label>
                 <InputGroup>
-                  <Input readOnly value={wgPublicKey} />
+                  <Input readOnly value={wgPublicKey || ""} />
                   <InputGroupAddon addonType="append">
                     <InputGroupText
                       style={{ cursor: "pointer" }}
