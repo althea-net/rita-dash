@@ -173,9 +173,7 @@ class DaoSelection extends Component {
             <Card>
               <CardBody>
                 <p>{t("presentQR")}</p>
-                {ethAddress && (
-                  <QrCode value={JSON.stringify({ ethAddress })} />
-                )}
+                {ethAddress && <QrCode value={ethAddress} />}
               </CardBody>
             </Card>
             <Card>
