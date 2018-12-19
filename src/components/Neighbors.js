@@ -241,11 +241,6 @@ function NodeInfo({
 
   t
 }) {
-  let s = nickname;
-  if (s.length > 12) {
-    s = `${s.substr(0, 4)}...${s.substr(s.length - 4)}`;
-  }
-
   let priceEthPerGB = BigNumber(priceToExit.toString())
     .times(bytesPerGb)
     .div(weiPerEth)
@@ -269,16 +264,21 @@ function NodeInfo({
       <div>
         <Card
           style={{
-            border: "3px solid black"
+            border: "3px solid black",
+            maxWidth: "50vw"
           }}
         >
           <CardBody
             style={{ paddingLeft: 10, paddingRight: 10, paddingBottom: 15 }}
           >
-            <CardTitle style={{ marginLeft: 10, marginRight: 10 }}>
-              <abbr title={nickname} style={{ textDecoration: "none" }}>
-                {s}
-              </abbr>
+            <CardTitle
+              style={{
+                marginLeft: 10,
+                marginRight: 10,
+                wordWrap: "break-word"
+              }}
+            >
+              {nickname}
             </CardTitle>
             <div
               style={{
