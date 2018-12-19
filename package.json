@@ -37,9 +37,7 @@
     "react-stateful": "git+https://github.com/jtremback/react-stateful.git",
     "reactstrap": "^5.0.0-beta",
     "styled-components": "^3.4.9",
-    "web3": "^1.0.0-beta.35",
-    "cordova-ios": "^4.5.5",
-    "cordova-android": "~7.1.1"
+    "web3": "^1.0.0-beta.35"
   },
   "scripts": {
     "start": "PORT=3005 react-scripts start",
@@ -49,7 +47,7 @@
     "package-ios": "cordova build ios --release --buildFlag=\"-useModernBuildSystem=0\"",
     "package-linux": "electron-packager . Althea --platform=linux --arch=x64 --icon=public/icons/png/1024x1024.png --prune=true",
     "package-mac": "electron-packager . Althea --osx-sign.identity=\"Mac Developer: Adam Soltys (256XBSY5HB)\" --overwrite --platform=darwin --arch=x64 --icon=public/icons/mac/althea.icns --prune=true",
-    "package-windows": "electron-packager . Althea --overwrite --asar=true --platform=win32 --arch=ia32 --icon=public/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=Althea --version-string.FileDescription=Althea --version-string.ProductName=\"Althea\"",
+    "package-windows": "electron-packager . Althea --overwrite --asar --platform=win32 --icon=public/icons/win/althea.ico --prune=true --out=release-builds --version-string.CompanyName=Althea --version-string.FileDescription=Althea --version-string.ProductName=\"Althea\"",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
