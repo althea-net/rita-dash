@@ -3,7 +3,6 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 const path = require("path");
-const isDev = require("electron-is-dev");
 
 let mainWindow;
 
@@ -13,11 +12,7 @@ function createWindow() {
     height: 680,
     icon: path.join(__dirname, "public/icons/png/64x64.png")
   });
-  mainWindow.loadURL(
-    isDev
-      ? "http://localhost:3005"
-      : `file://${path.join(__dirname, "build/index.html")}`
-  );
+  mainWindow.loadURL(`file://${path.join(__dirname, "index.html")}`);
   mainWindow.on("closed", () => (mainWindow = null));
 }
 
