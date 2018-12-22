@@ -45,6 +45,7 @@ class DaoSelection extends Component {
 
   componentDidMount() {
     actions.getSubnetDaos();
+    actions.getInfo();
   }
 
   onFieldChange = e => {
@@ -152,14 +153,14 @@ class DaoSelection extends Component {
   };
 
   render() {
-    let { daos, daosError, settings } = this.props.state;
-    let { ethAddress } = settings.payment;
+    let { daos, daosError, info, settings } = this.props.state;
     let { t } = this.props;
     let { contractAddress, ipAddress } = this.state.fields;
     let { confirming, joining } = this.state;
+    let ethAddress = info.address;
 
     if (!ipAddress) ipAddress = settings.network.meshIp;
-    if (daos && daos.length) {
+    if (daos && daos.length && !contractAddress) {
       contractAddress = daos[0];
     }
 
@@ -173,7 +174,10 @@ class DaoSelection extends Component {
             <Card>
               <CardBody>
                 <p>{t("presentQR")}</p>
-                {ethAddress && <QrCode value={ethAddress} />}
+                <figure className="text-center">
+                  {ethAddress && <QrCode value={ethAddress} size={300} />}
+                  <figcaption>{ethAddress}</figcaption>
+                </figure>
               </CardBody>
             </Card>
             <Card>
@@ -265,6 +269,6 @@ class DaoSelection extends Component {
   }
 }
 
-export default connect(["daos", "daosError", "settings"])(
+export default connect(["daos", "daosError", "info", "settings"])(
   translate()(DaoSelection)
 );

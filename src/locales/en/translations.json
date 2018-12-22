@@ -65,7 +65,7 @@
   "ports": "Ports",
   "preferHigh": "Prefer high quality",
   "preferLow": "Prefer low price",
-  "presentQR": "Present this QR code to your local subnet DAO organizer to have your node added to the DAO.",
+  "presentQR": "Present this QR code to your local subnet DAO organizer to have your node added to the DAO:",
   "price": "Price",
   "priceError": "Unable to get local pricing fee from rita server",
   "priceSetError": "An error occured, the price could not be updated",
