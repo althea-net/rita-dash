@@ -19,7 +19,11 @@ import QrCode from "qrcode.react";
 import { Address6 } from "ip-address";
 
 class ControlledInput extends Component {
-  state = { value: this.props.defaultValue };
+  state = {
+    newValue: this.props.newValue,
+    defaultValue: this.props.defaultValue,
+    value: this.props.defaultValue
+  };
 
   onChange = e => {
     let { value } = e.target;
@@ -31,7 +35,18 @@ class ControlledInput extends Component {
     let { value } = this.state;
     let { name } = this.props;
     let e = { target: { name, value } };
-    this.props.onChange(e);
+    this.onChange(e);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.newValue !== nextProps.newValue) {
+      return {
+        newValue: nextProps.newValue,
+        value: nextProps.newValue
+      };
+    }
+
+    return null;
   }
 
   render() {
@@ -71,7 +86,9 @@ class DaoSelection extends Component {
         daoAddress: true,
         meshIp: true
       },
-      validationWarning: false
+      validationWarning: false,
+      newIpAddress: "",
+      newDaoAddress: ""
     };
     this.validators = {
       daoAddress: a => web3.utils.isAddress(a),
@@ -178,7 +195,9 @@ class DaoSelection extends Component {
           valid: {
             daoAddress: this.validators.daoAddress(daoAddress),
             meshIp: this.validators.meshIp(ipAddress)
-          }
+          },
+          newIpAddress: ipAddress,
+          newDaoAddress: daoAddress
         });
       } catch (e) {
         console.log("failed to parse subnet DAO QR code");
@@ -293,6 +312,7 @@ class DaoSelection extends Component {
                       }
                       invalid={!this.state.valid.daoAddress}
                       key={defaultDaoAddress}
+                      newValue={this.state.newDaoAddress}
                     />
                     <FormFeedback invalid="true">
                       {t("enterEthAddress")}
@@ -309,6 +329,7 @@ class DaoSelection extends Component {
                       </Alert>
                     )}
                     <ControlledInput
+                      newValue={this.state.newIpAddress}
                       name="meshIp"
                       placeholder="Ip Address"
                       defaultValue={defaultMeshIp}
