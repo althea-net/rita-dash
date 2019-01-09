@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -17,33 +18,70 @@ import QrReader from "react-qr-reader";
 import QrCode from "qrcode.react";
 import { Address6 } from "ip-address";
 
+class ControlledInput extends Component {
+  state = { value: this.props.defaultValue };
+
+  onChange = e => {
+    let { value } = e.target;
+    this.setState({ value });
+    this.props.onChange(e);
+  };
+
+  componentDidMount() {
+    let { value } = this.state;
+    let { name } = this.props;
+    let e = { target: { name, value } };
+    this.props.onChange(e);
+  }
+
+  render() {
+    let { value } = this.state;
+    let { name, placeholder, valid, invalid, onBlur } = this.props;
+
+    return (
+      <Input
+        name={name}
+        placeholder={placeholder}
+        onBlur={onBlur}
+        onChange={this.onChange}
+        value={value || ""}
+        valid={valid}
+        invalid={invalid}
+      />
+    );
+  }
+}
+
 class DaoSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
       blurred: {
-        contractAddress: false,
-        ipAddress: false
+        daoAddress: false,
+        meshIp: false
       },
       fields: {
-        contractAddress: "",
-        ipAddress: ""
+        daoAddress: "",
+        meshIp: ""
       },
       joining: false,
       confirming: false,
+      ipNeedsFormatting: false,
       valid: {
-        contractAddress: true,
-        ipAddress: true
-      }
+        daoAddress: true,
+        meshIp: true
+      },
+      validationWarning: false
     };
     this.validators = {
-      contractAddress: a => web3.utils.isAddress(a),
-      ipAddress: ip => new Address6(ip).isValid()
+      daoAddress: a => web3.utils.isAddress(a),
+      meshIp: ip => new Address6(ip).isValid()
     };
     this.web3 = new web3();
   }
 
   componentDidMount() {
+    actions.getMeshIp();
     actions.getSubnetDaos();
     actions.getInfo();
   }
@@ -58,7 +96,13 @@ class DaoSelection extends Component {
       fields: {
         ...this.state.fields,
         [name]: value
-      }
+      },
+      valid: {
+        ...this.state.valid,
+        [name]: true
+      },
+      ipNeedsFormatting: false,
+      validationWarning: false
     });
   };
 
@@ -75,14 +119,9 @@ class DaoSelection extends Component {
       }
     });
 
-    let ipAddress = new Address6(this.state.fields.ipAddress);
-    if (ipAddress.isValid()) {
-      ipAddress = ipAddress.canonicalForm();
-      this.setState({
-        fields: {
-          ipAddress
-        }
-      });
+    let meshIp = new Address6(this.state.fields.meshIp);
+    if (meshIp.isValid() && meshIp.subnet !== "/128") {
+      this.setState({ ipNeedsFormatting: true });
     }
   };
 
@@ -115,8 +154,8 @@ class DaoSelection extends Component {
 
     this.setState({
       fields: {
-        contractAddress: "",
-        ipAddress: ""
+        daoAddress: "",
+        meshIp: ""
       }
     });
   };
@@ -124,22 +163,21 @@ class DaoSelection extends Component {
   handleScan = result => {
     if (result) {
       try {
-        let { contractAddress, ipAddress } = JSON.parse(result);
-        ipAddress = ipAddress.replace("::/64", "::1");
+        let { daoAddress, ipAddress } = JSON.parse(result);
 
         this.setState({
           joining: false,
           blurred: {
-            contractAddress: true,
-            ipAddress: true
+            daoAddress: true,
+            meshIp: true
           },
           fields: {
-            contractAddress,
-            ipAddress
+            daoAddress,
+            meshIp: ipAddress
           },
           valid: {
-            contractAddress: this.validators.contractAddress(contractAddress),
-            ipAddress: this.validators.ipAddress(ipAddress)
+            daoAddress: this.validators.daoAddress(daoAddress),
+            meshIp: this.validators.meshIp(ipAddress)
           }
         });
       } catch (e) {
@@ -152,16 +190,39 @@ class DaoSelection extends Component {
     console.error(err);
   };
 
-  render() {
-    let { daos, daosError, info, settings } = this.props.state;
-    let { t } = this.props;
-    let { contractAddress, ipAddress } = this.state.fields;
-    let { confirming, joining } = this.state;
-    let ethAddress = info.address;
+  allValid = () => {
+    let valid = {};
+    for (let f in this.state.fields) {
+      valid[f] = this.validators[f](this.state.fields[f]);
+    }
+    this.setState({ valid });
+    console.log(valid);
+    return Object.values(valid).reduce((a, b) => a && b, true);
+  };
 
-    if (!ipAddress) ipAddress = settings.network.meshIp;
-    if (daos && daos.length && !contractAddress) {
-      contractAddress = daos[0];
+  submit = () => {
+    this.setState({ validationWarning: false });
+    if (this.allValid()) this.setState({ confirming: true });
+    else this.setState({ validationWarning: true });
+  };
+
+  render() {
+    let { daos, daosError, info } = this.props.state;
+    let { t } = this.props;
+    let { daoAddress, meshIp } = this.state.fields;
+    let { confirming, joining, ipNeedsFormatting } = this.state;
+    let ethAddress = info.address;
+    let defaultMeshIp = this.props.state.meshIp;
+
+    if (meshIp) {
+      meshIp = new Address6(this.state.fields.meshIp).canonicalForm();
+      if (meshIp) meshIp = meshIp.substr(0, meshIp.length - 1) + 1;
+      else meshIp = "";
+    }
+
+    let defaultDaoAddress = "";
+    if (daos.length) {
+      defaultDaoAddress = daos[0];
     }
 
     return (
@@ -208,43 +269,56 @@ class DaoSelection extends Component {
                       }
                     }, 1000);
 
-                    actions.joinSubnetDao(contractAddress, ipAddress);
+                    actions.joinSubnetDao(daoAddress, meshIp);
 
                     this.setState({ confirming: false });
                   }}
                 />
+                {this.state.validationWarning && (
+                  <Alert color="danger">
+                    There were validation errors when submitting the form
+                  </Alert>
+                )}
                 <Form style={{ marginTop: 15 }}>
                   <FormGroup>
-                    <Input
-                      name="contractAddress"
+                    <ControlledInput
+                      name="daoAddress"
                       placeholder="Subnet DAO Contract Address"
-                      onChange={this.onFieldChange}
+                      defaultValue={defaultDaoAddress}
                       onBlur={this.onBlur}
+                      onChange={this.onFieldChange}
                       valid={
-                        this.state.valid.contractAddress &&
-                        this.state.blurred.contractAddress
+                        this.state.valid.daoAddress &&
+                        this.state.blurred.daoAddress
                       }
-                      invalid={
-                        !(this.state.valid.contractAddress || !contractAddress)
-                      }
-                      value={contractAddress || ""}
+                      invalid={!this.state.valid.daoAddress}
+                      key={defaultDaoAddress}
                     />
                     <FormFeedback invalid="true">
                       {t("enterEthAddress")}
                     </FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                    <Input
-                      name="ipAddress"
-                      placeholder="Mesh IP Address"
-                      onChange={this.onFieldChange}
+                    {ipNeedsFormatting && (
+                      <Alert color="info">
+                        <strong>IP Subnet Detected</strong>
+                        <p>
+                          The router will be assigned the first non-zero address
+                          in the range: {meshIp}
+                        </p>
+                      </Alert>
+                    )}
+                    <ControlledInput
+                      name="meshIp"
+                      placeholder="Ip Address"
+                      defaultValue={defaultMeshIp}
                       onBlur={this.onBlur}
+                      onChange={this.onFieldChange}
                       valid={
-                        this.state.valid.ipAddress &&
-                        this.state.blurred.ipAddress
+                        this.state.valid.meshIp && this.state.blurred.meshIp
                       }
-                      invalid={!(this.state.valid.ipAddress || !ipAddress)}
-                      value={ipAddress || ""}
+                      invalid={!this.state.valid.meshIp}
+                      key={defaultMeshIp}
                     />
                     <FormFeedback invalid="true">
                       {t("enterIpAddress")}
@@ -254,9 +328,9 @@ class DaoSelection extends Component {
                     <Button
                       color="primary"
                       className="float-right"
-                      onClick={() => this.setState({ confirming: true })}
+                      onClick={this.submit}
                     >
-                      Join
+                      Submit
                     </Button>
                   </FormGroup>
                 </Form>
@@ -269,6 +343,6 @@ class DaoSelection extends Component {
   }
 }
 
-export default connect(["daos", "daosError", "info", "settings"])(
+export default connect(["daoAddress", "meshIp", "daos", "daosError", "info"])(
   translate()(DaoSelection)
 );

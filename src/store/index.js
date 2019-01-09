@@ -21,6 +21,7 @@ const initialSettings = {
 
 const store = {
   initialState: {
+    daoAddress: null,
     daos: [],
     daosError: null,
     depositing: false,
@@ -37,7 +38,7 @@ const store = {
     loading: null,
     info: { balance: 0, device: null, version: "" },
     interfaces: null,
-    meshIp: "",
+    meshIp: null,
     neighbors: null,
     neighborsError: null,
     page: "",
