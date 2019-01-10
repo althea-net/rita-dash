@@ -32,6 +32,10 @@ class PriceForm extends Component {
     this.setState({ price });
   };
 
+  togglePricing = () => {
+    actions.toggleAutoPricing();
+  };
+
   onSubmit = e => {
     e.preventDefault();
     let price = this.state.price;
@@ -68,7 +72,7 @@ class PriceForm extends Component {
                 type="checkbox"
                 id="autoPricing"
                 label={t("automatedPricing")}
-                onClick={actions.toggleAutoPricing}
+                onClick={this.togglePricing}
                 value={autoPricing}
                 checked={autoPricing}
               />

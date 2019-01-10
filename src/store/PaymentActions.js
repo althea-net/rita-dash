@@ -43,10 +43,25 @@ export default backend => {
 
     toggleAutoPricing: async ({ setState, state }) => {
       let { autoPricing } = state;
-      console.log(state);
       autoPricing = !autoPricing;
       await backend.setAutoPricing(autoPricing);
-      return { autoPricing };
+
+      let res = await backend.getPrice();
+
+      if (res instanceof Error) {
+        return setState({
+          priceError: state.t("priceError")
+        });
+      }
+
+      let price = parseFloat(
+        BigNumber(res.localFee.toString())
+          .times(bytesPerGb)
+          .div(weiPerEth)
+          .toFixed(8)
+      );
+
+      return { autoPricing, price };
     },
 
     setFactor: async ({ setState, state }, factor) => {
