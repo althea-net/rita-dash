@@ -53,6 +53,7 @@ const store = {
     version: true,
     versionError: null,
     waiting: 0,
+    waitingForPrice: false,
     wifiError: null,
     wifiSettings: null,
     withdrawing: false,

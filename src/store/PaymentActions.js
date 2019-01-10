@@ -33,7 +33,7 @@ export default backend => {
           .toFixed(8)
       );
 
-      return { price };
+      return { price, waitingForPrice: false };
     },
 
     getAutoPricing: async ({ setState, state }) => {
@@ -43,25 +43,13 @@ export default backend => {
 
     toggleAutoPricing: async ({ setState, state }) => {
       let { autoPricing } = state;
+      let waitingForPrice = false;
+
       autoPricing = !autoPricing;
       await backend.setAutoPricing(autoPricing);
+      if (autoPricing) waitingForPrice = true;
 
-      let res = await backend.getPrice();
-
-      if (res instanceof Error) {
-        return setState({
-          priceError: state.t("priceError")
-        });
-      }
-
-      let price = parseFloat(
-        BigNumber(res.localFee.toString())
-          .times(bytesPerGb)
-          .div(weiPerEth)
-          .toFixed(8)
-      );
-
-      return { autoPricing, price };
+      return { autoPricing, waitingForPrice };
     },
 
     setFactor: async ({ setState, state }, factor) => {
@@ -87,6 +75,8 @@ export default backend => {
           priceError: state.t("priceSetError")
         });
       }
+
+      return { waitingForPrice: true };
     },
 
     startDepositing: async ({ setState, state }) => {
