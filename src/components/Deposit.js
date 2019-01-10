@@ -28,8 +28,8 @@ const Deposit = ({ state, t }) => {
           <Card>
             <CardBody className="text-center">
               <h2>
-                <span>{t("currentBalance")}: </span>
-                <span>{balance}</span>
+                <span>{t("currentBalance")} </span>
+                <span>{balance} ETH</span>
               </h2>
               <QR
                 style={{

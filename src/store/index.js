@@ -21,6 +21,7 @@ const initialSettings = {
 
 const store = {
   initialState: {
+    autoPricing: false,
     daoAddress: null,
     daos: [],
     daosError: null,

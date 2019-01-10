@@ -173,6 +173,10 @@ export default class Backend {
     return get("/local_fee");
   }
 
+  async getAutoPricing() {
+    return fetch(base + "/auto_price/enabled");
+  }
+
   async getSettings() {
     return get("/settings");
   }
@@ -233,6 +237,10 @@ export default class Backend {
 
   async setPrice(price) {
     return post(`/local_fee/${price}`);
+  }
+
+  async setAutoPricing(enabled) {
+    return post(`/auto_price/enabled/${enabled}`);
   }
 
   async withdraw(address, amount) {

@@ -39,10 +39,6 @@ class ControlledInput extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("prev.value", prevState.value);
-    console.log("next.value", nextProps.value);
-    console.log("prev.newvalue", prevState.newValue);
-    console.log("next.newvalue", nextProps.newValue);
     if (prevState.newValue !== nextProps.newValue) {
       return {
         newValue: nextProps.newValue,

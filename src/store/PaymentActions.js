@@ -26,12 +26,27 @@ export default backend => {
         });
       }
 
-      let price = BigNumber(res.localFee.toString())
-        .times(bytesPerGb)
-        .div(weiPerEth)
-        .toFixed(8);
+      let price = parseFloat(
+        BigNumber(res.localFee.toString())
+          .times(bytesPerGb)
+          .div(weiPerEth)
+          .toFixed(8)
+      );
 
       return { price };
+    },
+
+    getAutoPricing: async ({ setState, state }) => {
+      let res = await backend.getAutoPricing();
+      return { autoPricing: await res.json() };
+    },
+
+    toggleAutoPricing: async ({ setState, state }) => {
+      let { autoPricing } = state;
+      console.log(state);
+      autoPricing = !autoPricing;
+      await backend.setAutoPricing(autoPricing);
+      return { autoPricing };
     },
 
     setFactor: async ({ setState, state }, factor) => {

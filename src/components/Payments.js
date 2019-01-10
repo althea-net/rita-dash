@@ -1,17 +1,5 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  Col,
-  Form,
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  Label,
-  Row
-} from "reactstrap";
+import { Button, Card, CardBody, Col, Row } from "reactstrap";
 import { actions, connect } from "../store";
 import { translate } from "react-i18next";
 import PriceForm from "./PriceForm";
@@ -69,20 +57,11 @@ class Payments extends Component {
 
         <Row style={{ marginBottom: 15 }}>
           <Col md="6">
-            <PriceForm />
-          </Col>
-          <Col md="6">
-            <QualityForm />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col md="6">
             <Card style={{ height: "100%" }}>
               <CardBody>
                 <div className="text-center">
                   <h2>{t("currentBalance")}</h2>
-                  <h3>♦ {balance}</h3>
+                  <h3>{balance} ETH</h3>
                   <Button color="primary" onClick={actions.startDepositing}>
                     {t("add1")}
                   </Button>
@@ -97,35 +76,19 @@ class Payments extends Component {
               </CardBody>
             </Card>
           </Col>
-          <Col>
-            <LowFunds t={t} />
+          <Col md="6">
+            <PriceForm />
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md="6">
+            <QualityForm />
           </Col>
         </Row>
       </div>
     );
   }
-}
-
-function LowFunds({ t }) {
-  return (
-    <Card>
-      <CardBody>
-        <h3>{t("lowFunds")}</h3>
-
-        <Form>
-          <FormGroup>
-            <Label>Throttle threshold:</Label>
-            <InputGroup>
-              <Input style={{ width: "5em" }} value={10} readOnly />
-              <InputGroupAddon addonType="append">
-                {t("monthlyUse")}
-              </InputGroupAddon>
-            </InputGroup>
-          </FormGroup>
-        </Form>
-      </CardBody>
-    </Card>
-  );
 }
 
 export default connect([

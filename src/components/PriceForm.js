@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardBody,
+  CustomInput,
   Form,
   FormGroup,
   Input,
@@ -17,12 +18,13 @@ class PriceForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      price: 0
+      price: null
     };
   }
 
   componentDidMount = () => {
     actions.getPrice();
+    actions.getAutoPricing();
   };
 
   setPrice = e => {
@@ -40,7 +42,8 @@ class PriceForm extends Component {
   render() {
     let { t } = this.props;
     let { price } = this.state;
-    if (!price) price = this.props.state.price;
+    if (price === null) price = this.props.state.price;
+    let { autoPricing } = this.props.state;
 
     return (
       <Card style={{ height: "100%" }}>
@@ -55,11 +58,20 @@ class PriceForm extends Component {
                   placeholder={t("enterPrice")}
                   onChange={this.setPrice}
                   value={price || ""}
+                  disabled={autoPricing}
                 />
                 <InputGroupAddon addonType="append">
-                  <InputGroupText>♦/GB</InputGroupText>
+                  <InputGroupText>ETH/GB</InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
+              <CustomInput
+                type="checkbox"
+                id="autoPricing"
+                label={t("automatedPricing")}
+                onClick={actions.toggleAutoPricing}
+                value={autoPricing}
+                checked={autoPricing}
+              />
             </FormGroup>
             <FormGroup>
               <Button color="primary">{t("save")}</Button>
@@ -71,4 +83,4 @@ class PriceForm extends Component {
   }
 }
 
-export default connect(["price"])(translate()(PriceForm));
+export default connect(["autoPricing", "price"])(translate()(PriceForm));

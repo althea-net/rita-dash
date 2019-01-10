@@ -117,8 +117,8 @@ class Withdraw extends React.Component {
               <CardBody className="text-center">
                 <Error error={withdrawalError} />
                 <h2>
-                  <span>{t("currentBalance")}: </span>
-                  <span>{balance}</span>
+                  <span>{t("currentBalance")} </span>
+                  <span>{balance} ETH</span>
                 </h2>
                 <Form onSubmit={this.onSubmit} className="text-left">
                   <FormGroup id="form">

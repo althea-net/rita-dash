@@ -306,19 +306,19 @@ function NodeInfo({
               {priceToExit < maxu32 && (
                 <LabelUnit
                   label={t("price")}
-                  content={`${priceEthPerGB} ♦/GB`}
+                  content={`${priceEthPerGB} ETH/GB`}
                 />
               )}
               {(totalPaymentReceived > 0 && (
                 <LabelUnit
                   label={t("paymentReceived")}
-                  content={`♦ ${totalPaymentReceived}`}
+                  content={`${totalPaymentReceived} ETH`}
                 />
               )) ||
                 (totalPaymentSent > 0 && (
                   <LabelUnit
                     label={t("paymentSent")}
-                    content={`♦ ${totalPaymentSent}`}
+                    content={`${totalPaymentSent} ETH`}
                   />
                 ))}
             </div>
