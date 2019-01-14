@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "../store";
 import QR from "qrcode.react";
 import {
+  Alert,
   Card,
   CardBody,
   CardTitle,
@@ -32,7 +33,7 @@ class FrontPage extends Component {
   render() {
     let { error, loading, info, settings } = this.props.state;
     let { meshIp, wgPublicKey } = settings.network;
-    let { address, version } = info;
+    let { address, ritaVersion, version } = info;
     let { qrvalue } = this.state;
     let { t } = this.props;
 
@@ -46,10 +47,13 @@ class FrontPage extends Component {
           <Progress animated color="info" value="100" />
         ) : (
           <div>
-            <p id="version">{t("version", { version })}</p>
+            <Alert color="info" id="version">
+              {t("version")} <b>{version}</b>
+              <br />
+              {t("ritaVersion")} <b>{ritaVersion}</b>
+            </Alert>
             <Card>
               <CardBody>
-                <CardTitle>{t("nodeInfo")}</CardTitle>
                 {qrvalue && (
                   <div className="text-center">
                     <QR

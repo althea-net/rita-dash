@@ -90,6 +90,8 @@ const store = {
         };
       }
 
+      console.log(info);
+
       return { loading: false, info };
     },
 
