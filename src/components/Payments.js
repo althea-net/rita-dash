@@ -8,6 +8,7 @@ import Error from "./Error";
 import Success from "./Success";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
+import AdvancedSettings from "./AdvancedSettings";
 import { BigNumber } from "bignumber.js";
 
 const weiPerEth = BigNumber("1000000000000000000");
@@ -84,6 +85,9 @@ class Payments extends Component {
         <Row>
           <Col md="6">
             <QualityForm />
+          </Col>
+          <Col md="6">
+            <AdvancedSettings />
           </Col>
         </Row>
       </div>

@@ -16,13 +16,10 @@ import { actions, connect } from "../store";
 import { translate } from "react-i18next";
 
 class PriceForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      price: null,
-      propsPrice: 0
-    };
-  }
+  state = {
+    price: null,
+    propsPrice: 0
+  };
 
   componentDidMount() {
     actions.getPrice();
@@ -51,7 +48,6 @@ class PriceForm extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps, prevState);
     if (prevState && prevState.propsPrice !== nextProps.state.price) {
       return {
         propsPrice: nextProps.state.price,
@@ -66,16 +62,14 @@ class PriceForm extends Component {
     let { t } = this.props;
     let { price } = this.state;
     if (price === null) price = this.props.state.price;
-    let { autoPricing, waitingForPrice } = this.props.state;
+    let { autoPricing, loadingPrice } = this.props.state;
 
     return (
       <Card style={{ height: "100%" }}>
         <CardBody>
           <Form onSubmit={this.onSubmit}>
             <FormGroup id="form">
-              {waitingForPrice && (
-                <Progress animated color="info" value="100" />
-              )}
+              {loadingPrice && <Progress animated color="info" value="100" />}
               <h3>{t("price")}</h3>
               <InputGroup>
                 <Input
@@ -109,6 +103,6 @@ class PriceForm extends Component {
   }
 }
 
-export default connect(["autoPricing", "price", "waitingForPrice"])(
+export default connect(["autoPricing", "price", "loadingPrice"])(
   translate()(PriceForm)
 );

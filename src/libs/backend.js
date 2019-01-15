@@ -177,6 +177,10 @@ export default class Backend {
     return fetch(base + "/auto_price/enabled");
   }
 
+  async getBlockchain() {
+    return get("/blockchain/get/");
+  }
+
   async getSettings() {
     return get("/settings");
   }
@@ -233,6 +237,10 @@ export default class Backend {
 
   async setFactor(factor) {
     return post(`/metric_factor/${factor}`);
+  }
+
+  async setBlockchain(blockchain) {
+    return post(`/blockchain/set/${blockchain}`);
   }
 
   async setPrice(price) {

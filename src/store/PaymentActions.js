@@ -33,7 +33,13 @@ export default backend => {
           .toFixed(8)
       );
 
-      return { price, waitingForPrice: false };
+      return { price, loadingPrice: false };
+    },
+
+    getBlockchain: async ({ setState, state }) => {
+      setState({ loadingBlockchain: true });
+      let res = await backend.getBlockchain();
+      return { blockchain: res, loadingBlockchain: false };
     },
 
     getAutoPricing: async ({ setState, state }) => {
@@ -43,13 +49,13 @@ export default backend => {
 
     toggleAutoPricing: async ({ setState, state }) => {
       let { autoPricing } = state;
-      let waitingForPrice = false;
+      let loadingPrice = false;
 
       autoPricing = !autoPricing;
       await backend.setAutoPricing(autoPricing);
-      if (autoPricing) waitingForPrice = true;
+      if (autoPricing) loadingPrice = true;
 
-      return { autoPricing, waitingForPrice };
+      return { autoPricing, loadingPrice };
     },
 
     setFactor: async ({ setState, state }, factor) => {
@@ -76,7 +82,20 @@ export default backend => {
         });
       }
 
-      return { waitingForPrice: true };
+      return { loadingPrice: true };
+    },
+
+    setBlockchain: async ({ setState, state }, blockchain) => {
+      setState({ loadingBlockchain: true });
+      let res = await backend.setBlockchain(blockchain);
+
+      if (res instanceof Error) {
+        return setState({
+          blockchainError: state.t("blockchainError")
+        });
+      }
+
+      return { loadingBlockchain: false, blockchainSuccess: true };
     },
 
     startDepositing: async ({ setState, state }) => {

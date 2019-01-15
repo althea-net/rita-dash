@@ -22,6 +22,7 @@ const initialSettings = {
 const store = {
   initialState: {
     autoPricing: false,
+    blockchainSuccess: false,
     daoAddress: null,
     daos: [],
     daosError: null,
@@ -32,8 +33,10 @@ const store = {
     factor: 0,
     factorError: null,
     initializing: true,
+    loadingBlockchain: false,
     loadingInterfaces: null,
     loadingIp: null,
+    loadingPrice: false,
     loadingSettings: false,
     loadingVersion: false,
     loading: null,
@@ -53,7 +56,6 @@ const store = {
     version: true,
     versionError: null,
     waiting: 0,
-    waitingForPrice: false,
     wifiError: null,
     wifiSettings: null,
     withdrawing: false,
@@ -89,8 +91,6 @@ const store = {
           loading: false
         };
       }
-
-      console.log(info);
 
       return { loading: false, info };
     },
