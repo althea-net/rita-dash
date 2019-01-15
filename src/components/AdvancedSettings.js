@@ -80,8 +80,8 @@ class AdvancedSettings extends Component {
                     <option value="Rinkeby" selected={blockchain === "Rinkeby"}>
                       Rinkeby
                     </option>
-                    <option value="XDai" selected={blockchain === "XDai"}>
-                      XDai
+                    <option value="Xdai" selected={blockchain === "Xdai"}>
+                      Xdai
                     </option>
                   </Input>
                 )}
