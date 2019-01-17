@@ -8,7 +8,7 @@
     "start": "PORT=3005 react-scripts start",
     "start-prod": "cross-env NODE_ENV=production electron electron.js",
     "build": "react-scripts build && rm build/static/**/*.map && cp electron.js build",
-    "package-android": "cordova build android",
+    "package-android": "cordova build android --release",
     "package-ios": "cordova build ios --release --buildFlag=\"-useModernBuildSystem=0\"",
     "package-linux": "electron-packager build althea --platform=linux --arch=x64 --icon=public/icons/png/1024x1024.png --prune=true",
     "package-mac": "electron-packager build althea --osx-sign.identity=\"Mac Developer: Adam Soltys (256XBSY5HB)\" --overwrite --platform=darwin --arch=x64 --icon=public/icons/mac/althea.icns --prune=true",
@@ -79,5 +79,9 @@
       "android",
       "ios"
     ]
+  },
+  "dependencies": {
+    "cordova-android": "~7.1.1",
+    "cordova-ios": "^4.5.5"
   }
 }
