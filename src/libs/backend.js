@@ -27,10 +27,10 @@ async function get(url, camel = true) {
   }
 }
 
-async function post(url, json) {
+async function post(url, data, camel = true) {
   const res = await fetch(base + url, {
     method: "POST",
-    body: JSON.stringify(json),
+    body: JSON.stringify(data),
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
@@ -38,7 +38,16 @@ async function post(url, json) {
   });
 
   if (!res.ok) return new Error(res.status);
-  return res.json();
+  try {
+    let json = await res.json();
+    if (json && json.error) {
+      throw new Error(json.error);
+    }
+    if (camel) json = cckd(json);
+    return json;
+  } catch (e) {
+    return e;
+  }
 }
 
 export default class Backend {

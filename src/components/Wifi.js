@@ -14,7 +14,6 @@ const WifiContainer = styled.div`
 
 class Wifi extends Component {
   componentDidMount = () => {
-    console.log("huh why no mount");
     actions.getWifiSettings();
     this.timer = setInterval(actions.getWifiSettings, 10000);
   };
