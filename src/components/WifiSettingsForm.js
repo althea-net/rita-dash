@@ -61,7 +61,7 @@ class WifiSettingsForm extends Component {
 
   render() {
     let radio = this.props.wifiSettings.device.radioType;
-    let { loading, success } = this.props.state;
+    let { loadingWifi, success } = this.props.state;
     let { t } = this.props;
 
     return (
@@ -71,7 +71,7 @@ class WifiSettingsForm extends Component {
             {success === radio && (
               <Alert color="success">{t("settingsSaved")}</Alert>
             )}
-            {loading === radio && (
+            {loadingWifi === radio && (
               <Progress animated color="info" value="100" />
             )}
             <Form onSubmit={this.onSubmit}>
@@ -146,4 +146,6 @@ class WifiSettingsForm extends Component {
   }
 }
 
-export default connect(["loading", "success"])(translate()(WifiSettingsForm));
+export default connect(["loadingWifi", "success"])(
+  translate()(WifiSettingsForm)
+);

@@ -14,6 +14,7 @@ const WifiContainer = styled.div`
 
 class Wifi extends Component {
   componentDidMount = () => {
+    console.log("huh why no mount");
     actions.getWifiSettings();
     this.timer = setInterval(actions.getWifiSettings, 10000);
   };
@@ -24,10 +25,15 @@ class Wifi extends Component {
 
   render() {
     let { t } = this.props;
-    const { initializing, wifiError, loading, wifiSettings } = this.props.state;
+    const {
+      initializing,
+      wifiError,
+      loadingWifi,
+      wifiSettings
+    } = this.props.state;
 
     if (!wifiSettings)
-      if (loading && !wifiError)
+      if (loadingWifi && !wifiError)
         return initializing ? (
           <Progress animated color="info" value={100} />
         ) : null;
@@ -53,6 +59,6 @@ class Wifi extends Component {
 export default connect([
   "initializing",
   "wifiError",
-  "loading",
+  "loadingWifi",
   "wifiSettings"
 ])(translate()(Wifi));

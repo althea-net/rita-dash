@@ -45,25 +45,25 @@ export default backend => {
     },
 
     getWifiSettings: async ({ setState, state }) => {
-      if (state.loading) return;
+      if (state.loadingWifi) return;
 
-      setState({ initializing: false, loading: true });
+      setState({ initializing: false, loadingWifi: true });
 
       let res = await backend.getWifiSettings();
       if (res instanceof Error) {
-        let wifiError, loading;
+        let wifiError, loadingWifi;
         if (res.message === "502") {
           wifiError = state.t("serverwifiError");
-          loading = null;
+          loadingWifi = null;
         } else {
           wifiError = state.t("wifiwifiError");
-          loading = false;
+          loadingWifi = false;
         }
         return setState({
           initializing: false,
           wifiError,
           wifiSettings: null,
-          loading
+          loadingWifi
         });
       }
 
@@ -71,7 +71,7 @@ export default backend => {
         initializing: false,
         wifiError: null,
         wifiSettings: res,
-        loading: false
+        loadingWifi: false
       };
     },
 
