@@ -14,16 +14,21 @@ export default backend => {
         });
       }
 
+      /*eslint no-sequences: 0*/
+      let interfaces = Object.keys(res)
+        .filter(i => !i.startsWith("wlan"))
+        .reduce((a, b) => ((a[b] = res[b]), a), {});
+
       let port = state.port;
-      if (!port && Object.keys(res).length > 0) {
-        port = Object.keys(res).sort()[0];
+      if (!port && interfaces.length > 0) {
+        port = interfaces.sort()[0];
         setState({ port });
       }
 
       return {
         error: null,
         initializing: false,
-        interfaces: res,
+        interfaces,
         loadingInterfaces: false
       };
     },

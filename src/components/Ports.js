@@ -39,7 +39,11 @@ class Ports extends React.Component {
     this.setState({ mode });
 
     let { interfaces } = this.props.state;
-    let warning = mode !== "Mesh" && Object.values(interfaces).includes(mode);
+    let warning =
+      mode !== "Mesh" &&
+      Object.values(interfaces)
+        .filter(i => !i.startsWith("wlan"))
+        .includes(mode);
     if (warning) return this.setState({ warning });
 
     this.setState({ modal: true });
