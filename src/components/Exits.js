@@ -30,10 +30,6 @@ class Exits extends Component {
     const { initializing, exitsError, exits } = this.props.state;
     let { t } = this.props;
 
-    const sort = (a, b) =>
-      a.nickname.localeCompare(b.nickname, undefined, { sensitivity: "base" });
-    if (exits) exits.sort(sort);
-
     return (
       <div>
         <Error error={exitsError} />

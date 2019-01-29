@@ -14,6 +14,18 @@ const actions = backend => {
         });
       }
 
+      const sort = (a, b) =>
+        a.nickname.localeCompare(b.nickname, undefined, {
+          sensitivity: "base"
+        });
+
+      exits = exits
+        .filter(
+          exit =>
+            exit.exitSettings.generalDetails.exitCurrency === state.blockchain
+        )
+        .sort(sort);
+
       setState({
         exitsError: null,
         exits,
