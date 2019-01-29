@@ -62,7 +62,7 @@ class PriceForm extends Component {
     let { t } = this.props;
     let { price } = this.state;
     if (price === null) price = this.props.state.price;
-    let { autoPricing, loadingPrice } = this.props.state;
+    let { autoPricing, loadingPrice, symbol } = this.props.state;
 
     return (
       <Card style={{ height: "100%" }}>
@@ -81,7 +81,10 @@ class PriceForm extends Component {
                   readOnly={autoPricing}
                 />
                 <InputGroupAddon addonType="append">
-                  <InputGroupText>ETH/GB</InputGroupText>
+                  <InputGroupText>
+                    {symbol}
+                    /GB
+                  </InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
               <CustomInput
@@ -103,6 +106,6 @@ class PriceForm extends Component {
   }
 }
 
-export default connect(["autoPricing", "price", "loadingPrice"])(
+export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
   translate()(PriceForm)
 );

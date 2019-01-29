@@ -22,6 +22,7 @@ const initialSettings = {
 const store = {
   initialState: {
     autoPricing: false,
+    blockchain: null,
     blockchainSuccess: false,
     daoAddress: null,
     daos: [],
@@ -51,6 +52,7 @@ const store = {
     priceError: null,
     scanning: false,
     settings: initialSettings,
+    symbol: null,
     success: false,
     t: () => {},
     version: true,

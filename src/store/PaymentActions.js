@@ -2,6 +2,11 @@ import { BigNumber } from "bignumber.js";
 
 const weiPerEth = BigNumber("1000000000000000000");
 const bytesPerGb = BigNumber("1000000000");
+const symbols = {
+  Ethereum: "ETH",
+  Rinkeby: "tETH",
+  Xdai: "DAI"
+};
 
 export default backend => {
   return {
@@ -36,10 +41,20 @@ export default backend => {
       return { price, loadingPrice: false };
     },
 
+    clearBlockchainSuccess: async () => {
+      return { blockchainSuccess: false };
+    },
+
     getBlockchain: async ({ setState, state }) => {
       setState({ loadingBlockchain: true });
       let res = await backend.getBlockchain();
-      return { blockchain: res, loadingBlockchain: false };
+      let blockchain = res;
+      let symbol = symbols[blockchain];
+      return {
+        blockchain,
+        loadingBlockchain: false,
+        symbol
+      };
     },
 
     getAutoPricing: async ({ setState, state }) => {
@@ -95,7 +110,13 @@ export default backend => {
         });
       }
 
-      return { loadingBlockchain: false, blockchainSuccess: true };
+      let symbol = symbols[blockchain];
+      return {
+        blockchain,
+        loadingBlockchain: false,
+        blockchainSuccess: true,
+        symbol
+      };
     },
 
     startDepositing: async ({ setState, state }) => {

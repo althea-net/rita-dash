@@ -30,6 +30,7 @@ class AdvancedSettings extends Component {
   setBlockchain = e => {
     let blockchain = e.target.value;
     this.setState({ blockchain });
+    actions.clearBlockchainSuccess();
   };
 
   onSubmit = e => {

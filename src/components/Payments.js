@@ -36,6 +36,7 @@ class Payments extends Component {
       factorError,
       priceError,
       settings,
+      symbol,
       withdrawalSuccess
     } = this.props.state;
     const { t } = this.props;
@@ -62,7 +63,9 @@ class Payments extends Component {
               <CardBody>
                 <div className="text-center">
                   <h2>{t("currentBalance")}</h2>
-                  <h3>{balance} ETH</h3>
+                  <h3>
+                    {balance} {symbol}
+                  </h3>
                   <Button color="primary" onClick={actions.startDepositing}>
                     {t("add1")}
                   </Button>
@@ -100,5 +103,6 @@ export default connect([
   "priceError",
   "withdrawalSuccess",
   "info",
-  "settings"
+  "settings",
+  "symbol"
 ])(translate()(Payments));

@@ -238,6 +238,7 @@ function NodeInfo({
   totalPaymentReceived,
   debt,
   incomingPayments,
+  symbol,
 
   t
 }) {
@@ -306,19 +307,19 @@ function NodeInfo({
               {priceToExit < maxu32 && (
                 <LabelUnit
                   label={t("price")}
-                  content={`${priceEthPerGB} ETH/GB`}
+                  content={`${priceEthPerGB} ${symbol}/GB`}
                 />
               )}
               {(totalPaymentReceived > 0 && (
                 <LabelUnit
                   label={t("paymentReceived")}
-                  content={`${totalPaymentReceived} ETH`}
+                  content={`${totalPaymentReceived} ${symbol}`}
                 />
               )) ||
                 (totalPaymentSent > 0 && (
                   <LabelUnit
                     label={t("paymentSent")}
-                    content={`${totalPaymentSent} ETH`}
+                    content={`${totalPaymentSent} ${symbol}`}
                   />
                 ))}
             </div>
@@ -340,6 +341,10 @@ function NodeInfo({
   );
 }
 
-export default connect(["error", "initializing", "loading", "neighbors"])(
-  translate()(Neighbors)
-);
+export default connect([
+  "error",
+  "initializing",
+  "loading",
+  "neighbors",
+  "symbol"
+])(translate()(Neighbors));
