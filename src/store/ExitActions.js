@@ -14,10 +14,11 @@ const actions = backend => {
         });
       }
 
-      const sort = (a, b) =>
+      const sort = (a, b) => {
         a.nickname.localeCompare(b.nickname, undefined, {
           sensitivity: "base"
         });
+      };
 
       exits = exits
         .filter(

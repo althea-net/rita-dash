@@ -40,6 +40,7 @@ class App extends Component {
   componentDidMount() {
     this.onHashChange();
     window.addEventListener("hashchange", this.onHashChange, false);
+    actions.getBlockchain();
     actions.getSettings();
     actions.getInfo();
     this.timer = setInterval(actions.getVersion, 10000);

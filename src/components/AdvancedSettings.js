@@ -72,18 +72,9 @@ class AdvancedSettings extends Component {
                     value={blockchain || ""}
                     type="select"
                   >
-                    <option
-                      value="Ethereum"
-                      selected={blockchain === "Ethereum"}
-                    >
-                      Ethereum
-                    </option>
-                    <option value="Rinkeby" selected={blockchain === "Rinkeby"}>
-                      Rinkeby
-                    </option>
-                    <option value="Xdai" selected={blockchain === "Xdai"}>
-                      Xdai
-                    </option>
+                    <option value="Ethereum">Ethereum</option>
+                    <option value="Rinkeby">Rinkeby</option>
+                    <option value="Xdai">Xdai</option>
                   </Input>
                 )}
               </FormGroup>

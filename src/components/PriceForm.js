@@ -18,7 +18,7 @@ import { translate } from "react-i18next";
 class PriceForm extends Component {
   state = {
     price: null,
-    propsPrice: 0
+    propsPrice: null
   };
 
   componentDidMount() {
@@ -55,7 +55,10 @@ class PriceForm extends Component {
       };
     }
 
-    return null;
+    return {
+      propsPrice: null,
+      price: null
+    };
   }
 
   render() {

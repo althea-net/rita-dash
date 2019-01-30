@@ -58,7 +58,7 @@
     "prettier": "1.14.0",
     "qrcode.react": "^0.8.0",
     "qrious": "^4.0.2",
-    "react": "16.3.1",
+    "react": "^16.7.0",
     "react-dom": "16.3.1",
     "react-i18next": "6.0.6",
     "react-qr-reader": "^2.1.1",
