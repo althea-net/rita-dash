@@ -23,7 +23,7 @@ class Neighbors extends Component {
   }
 
   render() {
-    const { error, initializing, neighbors } = this.props.state;
+    const { error, initializing, neighbors, symbol } = this.props.state;
     const { t } = this.props;
 
     let peers = [];
@@ -41,7 +41,7 @@ class Neighbors extends Component {
           !peers.length && <Alert color="info">{t("noPeers")}</Alert>}
         {error && <Error error={error} />}
         {peers.map(n => (
-          <NodeInfo {...n} key={n.nickname} t={t} />
+          <NodeInfo {...n} symbol={symbol} key={n.nickname} t={t} />
         ))}
       </div>
     );
