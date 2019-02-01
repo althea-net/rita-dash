@@ -21,10 +21,12 @@ const actions = backend => {
       };
 
       exits = exits
-        .filter(
-          exit =>
+        .filter(exit => {
+          return (
+            exit.exitSettings.generalDetails &&
             exit.exitSettings.generalDetails.exitCurrency === state.blockchain
-        )
+          );
+        })
         .sort(sort);
 
       setState({

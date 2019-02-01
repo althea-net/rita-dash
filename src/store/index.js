@@ -24,6 +24,7 @@ const store = {
     autoPricing: false,
     blockchain: null,
     blockchainSuccess: false,
+    channels: null,
     daoAddress: null,
     daos: [],
     daosError: null,

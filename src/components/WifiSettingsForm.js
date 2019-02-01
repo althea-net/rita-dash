@@ -19,18 +19,29 @@ class WifiSettingsForm extends Component {
     this.state = {
       fields: {
         key: "",
-        ssid: ""
+        ssid: "",
+        channel: "",
+        device: {
+          sectionName: ""
+        }
       },
       valid: {}
     };
     this.validators = {
       ssid: value => value.length >= 8,
-      key: value => value.length >= 8
+      key: value => value.length >= 8,
+      channel: value => !isNaN(value)
     };
   }
 
   componentDidMount = () => {
-    this.setState({ fields: this.props.wifiSettings });
+    console.log(this.props.wifiSettings);
+    this.setState({
+      fields: {
+        ...this.props.wifiSettings,
+        channel: this.props.wifiSettings.device.channel
+      }
+    });
   };
 
   onFieldChange = e => {
@@ -60,18 +71,19 @@ class WifiSettingsForm extends Component {
     this.state.fields[name] ? this.state.valid[name] : undefined;
 
   render() {
-    let radio = this.props.wifiSettings.device.radioType;
-    let { loadingWifi, success } = this.props.state;
+    let radioType = this.props.wifiSettings.device.radioType;
+    let radio = this.props.wifiSettings.device.sectionName;
+    let { loadingWifi, success, channels } = this.props.state;
     let { t } = this.props;
 
     return (
       <React.Fragment>
         <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
           <CardBody>
-            {success === radio && (
+            {success === radioType && (
               <Alert color="success">{t("settingsSaved")}</Alert>
             )}
-            {loadingWifi === radio && (
+            {loadingWifi === radioType && (
               <Progress animated color="info" value="100" />
             )}
             <Form onSubmit={this.onSubmit}>
@@ -83,14 +95,14 @@ class WifiSettingsForm extends Component {
                   textAlign: "center"
                 }}
               >
-                {radio}
+                {radioType}
               </Label>
 
               <FormGroup id="form">
                 <Label for="ssid">{t("ssid")}</Label>
                 <Input
                   type="text"
-                  id={radio + "-ssid"}
+                  id={radioType + "-ssid"}
                   name="ssid"
                   valid={this.isFieldValid("ssid")}
                   placeholder="min. 8 characters"
@@ -102,13 +114,27 @@ class WifiSettingsForm extends Component {
                 <Label for="password">{t("password")}</Label>
                 <Input
                   type="text"
-                  id={radio + "-pass"}
+                  id={radioType + "-pass"}
                   name="key"
                   valid={this.isFieldValid("key")}
                   placeholder="min. 8 characters"
                   onChange={this.onFieldChange}
                   value={this.state.fields.key}
                 />
+              </FormGroup>
+              <FormGroup>
+                <Label for="channel">{t("channel")}</Label>
+                <Input
+                  type="select"
+                  id={radio + "-channel"}
+                  name="channel"
+                  valid={this.isFieldValid("channel")}
+                  onChange={this.onFieldChange}
+                  value={this.state.fields.channel}
+                >
+                  {channels[radio] &&
+                    channels[radio].map(c => <option key={c}>{c}</option>)}
+                </Input>
               </FormGroup>
 
               <FormGroup
@@ -120,7 +146,7 @@ class WifiSettingsForm extends Component {
                 }}
               >
                 <Button
-                  id={radio + "-submit"}
+                  id={radioType + "-submit"}
                   color="primary"
                   style={{
                     margin: 10
@@ -146,6 +172,6 @@ class WifiSettingsForm extends Component {
   }
 }
 
-export default connect(["loadingWifi", "success"])(
+export default connect(["loadingWifi", "success", "channels"])(
   translate()(WifiSettingsForm)
 );

@@ -49,10 +49,10 @@ export default backend => {
 
       setState({ initializing: false, loadingWifi: true });
 
-      let res = await backend.getWifiSettings();
-      if (res instanceof Error) {
+      let settings = await backend.getWifiSettings();
+      if (settings instanceof Error) {
         let wifiError, loadingWifi;
-        if (res.message === "502") {
+        if (settings.message === "502") {
           wifiError = state.t("serverwifiError");
           loadingWifi = null;
         } else {
@@ -67,10 +67,20 @@ export default backend => {
         });
       }
 
+      let channels = {};
+      await Promise.all(
+        settings.map(async setting => {
+          let radio = setting.device.sectionName;
+          channels[radio] = await backend.getChannels(radio);
+          return channels[radio];
+        })
+      );
+
       return {
+        channels,
         initializing: false,
         wifiError: null,
-        wifiSettings: res,
+        wifiSettings: settings,
         loadingWifi: false
       };
     },
