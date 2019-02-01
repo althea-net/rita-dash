@@ -44,7 +44,7 @@ class Exits extends Component {
 function ExitList({ exits, t }) {
   let selected;
   function item(exit, i) {
-    return <ExitListItem exit={exit} key={i} t={t} />;
+    return <ExitListItem exit={exit} key={exit.nickname} t={t} />;
   }
 
   let unselected = exits
