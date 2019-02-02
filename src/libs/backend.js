@@ -76,7 +76,6 @@ export default class Backend {
   }
 
   async setWifiSettings(settings) {
-    console.log(settings);
     const radio = settings.device.sectionName;
     let { ssid, key, channel } = settings;
     channel = parseInt(channel, 10);

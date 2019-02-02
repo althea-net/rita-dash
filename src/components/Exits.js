@@ -71,11 +71,9 @@ function ExitList({ exits, t }) {
           <ListGroup>{item(selected, 0)}</ListGroup>
         </div>
       )}
+      <h2>{t("availableExits")}</h2>
       {unselected.length ? (
-        <React.Fragment>
-          <h2>{t("availableExits")}</h2>
-          <ListGroup>{unselected}</ListGroup>
-        </React.Fragment>
+        <ListGroup>{unselected}</ListGroup>
       ) : (
         <Alert color="danger">{t("noExits")}</Alert>
       )}

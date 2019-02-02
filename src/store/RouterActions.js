@@ -47,7 +47,7 @@ export default backend => {
     getWifiSettings: async ({ setState, state }) => {
       if (state.loadingWifi) return;
 
-      setState({ initializing: false, loadingWifi: true });
+      setState({ initializing: false, loadingWifi: true, success: null });
 
       let settings = await backend.getWifiSettings();
       if (settings instanceof Error) {
@@ -86,12 +86,18 @@ export default backend => {
     },
 
     saveWifiSetting: async ({ state, setState }, setting, radio) => {
+      let { wifiSettings } = state;
+
       setState({
         loading: radio
       });
 
       await backend.setWifiSettings(setting);
-      return { loading: false, success: radio };
+      let i = wifiSettings.findIndex(
+        s => s.device.sectionName === setting.device.sectionName
+      );
+      wifiSettings[i] = setting;
+      return { loading: false, success: radio, wifiSettings };
     }
   };
 };

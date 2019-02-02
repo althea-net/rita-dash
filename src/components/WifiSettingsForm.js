@@ -22,7 +22,8 @@ class WifiSettingsForm extends Component {
         ssid: "",
         channel: "",
         device: {
-          sectionName: ""
+          sectionName: "",
+          channel: ""
         }
       },
       valid: {}
@@ -35,7 +36,6 @@ class WifiSettingsForm extends Component {
   }
 
   componentDidMount = () => {
-    console.log(this.props.wifiSettings);
     this.setState({
       fields: {
         ...this.props.wifiSettings,
@@ -46,6 +46,13 @@ class WifiSettingsForm extends Component {
 
   onFieldChange = e => {
     const { name, value } = e.target;
+    if (name === "channel") {
+      this.setState({
+        fields: {
+          device: { channel: value }
+        }
+      });
+    }
 
     this.setState({
       fields: {
