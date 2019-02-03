@@ -34,7 +34,7 @@ class Withdraw extends React.Component {
     };
     this.validators = {
       address: a => web3.utils.isAddress(a),
-      amount: a => !isNaN(a) && a > 0 && a < this.props.state.info.balance
+      amount: a => !isNaN(a) && a > 0 && a <= this.props.state.info.balance
     };
   }
 
@@ -100,7 +100,7 @@ class Withdraw extends React.Component {
   };
 
   render() {
-    let { info, withdrawing, withdrawalError } = this.props.state;
+    let { info, symbol, withdrawing, withdrawalError } = this.props.state;
     let { balance } = info;
     let { t } = this.props;
 
@@ -118,7 +118,9 @@ class Withdraw extends React.Component {
                 <Error error={withdrawalError} />
                 <h2>
                   <span>{t("currentBalance")} </span>
-                  <span>{balance} ETH</span>
+                  <span>
+                    {balance} {symbol}
+                  </span>
                 </h2>
                 <Form onSubmit={this.onSubmit} className="text-left">
                   <FormGroup id="form">
@@ -203,6 +205,6 @@ class Withdraw extends React.Component {
   }
 }
 
-export default connect(["info", "withdrawing", "withdrawalError"])(
+export default connect(["info", "withdrawing", "withdrawalError", "symbol"])(
   translate()(Withdraw)
 );
