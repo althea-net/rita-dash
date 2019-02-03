@@ -43,11 +43,12 @@ class App extends Component {
     actions.getBlockchain();
     actions.getSettings();
     actions.getInfo();
-    this.timer = setInterval(actions.getVersion, 10000);
+    actions.getVersion();
+    this.versionTimer = setInterval(actions.getVersion, 2000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+    clearInterval(this.versionTimer);
   }
 
   onHashChange = () => {

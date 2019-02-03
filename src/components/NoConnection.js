@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Alert,
   Card,
   CardBody,
   Modal,
@@ -17,6 +18,9 @@ const NoConnection = ({ state, t }) => (
       <ModalBody>
         <Card>
           <CardBody>
+            {state.wifiChange && (
+              <Alert color="danger">{t("wifiChange")}</Alert>
+            )}
             {state.waiting > 0
               ? t("waiting", { seconds: state.waiting })
               : t("noRita")}
@@ -28,4 +32,6 @@ const NoConnection = ({ state, t }) => (
   </div>
 );
 
-export default connect(["waiting", "version"])(translate()(NoConnection));
+export default connect(["wifiChange", "waiting", "version"])(
+  translate()(NoConnection)
+);

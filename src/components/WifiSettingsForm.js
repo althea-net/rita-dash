@@ -10,7 +10,7 @@ import {
   Label,
   Progress
 } from "reactstrap";
-import { actions, connect } from "../store";
+import { actions, connect, getState } from "../store";
 import { translate } from "react-i18next";
 
 class WifiSettingsForm extends Component {
@@ -68,6 +68,21 @@ class WifiSettingsForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
+
+    if (
+      this.state.fields.key !== this.props.wifiSettings.key ||
+      this.state.fields.ssid !== this.props.wifiSettings.ssid
+    ) {
+      actions.startWaiting();
+
+      let i = setInterval(async () => {
+        actions.keepWaiting();
+        if (getState().waiting <= 0) {
+          clearInterval(i);
+        }
+      }, 1000);
+    }
+
     actions.saveWifiSetting(
       this.state.fields,
       this.props.wifiSettings.device.radioType

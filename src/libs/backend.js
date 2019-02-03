@@ -12,16 +12,30 @@ const port = 4877;
 const base =
   process.env.REACT_APP_BACKEND_URL || `${protocol}//${hostname}:${port}`;
 
-async function get(url, camel = true) {
-  const res = await fetch(base + url);
-  if (!res.ok) return new Error(res.status);
+const AbortController = window.AbortController;
+
+async function get(url, camel = true, timeout = 10000) {
+  const controller = new AbortController();
+  const signal = controller.signal;
+
   try {
-    let json = await res.json();
-    if (json && json.error) {
-      throw new Error(json.error);
+    let timer = setTimeout(() => controller.abort(), timeout);
+    const res = await fetch(base + url, { signal });
+    clearTimeout(timer);
+
+    if (!res.ok) return new Error(res.status);
+
+    let clone = res.clone();
+    try {
+      let json = await res.json();
+      if (json && json.error) {
+        return new Error(json.error);
+      }
+      if (camel) json = cckd(json);
+      return json;
+    } catch (e) {
+      return clone.text();
     }
-    if (camel) json = cckd(json);
-    return json;
   } catch (e) {
     return e;
   }
@@ -130,9 +144,7 @@ export default class Backend {
   }
 
   async getVersion() {
-    const res = await fetch(base + "/version");
-    if (!res.ok) return new Error(res.status);
-    return res;
+    return get("/version");
   }
 
   async getInfo() {
