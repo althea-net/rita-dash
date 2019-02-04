@@ -20,8 +20,8 @@ export default backend => {
         .reduce((a, b) => ((a[b] = res[b]), a), {});
 
       let port = state.port;
-      if (!port && interfaces.length > 0) {
-        port = interfaces.sort()[0];
+      if (!port && Object.keys(interfaces).length > 0) {
+        port = Object.keys(interfaces)[0];
         setState({ port });
       }
 

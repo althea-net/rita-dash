@@ -13,6 +13,7 @@ import {
 import { connect, actions, getState } from "../store";
 import { translate } from "react-i18next";
 import portImage from "../images/port.png";
+import glImage from "../images/gl.jpg";
 import portOrderings from "../portOrderings";
 import Confirm from "./Confirm";
 
@@ -89,6 +90,11 @@ class Ports extends React.Component {
           }}
         />
         <h2 style={{ marginTop: 20 }}>{t("ports")}</h2>
+        {device === "gl-b1300" && (
+          <div className="text-center">
+            <img src={glImage} alt="GL B-1300" className="img-fluid" />
+          </div>
+        )}
         <Row
           className="d-flex justify-content-center"
           style={{ marginBottom: 20 }}
