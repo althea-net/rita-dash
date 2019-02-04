@@ -22,7 +22,7 @@ const NoConnection = ({ state, t }) => (
               (!state.version || state.waiting > 60 ? (
                 <Alert color="warning">{t("noReboot")}</Alert>
               ) : (
-                <Alert color="info">{"safeToReboot"}</Alert>
+                <Alert color="info">{t("safeToReboot")}</Alert>
               ))}
             {state.wifiChange && (
               <Alert color="danger">{t("wifiChange")}</Alert>
