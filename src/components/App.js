@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import { Nav } from "reactstrap";
+import Sidebar from "./Sidebar";
 import AltheaNav from "./Nav";
+import Topbar from "./Topbar";
 import Frontpage from "./Frontpage";
 import Neighbors from "./Neighbors";
 import RouterSettings from "./RouterSettings";
@@ -74,13 +77,18 @@ class App extends Component {
     return (
       <React.Fragment>
         <div className="App">
-          <AltheaNav current={current} />
-          <NoConnection />
-          <div style={container}>
-            <div style={main}>
-              <Page />
+          <Topbar />
+          <Sidebar>
+            <Nav id="sidebar" navbar>
+              <AltheaNav current={current} />
+            </Nav>
+            <NoConnection />
+            <div style={container}>
+              <div style={main}>
+                <Page />
+              </div>
             </div>
-          </div>
+          </Sidebar>
         </div>
         <CameraUI />
       </React.Fragment>
