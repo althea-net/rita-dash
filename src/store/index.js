@@ -50,6 +50,7 @@ const store = {
     neighborsError: null,
     page: "",
     port: null,
+    portChange: false,
     price: 0,
     priceError: null,
     scanning: false,

@@ -76,6 +76,9 @@ class Ports extends React.Component {
           t={t}
           cancel={() => this.setState({ modal: false })}
           confirm={() => {
+            this.setState({ modal: false });
+
+            actions.startPortChange();
             actions.startWaiting();
 
             let i = setInterval(async () => {
@@ -86,13 +89,17 @@ class Ports extends React.Component {
             }, 1000);
 
             actions.setInterface(this.state.mode);
-            this.setState({ modal: false });
           }}
         />
         <h2 style={{ marginTop: 20 }}>{t("ports")}</h2>
         {device === "gl-b1300" && (
           <div className="text-center">
-            <img src={glImage} alt="GL B-1300" className="img-fluid" />
+            <img
+              src={glImage}
+              alt="GL B-1300"
+              className="img-fluid"
+              style={{ marginBottom: 20 }}
+            />
           </div>
         )}
         <Row

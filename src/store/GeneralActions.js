@@ -53,9 +53,12 @@ export default backend => {
         };
       }
 
+      if (!state.portChange) {
+        setState({ waiting: 0 });
+      }
+
       return {
         wifiChange: false,
-        waiting: 0,
         loadingVersion: false,
         version,
         loadingWifi: false
@@ -69,6 +72,11 @@ export default backend => {
     keepWaiting: async ({ setState, state }) => {
       let { waiting } = state;
       --waiting;
+
+      if (waiting <= 0) {
+        setState({ portChange: false });
+      }
+
       return { waiting };
     },
 

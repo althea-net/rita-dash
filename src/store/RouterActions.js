@@ -44,6 +44,10 @@ export default backend => {
       return { port };
     },
 
+    startPortChange: async ({ state, setState }, port) => {
+      setState({ portChange: true });
+    },
+
     getWifiSettings: async ({ setState, state }) => {
       if (state.loadingWifi) return;
 

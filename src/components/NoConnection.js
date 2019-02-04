@@ -18,6 +18,12 @@ const NoConnection = ({ state, t }) => (
       <ModalBody>
         <Card>
           <CardBody>
+            {state.portChange &&
+              (!state.version || state.waiting > 60 ? (
+                <Alert color="warning">{t("noReboot")}</Alert>
+              ) : (
+                <Alert color="info">{"safeToReboot"}</Alert>
+              ))}
             {state.wifiChange && (
               <Alert color="danger">{t("wifiChange")}</Alert>
             )}
@@ -32,6 +38,6 @@ const NoConnection = ({ state, t }) => (
   </div>
 );
 
-export default connect(["wifiChange", "waiting", "version"])(
+export default connect(["portChange", "wifiChange", "waiting", "version"])(
   translate()(NoConnection)
 );
