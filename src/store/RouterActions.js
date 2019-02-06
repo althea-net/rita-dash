@@ -75,7 +75,10 @@ export default backend => {
       await Promise.all(
         settings.map(async setting => {
           let radio = setting.device.sectionName;
-          channels[radio] = await backend.getChannels(radio);
+          channels[radio] = [];
+          try {
+            channels[radio] = await backend.getChannels(radio);
+          } catch (e) {}
           return channels[radio];
         })
       );
