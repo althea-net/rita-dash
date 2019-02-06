@@ -1,4 +1,6 @@
 {
+  "2ghz": "2.4 GHz Wireless Network",
+  "5ghz": "5 GHz Wireless Network",
   "add1": "Add funds",
   "address": "Address",
   "addSubnetDao": "Add subnet DAO",
@@ -55,6 +57,7 @@
   "neighbors": "Neighbors",
   "neighborsError": "Problem retrieving neighbors", 
   "networkConnection": "Network Connection",
+  "networkPassword": "Network Password",
   "networkSettings": "Network Settings",
   "no": "No",
   "noConnection": "Waiting for Connection",
@@ -94,7 +97,7 @@
   "settingsError": "Problem retrieving settings",
   "settingsError": "Problem retrieving settings",
   "settingsSaved": "Settings Saved Successfully",
-  "ssid": "SSID",
+  "ssid": "Network Name (SSID)",
   "stateConnected": "Connected",
   "stateDenied": "Registration denied",
   "stateProblem": "Connection problem",
