@@ -93,6 +93,8 @@ class App extends Component {
 
 const Page = connect(["page"])(({ state, t }) => {
   switch (state.page) {
+    case "advanced":
+      return <Neighbors />;
     case "router-settings":
       return <RouterSettings />;
     case "network-settings":
@@ -101,6 +103,7 @@ const Page = connect(["page"])(({ state, t }) => {
       return <Neighbors />;
     case "payments":
       return <Payments />;
+    case "dashboard":
     default:
       return <Frontpage />;
   }
