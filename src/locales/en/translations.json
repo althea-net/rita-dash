@@ -108,7 +108,7 @@
   "throttleSpeed": "Throttle speed",
   "unableToReachExit": "Unable to reach exit.",
   "verify": "Verify",
-  "version": "Althea Firmware Version: {{version}}",
+  "version": "You are running {{version}} with rita version {{ritaVersion}}",
   "ritaVersion": "Rita Version: {{version}}",
   "waiting": "Waiting {{seconds}} seconds for the router to come back online",
   "weiPerGB": "Ξ/GB",

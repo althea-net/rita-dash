@@ -62,11 +62,6 @@ class App extends Component {
 
   render() {
     let { current } = this.state;
-    let container = {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    };
 
     let main = {
       width: "100%",
@@ -83,10 +78,8 @@ class App extends Component {
               <AltheaNav current={current} />
             </Nav>
             <NoConnection />
-            <div style={container}>
-              <div style={main}>
-                <Page />
-              </div>
+            <div style={main}>
+              <Page />
             </div>
           </Sidebar>
         </div>

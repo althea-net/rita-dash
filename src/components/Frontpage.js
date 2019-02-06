@@ -3,6 +3,7 @@ import { connect } from "../store";
 import QR from "qrcode.react";
 import {
   Alert,
+  Button,
   Card,
   CardBody,
   Input,
@@ -15,6 +16,7 @@ import {
 import Error from "./Error";
 import { translate } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import updown from "../images/up_down.png";
 
 class FrontPage extends Component {
   constructor(props) {
@@ -46,11 +48,23 @@ class FrontPage extends Component {
           <Progress animated color="info" value="100" />
         ) : (
           <div>
-            <Alert color="info" id="version">
-              {t("version")} <b>{version}</b>
-              <br />
-              {t("ritaVersion")} <b>{ritaVersion}</b>
-            </Alert>
+            <p>
+              <small style={{ color: "gray" }}>
+                {t("version", { version, ritaVersion })}
+              </small>
+            </p>
+
+            <h2>Finances</h2>
+
+            <Card>
+              <CardBody>
+                Account Balance
+                <Button>Top Up</Button>
+                <Button>Withdraw</Button>
+                <img src={updown} />
+              </CardBody>
+            </Card>
+
             <Card>
               <CardBody>
                 {qrvalue && (
