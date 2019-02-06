@@ -65,7 +65,7 @@ class App extends Component {
 
     let main = {
       width: "100%",
-      maxWidth: 750,
+      maxWidth: 800,
       padding: 10
     };
 

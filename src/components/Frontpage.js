@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "../store";
 import QR from "qrcode.react";
 import {
-  Alert,
-  Button,
   Card,
   CardBody,
   Input,
@@ -16,7 +14,7 @@ import {
 import Error from "./Error";
 import { translate } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import updown from "../images/up_down.png";
+import Finances from "./Finances";
 
 class FrontPage extends Component {
   constructor(props) {
@@ -54,16 +52,7 @@ class FrontPage extends Component {
               </small>
             </p>
 
-            <h2>Finances</h2>
-
-            <Card>
-              <CardBody>
-                Account Balance
-                <Button>Top Up</Button>
-                <Button>Withdraw</Button>
-                <img src={updown} />
-              </CardBody>
-            </Card>
+            <Finances />
 
             <Card>
               <CardBody>
