@@ -16,6 +16,7 @@ import {
   faBan,
   faGlobeAmericas,
   faMinusCircle,
+  faAngleRight,
   faQrcode,
   faRoute,
   faSignal,
@@ -26,6 +27,7 @@ import {
 library.add(faBan);
 library.add(faGlobeAmericas);
 library.add(faMinusCircle);
+library.add(faAngleRight);
 library.add(faRoute);
 library.add(faQrcode);
 library.add(faSignal);
