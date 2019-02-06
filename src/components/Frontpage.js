@@ -1,40 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "../store";
-import QR from "qrcode.react";
-import {
-  Card,
-  CardBody,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Label,
-  Progress
-} from "reactstrap";
+import { Progress } from "reactstrap";
 import Error from "./Error";
 import { translate } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Finances from "./Finances";
 import UsageMetrics from "./UsageMetrics";
+import NetworkConnection from "./NetworkConnection";
+import NodeInformation from "./NodeInformation";
 
 class FrontPage extends Component {
-  constructor(props) {
-    super();
-
-    this.state = {
-      qrvalue: ""
-    };
-  }
-
-  setQr(qrvalue) {
-    this.setState({ qrvalue });
-  }
-
   render() {
     let { error, loading, info, settings } = this.props.state;
-    let { meshIp, wgPublicKey } = settings.network;
     let { address, ritaVersion, version } = info;
-    let { qrvalue } = this.state;
     let { t } = this.props;
 
     return (
@@ -55,70 +32,8 @@ class FrontPage extends Component {
 
             <Finances />
             <UsageMetrics />
-
-            <Card>
-              <CardBody>
-                {qrvalue && (
-                  <div className="text-center">
-                    <QR
-                      style={{
-                        height: "auto",
-                        width: "50%"
-                      }}
-                      value={qrvalue}
-                    />
-                  </div>
-                )}
-                <Label>
-                  <b>{t("meshIp")}</b>
-                </Label>
-                <InputGroup>
-                  <Input readOnly value={meshIp || ""} />
-                  <InputGroupAddon addonType="append">
-                    <InputGroupText
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        this.setQr(meshIp);
-                      }}
-                    >
-                      <FontAwesomeIcon icon="qrcode" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                </InputGroup>
-                <Label>
-                  <b>{t("ethereumAddress")}</b>
-                </Label>
-                <InputGroup>
-                  <Input readOnly value={address || ""} />
-                  <InputGroupAddon addonType="append">
-                    <InputGroupText
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        this.setQr(address);
-                      }}
-                    >
-                      <FontAwesomeIcon icon="qrcode" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                </InputGroup>
-                <Label>
-                  <b>{t("wireguardPublicKey")}</b>
-                </Label>
-                <InputGroup>
-                  <Input readOnly value={wgPublicKey || ""} />
-                  <InputGroupAddon addonType="append">
-                    <InputGroupText
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        this.setQr(wgPublicKey);
-                      }}
-                    >
-                      <FontAwesomeIcon icon="qrcode" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                </InputGroup>
-              </CardBody>
-            </Card>
+            <NetworkConnection />
+            <NodeInformation address={address} settings={settings} t={t} />
           </div>
         )}
       </div>

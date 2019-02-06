@@ -1,14 +1,15 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
+import bigGreenCheck from "../images/big_green_check.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default () => {
   return (
-    <div style={{ marginBottom: 40 }}>
+    <div style={{ marginBottom: 50 }}>
       <div className="w-100 d-flex justify-content-between">
-        <h2>Usage Metrics</h2>
+        <h2>Network Connection</h2>
         <div style={{ color: "#3DADF5" }} className="my-auto">
-          <span>Review Billing</span>
+          <span>Manage Network Connection</span>
           <FontAwesomeIcon
             size="lg"
             icon="angle-right"
@@ -24,41 +25,27 @@ export default () => {
             style={{ borderRight: "1px solid #dadada" }}
           >
             <div className="d-flex flex-wrap justify-content-between">
-              <h5 className="w-100" style={{ color: "gray" }}>
-                Month to Date
-              </h5>
               <div className="d-flex w-100 justify-content-around">
                 <div>
                   <div>
-                    <h4>4.8 GB</h4>
+                    <h4>130.2 MBps</h4>
                   </div>
-                  <div style={{ color: "gray" }}>Usage</div>
+                  <div style={{ color: "gray" }}>Avg. Download</div>
                 </div>
                 <div>
                   <div>
-                    <h4>0.24 ETH</h4>
+                    <h4>20.3 MBps</h4>
                   </div>
-                  <div style={{ color: "gray" }}>Cost</div>
+                  <div style={{ color: "gray" }}>Avg. Upload</div>
                 </div>
               </div>
             </div>
           </div>
           <div className="pl-4 w-50 d-flex flex-wrap">
-            <h5 className="w-100" style={{ color: "gray" }}>
-              Last Month
-            </h5>
             <div className="d-flex w-100 justify-content-around">
-              <div>
-                <div>
-                  <h4>10.2 GB</h4>
-                </div>
-                <div style={{ color: "gray" }}>Usage</div>
-              </div>
-              <div>
-                <div>
-                  <h4>0.45 ETH</h4>
-                </div>
-                <div style={{ color: "gray" }}>Cost</div>
+              <img src={bigGreenCheck} alt="Big Green Checkmark" />
+              <div className="my-auto" style={{ color: "gray" }}>
+                Your connection is looking great!
               </div>
             </div>
           </div>
