@@ -15,6 +15,7 @@ import Error from "./Error";
 import { translate } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Finances from "./Finances";
+import UsageMetrics from "./UsageMetrics";
 
 class FrontPage extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class FrontPage extends Component {
             </p>
 
             <Finances />
+            <UsageMetrics />
 
             <Card>
               <CardBody>
