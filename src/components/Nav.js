@@ -6,10 +6,12 @@ class AltheaNav extends Component {
   navItems = () => {
     let { t } = this.props;
     let pages = {
-      neighbors: { title: t("neighbors") },
-      router_settings: { title: t("routerSettings") },
-      network_settings: { title: t("networkSettings") },
-      payments: { title: t("payments") }
+      dashboard: { title: t("dashboard") },
+      router_settings: { title: t("wifiAndPorts") },
+      network_settings: { title: t("networkConnection") },
+      billing: { title: t("billing") },
+      payments: { title: t("paymentSettings") },
+      advanced: { title: t("advancedSettings") }
     };
 
     return Object.keys(pages).map((p, i) => {
