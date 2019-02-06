@@ -18,26 +18,22 @@ async function get(url, camel = true, timeout = 10000) {
   const controller = new AbortController();
   const signal = controller.signal;
 
+  let timer = setTimeout(() => controller.abort(), timeout);
+  const res = await fetch(base + url, { signal });
+  clearTimeout(timer);
+
+  if (!res.ok) return new Error(res.status);
+
+  let clone = res.clone();
   try {
-    let timer = setTimeout(() => controller.abort(), timeout);
-    const res = await fetch(base + url, { signal });
-    clearTimeout(timer);
-
-    if (!res.ok) return new Error(res.status);
-
-    let clone = res.clone();
-    try {
-      let json = await res.json();
-      if (json && json.error) {
-        return new Error(json.error);
-      }
-      if (camel) json = cckd(json);
-      return json;
-    } catch (e) {
-      return clone.text();
+    let json = await res.json();
+    if (json && json.error) {
+      return new Error(json.error);
     }
+    if (camel) json = cckd(json);
+    return json;
   } catch (e) {
-    return e;
+    return clone.text();
   }
 }
 
