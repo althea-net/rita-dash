@@ -5,13 +5,6 @@ import styled from "styled-components";
 import { Alert, Progress } from "reactstrap";
 import { translate } from "react-i18next";
 
-const WifiContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 10;
-  margin: -20;
-`;
-
 class Wifi extends Component {
   componentDidMount = () => {
     actions.getWifiSettings();
@@ -39,16 +32,13 @@ class Wifi extends Component {
 
     return (
       <React.Fragment>
-        <h2>{t("wifi")}</h2>
-        <WifiContainer>
-          {wifiSettings.map((settings, i) => (
-            <WifiSettingsForm
-              state={this.props.state}
-              key={i}
-              wifiSettings={settings}
-            />
-          ))}
-        </WifiContainer>
+        {wifiSettings.map((settings, i) => (
+          <WifiSettingsForm
+            state={this.props.state}
+            key={i}
+            wifiSettings={settings}
+          />
+        ))}
       </React.Fragment>
     );
   }

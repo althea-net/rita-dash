@@ -108,20 +108,12 @@ class WifiSettingsForm extends Component {
             {loadingWifi === radioType && (
               <Progress animated color="info" value="100" />
             )}
-            <Form onSubmit={this.onSubmit}>
-              <Label
-                for="form"
-                style={{
-                  marginBottom: "20px",
-                  fontSize: "1.5em",
-                  textAlign: "center"
-                }}
-              >
-                {radioType}
-              </Label>
-
-              <FormGroup id="form">
-                <Label for="ssid">{t("ssid")}</Label>
+            <h4 className="mb-4">{t(radioType)}</h4>
+            <Form onSubmit={this.onSubmit} className="d-flex">
+              <FormGroup id="form" className="pr-2 mb-0">
+                <Label for="ssid">
+                  <b>{t("ssid")}</b>
+                </Label>
                 <Input
                   type="text"
                   id={radioType + "-ssid"}
@@ -132,8 +124,10 @@ class WifiSettingsForm extends Component {
                   value={this.state.fields.ssid}
                 />
               </FormGroup>
-              <FormGroup>
-                <Label for="password">{t("password")}</Label>
+              <FormGroup className="pr-2 mb-0">
+                <Label for="password">
+                  <b>{t("networkPassword")}</b>
+                </Label>
                 <Input
                   type="text"
                   id={radioType + "-pass"}
@@ -144,8 +138,10 @@ class WifiSettingsForm extends Component {
                   value={this.state.fields.key}
                 />
               </FormGroup>
-              <FormGroup>
-                <Label for="channel">{t("channel")}</Label>
+              <FormGroup className="pr-2 mb-0">
+                <Label for="channel">
+                  <b>{t("channel")}</b>
+                </Label>
                 <Input
                   type="select"
                   id={radio + "-channel"}
@@ -159,24 +155,11 @@ class WifiSettingsForm extends Component {
                 </Input>
               </FormGroup>
 
-              <FormGroup
-                style={{
-                  display: "flex",
-                  margin: -20,
-                  marginTop: 0,
-                  padding: 10
-                }}
-              >
-                <Button
-                  id={radioType + "-submit"}
-                  color="primary"
-                  style={{
-                    margin: 10
-                  }}
-                >
+              <div className="mt-auto">
+                <Button id={radioType + "-submit"} color="primary">
                   {t("save")}
                 </Button>
-              </FormGroup>
+              </div>
 
               <FormGroup
                 style={{

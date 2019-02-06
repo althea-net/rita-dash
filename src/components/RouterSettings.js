@@ -9,7 +9,7 @@ class RouterSettings extends Component {
 
     return (
       <div id="router-settings-main">
-        <h1 id="router-settings-title">{t("routerSettings")}</h1>
+        <h1 id="router-settings-title">{t("wifiAndPorts")}</h1>
 
         <Wifi />
         <div style={{ marginTop: 20 }}>
