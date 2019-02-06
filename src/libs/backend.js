@@ -22,7 +22,7 @@ async function get(url, camel = true, timeout = 10000) {
   const res = await fetch(base + url, { signal });
   clearTimeout(timer);
 
-  if (!res.ok) return new Error(res.status);
+  if (!res.ok) throw new Error(res.status);
 
   let clone = res.clone();
   try {
