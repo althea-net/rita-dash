@@ -8,13 +8,15 @@ export default () => {
     <div style={{ marginBottom: 40 }}>
       <div className="w-100 d-flex justify-content-between">
         <h2>Finances</h2>
-        <div style={{ color: "#3DADF5" }} className="my-auto">
-          <span>Manage Payment Settings</span>
-          <FontAwesomeIcon
-            size="lg"
-            icon="angle-right"
-            style={{ marginLeft: 10 }}
-          />
+        <div className="my-auto">
+          <a href="#payments">
+            Manage Payment Settings
+            <FontAwesomeIcon
+              size="lg"
+              icon="angle-right"
+              style={{ marginLeft: 10 }}
+            />
+          </a>
         </div>
       </div>
       <Card>
