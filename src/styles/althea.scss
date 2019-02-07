@@ -1,3 +1,152 @@
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/bootstrap";
+
+@keyframes ScrollRight {
+  0% {
+    background-position: 0px;
+  }
+  100% {
+    background-position: 1000px;
+  }
+}
+
+@keyframes ScrollLeft {
+  0% {
+    background-position: 1000px;
+  }
+  100% {
+    background-position: 0px;
+  }
+}
+
+.nav-item.active {
+  background: #ccc
+} 
+
+.dropdown-toggle::after {
+  right: 0;
+  margin-right: 10px;
+}
+
+#camcontrols {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+} 
+
+#crosshair {
+  position: absolute;
+  display: block;
+  width: 200px;
+  height: 200px;
+  border: 10px dashed white;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -100px;
+} 
+
+#controls {
+  position: absolute;
+  margin-left: auto;
+  left: 50%;
+  display: block;
+  width: 300px;
+  bottom: 10px;
+  background: white;
+  text-align: center;
+  color: black;
+  font-family: Roboto, sans-serif;
+  font-size: 32px;
+  border-radius: 15px;
+  z-index: 500;
+  margin: 0 0 0 -150px;
+} 
+
+a,
+a:hover,
+a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.nav-link {
+  margin-top: 5px;
+  margin-bottom: 5px;
+} 
+
+a.nav-link {
+  color: #333;
+} 
+
+.nav-item.active {
+  background: inherit !important;
+  font-weight: bold;
+} 
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+  padding-top: 30px;
+  padding-left: 60px;
+  width: 300px;
+  position: fixed;
+  top: 78px;
+  left: 0;
+  height: 100vh;
+  z-index: 999;
+  background: #F8F9FA;
+  color: #000;
+  transition: all 0.3s;
+  border-right: 1px solid #ddd;
+}
+
+#content {
+  margin-top: 100px;
+  margin-left: 320px;
+  width: 100%;
+  transition: all 0.3s;
+  text-align: left;
+}
+
+#content.active {
+    width: 100%;
+}
+
+@media (max-width: 575px) {
+    #sidebar {
+       display: none; 
+    }
+
+    #content {
+      left: 0;
+    } 
+  }

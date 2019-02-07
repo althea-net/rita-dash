@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "../styles/BasicScroll.css";
 
 import { Alert, Card, CardBody, CardTitle, Progress } from "reactstrap";
 
