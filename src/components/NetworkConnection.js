@@ -9,12 +9,14 @@ export default () => {
       <div className="w-100 d-flex justify-content-between">
         <h2>Network Connection</h2>
         <div style={{ color: "#3DADF5" }} className="my-auto">
-          <span>Manage Network Connection</span>
-          <FontAwesomeIcon
-            size="lg"
-            icon="angle-right"
-            style={{ marginLeft: 10 }}
-          />
+          <a href="#network-settings">
+            Manage Network Connection
+            <FontAwesomeIcon
+              size="lg"
+              icon="angle-right"
+              style={{ marginLeft: 10 }}
+            />
+          </a>
         </div>
       </div>
 

@@ -8,12 +8,14 @@ export default () => {
       <div className="w-100 d-flex justify-content-between">
         <h2>Usage Metrics</h2>
         <div style={{ color: "#3DADF5" }} className="my-auto">
-          <span>Review Billing</span>
-          <FontAwesomeIcon
-            size="lg"
-            icon="angle-right"
-            style={{ marginLeft: 10 }}
-          />
+          <a href="#billing">
+            Review Billing
+            <FontAwesomeIcon
+              size="lg"
+              icon="angle-right"
+              style={{ marginLeft: 10 }}
+            />
+          </a>
         </div>
       </div>
 
