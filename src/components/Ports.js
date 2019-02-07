@@ -11,7 +11,7 @@ import {
   Row
 } from "reactstrap";
 import { connect, actions, getState } from "../store";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import portImage from "../images/port.png";
 import glImage from "../images/gl.jpg";
 import portOrderings from "../portOrderings";
@@ -185,4 +185,4 @@ export default connect([
   "port",
   "success",
   "interfaces"
-])(translate()(Ports));
+])(withTranslation()(Ports));

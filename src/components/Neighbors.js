@@ -5,7 +5,7 @@ import { Alert, Card, CardBody, CardTitle, Progress } from "reactstrap";
 
 import { actions, connect } from "../store";
 import Error from "./Error";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { BigNumber } from "bignumber.js";
 
 const weiPerEth = BigNumber("1000000000000000000");
@@ -347,4 +347,4 @@ export default connect([
   "loading",
   "neighbors",
   "symbol"
-])(translate()(Neighbors));
+])(withTranslation()(Neighbors));

@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import { actions } from "../store";
 import logo from "../images/althea.png";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import AltheaNav from "./Nav";
 
 const languages = {
@@ -98,4 +98,4 @@ class Topbar extends Component {
   }
 }
 
-export default translate()(Topbar);
+export default withTranslation()(Topbar);

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { actions, connect } from "../store";
 import WifiSettingsForm from "./WifiSettingsForm";
 import { Alert, Progress } from "reactstrap";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class Wifi extends Component {
   componentDidMount = () => {
@@ -48,4 +48,4 @@ export default connect([
   "wifiError",
   "loadingWifi",
   "wifiSettings"
-])(translate()(Wifi));
+])(withTranslation()(Wifi));

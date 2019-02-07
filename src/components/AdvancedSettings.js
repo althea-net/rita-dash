@@ -10,7 +10,7 @@ import {
   Progress
 } from "reactstrap";
 import { actions, connect } from "../store";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class AdvancedSettings extends Component {
   state = {
@@ -93,4 +93,4 @@ export default connect([
   "blockchain",
   "loadingBlockchain",
   "blockchainSuccess"
-])(translate()(AdvancedSettings));
+])(withTranslation()(AdvancedSettings));

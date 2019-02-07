@@ -13,7 +13,7 @@ import { actions, connect, getState } from "../store";
 import Web3 from "web3";
 import Confirm from "./Confirm";
 import Error from "./Error";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import QrReader from "react-qr-reader";
 import QrCode from "qrcode.react";
 import { Address6 } from "ip-address";
@@ -366,5 +366,5 @@ class DaoSelection extends Component {
 }
 
 export default connect(["daoAddress", "meshIp", "daos", "daosError", "info"])(
-  translate()(DaoSelection)
+  withTranslation()(DaoSelection)
 );

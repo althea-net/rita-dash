@@ -9,7 +9,7 @@ import {
   Progress
 } from "reactstrap";
 import { connect } from "../store";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 const NoConnection = ({ state, t }) => (
   <div>
@@ -39,5 +39,5 @@ const NoConnection = ({ state, t }) => (
 );
 
 export default connect(["portChange", "wifiChange", "waiting", "version"])(
-  translate()(NoConnection)
+  withTranslation()(NoConnection)
 );

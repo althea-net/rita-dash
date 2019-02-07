@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavItem, NavLink } from "reactstrap";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class AltheaNav extends Component {
   navItems = () => {
@@ -37,4 +37,4 @@ class AltheaNav extends Component {
   }
 }
 
-export default translate()(AltheaNav);
+export default withTranslation()(AltheaNav);

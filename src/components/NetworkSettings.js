@@ -3,7 +3,7 @@ import Exits from "./Exits";
 import DaoSelection from "./DaoSelection";
 import { Card, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class NetworkSettings extends Component {
   state = {
@@ -67,4 +67,4 @@ class NetworkSettings extends Component {
   }
 }
 
-export default translate()(NetworkSettings);
+export default withTranslation()(NetworkSettings);

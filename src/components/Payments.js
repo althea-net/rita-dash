@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Card, CardBody, Col, Row } from "reactstrap";
 import { actions, connect } from "../store";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import PriceForm from "./PriceForm";
 import QualityForm from "./QualityForm";
 import Error from "./Error";
@@ -105,4 +105,4 @@ export default connect([
   "info",
   "settings",
   "symbol"
-])(translate()(Payments));
+])(withTranslation()(Payments));

@@ -9,7 +9,7 @@ import {
   ModalBody
 } from "reactstrap";
 import { actions, connect } from "../store";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import QR from "qrcode.react";
 import { BigNumber } from "bignumber.js";
 
@@ -54,4 +54,4 @@ const Deposit = ({ state, t }) => {
   );
 };
 
-export default connect(["info", "depositing", "symbol"])(translate()(Deposit));
+export default connect(["info", "depositing", "symbol"])(withTranslation()(Deposit));
