@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Card, CardBody, Form, FormGroup, Input } from "reactstrap";
 import { actions, connect } from "../store";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class PriceQualityForm extends Component {
   constructor(props) {
@@ -59,4 +59,4 @@ class PriceQualityForm extends Component {
   }
 }
 
-export default connect(["factor"])(translate()(PriceQualityForm));
+export default connect(["factor"])(withTranslation()(PriceQualityForm));

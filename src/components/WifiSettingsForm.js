@@ -11,7 +11,7 @@ import {
   Progress
 } from "reactstrap";
 import { actions, connect, getState } from "../store";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class WifiSettingsForm extends Component {
   constructor(props) {
@@ -178,5 +178,5 @@ class WifiSettingsForm extends Component {
 }
 
 export default connect(["loadingWifi", "success", "channels"])(
-  translate()(WifiSettingsForm)
+  withTranslation()(WifiSettingsForm)
 );

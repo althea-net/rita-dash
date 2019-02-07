@@ -14,7 +14,7 @@ import {
   ModalBody
 } from "reactstrap";
 import { actions, connect } from "../store";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { BigNumber } from "bignumber.js";
 import web3 from "web3";
 import Error from "./Error";
@@ -206,5 +206,5 @@ class Withdraw extends React.Component {
 }
 
 export default connect(["info", "withdrawing", "withdrawalError", "symbol"])(
-  translate()(Withdraw)
+  withTranslation()(Withdraw)
 );

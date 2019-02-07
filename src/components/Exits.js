@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Error from "./Error";
 import RegistrationForm from "./RegistrationForm";
 import VerifyForm from "./VerifyForm";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class Exits extends Component {
   componentDidMount() {
@@ -281,5 +281,5 @@ class ConnectionError extends Component {
 }
 
 export default connect(["initializing", "exits", "exitsError"])(
-  translate()(Exits)
+  withTranslation()(Exits)
 );

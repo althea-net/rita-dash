@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "../store";
 import { Progress } from "reactstrap";
 import Error from "./Error";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import Finances from "./Finances";
 import UsageMetrics from "./UsageMetrics";
 import NetworkConnection from "./NetworkConnection";
@@ -42,5 +42,5 @@ class FrontPage extends Component {
 }
 
 export default connect(["error", "loading", "info", "settings"])(
-  translate()(FrontPage)
+  withTranslation()(FrontPage)
 );
