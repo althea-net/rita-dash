@@ -81,7 +81,7 @@ class Payments extends Component {
             </Card>
           </Col>
           <Col md="6">
-            <PriceForm />
+            <PriceForm t={t} />
           </Col>
         </Row>
 

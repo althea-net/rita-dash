@@ -35,12 +35,9 @@ library.add(faSitemap);
 library.add(faSync);
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: window.location.hash.substr(1)
-    };
-  }
+  state = {
+    current: window.location.hash.substr(1)
+  };
 
   componentDidMount() {
     this.onHashChange();
@@ -81,7 +78,7 @@ class App extends Component {
             </Nav>
             <NoConnection />
             <div style={main}>
-              <Page />
+              <Page page={current} />
             </div>
           </Sidebar>
         </div>
@@ -91,8 +88,8 @@ class App extends Component {
   }
 }
 
-const Page = connect(["page"])(({ state, t }) => {
-  switch (state.page) {
+const Page = connect(["page"])(({ page, state, t }) => {
+  switch (page) {
     case "advanced":
       return <Neighbors />;
     case "router-settings":
@@ -101,6 +98,8 @@ const Page = connect(["page"])(({ state, t }) => {
       return <NetworkSettings />;
     case "neighbors":
       return <Neighbors />;
+    case "billing":
+      return <Payments />;
     case "payments":
       return <Payments />;
     case "dashboard":

@@ -13,7 +13,6 @@ import {
   Progress
 } from "reactstrap";
 import { actions, connect } from "../store";
-import { translate } from "react-i18next";
 
 class PriceForm extends Component {
   state = {
@@ -94,7 +93,7 @@ class PriceForm extends Component {
                 type="checkbox"
                 id="autoPricing"
                 label={t("automatedPricing")}
-                onClick={this.togglePricing}
+                onChange={this.togglePricing}
                 value={autoPricing}
                 checked={autoPricing}
               />
@@ -110,5 +109,5 @@ class PriceForm extends Component {
 }
 
 export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
-  translate()(PriceForm)
+  PriceForm
 );

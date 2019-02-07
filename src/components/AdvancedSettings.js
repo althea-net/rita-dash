@@ -49,9 +49,9 @@ class AdvancedSettings extends Component {
       <Card style={{ height: "100%" }}>
         <CardBody>
           {!confirmed ? (
-            <a href="" onClick={this.confirm}>
+            <span onClick={this.confirm}>
               Click to Access Advanced Settings
-            </a>
+            </span>
           ) : (
             <Form onSubmit={this.onSubmit}>
               <FormGroup id="form">
