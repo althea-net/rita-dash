@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { actions, connect } from "../store";
 import WifiSettingsForm from "./WifiSettingsForm";
-import styled from "styled-components";
 import { Alert, Progress } from "reactstrap";
 import { translate } from "react-i18next";
 

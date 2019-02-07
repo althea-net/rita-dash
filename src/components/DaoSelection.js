@@ -10,7 +10,7 @@ import {
   Input
 } from "reactstrap";
 import { actions, connect, getState } from "../store";
-import web3 from "web3";
+import Web3 from "web3";
 import Confirm from "./Confirm";
 import Error from "./Error";
 import { translate } from "react-i18next";
@@ -91,10 +91,10 @@ class DaoSelection extends Component {
       newDaoAddress: ""
     };
     this.validators = {
-      daoAddress: a => web3.utils.isAddress(a),
+      daoAddress: a => Web3.utils.isAddress(a),
       meshIp: ip => new Address6(ip).isValid()
     };
-    this.web3 = new web3();
+    this.web3 = new Web3(Web3.givenProvider);
   }
 
   componentDidMount() {

@@ -6,22 +6,17 @@ import classnames from "classnames";
 import { translate } from "react-i18next";
 
 class NetworkSettings extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    activeTab: "1"
+  };
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      activeTab: "1"
-    };
-  }
-
-  toggle(tab) {
+  toggle = tab => {
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab
       });
     }
-  }
+  };
 
   render() {
     let { t } = this.props;
