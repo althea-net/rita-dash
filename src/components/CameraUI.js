@@ -1,7 +1,6 @@
 import React from "react";
 import { actions, connect } from "../store";
 import { withTranslation } from "react-i18next";
-import "../styles/camera-controls.css";
 
 const CameraUI = ({ state, t }) => {
   if (!state.scanning) return null;

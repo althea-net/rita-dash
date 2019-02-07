@@ -1,8 +1,0 @@
-.nav-item.active {
-  background: #ccc
-} 
-
-.dropdown-toggle::after {
-  right: 0;
-  margin-right: 10px;
-}
