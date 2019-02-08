@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Alert,
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  CardTitle,
-  Col,
-  Progress,
-  Row
-} from "reactstrap";
+import { Alert, Button, Card, CardBody, Progress, Row } from "reactstrap";
 import { connect, actions, getState } from "../store";
 import { withTranslation } from "react-i18next";
 import portImage from "../images/port.png";
