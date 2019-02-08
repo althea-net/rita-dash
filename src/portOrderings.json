@@ -5,7 +5,7 @@
   "erlite": ["eth0", "eth1", "eth2"],
   "ea3500": ["eth1", "eth0.3", "eth0.4", "eth0.5", "eth0.6"],
   "gl-ar750": ["eth0", "eth1.1", "eth1.2"],
-  "gl-b1300": ["eth0.3", "eth0.4", "eth1"],
+  "gl-b1300": ["1", "2", "3"],
   "mynet-n600": ["eth0.1", "eth0.2", "eth0.3", "eth0.4", "eth1"],
   "mynet-n750": ["eth0.1", "eth0.4", "eth0.5", "eth0.3", "eth0.2"],
   "rpi-2": ["eth0"],

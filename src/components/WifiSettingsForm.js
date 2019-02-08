@@ -100,7 +100,7 @@ class WifiSettingsForm extends Component {
 
     return (
       <React.Fragment>
-        <Card style={{ flex: 1, minWidth: 300, margin: 10 }}>
+        <Card style={{ marginBottom: 20 }}>
           <CardBody>
             {success === radioType && (
               <Alert color="success">{t("settingsSaved")}</Alert>
@@ -109,7 +109,7 @@ class WifiSettingsForm extends Component {
               <Progress animated color="info" value="100" />
             )}
             <h4 className="mb-4">{t(radioType)}</h4>
-            <Form onSubmit={this.onSubmit} className="d-flex">
+            <Form onSubmit={this.onSubmit} className="d-flex flex-wrap">
               <FormGroup id="form" className="pr-2 mb-0">
                 <Label for="ssid">
                   <b>{t("ssid")}</b>

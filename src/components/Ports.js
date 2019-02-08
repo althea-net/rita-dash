@@ -46,6 +46,27 @@ class Ports extends React.Component {
     this.setState({ modal: true });
   };
 
+  confirm = () => {
+    this.setState({ modal: false });
+
+    actions.startPortChange();
+    actions.startWaiting();
+
+    let i = setInterval(async () => {
+      actions.keepWaiting();
+      if (getState().waiting <= 0) {
+        clearInterval(i);
+      }
+    }, 1000);
+
+    actions.setInterface(this.state.mode);
+  };
+
+  setPort = iface => {
+    actions.setPort(iface);
+    this.setState({ warning: false });
+  };
+
   render() {
     let { t } = this.props;
     let {
@@ -57,7 +78,7 @@ class Ports extends React.Component {
     } = this.props.state;
     let { mode, modal, warning } = this.state;
     let { device } = info;
-    let modes = [t("Mesh"), t("WAN"), t("LAN")];
+    let modes = [t("LAN"), t("Mesh"), t("WAN")];
 
     if (!interfaces)
       if (loadingInterfaces === false) {
@@ -75,103 +96,94 @@ class Ports extends React.Component {
           show={modal}
           t={t}
           cancel={() => this.setState({ modal: false })}
-          confirm={() => {
-            this.setState({ modal: false });
-
-            actions.startPortChange();
-            actions.startWaiting();
-
-            let i = setInterval(async () => {
-              actions.keepWaiting();
-              if (getState().waiting <= 0) {
-                clearInterval(i);
-              }
-            }, 1000);
-
-            actions.setInterface(this.state.mode);
-          }}
+          confirm={this.confirm}
         />
-        <h2 style={{ marginTop: 20 }}>{t("ports")}</h2>
-        {device === "gl-b1300" && (
-          <div className="text-center">
-            <img
-              src={glImage}
-              alt="GL B-1300"
-              className="img-fluid"
-              style={{ marginBottom: 20 }}
-            />
-          </div>
-        )}
-        <Row
-          className="d-flex justify-content-center"
-          style={{ marginBottom: 20 }}
-        >
-          {portOrderings[device].map((iface, i) => {
-            return (
-              <Card
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  actions.setPort(iface);
-                  this.setState({ warning: false });
-                }}
-                className={port === iface ? "bg-primary" : null}
-                key={i}
-              >
-                <CardBody>
-                  <img src={portImage} alt={iface} width="60px" />
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: 25,
-                      left: 20,
-                      fontWeight: "bold",
-                      textAlign: "center",
-                      textShadow: "2px 2px #666",
-                      color: "white",
-                      maxWidth: 60
-                    }}
-                  >
-                    {iface} {interfaces[iface]}
-                  </span>
-                </CardBody>
-              </Card>
-            );
-          })}
-        </Row>
-        <Row>
-          <Col sm={12} md={{ size: 8, offset: 2 }}>
-            <Card>
-              <CardHeader>
-                <CardTitle>{port}</CardTitle>
-              </CardHeader>
-              <CardBody>
-                {warning && (
-                  <Alert color="danger">{t("onlyOne", { mode })}</Alert>
-                )}
-                <p>
-                  {t("mode")}: <strong>{interfaces[port]}</strong>
-                </p>
-                <p>{t("switchMode")}:</p>
 
-                {modes.map((mode, i) => {
+        <Card>
+          <CardBody>
+            <h2 style={{ marginTop: 20 }}>{t("ports")}</h2>
+            <p style={{ color: "gray", fontSize: 14 }}>
+              Re-assign the modes of your router ports. They are visually
+              displayed in the same order as on your router.
+            </p>
+            <div className="d-flex flex-wrap">
+              {device === "gl-b1300" && (
+                <div className="text-center">
+                  <img
+                    src={glImage}
+                    alt="GL B-1300"
+                    className="img-fluid"
+                    style={{ marginBottom: 20, width: 300, marginRight: 40 }}
+                  />
+                </div>
+              )}
+              <Row
+                className="d-flex flex-nowrap justify-content-center"
+                style={{ marginBottom: 20 }}
+              >
+                {portOrderings[device].map((iface, i) => {
                   return (
-                    <Button
-                      color={
-                        mode === interfaces[port] ? "secondary" : "primary"
-                      }
+                    <Card
+                      className={port === iface ? "bg-primary" : null}
                       key={i}
-                      style={{ marginRight: 15 }}
-                      disabled={mode === interfaces[port]}
-                      onClick={() => this.setInterface(mode)}
+                      style={{
+                        borderRadius: 0,
+                        borderLeft:
+                          i === portOrderings[device].length - 1 && "none",
+                        borderRight: i === 0 && "none"
+                      }}
                     >
-                      {mode} {mode === "WAN" && t("gateway")}
-                    </Button>
+                      <CardBody className="text-center">
+                        <img src={portImage} alt={iface} width="60px" />
+
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: 30,
+                            left: 62,
+                            fontSize: 24,
+                            fontWeight: "bold",
+                            textShadow: "2px 2px #666",
+                            textAlign: "center",
+                            color: "white",
+                            height: 40,
+                            paddingTop: 4
+                          }}
+                        >
+                          {iface}
+                        </div>
+
+                        {warning && (
+                          <Alert color="danger">{t("onlyOne", { mode })}</Alert>
+                        )}
+                        <div className="d-flex flex-column mt-3">
+                          {modes.map((mode, i) => {
+                            return (
+                              <Button
+                                key={i}
+                                style={{
+                                  width: 100,
+                                  background: "white",
+                                  color: "#999",
+                                  border: "1px solid #aaa",
+                                  borderRadius: 0,
+                                  marginTop: 6
+                                }}
+                                onClick={() => this.setInterface(mode)}
+                              >
+                                {mode}
+                              </Button>
+                            );
+                          })}
+                        </div>
+                      </CardBody>
+                    </Card>
                   );
                 })}
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+              </Row>
+            </div>
+          </CardBody>
+        </Card>
       </div>
     );
   }
