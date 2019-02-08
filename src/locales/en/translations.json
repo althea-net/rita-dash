@@ -48,6 +48,7 @@
   "gateway": "(Gateway)",
   "highestAcceptable": "Highest acceptable price",
   "infoError": "Problem retrieving balance and version info",
+  "ipAddress": "IP Address",
   "linkToExit": "Link to exit",
   "linkToMe": "Link to me",
   "lowFunds": "When Funds Get Low",
@@ -78,7 +79,7 @@
   "ports": "Ports",
   "preferHigh": "Prefer high quality",
   "preferLow": "Prefer low price",
-  "presentQR": "Present this QR code to your local subnet DAO organizer to have your node added to the DAO:",
+  "presentQR": "This is your Ethereum address that is used for payments. This should be provided to the organizer, to enable your router to connect to the subnet.",
   "price": "Price",
   "priceError": "Unable to get local pricing fee from rita server",
   "priceSetError": "An error occured, the price could not be updated",
@@ -107,7 +108,9 @@
   "submit": "Submit",
   "submittingCode": "Submitting verification code to exit...",
   "submittingEmail": "Submitting email to exit...",
+  "subnet": "Subnet",
   "subnetDao": "Subnet DAO",
+  "subnetAddress": "Subnet Organization Ethereum Address",
   "switchMode": "Switch mode to",
   "systemBlockchain": "System Blockchain",
   "thisAction": "This action will interrupt the connection to the router. After initiating the change, please wait 60 seconds and then re-plug your ethernet cables into the router.",
@@ -128,5 +131,6 @@
   "wireguardPublicKey": "WireGuard Public Key",
   "withdraw": "Withdraw",
   "withdrawalError": "An error occurred, your withdrawal could not be completed",
-  "yes": "Yes"
+  "yes": "Yes",
+  "yourOrganizer": "Your organizer who helps maintain your local mesh network will provide you with your IP address and the Ethereum Address for the Subnet Organization. These fields can be manually populated or they can be populated by scanning a QR code."
 }

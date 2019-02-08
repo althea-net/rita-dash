@@ -24,11 +24,7 @@ class FrontPage extends Component {
           <Progress animated color="info" value="100" />
         ) : (
           <div>
-            <p>
-              <small style={{ color: "gray" }}>
-                {t("version", { version, ritaVersion })}
-              </small>
-            </p>
+            <p>{t("version", { version, ritaVersion })}</p>
 
             <Finances />
             <UsageMetrics />
