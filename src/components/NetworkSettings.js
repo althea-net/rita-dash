@@ -1,34 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
+import { useTranslation } from "react-i18next";
+
 import Exits from "./Exits";
 import DaoSelection from "./DaoSelection";
-import { Card, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
-import classnames from "classnames";
-import { withTranslation } from "react-i18next";
 
-class NetworkSettings extends Component {
-  state = {
-    activeTab: "1"
-  };
+export default () => {
+  const [t] = useTranslation();
 
-  toggle = tab => {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
-  };
-
-  render() {
-    let { t } = this.props;
-
-    return (
-      <div>
-        <h1>{t("networkConnection")}</h1>
-        <DaoSelection />
-        <Exits />
-      </div>
-    );
-  }
-}
-
-export default withTranslation()(NetworkSettings);
+  return (
+    <div>
+      <h1>{t("networkConnection")}</h1>
+      <DaoSelection />
+      <Exits />
+    </div>
+  );
+};

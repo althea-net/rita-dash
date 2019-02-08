@@ -36,6 +36,7 @@ const store = {
     factor: 0,
     factorError: null,
     initializing: true,
+    ipAddress: null,
     loadingBlockchain: false,
     loadingInterfaces: null,
     loadingIp: null,

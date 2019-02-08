@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Error from "./Error";
 import RegistrationForm from "./RegistrationForm";
 import VerifyForm from "./VerifyForm";
+import ConnectionError from "./ConnectionError";
 import { withTranslation } from "react-i18next";
 
 class Exits extends Component {
@@ -163,7 +164,7 @@ class ExitListItem extends Component {
             <Col xs="12" md={pseudostate === "Problem" ? 12 : 6}>
               <div>{description}</div>
               {state === "Denied" && <div>{message}</div>}
-              <ConnectionError connected={connected} exit={exit} t={t} />
+              <ConnectionError connected={connected} exit={exit} />
             </Col>
             {pseudostate !== "Problem" && (
               <Col xs="12" md="6">
@@ -229,53 +230,6 @@ class ExitListItem extends Component {
           </Row>
         </ListGroupItem>
       </div>
-    );
-  }
-}
-
-class ConnectionError extends Component {
-  constructor() {
-    super();
-    this.state = {
-      show: false
-    };
-    this.debug = this.debug.bind(this);
-  }
-
-  debug(e) {
-    e.preventDefault();
-    this.setState({ show: !this.state.show });
-  }
-
-  render() {
-    let connected = this.props.connected;
-    let { isReachable, haveRoute, isTunnelWorking } = this.props.exit;
-    let { state } = this.props.exit.exitSettings;
-    let reachable = isReachable.toString();
-    let route = haveRoute.toString();
-    let tunnel = isTunnelWorking.toString();
-    let { t } = this.props;
-
-    return (
-      connected || (
-        <div style={{ marginTop: 5, marginBottom: 5 }}>
-          {t("unableToReachExit")}
-          <a href="#debug" onClick={this.debug}>
-            {t("debuggingMessage", { show: this.state.show ? "Hide" : "View" })}
-          </a>
-          {this.state.show && (
-            <pre style={{ background: "#ddd", padding: "10px" }}>
-              {t("debugState", { state })}
-              <br />
-              {t("debugReachable", { reachable })}
-              <br />
-              {t("debugRoute", { route })}
-              <br />
-              {t("debugTunnel", { tunnel })}
-            </pre>
-          )}
-        </div>
-      )
     );
   }
 }

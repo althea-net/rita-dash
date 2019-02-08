@@ -4,7 +4,7 @@ const wei = BigNumber("1000000000000000000");
 export default backend => {
   return {
     getNeighbors: async ({ setState, state }) => {
-      if (state.loading) return;
+      if (state.loading || !state.settings.exitClient) return;
       setState({ initializing: false, loading: true });
 
       let debts = await backend.getDebts();
@@ -18,7 +18,6 @@ export default backend => {
       }
 
       let exits = state.settings.exitClient.exits;
-
       let neighbors = await backend.getNeighbors();
 
       if (neighbors instanceof Error) {
