@@ -42,6 +42,7 @@
   "exitNode": "Exit Node",
   "exitNodesP1": "Exit nodes are like a combination of a VPN and a speedtest server. They keep your browsing history private and make sure that your traffic is always routed through the fastest path in the network at a given price.",
   "exitNodesP2": "Exit nodes need to collect a bit of information about you (your email address), and you need to select an exit node in your region. Althea runs some exit nodes, but in the future you will be able to select exits from other companies if you prefer.",
+  "exitNodesSetup": "You must setup your Subnet before you can select an exit node.",
   "exits": "Exits",
   "exitsError": "Unable to get list of exits from rita server",
   "factorError": "Unable to get metric adjustment factor from rita server",

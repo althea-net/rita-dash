@@ -12,6 +12,7 @@ import VerifyForm from "./VerifyForm";
 import ConnectionError from "./ConnectionError";
 import { actions } from "../store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import usa from "../images/usa.svg";
 
 export default ({ exit }) => {
   let [t] = useTranslation();
@@ -53,7 +54,10 @@ export default ({ exit }) => {
       >
         <ListGroupItemHeading>
           <Row>
-            <Col xs="6">{nickname}</Col>
+            <Col xs="6">
+              <img src={usa} alt="USA" style={{ width: 80 }} />
+              {nickname}
+            </Col>
             <Col xs="6" className="text-right">
               {
                 {
