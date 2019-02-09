@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Exits from "./Exits";
 import DaoSelection from "./DaoSelection";
 
-export default () => {
+export default (daoAddress, ipAddress) => {
   const [t] = useTranslation();
 
   return (

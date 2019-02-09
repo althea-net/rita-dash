@@ -95,7 +95,7 @@ class DaoSelection extends Component {
       newDaoAddress: ""
     };
     this.validators = {
-      daoAddress: a => a && Web3.utils.isAddress(a),
+      daoAddress: a => this.web3.utils.isAddress(a),
       meshIp: ip => new Address6(ip).isValid()
     };
     this.web3 = new Web3(Web3.givenProvider);
@@ -250,7 +250,7 @@ class DaoSelection extends Component {
     }
 
     return (
-      <Card>
+      <Card className="mb-4">
         <CardBody>
           <h2>{t("subnet")}</h2>
           <p>{t("yourOrganizer")}</p>
