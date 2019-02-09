@@ -72,9 +72,9 @@ const store = {
   actions: {
     ...GeneralActions(backend),
     ...DaoActions(backend),
-    ...ExitActions(backend),
+    ...ExitActions,
     ...NeighborActions(backend),
-    ...PaymentActions(backend),
+    ...PaymentActions,
     ...RouterActions(backend),
 
     changePage: (_, page) => ({

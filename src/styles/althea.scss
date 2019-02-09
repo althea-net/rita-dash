@@ -122,18 +122,20 @@ a.nav-link {
   border-right: 1px solid #ddd;
 }
 
-#content {
+#content, .modal-body {
   font-size: 14px;
+  p {
+    color: gray;
+  } 
+}
+
+#content {
   margin-top: 100px;
   margin-left: 320px;
   width: 100%;
   transition: all 0.3s;
   text-align: left;
-
-  p {
-    color: gray;
-  } 
-}
+} 
 
 #content.active {
     width: 100%;
