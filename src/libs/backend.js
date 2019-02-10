@@ -108,7 +108,7 @@ export default class Backend {
   }
 
   async getDebts() {
-    return get("/debts");
+    return get("/debts", true, 300000);
   }
 
   async getExits() {
