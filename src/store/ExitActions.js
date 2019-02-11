@@ -3,20 +3,22 @@ import Backend from "../libs/backend";
 const backend = new Backend();
 
 export async function getExits({ setState, state }, backend) {
-  if (state.loading) return;
-  setState({ initializing: false, loading: true });
+  if (state.loadingExits) return;
+  setState({ exitsError: false, initializing: false, loadingExits: true });
 
   let { blockchain } = state;
   if (!blockchain)
     blockchain = (await getBlockchain({ setState, state })).blockchain;
 
-  let exits = await backend.getExits();
-  if (exits instanceof Error) {
+  let exits = [];
+  try {
+    exits = await backend.getExits();
+  } catch (e) {
     return setState({
       exitsError: state.t("exitsError"),
       exits: null,
       initializing: false,
-      loading: false
+      loadingExits: false
     });
   }
 
@@ -39,7 +41,7 @@ export async function getExits({ setState, state }, backend) {
     exitsError: null,
     exits,
     initializing: false,
-    loading: false
+    loadingExits: false
   });
 }
 
