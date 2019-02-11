@@ -38,6 +38,7 @@ const store = {
     initializing: true,
     ipAddress: null,
     loadingBlockchain: false,
+    loadingExits: null,
     loadingInterfaces: null,
     loadingIp: null,
     loadingPrice: false,

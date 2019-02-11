@@ -1,48 +1,37 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { ListGroupItem } from "reactstrap";
-import { actions } from "../store";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import usa from "../images/usa.svg";
-
-const resetStyle = {
-  color: "#999",
-  cursor: "pointer",
-  textDecoration: "underline"
-};
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default ({ exit }) => {
-  let [t] = useTranslation();
-
   if (!exit.exitSettings) return null;
-  let { message, state } = exit.exitSettings;
-  let { nickname } = exit;
-  if (!message) message = "";
+  let { exitSettings, nickname } = exit;
+  let { description } = exitSettings.generalDetails;
+  nickname = "US West (Althea)";
 
   return (
     <div>
-      <ListGroupItem>
-        <img src={usa} alt="USA" style={{ width: 80 }} />
-        {nickname}
-        {state !== "New" && (
-          <span
-            style={resetStyle}
-            onClick={() => {
-              actions.resetExit(nickname);
-            }}
-          >
-            <FontAwesomeIcon
-              icon="sync"
-              color="#aaaaaa"
-              style={{
-                marginLeft: "15px",
-                marginTop: "10px",
-                marginRight: "5px"
-              }}
-            />
-            {t("reset")}
-          </span>
-        )}
+      <ListGroupItem
+        className="d-flex"
+        style={{ borderRadius: 0, marginBottom: 10 }}
+      >
+        <img
+          src={usa}
+          alt="USA"
+          style={{ width: 50, height: 50, marginRight: 20 }}
+        />
+        <div className="d-flex">
+          <div>
+            <h5>{nickname}</h5>
+            <p className="mb-0">{description}</p>
+          </div>
+          <div className="ml-2">
+            <FontAwesomeIcon color="#27D38D" icon="check-circle" />
+            <span style={{ color: "#27d38d", marginLeft: 5 }}>
+              Great connection
+            </span>
+          </div>
+        </div>
       </ListGroupItem>
     </div>
   );
