@@ -2,6 +2,20 @@ $primary: #3DADF5;
 $btn-border-radius: 0;
 @import "~bootstrap/scss/bootstrap";
 
+.table-striped>thead>tr>th {
+  border-bottom: 1px solid #dadada;
+} 
+
+.table-striped>tbody>tr {
+  >td {
+    border: none;
+  } 
+
+  &:nth-child(odd)>td {
+    background-color: #f8f9fa;
+  }
+}
+
 @keyframes ScrollRight {
   0% {
     background-position: 0px;

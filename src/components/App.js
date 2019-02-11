@@ -3,11 +3,14 @@ import { Nav } from "reactstrap";
 import Sidebar from "./Sidebar";
 import AltheaNav from "./Nav";
 import Topbar from "./Topbar";
-import Frontpage from "./Frontpage";
-import Neighbors from "./Neighbors";
-import RouterSettings from "./RouterSettings";
-import NetworkSettings from "./NetworkSettings";
-import Payments from "./Payments";
+import {
+  Billing,
+  Frontpage,
+  Neighbors,
+  RouterSettings,
+  NetworkSettings,
+  Payments
+} from "../pages";
 import NoConnection from "./NoConnection";
 import CameraUI from "./CameraUI";
 import { actions, connect } from "../store";
@@ -101,7 +104,7 @@ const Page = connect(["page"])(({ page, state, t }) => {
     case "neighbors":
       return <Neighbors />;
     case "billing":
-      return <Payments />;
+      return <Billing />;
     case "payments":
       return <Payments />;
     case "dashboard":
