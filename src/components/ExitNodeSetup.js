@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Button, Modal, ModalBody } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import ExitList from "./ExitList";
-import RegistrationForm from "./RegistrationForm";
-import VerifyForm from "./VerifyForm";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
+import SelectedExit from "./SelectedExit";
 
 export default ({ exits, open, setOpen }) => {
   let [t] = useTranslation();
@@ -12,7 +13,7 @@ export default ({ exits, open, setOpen }) => {
 
   return (
     <div>
-      <Modal isOpen={open} centered>
+      <Modal isOpen={open} centered size="lg">
         <div className="modal-header d-flex justify-content-between">
           <div className="d-flex mr-auto">
             <button
@@ -31,20 +32,30 @@ export default ({ exits, open, setOpen }) => {
           <Button
             color="primary"
             className="ml-auto"
-            onClick={() => setStep(step + 1)}
+            onClick={() => {
+              step === 3 ? setOpen(false) : setStep(step + 1);
+            }}
+            style={{ width: 150 }}
           >
-            Next
+            {step < 3 ? "Next" : "Finish"}
           </Button>
         </div>
+        <SelectedExit exit={exit} />
         <ModalBody>
           {step === 1 && (
             <div>
               <p>{t("selectNode")}</p>
-              <ExitList exits={exits} setExit={setExit} />
+              <ExitList
+                exits={exits}
+                setExit={exit => {
+                  setExit(exit);
+                  setStep(step + 1);
+                }}
+              />
             </div>
           )}
-          {step === 2 && <RegistrationForm exit={exit} />}
-          {step === 3 && <VerifyForm exit={exit} />}
+          {step === 2 && <Step2 exit={exit} />}
+          {step === 3 && <Step3 exit={exit} />}
         </ModalBody>
       </Modal>
     </div>
