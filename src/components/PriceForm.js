@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Button,
   Card,
@@ -14,62 +15,31 @@ import {
 } from "reactstrap";
 import { actions, connect } from "../store";
 
-class PriceForm extends Component {
-  state = {
-    price: null,
-    propsPrice: null
-  };
+export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
+  ({ state: { autoPricing, price, loadingPrice, symbol } }) => {
+    useEffect(() => {
+      actions.getPrice();
+      actions.getAutoPricing();
+      let timer = setInterval(actions.getPrice, 10000);
+      return () => clearInterval(timer);
+    }, []);
 
-  componentDidMount() {
-    actions.getPrice();
-    this.timer = setInterval(actions.getPrice, 10000);
-    actions.getAutoPricing();
-  }
+    let [t] = useTranslation();
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
+    const [newPrice, setNewPrice] = useState(null);
 
-  setPrice = e => {
-    let price = e.target.value;
-    this.setState({ price });
-  };
-
-  togglePricing = () => {
-    actions.toggleAutoPricing();
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    let price = this.state.price;
-    if (!price) price = this.props.state.price;
-    actions.setPrice(price);
-  };
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState && prevState.propsPrice !== nextProps.state.price) {
-      return {
-        propsPrice: nextProps.state.price,
-        price: nextProps.state.price
-      };
-    }
-
-    return {
-      propsPrice: null,
-      price: null
+    const onSubmit = () => {
+      actions.setPrice(newPrice);
     };
-  }
 
-  render() {
-    let { t } = this.props;
-    let { price } = this.state;
-    if (price === null) price = this.props.state.price;
-    let { autoPricing, loadingPrice, symbol } = this.props.state;
+    const togglePricing = () => {
+      actions.toggleAutoPricing();
+    };
 
     return (
-      <Card style={{ height: "100%" }}>
+      <Card className="mb-4">
         <CardBody>
-          <Form onSubmit={this.onSubmit}>
+          <Form onSubmit={onSubmit}>
             <FormGroup id="form">
               {loadingPrice && <Progress animated color="info" value="100" />}
               <h3>{t("price")}</h3>
@@ -78,8 +48,8 @@ class PriceForm extends Component {
                   label={t("price")}
                   name="price"
                   placeholder={t("enterPrice")}
-                  onChange={this.setPrice}
-                  value={price || ""}
+                  onChange={setNewPrice}
+                  value={newPrice}
                   readOnly={autoPricing}
                 />
                 <InputGroupAddon addonType="append">
@@ -93,7 +63,7 @@ class PriceForm extends Component {
                 type="checkbox"
                 id="autoPricing"
                 label={t("automatedPricing")}
-                onChange={this.togglePricing}
+                onChange={togglePricing}
                 value={autoPricing}
                 checked={autoPricing}
               />
@@ -106,8 +76,4 @@ class PriceForm extends Component {
       </Card>
     );
   }
-}
-
-export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
-  PriceForm
 );
