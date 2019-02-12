@@ -31,7 +31,7 @@ class PriceQualityForm extends Component {
     if (!factor) factor = this.props.state.factor;
 
     return (
-      <Card>
+      <Card className="mb-4">
         <CardBody>
           <h3>{t("priceQuality")}</h3>
 
