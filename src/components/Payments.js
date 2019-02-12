@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Button, Card, CardBody, Col, Row } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Button, Card, CardBody } from "reactstrap";
 import { actions, connect } from "../store";
-import { withTranslation } from "react-i18next";
 import PriceForm from "./PriceForm";
 import QualityForm from "./QualityForm";
 import Error from "./Error";
@@ -10,40 +10,42 @@ import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
 import AdvancedSettings from "./AdvancedSettings";
 import { BigNumber } from "bignumber.js";
+import updown from "../images/up_down.png";
 
 const weiPerEth = BigNumber("1000000000000000000");
 
-class Payments extends Component {
-  constructor() {
-    super();
-    this.state = {
-      depositing: false
-    };
-  }
-
-  componentDidMount() {
-    actions.getSettings();
-    this.timer = setInterval(actions.getInfo, 10000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  render() {
-    const {
-      info,
+export default connect([
+  "factorError",
+  "priceError",
+  "withdrawalSuccess",
+  "info",
+  "settings",
+  "symbol"
+])(
+  ({
+    state: {
       factorError,
       priceError,
+      withdrawalSuccess,
+      info,
       settings,
-      symbol,
-      withdrawalSuccess
-    } = this.props.state;
-    const { t } = this.props;
+      symbol
+    }
+  }) => {
+    let [depositing, setDepositing] = useState(false);
+    let [withdrawing, setWithdrawing] = useState(false);
+
+    useEffect(() => {
+      actions.getInfo();
+      let timer = setInterval(actions.getInfo, 10000);
+      return () => clearInterval(timer);
+    }, []);
+
+    let [t] = useTranslation();
 
     let balance = BigNumber(info.balance.toString())
       .div(weiPerEth)
-      .toFixed(8);
+      .toFixed(4);
 
     if (!(info && settings)) return null;
     return (
@@ -54,55 +56,55 @@ class Payments extends Component {
         <Error error={priceError} />
         <Success message={withdrawalSuccess} />
 
-        <Deposit depositing={this.state.depositing} />
-        <Withdraw withdrawing={this.state.withdrawing} />
+        <Deposit depositing={depositing} />
+        <Withdraw withdrawing={withdrawing} />
 
-        <Row style={{ marginBottom: 15 }}>
-          <Col md="6">
-            <Card style={{ height: "100%" }}>
-              <CardBody>
-                <div className="text-center">
-                  <h2>{t("currentBalance")}</h2>
-                  <h3>
-                    {balance} {symbol}
-                  </h3>
-                  <Button color="primary" onClick={actions.startDepositing}>
-                    {t("add1")}
-                  </Button>
-                  <Button
-                    className="ml-2"
-                    color="primary"
-                    onClick={actions.startWithdrawing}
-                  >
-                    {t("withdraw")}
-                  </Button>
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col md="6">
-            <PriceForm t={t} />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col md="6">
-            <QualityForm />
-          </Col>
-          <Col md="6">
-            <AdvancedSettings />
-          </Col>
-        </Row>
+        <Card style={{ height: "100%" }}>
+          <CardBody className="d-flex">
+            <div
+              className="pr-4 w-50 d-flex flex-column justify-content-between"
+              style={{ borderRight: "1px solid #dadada" }}
+            >
+              <div className="d-flex justify-content-between">
+                <h4>{t("currentBalance")}</h4>
+                <h4>
+                  {balance} {symbol}
+                </h4>
+              </div>
+              <div className="d-flex">
+                <Button
+                  color="primary"
+                  onClick={() => setDepositing(true)}
+                  style={{ width: 150 }}
+                >
+                  {t("topUp")}
+                </Button>
+                <Button
+                  className="ml-2"
+                  color="primary"
+                  onClick={() => setWithdrawing(true)}
+                  style={{ width: 150 }}
+                >
+                  {t("withdraw")}
+                </Button>
+              </div>
+            </div>
+            <div className="pl-4 w-50 d-flex">
+              <div className="pr-2">
+                <img src={updown} alt="Upload/Download" />
+              </div>
+              <p>
+                Based on your average usage of 8.4 GB per month, your balance
+                will provide you with an estimated <strong>16 weeks</strong> of
+                service.
+              </p>
+            </div>
+          </CardBody>
+        </Card>
+        <PriceForm t={t} />
+        <QualityForm />
+        <AdvancedSettings />
       </div>
     );
   }
-}
-
-export default connect([
-  "factorError",
-  "priceError",
-  "withdrawalSuccess",
-  "info",
-  "settings",
-  "symbol"
-])(withTranslation()(Payments));
+);

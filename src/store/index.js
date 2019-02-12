@@ -29,7 +29,6 @@ const store = {
     daoAddress: null,
     daos: [],
     daosError: null,
-    depositing: false,
     error: null,
     exits: null,
     exitsError: null,
@@ -66,7 +65,6 @@ const store = {
     wifiChange: null,
     wifiError: null,
     wifiSettings: null,
-    withdrawing: false,
     withdrawalError: null,
     withdrawalSuccess: false
   },
