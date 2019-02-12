@@ -46,8 +46,8 @@ export default connect([
         <Success message={withdrawalSuccess} />
 
         <Account />
-        <PriceForm />
         <QualityForm />
+        <PriceForm />
         <AdvancedSettings />
       </div>
     );
