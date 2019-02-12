@@ -11,6 +11,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
+  Label,
   Progress
 } from "reactstrap";
 import { actions, connect } from "../store";
@@ -26,7 +27,7 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
 
     let [t] = useTranslation();
 
-    const [newPrice, setNewPrice] = useState(null);
+    const [newPrice, setNewPrice] = useState(0);
 
     const onSubmit = () => {
       actions.setPrice(newPrice);
@@ -42,8 +43,9 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
           <Form onSubmit={onSubmit}>
             <FormGroup id="form">
               {loadingPrice && <Progress animated color="info" value="100" />}
-              <h3>{t("price")}</h3>
+              <h3>{t("sellingBandwidth")}</h3>
               <InputGroup>
+                <Label for="price">{t("bandwidthPrice")}</Label>
                 <Input
                   label={t("price")}
                   name="price"
