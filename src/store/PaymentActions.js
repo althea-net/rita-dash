@@ -122,22 +122,6 @@ export default {
     };
   },
 
-  startDepositing: async ({ setState, state }) => {
-    return { depositing: true };
-  },
-
-  stopDepositing: async ({ setState, state }) => {
-    return { depositing: false };
-  },
-
-  startWithdrawing: async ({ setState, state }) => {
-    return { withdrawing: true };
-  },
-
-  stopWithdrawing: async ({ setState, state }) => {
-    return { withdrawing: false };
-  },
-
   withdraw: async ({ setState, state }, address, amount) => {
     let res = await backend.withdraw(address, amount);
 
@@ -150,8 +134,7 @@ export default {
     let txid = res.replace("txid:", "");
 
     return {
-      withdrawalSuccess: `Withdrawal completed with txid: ${txid}`,
-      withdrawing: false
+      withdrawalSuccess: `Withdrawal completed with txid: ${txid}`
     };
   }
 };
