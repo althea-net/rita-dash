@@ -17,6 +17,7 @@ import { actions, connect } from "../store";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBan,
+  faCopy,
   faGlobeAmericas,
   faMinusCircle,
   faAngleRight,
@@ -29,6 +30,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faBan);
+library.add(faCopy);
 library.add(faGlobeAmericas);
 library.add(faMinusCircle);
 library.add(faAngleRight);
