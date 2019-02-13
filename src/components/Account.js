@@ -52,7 +52,12 @@ export default connect([
             info={info}
             symbol={symbol}
           />
-          <Withdraw withdrawing={withdrawing} />
+          <Withdraw
+            withdrawing={withdrawing}
+            setWithdrawing={setWithdrawing}
+            balance={balance}
+            symbol={symbol}
+          />
           <div
             className="pr-4 w-50 d-flex flex-column justify-content-between"
             style={{ borderRight: "1px solid #dadada" }}
