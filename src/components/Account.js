@@ -46,9 +46,13 @@ export default connect([
     return (
       <Card className="mb-4">
         <CardBody className="d-flex">
-          <Deposit depositing={depositing} />
+          <Deposit
+            depositing={depositing}
+            setDepositing={setDepositing}
+            info={info}
+            symbol={symbol}
+          />
           <Withdraw withdrawing={withdrawing} />
-
           <div
             className="pr-4 w-50 d-flex flex-column justify-content-between"
             style={{ borderRight: "1px solid #dadada" }}

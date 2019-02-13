@@ -30,6 +30,7 @@
   "debugState": "state: {{state}}",
   "debugTunnel": "has tunnel: {{tunnel}}",
   "debuggingMessage": "{{show}} advanced debugging message",
+  "deposit": "Deposit",
   "depositFunds": "Deposit Funds",
   "email": "Email",
   "emailRequired": "A valid email is required",

@@ -44,8 +44,12 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
             <FormGroup id="form">
               {loadingPrice && <Progress animated color="info" value="100" />}
               <h3>{t("sellingBandwidth")}</h3>
+              <p>Set the price for your bandwidth.</p>
+
+              <Label for="price">
+                <b>{t("bandwidthPrice")}</b>
+              </Label>
               <InputGroup>
-                <Label for="price">{t("bandwidthPrice")}</Label>
                 <Input
                   label={t("price")}
                   name="price"
@@ -53,22 +57,30 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
                   onChange={setNewPrice}
                   value={newPrice}
                   readOnly={autoPricing}
+                  style={{ borderRight: "none" }}
                 />
                 <InputGroupAddon addonType="append">
-                  <InputGroupText>
-                    {symbol}
-                    /GB
+                  <InputGroupText
+                    style={{
+                      background: "#F8F9FA",
+                      fontSize: 14,
+                      color: "#888"
+                    }}
+                  >
+                    {symbol} / GB
                   </InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
-              <CustomInput
-                type="checkbox"
-                id="autoPricing"
-                label={t("automatedPricing")}
-                onChange={togglePricing}
-                value={autoPricing}
-                checked={autoPricing}
-              />
+              <label className="container">
+                <CustomInput
+                  type="checkbox"
+                  id="autoPricing"
+                  label={t("automatedPricing")}
+                  onChange={togglePricing}
+                  value={autoPricing}
+                  checked={autoPricing}
+                />
+              </label>
             </FormGroup>
             <FormGroup>
               <Button color="primary">{t("save")}</Button>
