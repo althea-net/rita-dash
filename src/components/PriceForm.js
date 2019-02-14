@@ -46,44 +46,43 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
               <h3>{t("sellingBandwidth")}</h3>
               <p>Set the price for your bandwidth.</p>
 
-              <Label for="price">
-                <b>{t("bandwidthPrice")}</b>
-              </Label>
-              <InputGroup>
-                <Input
-                  label={t("price")}
-                  name="price"
-                  placeholder={t("enterPrice")}
-                  onChange={setNewPrice}
-                  value={newPrice}
-                  readOnly={autoPricing}
-                  style={{ borderRight: "none" }}
-                />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText
-                    style={{
-                      background: "#F8F9FA",
-                      fontSize: 14,
-                      color: "#888"
-                    }}
-                  >
-                    {symbol} / GB
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-              <label className="container">
-                <CustomInput
-                  type="checkbox"
-                  id="autoPricing"
-                  label={t("automatedPricing")}
-                  onChange={togglePricing}
-                  value={autoPricing}
-                  checked={autoPricing}
-                />
-              </label>
+              <Label for="price">{t("bandwidthPrice")}</Label>
+
+              <div className="d-flex">
+                <InputGroup className="mr-3" style={{ width: 350 }}>
+                  <Input
+                    label={t("price")}
+                    name="price"
+                    placeholder={t("enterPrice")}
+                    onChange={setNewPrice}
+                    value={newPrice}
+                    readOnly={autoPricing}
+                    style={{ borderRight: "none" }}
+                  />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText
+                      style={{
+                        background: "#F8F9FA",
+                        fontSize: 14,
+                        color: "#888"
+                      }}
+                    >
+                      {symbol} / GB
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+                <Button color="primary">{t("save")}</Button>
+              </div>
             </FormGroup>
-            <FormGroup>
-              <Button color="primary">{t("save")}</Button>
+            <FormGroup className="d-flex">
+              <CustomInput
+                type="checkbox"
+                id="autoPricing"
+                onChange={togglePricing}
+                value={autoPricing}
+                checked={autoPricing}
+              />
+              <Label for="autoPricing">{t("automatedPricing")}</Label>
             </FormGroup>
           </Form>
         </CardBody>

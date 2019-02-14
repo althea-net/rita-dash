@@ -4,10 +4,7 @@ import { Button, Card, CardBody } from "reactstrap";
 import { actions, connect } from "../store";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
-import { BigNumber } from "bignumber.js";
 import updown from "../images/up_down.png";
-
-const weiPerEth = BigNumber("1000000000000000000");
 
 export default connect([
   "factorError",
@@ -18,6 +15,7 @@ export default connect([
   "symbol"
 ])(
   ({
+    balance,
     state: {
       factorError,
       priceError,
@@ -37,10 +35,6 @@ export default connect([
     }, []);
 
     let [t] = useTranslation();
-
-    let balance = BigNumber(info.balance.toString())
-      .div(weiPerEth)
-      .toFixed(3);
 
     if (!(info && settings)) return null;
     return (
