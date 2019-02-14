@@ -1,14 +1,17 @@
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { actions, connect } from "../store";
+import { BigNumber } from "bignumber.js";
 
 import Account from "./Account";
 import PriceForm from "./PriceForm";
 import QualityForm from "./QualityForm";
-import AdvancedSettings from "./AdvancedSettings";
+import PrivateKeys from "./PrivateKeys";
 
 import Error from "./Error";
 import Success from "./Success";
+
+const weiPerEth = BigNumber("1000000000000000000");
 
 export default connect([
   "factorError",
@@ -36,6 +39,10 @@ export default connect([
 
     let [t] = useTranslation();
 
+    let balance = BigNumber(info.balance.toString())
+      .div(weiPerEth)
+      .toFixed(3);
+
     if (!(info && settings)) return null;
     return (
       <div>
@@ -45,10 +52,10 @@ export default connect([
         <Error error={priceError} />
         <Success message={withdrawalSuccess} />
 
-        <Account />
+        <Account balance={balance} />
         <QualityForm />
         <PriceForm />
-        <AdvancedSettings />
+        <PrivateKeys balance={balance} symbol={symbol} />
       </div>
     );
   }
