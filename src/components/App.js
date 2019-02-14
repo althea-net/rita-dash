@@ -6,7 +6,7 @@ import Topbar from "./Topbar";
 import {
   Billing,
   Frontpage,
-  Neighbors,
+  AdvancedSettings,
   RouterSettings,
   NetworkSettings,
   Payments
@@ -98,13 +98,11 @@ class App extends Component {
 const Page = connect(["page"])(({ page, state, t }) => {
   switch (page) {
     case "advanced":
-      return <Neighbors />;
+      return <AdvancedSettings />;
     case "router-settings":
       return <RouterSettings />;
     case "network-settings":
       return <NetworkSettings />;
-    case "neighbors":
-      return <Neighbors />;
     case "billing":
       return <Billing />;
     case "payments":

@@ -1,3 +1,4 @@
+export { default as AdvancedSettings } from "../components/AdvancedSettings";
 export { default as Billing } from "../components/Billing";
 export { default as Frontpage } from "../components/Frontpage";
 export { default as Neighbors } from "../components/Neighbors";
