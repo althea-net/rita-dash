@@ -1,3 +1,5 @@
+import { BigNumber } from "bignumber.js";
+
 const initialSettings = {
   network: {
     meshIp: null
@@ -21,7 +23,12 @@ export default backend => {
         };
       }
 
-      return { loading: false, info };
+      let weiPerEth = BigNumber("1000000000000000000");
+      let balance = BigNumber(info.balance.toString())
+        .div(weiPerEth)
+        .toFixed(3);
+
+      return { balance, loading: false, info };
     },
 
     getSettings: async ({ setState, state }) => {

@@ -120,11 +120,6 @@ a.nav-link {
     margin: 40px 0;
 }
 
-.wrapper {
-    display: flex;
-    width: 100%;
-}
-
 #sidebar {
   font-size: 1rem;
   padding-top: 30px;
@@ -154,6 +149,7 @@ a.nav-link {
   width: 100%;
   transition: all 0.3s;
   text-align: left;
+  max-width: 800px;
 } 
 
 #content.active {
@@ -166,6 +162,6 @@ a.nav-link {
     }
 
     #content {
-      left: 0;
+      margin-left: 0;
     } 
   }
