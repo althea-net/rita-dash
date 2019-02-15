@@ -16,7 +16,7 @@ export default connect(["initializing", "exits", "exitsError", "daoAddress"])(
       return () => clearInterval(timer);
     }, []);
 
-    let [selectingExit, setSelectingExit] = useState(true);
+    let [selectingExit, setSelectingExit] = useState(false);
 
     let { exits, exitsError, initializing, daoAddress } = state;
 

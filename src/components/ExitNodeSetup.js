@@ -13,7 +13,7 @@ export default ({ exits, open, setOpen }) => {
 
   return (
     <div>
-      <Modal isOpen={open} centered size="lg">
+      <Modal isOpen={open} centered size="lg" toggle={() => setOpen(!open)}>
         <div className="modal-header d-flex justify-content-between">
           <div className="d-flex mr-auto">
             <button
