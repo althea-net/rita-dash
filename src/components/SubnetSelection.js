@@ -69,7 +69,7 @@ class ControlledInput extends Component {
   }
 }
 
-class DaoSelection extends Component {
+class SubnetSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -374,5 +374,5 @@ class DaoSelection extends Component {
 }
 
 export default connect(["daoAddress", "meshIp", "daos", "daosError", "info"])(
-  withTranslation()(DaoSelection)
+  withTranslation()(SubnetSelection)
 );
