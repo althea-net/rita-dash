@@ -1,44 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Nav } from "reactstrap";
 import Sidebar from "./Sidebar";
 import AltheaNav from "./Nav";
 import Topbar from "./Topbar";
-import {
-  Billing,
-  Frontpage,
-  AdvancedSettings,
-  RouterSettings,
-  NetworkSettings,
-  Payments
-} from "../pages";
 import NoConnection from "./NoConnection";
 import CameraUI from "./CameraUI";
-import { actions, connect } from "../store";
-import "../icons";
-import { Address, Balance, CurrencySymbol } from "../contexts";
+import { Provider } from "../Store";
 import Backend from "../libs/backend";
 import { BigNumber } from "bignumber.js";
+import Router from "../Router";
 const backend = new Backend();
 
-const main = {
-  width: "100%",
-  maxWidth: 800,
-  padding: 10
-};
-
 export default () => {
-  let [current, setCurrent] = useState(window.location.hash.substr(1));
+  let [page, setPage] = useState("");
   let [address, setAddress] = useState("");
   let [symbol, setSymbol] = useState("");
   let [balance, setBalance] = useState("");
+  let [version, setVersion] = useState("");
 
-  const onHashChange = () => {
+  const getPage = () => {
     let page = window.location.hash.substr(1);
-    setCurrent(page);
-    actions.changePage(page);
+    setPage(page);
   };
 
-  useEffect(async () => {
+  const init = async () => {
+    getPage();
+    window.addEventListener("hashchange", getPage, false);
+
     let weiPerEth = BigNumber("1000000000000000000");
     let symbols = {
       Ethereum: "ETH",
@@ -51,59 +39,36 @@ export default () => {
     let balance = BigNumber(info.balance.toString())
       .div(weiPerEth)
       .toFixed(3);
+
+    let version = await backend.getVersion();
+
+    setVersion(version);
     setSymbol(symbols[blockchain]);
     setBalance(balance);
     setAddress(info.address);
+  };
 
-    onHashChange();
-    window.addEventListener("hashchange", onHashChange, false);
-    actions.getBlockchain();
-    actions.getSettings();
-    actions.getInfo();
-    actions.getVersion();
-    let timer = setInterval(actions.getVersion, 2000);
+  useEffect(() => {
+    init();
+    let timer = setInterval(backend.getVersion, 2000);
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <React.Fragment>
-      <div className="App">
-        <Topbar />
-        <Sidebar>
-          <Nav id="sidebar" navbar>
-            <AltheaNav current={current} />
-          </Nav>
-          <NoConnection />
-          <div style={main}>
-            <Balance.Provider value={balance}>
-              <Address.Provider value={address}>
-                <CurrencySymbol.Provider value={symbol}>
-                  <Page page={current} />
-                </CurrencySymbol.Provider>
-              </Address.Provider>
-            </Balance.Provider>
-          </div>
-        </Sidebar>
-      </div>
-      <CameraUI />
-    </React.Fragment>
+    <Fragment>
+      <Provider value={{ address, symbol, balance, version }}>
+        <div className="App">
+          <Topbar />
+          <Sidebar>
+            <Nav id="sidebar" navbar>
+              <AltheaNav page={page} />
+            </Nav>
+            <NoConnection />
+            <Router page={page} />
+          </Sidebar>
+        </div>
+        <CameraUI />
+      </Provider>
+    </Fragment>
   );
 };
-
-const Page = connect(["page"])(({ page, state, t }) => {
-  switch (page) {
-    case "advanced":
-      return <AdvancedSettings />;
-    case "router-settings":
-      return <RouterSettings />;
-    case "network-settings":
-      return <NetworkSettings />;
-    case "billing":
-      return <Billing />;
-    case "payments":
-      return <Payments />;
-    case "dashboard":
-    default:
-      return <Frontpage />;
-  }
-});
