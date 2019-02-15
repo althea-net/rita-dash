@@ -132,6 +132,8 @@
   "subnet": "Subnet",
   "subnetDao": "Subnet DAO",
   "subnetAddress": "Subnet Organization Ethereum Address",
+  "subnetOrganization": "Subnet Organization",
+  "subnetsAre": "Subnets are the service providers who help maintain your local network and provide you with your IP address.",
   "switchMode": "Switch mode to",
   "systemBlockchain": "System Blockchain",
   "theseCredentials": "These are the credentials you enter when accessing your router interface.",
