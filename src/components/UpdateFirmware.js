@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Modal, ModalBody } from "reactstrap";
+
 import router from "../images/router.png";
+import bigGreenCheck from "../images/big_green_check.png";
 
 export default ({ open, setOpen }) => {
   let [t] = useTranslation();
+  let [updated, setUpdated] = useState(false);
 
   return (
     <Modal isOpen={open} centered toggle={() => setOpen(!open)} size="sm">
@@ -17,18 +20,30 @@ export default ({ open, setOpen }) => {
           &times;
         </h2>
       </div>
-      <ModalBody className="text-center">
-        <img src={router} alt="Router" className="mb-2" />
-        <p>
-          <b>A new version of the firmware is available (4.3.4)</b>
-        </p>
-        <Button className="mb-2" color="primary" style={{ width: 250 }}>
-          Update Now
-        </Button>
-        <p>
-          <small>After you update, you will have to log in again.</small>
-        </p>
-      </ModalBody>
+      {updated ? (
+        <ModalBody className="text-center">
+          <img src={bigGreenCheck} alt="Checkmark" className="mb-2" />
+          <h5>Your firmware is currently up to date!</h5>
+        </ModalBody>
+      ) : (
+        <ModalBody className="text-center">
+          <img src={router} alt="Router" className="mb-2" />
+          <p>
+            <b>A new version of the firmware is available (4.3.4)</b>
+          </p>
+          <Button
+            className="mb-2"
+            color="primary"
+            style={{ width: 250 }}
+            onClick={() => setUpdated(true)}
+          >
+            Update Now
+          </Button>
+          <p>
+            <small>After you update, you will have to log in again.</small>
+          </p>
+        </ModalBody>
+      )}
     </Modal>
   );
 };
