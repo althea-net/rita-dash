@@ -30,7 +30,7 @@ export default ({ balance, symbol }) => {
             <h3>{t("privateKeys")}</h3>
             <p>{t("importKey", { balance, symbol })}</p>
 
-            <h4>Import</h4>
+            <h4>{t("import")}</h4>
             <Label for="price">{t("privateKeyString")}</Label>
             <div className="d-flex">
               <Input

@@ -1,57 +1,34 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  Button,
   Card,
   CardBody,
   Form,
   FormGroup,
-  Input,
+  CustomInput,
   Label
 } from "reactstrap";
 
-import Export from "./Export";
-
 export default ({ balance, symbol }) => {
   let [t] = useTranslation();
-  let [privateKey, setPrivateKey] = useState("");
-  let [exporting, setExporting] = useState(false);
+  let [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   return (
     <Card className="mb-4">
       <CardBody>
-        <Export
-          exporting={exporting}
-          setExporting={setExporting}
-          privateKey={privateKey}
-        />
-        <Form onSubmit={() => setPrivateKey(privateKey)}>
-          <FormGroup id="form">
-            <h3>{t("privateKeys")}</h3>
-            <p>{t("importKey", { balance, symbol })}</p>
+        <Form>
+          <h3>{t("emailNotifications")}</h3>
+          <p>{t("whenEmail")}</p>
 
-            <h4>Import</h4>
-            <Label for="price">{t("privateKeyString")}</Label>
-            <div className="d-flex">
-              <Input
-                className="mr-3"
-                onChange={e => setPrivateKey(e.target.value)}
-                value={privateKey}
-                style={{ width: 350 }}
-              />
-              <Button color="primary" style={{ width: 100 }} disabled>
-                {t("import")}
-              </Button>
-            </div>
+          <FormGroup className="d-flex">
+            <CustomInput
+              type="checkbox"
+              id="notifications"
+              onClick={() => setNotificationsEnabled(!notificationsEnabled)}
+              checked={notificationsEnabled}
+            />
+            <Label for="notifications">{t("enableNotifications")}</Label>
           </FormGroup>
-          <h4>{t("export")}</h4>
-          <Button
-            color="secondary"
-            style={{ width: 150 }}
-            onClick={() => setExporting(true)}
-          >
-            {t("export")}
-          </Button>
         </Form>
       </CardBody>
     </Card>
