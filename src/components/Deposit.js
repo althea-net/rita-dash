@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Modal, ModalHeader, ModalBody } from "reactstrap";
 import QR from "qrcode.react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default ({ depositing, setDepositing, info, symbol }) => {
-  let [t] = useTranslation();
+import { Address, CurrencySymbol } from "../contexts";
 
-  let { address } = info;
+export default ({ open, setOpen }) => {
+  let [t] = useTranslation();
+  let address = useContext(Address);
+  let symbol = useContext(CurrencySymbol);
+
+  if (!(address && symbol)) return null;
 
   return (
-    <Modal
-      isOpen={depositing}
-      centered
-      toggle={() => setDepositing(!depositing)}
-    >
+    <Modal isOpen={open} centered toggle={() => setOpen(!open)}>
       <ModalHeader>
         {t("deposit")} {symbol}
       </ModalHeader>

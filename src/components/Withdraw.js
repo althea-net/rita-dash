@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -18,12 +18,16 @@ import { actions } from "../store";
 import { BigNumber } from "bignumber.js";
 import web3 from "web3";
 
+import { Balance, CurrencySymbol } from "../contexts";
+
 const weiPerEth = BigNumber("1000000000000000000");
 
-export default ({ withdrawing, setWithdrawing, balance, symbol }) => {
+export default ({ open, setOpen }) => {
   let [t] = useTranslation();
   let [address, setAddress] = useState("");
   let [amount, setAmount] = useState("");
+  let balance = useContext(Balance);
+  let symbol = useContext(CurrencySymbol);
 
   let validate = param => {
     return {
@@ -45,7 +49,7 @@ export default ({ withdrawing, setWithdrawing, balance, symbol }) => {
 
   return (
     <div>
-      <Modal isOpen={withdrawing} toggle={() => setWithdrawing(!withdrawing)}>
+      <Modal isOpen={open} toggle={() => setOpen(!open)}>
         <ModalHeader>
           {t("withdraw")} {symbol}
         </ModalHeader>
@@ -109,7 +113,7 @@ export default ({ withdrawing, setWithdrawing, balance, symbol }) => {
             <Button
               color="primary"
               outline
-              onClick={() => setWithdrawing(false)}
+              onClick={() => setOpen(false)}
               className="mr-2"
             >
               Cancel
