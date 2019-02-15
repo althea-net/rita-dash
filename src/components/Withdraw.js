@@ -18,7 +18,7 @@ import { actions } from "../store";
 import { BigNumber } from "bignumber.js";
 import web3 from "web3";
 
-import { Store } from "../Store";
+import { Context } from "../store";
 
 const weiPerEth = BigNumber("1000000000000000000");
 
@@ -28,7 +28,9 @@ export default ({ open, setOpen }) => {
   let [address, setAddress] = useState("");
   let [amount, setAmount] = useState("");
 
-  let { balance, symbol } = useContext(Store);
+  let {
+    state: { balance, symbol }
+  } = useContext(Context);
 
   let validate = param => {
     return {

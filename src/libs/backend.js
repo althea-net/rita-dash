@@ -19,10 +19,17 @@ async function get(url, camel = true, timeout = 10000) {
   const signal = controller.signal;
 
   let timer = setTimeout(() => controller.abort(), timeout);
-  const res = await fetch(base + url, { signal });
+  let res;
+
+  try {
+    res = await fetch(base + url, { signal });
+  } catch (e) {
+    return e;
+  }
+
   clearTimeout(timer);
 
-  if (!res.ok) throw new Error(res.status);
+  if (!res.ok) return new Error(res.status);
 
   let clone = res.clone();
   try {

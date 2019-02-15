@@ -95,5 +95,6 @@ export const {
   actions,
   getState,
   connect,
-  subscribe
+  subscribe,
+  Context
 } = initStore(store);

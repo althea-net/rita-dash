@@ -5,7 +5,7 @@ import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
 import updown from "../images/up_down.png";
 
-import { Store } from "../Store";
+import { Context } from "../store";
 
 export default () => {
   let [t] = useTranslation();
@@ -13,7 +13,9 @@ export default () => {
   let [depositing, setDepositing] = useState(false);
   let [withdrawing, setWithdrawing] = useState(false);
 
-  let { balance, symbol } = useContext(Store);
+  let {
+    state: { balance, symbol }
+  } = useContext(Context);
 
   return (
     <Card className="mb-4">
