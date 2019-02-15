@@ -24,7 +24,7 @@ export default ({ balance, symbol }) => {
             <CustomInput
               type="checkbox"
               id="notifications"
-              onClick={() => setNotificationsEnabled(!notificationsEnabled)}
+              onChange={() => setNotificationsEnabled(!notificationsEnabled)}
               checked={notificationsEnabled}
             />
             <Label for="notifications">{t("enableNotifications")}</Label>
