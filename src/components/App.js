@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Nav } from "reactstrap";
 import Sidebar from "./Sidebar";
 import AltheaNav from "./Nav";
@@ -14,86 +14,81 @@ import {
 import NoConnection from "./NoConnection";
 import CameraUI from "./CameraUI";
 import { actions, connect } from "../store";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faBan,
-  faCopy,
-  faGlobeAmericas,
-  faMinusCircle,
-  faAngleRight,
-  faCheckCircle,
-  faQrcode,
-  faRoute,
-  faSignal,
-  faSitemap,
-  faSync
-} from "@fortawesome/free-solid-svg-icons";
+import "../icons";
+import { Address, Balance, CurrencySymbol } from "../contexts";
+import Backend from "../libs/backend";
+import { BigNumber } from "bignumber.js";
+const backend = new Backend();
 
-library.add(faBan);
-library.add(faCopy);
-library.add(faGlobeAmericas);
-library.add(faMinusCircle);
-library.add(faAngleRight);
-library.add(faCheckCircle);
-library.add(faRoute);
-library.add(faQrcode);
-library.add(faSignal);
-library.add(faSitemap);
-library.add(faSync);
+const main = {
+  width: "100%",
+  maxWidth: 800,
+  padding: 10
+};
 
-class App extends Component {
-  state = {
-    current: window.location.hash.substr(1)
+export default () => {
+  let [current, setCurrent] = useState(window.location.hash.substr(1));
+  let [address, setAddress] = useState("");
+  let [symbol, setSymbol] = useState("");
+  let [balance, setBalance] = useState("");
+
+  const onHashChange = () => {
+    let page = window.location.hash.substr(1);
+    setCurrent(page);
+    actions.changePage(page);
   };
 
-  componentDidMount() {
-    this.onHashChange();
-    window.addEventListener("hashchange", this.onHashChange, false);
+  useEffect(async () => {
+    let weiPerEth = BigNumber("1000000000000000000");
+    let symbols = {
+      Ethereum: "ETH",
+      Rinkeby: "tETH",
+      Xdai: "DAI"
+    };
+
+    let info = await backend.getInfo();
+    let blockchain = await backend.getBlockchain();
+    let balance = BigNumber(info.balance.toString())
+      .div(weiPerEth)
+      .toFixed(3);
+    setSymbol(symbols[blockchain]);
+    setBalance(balance);
+    setAddress(info.address);
+
+    onHashChange();
+    window.addEventListener("hashchange", onHashChange, false);
     actions.getBlockchain();
     actions.getSettings();
     actions.getInfo();
     actions.getVersion();
-    this.versionTimer = setInterval(actions.getVersion, 2000);
-  }
+    let timer = setInterval(actions.getVersion, 2000);
+    return () => clearInterval(timer);
+  }, []);
 
-  componentWillUnmount() {
-    clearInterval(this.versionTimer);
-  }
-
-  onHashChange = () => {
-    let page = window.location.hash.substr(1);
-    this.setState({ current: page });
-    actions.changePage(page);
-  };
-
-  render() {
-    let { current } = this.state;
-
-    let main = {
-      width: "100%",
-      maxWidth: 800,
-      padding: 10
-    };
-
-    return (
-      <React.Fragment>
-        <div className="App">
-          <Topbar />
-          <Sidebar>
-            <Nav id="sidebar" navbar>
-              <AltheaNav current={current} />
-            </Nav>
-            <NoConnection />
-            <div style={main}>
-              <Page page={current} />
-            </div>
-          </Sidebar>
-        </div>
-        <CameraUI />
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <div className="App">
+        <Topbar />
+        <Sidebar>
+          <Nav id="sidebar" navbar>
+            <AltheaNav current={current} />
+          </Nav>
+          <NoConnection />
+          <div style={main}>
+            <Balance.Provider value={balance}>
+              <Address.Provider value={address}>
+                <CurrencySymbol.Provider value={symbol}>
+                  <Page page={current} />
+                </CurrencySymbol.Provider>
+              </Address.Provider>
+            </Balance.Provider>
+          </div>
+        </Sidebar>
+      </div>
+      <CameraUI />
+    </React.Fragment>
+  );
+};
 
 const Page = connect(["page"])(({ page, state, t }) => {
   switch (page) {
@@ -112,5 +107,3 @@ const Page = connect(["page"])(({ page, state, t }) => {
       return <Frontpage />;
   }
 });
-
-export default App;
