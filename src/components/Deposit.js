@@ -4,12 +4,11 @@ import { Card, CardBody, Modal, ModalHeader, ModalBody } from "reactstrap";
 import QR from "qrcode.react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Address, CurrencySymbol } from "../contexts";
+import { Store } from "../Store";
 
 export default ({ open, setOpen }) => {
   let [t] = useTranslation();
-  let address = useContext(Address);
-  let symbol = useContext(CurrencySymbol);
+  let { address, symbol } = useContext(Store);
 
   if (!(address && symbol)) return null;
 

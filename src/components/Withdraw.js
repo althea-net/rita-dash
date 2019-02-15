@@ -18,16 +18,17 @@ import { actions } from "../store";
 import { BigNumber } from "bignumber.js";
 import web3 from "web3";
 
-import { Balance, CurrencySymbol } from "../contexts";
+import { Store } from "../Store";
 
 const weiPerEth = BigNumber("1000000000000000000");
 
 export default ({ open, setOpen }) => {
   let [t] = useTranslation();
+
   let [address, setAddress] = useState("");
   let [amount, setAmount] = useState("");
-  let balance = useContext(Balance);
-  let symbol = useContext(CurrencySymbol);
+
+  let { balance, symbol } = useContext(Store);
 
   let validate = param => {
     return {
