@@ -49,7 +49,7 @@ export default () => {
                   style={{ width: 240 }}
                   onClick={() => setSelectingExit(true)}
                 >
-                  Setup Exit Node
+                  {t("setupExitNode")}
                 </Button>
                 {selectingExit && (
                   <ExitNodeSetup
