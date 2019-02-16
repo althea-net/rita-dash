@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button, Modal, ModalBody } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import ExitList from "./ExitList";
-import Step2 from "./Step2";
-import Step3 from "./Step3";
+import EmailForm from "./EmailForm";
+import CodeForm from "./CodeForm";
 import SelectedExit from "./SelectedExit";
 
 export default ({ exits, open, setOpen }) => {
@@ -54,8 +54,8 @@ export default ({ exits, open, setOpen }) => {
               />
             </div>
           )}
-          {step === 2 && <Step2 exit={exit} />}
-          {step === 3 && <Step3 exit={exit} />}
+          {step === 2 && <EmailForm exit={exit} />}
+          {step === 3 && <CodeForm exit={exit} />}
         </ModalBody>
       </Modal>
     </div>
