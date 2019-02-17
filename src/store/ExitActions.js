@@ -11,9 +11,9 @@ export async function getExits({ setState, state }, backend) {
     blockchain = (await getBlockchain({ setState, state })).blockchain;
 
   let exits = [];
-  try {
-    exits = await backend.getExits();
-  } catch (e) {
+  exits = await backend.getExits();
+
+  if (exits instanceof Error) {
     return setState({
       exitsError: state.t("exitsError"),
       exits: null,
@@ -28,14 +28,15 @@ export async function getExits({ setState, state }, backend) {
     });
   };
 
-  exits = exits
-    .filter(exit => {
-      return (
-        exit.exitSettings.generalDetails &&
-        exit.exitSettings.generalDetails.exitCurrency === blockchain
-      );
-    })
-    .sort(sort);
+  if (exits.length)
+    exits = exits
+      .filter(exit => {
+        return (
+          exit.exitSettings.generalDetails &&
+          exit.exitSettings.generalDetails.exitCurrency === blockchain
+        );
+      })
+      .sort(sort);
 
   setState({
     exitsError: null,

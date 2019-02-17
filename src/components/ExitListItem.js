@@ -27,14 +27,13 @@ const Status = styled.span`
   margin-left: 5px;
 `;
 
-export default ({ exit, setExit }) => {
+export default ({ exit, click }) => {
   if (!exit.exitSettings) return null;
   let { exitSettings, nickname } = exit;
   let { description } = exitSettings.generalDetails;
-  nickname = "US West (Althea)";
 
   return (
-    <Item className="d-flex" onClick={() => setExit(exit)}>
+    <Item className="d-flex" onClick={click}>
       <Flag src={usa} alt="USA" />
       <div className="d-flex">
         <div>
