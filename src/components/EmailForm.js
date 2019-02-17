@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import envelope from "../images/email.png";
 import { Form, FormGroup, Input } from "reactstrap";
 
-export default ({ exit }) => {
+export default ({ email, handleEmail }) => {
   let [t] = useTranslation();
-  let [email, setEmail] = useState("");
 
   return (
     <div>
@@ -17,8 +16,9 @@ export default ({ exit }) => {
           <Form>
             <FormGroup>
               <Input
+                name="email"
                 value={email}
-                onChange={e => setEmail(e.target.value)}
+                onChange={handleEmail}
                 placeholder={t("emailAddress")}
                 style={{ width: 300 }}
               />

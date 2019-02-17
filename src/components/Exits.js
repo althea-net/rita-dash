@@ -16,7 +16,9 @@ export default () => {
   useEffect(() => {
     actions.getExits();
     let timer = setInterval(actions.getExits, 10000);
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   let [selectingExit, setSelectingExit] = useState(false);
@@ -40,7 +42,19 @@ export default () => {
           <div>
             <p>{t("exitNodesP1")}</p>
             {selected ? (
-              <ExitListItem exit={selected} />
+              <>
+                <ExitListItem
+                  exit={selected}
+                  click={() => setSelectingExit(true)}
+                />
+                <Button
+                  color="secondary"
+                  style={{ width: 240 }}
+                  onClick={() => setSelectingExit(true)}
+                >
+                  {t("updateExit")}
+                </Button>
+              </>
             ) : (
               <div>
                 <p>{t("exitNodesP2")}</p>
@@ -51,14 +65,14 @@ export default () => {
                 >
                   {t("setupExitNode")}
                 </Button>
-                {selectingExit && (
-                  <ExitNodeSetup
-                    open={selectingExit}
-                    setOpen={setSelectingExit}
-                    exits={available}
-                  />
-                )}
               </div>
+            )}
+            {selectingExit && (
+              <ExitNodeSetup
+                open={selectingExit}
+                setOpen={setSelectingExit}
+                exits={available}
+              />
             )}
           </div>
         ) : (

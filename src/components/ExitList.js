@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Alert, ListGroup } from "reactstrap";
 import ExitListItem from "./ExitListItem";
 
-export default ({ exits, setExit }) => {
+export default ({ exits, selectExit }) => {
   let [t] = useTranslation();
 
   return (
@@ -11,7 +11,11 @@ export default ({ exits, setExit }) => {
       {exits.length ? (
         <ListGroup>
           {exits.map(exit => (
-            <ExitListItem exit={exit} key={exit.nickname} setExit={setExit} />
+            <ExitListItem
+              exit={exit}
+              key={exit.nickname}
+              click={() => selectExit(exit)}
+            />
           ))}
         </ListGroup>
       ) : (
