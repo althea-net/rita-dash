@@ -11,7 +11,7 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
   let modes = [t("LAN"), t("Mesh"), t("WAN")];
 
   return (
-    <div className="d-flex flex-nowrap justify-content-center mb-2">
+    <div className="d-flex flex-wrap justify-content-center mb-2">
       {portOrderings[device].map((iface, i) => {
         let last = i === portOrderings[device].length - 1;
 

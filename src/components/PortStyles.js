@@ -6,7 +6,7 @@ import glImage from "../images/gl.jpg";
 export const PortNumber = styled.div`
   position: absolute;
   top: 30px;
-  left: 62px;
+  left: calc(50% - 6px);
   font-size: 24px;
   font-weight: bold;
   text-shadow: 2px 2px #666;
@@ -28,8 +28,8 @@ export const PortToggle = styled(Button)`
 
 export const RouterImage = styled.img`
   margin-bottom: 20px;
-  width: 300px;
   margin-right: 20px;
+  width: 300px;
 `;
 
 const StyledCard = styled(Card)`
@@ -37,8 +37,8 @@ const StyledCard = styled(Card)`
 `;
 
 export const PortColumn = props => (
-  <StyledCard>
-    <CardBody className="text-center">{props.children}</CardBody>
+  <StyledCard className="col-4 p-0">
+    <CardBody className="text-center mx-auto">{props.children}</CardBody>
   </StyledCard>
 );
 
