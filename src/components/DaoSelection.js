@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {
   Alert,
   Button,
@@ -248,7 +248,7 @@ class DaoSelection extends Component {
     }
 
     return (
-      <Fragment>
+      <>
         <p>{t("yourOrganizer")}</p>
         <Form style={{ marginTop: 15 }}>
           <FormGroup>
@@ -368,7 +368,7 @@ class DaoSelection extends Component {
             )}
           </div>
         )}
-      </Fragment>
+      </>
     );
   }
 }

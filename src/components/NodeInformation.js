@@ -19,7 +19,7 @@ export default ({ address, settings }) => {
   let { meshIp, wgPublicKey } = settings.network;
 
   return (
-    <React.Fragment>
+    <>
       <h2>{t("nodeInfo")}</h2>
       <Card>
         <CardBody>
@@ -78,6 +78,6 @@ export default ({ address, settings }) => {
           </InputGroup>
         </CardBody>
       </Card>
-    </React.Fragment>
+    </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { connect } from "../store";
 import { Progress } from "reactstrap";
@@ -15,7 +15,7 @@ export default connect(["error", "loading", "info", "settings"])(
     let { address, ritaVersion, version } = info;
 
     return (
-      <Fragment>
+      <>
         <h1>{t("welcome")}</h1>
 
         {error ? (
@@ -32,7 +32,7 @@ export default connect(["error", "loading", "info", "settings"])(
             <NodeInformation address={address} settings={settings} t={t} />
           </div>
         )}
-      </Fragment>
+      </>
     );
   }
 );

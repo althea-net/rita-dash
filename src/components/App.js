@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Nav } from "reactstrap";
 import AltheaNav from "./Nav";
 import Topbar from "./Topbar";
@@ -20,7 +20,7 @@ export default () => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <Topbar />
       <div id="content">
         <Nav id="sidebar" navbar>
@@ -29,6 +29,6 @@ export default () => {
         <NoConnection />
         <Router page={page} setPage={setPage} />
       </div>
-    </Fragment>
+    </>
   );
 };
