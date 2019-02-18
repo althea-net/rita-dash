@@ -30,7 +30,7 @@ class Wifi extends Component {
       else return <Alert color="info">{t("noWifi")}</Alert>;
 
     return (
-      <React.Fragment>
+      <>
         {wifiSettings.map((settings, i) => (
           <WifiSettingsForm
             state={this.props.state}
@@ -38,7 +38,7 @@ class Wifi extends Component {
             wifiSettings={settings}
           />
         ))}
-      </React.Fragment>
+      </>
     );
   }
 }

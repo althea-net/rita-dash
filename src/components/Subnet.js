@@ -1,4 +1,4 @@
-import React, { useContext, useState, Fragment } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody } from "reactstrap";
 
@@ -15,7 +15,7 @@ export default () => {
   } = useContext(Context);
 
   return (
-    <Fragment>
+    <>
       <Card className="mb-4">
         <CardBody>
           <h2>{t("subnet")}</h2>
@@ -26,6 +26,6 @@ export default () => {
           )}
         </CardBody>
       </Card>
-    </Fragment>
+    </>
   );
 };

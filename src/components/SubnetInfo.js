@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Label } from "reactstrap";
 
@@ -11,7 +11,7 @@ export default ({ setEditing }) => {
   } = useContext(Context);
 
   return (
-    <Fragment>
+    <>
       <p>{t("subnetsAre")}</p>
 
       <div className="d-flex mb-4">
@@ -32,6 +32,6 @@ export default ({ setEditing }) => {
       >
         Edit
       </Button>
-    </Fragment>
+    </>
   );
 };

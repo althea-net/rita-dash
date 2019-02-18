@@ -99,7 +99,7 @@ class WifiSettingsForm extends Component {
     let { t } = this.props;
 
     return (
-      <React.Fragment>
+      <>
         <Card style={{ marginBottom: 20 }}>
           <CardBody>
             {success === radioType && (
@@ -172,7 +172,7 @@ class WifiSettingsForm extends Component {
             </Form>
           </CardBody>
         </Card>
-      </React.Fragment>
+      </>
     );
   }
 }
