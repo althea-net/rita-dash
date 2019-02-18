@@ -1,40 +1,38 @@
-import React, { Component } from "react";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import { NavItem, NavLink } from "reactstrap";
-import { withTranslation } from "react-i18next";
 
-class AltheaNav extends Component {
-  navItems = () => {
-    let { t } = this.props;
-    let pages = {
-      dashboard: { title: t("dashboard") },
-      router_settings: { title: t("wifiAndPorts") },
-      network_settings: { title: t("networkConnection") },
-      billing: { title: t("billing") },
-      payments: { title: t("paymentSettings") },
-      advanced: { title: t("advancedSettings") }
-    };
+const padded = { paddingLeft: 5, paddingRight: 5 };
 
-    return Object.keys(pages).map((p, i) => {
-      let path = p.replace("_", "-");
-      let active = path === this.props.current ? "active" : null;
-      let { title } = pages[p];
+const AltheaNav = ({ current }) => {
+  let [t] = useTranslation();
 
-      return { path, active, title };
-    });
+  let pages = {
+    dashboard: { title: t("dashboard") },
+    router_settings: { title: t("wifiAndPorts") },
+    network_settings: { title: t("networkConnection") },
+    billing: { title: t("billing") },
+    payments: { title: t("paymentSettings") },
+    advanced: { title: t("advancedSettings") }
   };
 
-  render() {
-    let padded = { paddingLeft: 5, paddingRight: 5 };
-    return this.navItems().map((page, i) => {
-      return (
-        <NavItem style={padded} className={page.active} key={i}>
-          <NavLink href={"#" + page.path} id={page.path}>
-            {page.title}
-          </NavLink>
-        </NavItem>
-      );
-    });
-  }
-}
+  let navItems = Object.keys(pages).map((p, i) => {
+    let path = p.replace("_", "-");
+    let active = path === current ? "active" : null;
+    let { title } = pages[p];
 
-export default withTranslation()(AltheaNav);
+    return { path, active, title };
+  });
+
+  return navItems.map((page, i) => {
+    return (
+      <NavItem style={padded} className={page.active} key={i}>
+        <NavLink href={"#" + page.path} id={page.path}>
+          {page.title}
+        </NavLink>
+      </NavItem>
+    );
+  });
+};
+
+export default AltheaNav;
