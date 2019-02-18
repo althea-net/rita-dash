@@ -105,6 +105,7 @@
   "privateKeyString": "Private Key String",
   "proceed": "Do you wish to proceed?",
   "putAddress": "Put subnet DAO eth address here...",
+  "reassignPorts": "Re-assign the modes of your router ports. They are visually displayed in the same order as on your router.",
   "register": "Register",
   "registrationTimeout": "Registration timed out possibly due to an invalid code",
   "reset": "Reset",

@@ -1,43 +1,77 @@
-import React from "react";
-import { Alert, Button, Card, CardBody, Progress, Row } from "reactstrap";
-import { connect, actions, getState } from "../store";
-import { withTranslation } from "react-i18next";
+import React, { useEffect, useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Alert, Button, Card, CardBody, Progress } from "reactstrap";
+import { Context, getState } from "../store";
+import styled from "styled-components";
+
 import portImage from "../images/port.png";
 import glImage from "../images/gl.jpg";
 import portOrderings from "../portOrderings";
 import Confirm from "./Confirm";
 
-class Ports extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      mode: null,
-      modal: false,
-      warning: false
-    };
-  }
+const GL = () => {
+  return (
+    <img
+      src={glImage}
+      alt="GL B-1300"
+      className="img-fluid"
+      style={{ marginBottom: 20, width: 300, marginRight: 40 }}
+    />
+  );
+};
 
-  componentDidMount = () => {
+const deviceImages = {
+  "gl-b1300": <GL />
+};
+
+const portStyle = {
+  position: "absolute",
+  top: 30,
+  left: 62,
+  fontSize: 24,
+  fontWeight: "bold",
+  textShadow: "2px 2px #666",
+  textAlign: "center",
+  color: "white",
+  height: 40,
+  paddingTop: 4
+};
+
+const PortToggle = styled(Button)`
+  width: 100px;
+  background: ${props => (props.selected ? "#0BB36D" : "white")} !important;
+  color: ${props => (props.selected ? "white" : "gray")} !important;
+  border: 1px solid #aaa;
+  border-color: ${props => (props.selected ? "#0BB36D" : "#aaa")} !important;
+  border-radius: 0;
+  margin-top: 6px;
+`;
+
+const Ports = () => {
+  let [t] = useTranslation();
+  let [open, setOpen] = useState(false);
+  let [confirmIface, setConfirmIface] = useState("");
+  let [mode, setMode] = useState("");
+
+  let {
+    actions,
+    state: { initializing, info, loadingInterfaces, interfaces }
+  } = useContext(Context);
+  useEffect(() => {
     actions.getInterfaces();
-    this.timer = setInterval(actions.getInterfaces, 10000);
+    let timer = setInterval(actions.getInterfaces, 10000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  let setInterfaceMode = (iface, mode) => {
+    setConfirmIface(iface);
+    setMode(mode);
   };
 
-  componentWillUnmount = () => {
-    clearInterval(this.timer);
-  };
-
-  setInterface = mode => {
-    this.setState({ mode });
-
-    let { interfaces } = this.props.state;
-    let warning = mode !== "Mesh" && Object.values(interfaces).includes(mode);
-    if (warning) return this.setState({ warning });
-
-    this.setState({ modal: true });
-  };
-
-  confirm = () => {
-    this.setState({ modal: false });
+  let confirm = () => {
+    setOpen(false);
 
     actions.startPortChange();
     actions.startWaiting();
@@ -49,142 +83,80 @@ class Ports extends React.Component {
       }
     }, 1000);
 
-    actions.setInterface(this.state.mode);
+    actions.setInterface(confirmIface, mode);
   };
 
-  setPort = iface => {
-    actions.setPort(iface);
-    this.setState({ warning: false });
-  };
+  let { device } = info;
+  let modes = [t("LAN"), t("Mesh"), t("WAN")];
 
-  render() {
-    let { t } = this.props;
-    let {
-      initializing,
-      info,
-      loadingInterfaces,
-      interfaces,
-      port
-    } = this.props.state;
-    let { mode, modal, warning } = this.state;
-    let { device } = info;
-    let modes = [t("LAN"), t("Mesh"), t("WAN")];
+  if (!interfaces)
+    if (loadingInterfaces === false) {
+      return <Alert color="info">{t("noInterfaces")}</Alert>;
+    } else
+      return initializing ? (
+        <Progress animated color="info" value={100} />
+      ) : null;
 
-    if (!interfaces)
-      if (loadingInterfaces === false) {
-        return <Alert color="info">{t("noInterfaces")}</Alert>;
-      } else
-        return initializing ? (
-          <Progress animated color="info" value={100} />
-        ) : null;
+  if (!device) return <Alert color="danger">{t("noDevice")}</Alert>;
 
-    if (!device) return <Alert color="danger">{t("noDevice")}</Alert>;
+  return (
+    <div>
+      <Confirm
+        show={open}
+        t={t}
+        cancel={() => setOpen(false)}
+        confirm={confirm}
+      />
 
-    return (
-      <div>
-        <Confirm
-          show={modal}
-          t={t}
-          cancel={() => this.setState({ modal: false })}
-          confirm={this.confirm}
-        />
+      <Card>
+        <CardBody>
+          <h2 style={{ marginTop: 20 }}>{t("ports")}</h2>
+          <p style={{ color: "gray", fontSize: 14 }}>{t("reassignPorts")}</p>
+          <div className="d-flex flex-wrap">
+            <div className="text-center">{deviceImages[device]}</div>
+            <div
+              className="d-flex flex-nowrap justify-content-center"
+              style={{ marginBottom: 20 }}
+            >
+              {portOrderings[device].map((iface, i) => {
+                return (
+                  <Card
+                    key={i}
+                    style={{
+                      borderRadius: 0,
+                      borderLeft:
+                        i === portOrderings[device].length - 1 && "none",
+                      borderRight: i === 0 && "none"
+                    }}
+                  >
+                    <CardBody className="text-center">
+                      <img src={portImage} alt={iface} width="60px" />
 
-        <Card>
-          <CardBody>
-            <h2 style={{ marginTop: 20 }}>{t("ports")}</h2>
-            <p style={{ color: "gray", fontSize: 14 }}>
-              Re-assign the modes of your router ports. They are visually
-              displayed in the same order as on your router.
-            </p>
-            <div className="d-flex flex-wrap">
-              {device === "gl-b1300" && (
-                <div className="text-center">
-                  <img
-                    src={glImage}
-                    alt="GL B-1300"
-                    className="img-fluid"
-                    style={{ marginBottom: 20, width: 300, marginRight: 40 }}
-                  />
-                </div>
-              )}
-              <Row
-                className="d-flex flex-nowrap justify-content-center"
-                style={{ marginBottom: 20 }}
-              >
-                {portOrderings[device].map((iface, i) => {
-                  return (
-                    <Card
-                      className={port === iface ? "bg-primary" : null}
-                      key={i}
-                      style={{
-                        borderRadius: 0,
-                        borderLeft:
-                          i === portOrderings[device].length - 1 && "none",
-                        borderRight: i === 0 && "none"
-                      }}
-                    >
-                      <CardBody className="text-center">
-                        <img src={portImage} alt={iface} width="60px" />
+                      <div style={portStyle}>{iface}</div>
 
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: 30,
-                            left: 62,
-                            fontSize: 24,
-                            fontWeight: "bold",
-                            textShadow: "2px 2px #666",
-                            textAlign: "center",
-                            color: "white",
-                            height: 40,
-                            paddingTop: 4
-                          }}
-                        >
-                          {iface}
-                        </div>
-
-                        {warning && (
-                          <Alert color="danger">{t("onlyOne", { mode })}</Alert>
-                        )}
-                        <div className="d-flex flex-column mt-3">
-                          {modes.map((mode, i) => {
-                            return (
-                              <Button
-                                key={i}
-                                style={{
-                                  width: 100,
-                                  background: "white",
-                                  color: "#999",
-                                  border: "1px solid #aaa",
-                                  borderRadius: 0,
-                                  marginTop: 6
-                                }}
-                                onClick={() => this.setInterface(mode)}
-                              >
-                                {mode}
-                              </Button>
-                            );
-                          })}
-                        </div>
-                      </CardBody>
-                    </Card>
-                  );
-                })}
-              </Row>
+                      <div className="d-flex flex-column mt-3">
+                        {modes.map((mode, i) => {
+                          return (
+                            <PortToggle
+                              key={i}
+                              selected={mode === interfaces[iface]}
+                              onClick={() => setInterfaceMode(iface, mode)}
+                            >
+                              {mode}
+                            </PortToggle>
+                          );
+                        })}
+                      </div>
+                    </CardBody>
+                  </Card>
+                );
+              })}
             </div>
-          </CardBody>
-        </Card>
-      </div>
-    );
-  }
-}
+          </div>
+        </CardBody>
+      </Card>
+    </div>
+  );
+};
 
-export default connect([
-  "error",
-  "initializing",
-  "info",
-  "loadingInterfaces",
-  "port",
-  "success",
-  "interfaces"
-])(withTranslation()(Ports));
+export default Ports;

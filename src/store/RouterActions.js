@@ -33,11 +33,11 @@ export default backend => {
       };
     },
 
-    setInterface: async ({ state, setState }, mode) => {
+    setInterface: async ({ state, setState }, port, mode) => {
       let interfaces = state.interfaces;
-      interfaces[state.port] = mode;
+      interfaces[port] = mode;
       setState({ interfaces });
-      await backend.setInterface(state.port, mode);
+      await backend.setInterface(port, mode);
     },
 
     setPort: async ({ state, setState }, port) => {
