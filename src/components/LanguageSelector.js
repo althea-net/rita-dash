@@ -27,11 +27,7 @@ export default () => {
   let toggle = () => setOpen(!open);
 
   return (
-    <ButtonDropdown
-      isOpen={open}
-      toggle={toggle}
-      className="ml-auto d-none d-sm-block mr-4 my-auto"
-    >
+    <ButtonDropdown isOpen={open} toggle={toggle}>
       <DropdownToggle className="dropdown-toggle" caret style={toggleStyles}>
         {languages[i18n.language]}
       </DropdownToggle>

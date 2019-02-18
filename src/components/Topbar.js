@@ -17,12 +17,15 @@ const Topbar = () => {
           <img src={logo} alt="Althea Logo" style={logoStyles} />
           <h1 className="mb-0">Althea</h1>
         </NavbarBrand>
-        <LanguageSelector />
+        <div className="ml-auto d-none d-lg-block mr-4 my-auto">
+          <LanguageSelector />
+        </div>
         <NavbarToggler className="ml-auto" onClick={toggle} />
       </div>
       <div className="d-flex">
         <Collapse isOpen={open}>
-          <Nav navbar className="d-sm-none">
+          <Nav navbar className="d-lg-none">
+            <LanguageSelector />
             <AltheaNav />
           </Nav>
         </Collapse>
