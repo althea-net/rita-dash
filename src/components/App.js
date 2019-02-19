@@ -3,10 +3,8 @@ import { Nav } from "reactstrap";
 import AltheaNav from "./Nav";
 import Topbar from "./Topbar";
 import NoConnection from "./NoConnection";
-import Backend from "../libs/backend";
 import Router from "../Router";
 import { actions } from "../store";
-const backend = new Backend();
 
 export default () => {
   const [page, setPage] = useState("dashboard");
@@ -15,7 +13,7 @@ export default () => {
     actions.getBlockchain();
     actions.getInfo();
     actions.getSettings();
-    let timer = setInterval(backend.getVersion, 2000);
+    let timer = setInterval(actions.getVersion, 2000);
     return () => clearInterval(timer);
   }, []);
 
