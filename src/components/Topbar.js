@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
 import logo from "../images/althea.png";
 import AltheaNav from "./Nav";
@@ -9,6 +9,10 @@ const logoStyles = { width: 50, height: 50, marginLeft: 10, marginRight: 20 };
 const Topbar = () => {
   let [open, setOpen] = useState(false);
   let toggle = () => setOpen(!open);
+
+  useEffect(() => {
+    window.addEventListener("hashchange", () => setOpen(false), false);
+  }, []);
 
   return (
     <Navbar color="white" light expand="lg" className="shadow-sm fixed-top">

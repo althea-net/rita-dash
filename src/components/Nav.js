@@ -4,22 +4,22 @@ import { NavItem, NavLink } from "reactstrap";
 
 const padded = { paddingLeft: 5, paddingRight: 5 };
 
-const AltheaNav = ({ current }) => {
+const AltheaNav = ({ page }) => {
   let [t] = useTranslation();
 
   let pages = {
-    dashboard: { title: t("dashboard") },
-    router_settings: { title: t("wifiAndPorts") },
-    network_settings: { title: t("networkConnection") },
-    billing: { title: t("billing") },
-    payments: { title: t("paymentSettings") },
-    advanced: { title: t("advancedSettings") }
+    dashboard: t("dashboard"),
+    router_settings: t("wifiAndPorts"),
+    network_settings: t("networkConnection"),
+    billing: t("billing"),
+    payments: t("paymentSettings"),
+    advanced: t("advancedSettings")
   };
 
   let navItems = Object.keys(pages).map((p, i) => {
     let path = p.replace("_", "-");
-    let active = path === current ? "active" : null;
-    let { title } = pages[p];
+    let active = path === page ? "active" : null;
+    let title = pages[p];
 
     return { path, active, title };
   });
