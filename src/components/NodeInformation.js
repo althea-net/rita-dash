@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Context } from "../store";
+
 import QR from "qrcode.react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,11 +14,18 @@ import {
   Label
 } from "reactstrap";
 
-export default ({ address, settings }) => {
+const NodeInformation = () => {
   let [t] = useTranslation();
   let [qr, setQR] = useState("");
 
-  let { meshIp, wgPublicKey } = settings.network;
+  let {
+    state: {
+      info: { address },
+      settings: {
+        network: { meshIp, wgPublicKey }
+      }
+    }
+  } = useContext(Context);
 
   return (
     <>
@@ -81,3 +90,5 @@ export default ({ address, settings }) => {
     </>
   );
 };
+
+export default NodeInformation;
