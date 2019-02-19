@@ -1,25 +1,20 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useTranslation } from "react-i18next";
+import { Heading } from "./ui";
 
 import Account from "./Account";
 
 export default () => {
+  let [t] = useTranslation();
+
   return (
     <div style={{ marginBottom: 40 }}>
-      <div className="w-100 d-flex justify-content-between">
-        <h2>Finances</h2>
-        <div className="my-auto">
-          <a href="#payments">
-            Manage Payment Settings
-            <FontAwesomeIcon
-              size="lg"
-              icon="angle-right"
-              style={{ marginLeft: 10 }}
-            />
-          </a>
-        </div>
-      </div>
-      <Account balance={0.452} />
+      <Heading
+        title={t("finances")}
+        link="#payments"
+        linkText={t("managePaymentSettings")}
+      />
+      <Account />
     </div>
   );
 };
