@@ -14,14 +14,14 @@ export default ({ setEditing }) => {
     <>
       <p>{t("subnetsAre")}</p>
 
-      <div className="d-flex mb-4">
+      <div className="d-flex flex-wrap mb-4">
         <div className="mr-2">
           <Label>{t("ipAddress")}</Label>
-          <div>{meshIp}</div>
+          <div className="text-break">{meshIp}</div>
         </div>
         <div>
           <Label>{t("subnetOrganization")}</Label>
-          <div>{daoAddress}</div>
+          <div className="text-break">{daoAddress}</div>
         </div>
       </div>
 
@@ -30,7 +30,7 @@ export default ({ setEditing }) => {
         style={{ width: 200 }}
         onClick={() => setEditing(true)}
       >
-        Edit
+        {t("edit")}
       </Button>
     </>
   );
