@@ -250,6 +250,14 @@ class SubnetSelection extends Component {
     return (
       <>
         <p>{t("yourOrganizer")}</p>
+        <div id="viewer" style={{ width: "300px" }} />
+        {joining && (
+          <QrReader
+            onScan={this.handleScan}
+            onError={this.handleError}
+            style={{ width: "300px", marginTop: 15 }}
+          />
+        )}
         <Form style={{ marginTop: 15 }}>
           <FormGroup>
             {ipNeedsFormatting && (
@@ -334,14 +342,6 @@ class SubnetSelection extends Component {
                 </InputGroupText>
               </InputGroupAddon>
             </InputGroup>
-            <div id="viewer" style={{ width: "300px" }} />
-            {joining && (
-              <QrReader
-                onScan={this.handleScan}
-                onError={this.handleError}
-                style={{ width: "300px" }}
-              />
-            )}
             <Confirm
               show={confirming}
               t={t}
