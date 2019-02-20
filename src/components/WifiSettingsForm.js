@@ -156,7 +156,11 @@ class WifiSettingsForm extends Component {
               </FormGroup>
 
               <div className="mt-auto">
-                <Button id={radioType + "-submit"} color="primary">
+                <Button
+                  id={radioType + "-submit"}
+                  color="primary"
+                  className="mt-2"
+                >
                   {t("save")}
                 </Button>
               </div>

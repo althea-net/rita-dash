@@ -54,7 +54,7 @@ const Ports = () => {
 
           <p style={{ color: "gray", fontSize: 14 }}>{t("reassignPorts")}</p>
 
-          <div className="d-flex flex-wrap">
+          <div className="d-flex flex-wrap justify-content-center">
             <Device device={device} />
             <PortColumns
               device={device}
