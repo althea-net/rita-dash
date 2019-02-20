@@ -14,18 +14,12 @@ import { withTranslation } from "react-i18next";
 
 class AdvancedSettings extends Component {
   state = {
-    blockchain: null,
-    confirmed: false
+    blockchain: null
   };
 
   componentDidMount() {
     actions.getBlockchain();
   }
-
-  confirm = e => {
-    e.preventDefault();
-    this.setState({ confirmed: true });
-  };
 
   setBlockchain = e => {
     let blockchain = e.target.value;
@@ -41,48 +35,40 @@ class AdvancedSettings extends Component {
 
   render() {
     let { t } = this.props;
-    let { blockchain, confirmed } = this.state;
+    let { blockchain } = this.state;
     if (blockchain === null) blockchain = this.props.state.blockchain;
     let { loadingBlockchain, blockchainSuccess } = this.props.state;
 
     return (
-      <Card style={{ height: "100%" }}>
+      <Card style={{ height: "100%", marginBottom: 20 }}>
         <CardBody>
-          {!confirmed ? (
-            <span onClick={this.confirm}>
-              Click to Access Advanced Settings
-            </span>
-          ) : (
-            <Form onSubmit={this.onSubmit}>
-              <FormGroup id="form">
-                <h3>{t("systemBlockchain")}</h3>
-                {blockchainSuccess ? (
-                  <Alert color="success">{t("blockchainSuccess")}</Alert>
-                ) : (
-                  <Alert color="danger">{t("blockchainWarning")}</Alert>
-                )}
-                {loadingBlockchain ? (
-                  <Progress animated color="info" value="100" />
-                ) : (
-                  <Input
-                    label={t("blockchain")}
-                    name="blockchain"
-                    placeholder={t("enterBlockchain")}
-                    onChange={this.setBlockchain}
-                    value={blockchain || ""}
-                    type="select"
-                  >
-                    <option value="Ethereum">Ethereum</option>
-                    <option value="Rinkeby">Rinkeby</option>
-                    <option value="Xdai">Xdai</option>
-                  </Input>
-                )}
-              </FormGroup>
-              <FormGroup>
-                <Button color="primary">{t("save")}</Button>
-              </FormGroup>
-            </Form>
-          )}
+          <Form onSubmit={this.onSubmit}>
+            <FormGroup id="form">
+              <h3>{t("systemBlockchain")}</h3>
+              {blockchainSuccess && (
+                <Alert color="success">{t("blockchainSuccess")}</Alert>
+              )}
+              {loadingBlockchain ? (
+                <Progress animated color="info" value="100" />
+              ) : (
+                <Input
+                  label={t("blockchain")}
+                  name="blockchain"
+                  placeholder={t("enterBlockchain")}
+                  onChange={this.setBlockchain}
+                  value={blockchain || ""}
+                  type="select"
+                >
+                  <option value="Ethereum">Ethereum</option>
+                  <option value="Rinkeby">Rinkeby</option>
+                  <option value="Xdai">Xdai</option>
+                </Input>
+              )}
+            </FormGroup>
+            <FormGroup>
+              <Button color="primary">{t("save")}</Button>
+            </FormGroup>
+          </Form>
         </CardBody>
       </Card>
     );
