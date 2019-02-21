@@ -1,6 +1,5 @@
+import { get, post } from "./fetch";
 import { BigNumber } from "bignumber.js";
-import Backend from "../libs/backend";
-const backend = new Backend();
 
 const weiPerEth = BigNumber("1000000000000000000");
 const bytesPerGb = BigNumber("1000000000");
@@ -12,7 +11,7 @@ const symbols = {
 
 export async function getBlockchain({ setState, state }) {
   setState({ loadingBlockchain: true });
-  let res = await backend.getBlockchain();
+  let res = await get("/blockchain/get/");
   let blockchain = res;
   let symbol = symbols[blockchain];
   return {
@@ -26,7 +25,7 @@ export default {
   getBlockchain,
 
   getFactor: async ({ setState, state }) => {
-    let res = await backend.getFactor();
+    let res = await get("/metric_factor");
 
     if (res instanceof Error) {
       return setState({
@@ -38,7 +37,7 @@ export default {
   },
 
   getPrice: async ({ setState, state }) => {
-    let res = await backend.getPrice();
+    let res = await get("/local_fee");
 
     if (res instanceof Error) {
       return setState({
@@ -61,8 +60,8 @@ export default {
   },
 
   getAutoPricing: async ({ setState, state }) => {
-    let res = await backend.getAutoPricing();
-    return { autoPricing: await res.json() };
+    let autoPricing = await get("/auto_price/enabled");
+    return { autoPricing };
   },
 
   toggleAutoPricing: async ({ setState, state }) => {
@@ -70,14 +69,14 @@ export default {
     let loadingPrice = false;
 
     autoPricing = !autoPricing;
-    await backend.setAutoPricing(autoPricing);
+    await post(`/auto_price/enabled/${autoPricing}`);
     if (autoPricing) loadingPrice = true;
 
     return { autoPricing, loadingPrice };
   },
 
   setFactor: async ({ setState, state }, factor) => {
-    let res = await backend.setFactor(factor);
+    let res = await get("/metric_factor");
 
     if (res instanceof Error) {
       return setState({
@@ -92,7 +91,7 @@ export default {
       .div(bytesPerGb)
       .toFixed(0);
 
-    let res = await backend.setPrice(priceWei);
+    let res = await post(`/local_fee/${priceWei}`);
 
     if (res instanceof Error) {
       return setState({
@@ -105,7 +104,7 @@ export default {
 
   setBlockchain: async ({ setState, state }, blockchain) => {
     setState({ loadingBlockchain: true });
-    let res = await backend.setBlockchain(blockchain);
+    let res = await post(`/blockchain/set/${blockchain}`);
 
     if (res instanceof Error) {
       return setState({
@@ -123,7 +122,7 @@ export default {
   },
 
   withdraw: async ({ setState, state }, address, amount) => {
-    let res = await backend.withdraw(address, amount);
+    let res = await post(`/withdraw/${address}/${amount}`);
 
     if (res instanceof Error) {
       return setState({
