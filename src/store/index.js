@@ -1,5 +1,4 @@
 import { initStore } from "react-stateful";
-import Backend from "../libs/backend";
 import {
   DaoActions,
   ExitActions,
@@ -17,8 +16,6 @@ const initialSettings = {
     ethAddress: null
   }
 };
-
-const backend = new Backend();
 
 const store = {
   initialState: {
@@ -69,12 +66,12 @@ const store = {
     withdrawalSuccess: false
   },
   actions: {
-    ...GeneralActions(backend),
-    ...DaoActions(backend),
+    ...GeneralActions,
+    ...DaoActions,
     ...ExitActions,
-    ...NeighborActions(backend),
+    ...NeighborActions,
     ...PaymentActions,
-    ...RouterActions(backend),
+    ...RouterActions,
 
     changePage: (_, page) => ({
       error: "",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -9,6 +9,7 @@ import {
   Input,
   Label
 } from "reactstrap";
+import { Context } from "../store";
 
 import Export from "./Export";
 
@@ -16,6 +17,17 @@ export default ({ balance, symbol }) => {
   let [t] = useTranslation();
   let [privateKey, setPrivateKey] = useState("");
   let [exporting, setExporting] = useState(false);
+
+  let {
+    actions,
+    state: { ethPrivateKey }
+  } = useContext(Context);
+
+  if (!privateKey) privateKey = ethPrivateKey;
+
+  useEffect(() => {
+    actions.getPrivateKey();
+  }, []);
 
   return (
     <Card className="mb-4">
