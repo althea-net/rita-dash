@@ -1,4 +1,5 @@
 import cckd from "camelcase-keys-deep";
+import { useEffect, useState } from "react";
 
 let { protocol, hostname } = window.location;
 
@@ -53,7 +54,9 @@ export async function post(url, data, camel = true) {
     }
   });
 
-  if (!res.ok) return new Error(res.status);
+  if (!res.ok) throw new Error(res.status);
+
+  let clone = res.clone();
   try {
     let json = await res.json();
     if (json && json.error) {
@@ -62,6 +65,32 @@ export async function post(url, data, camel = true) {
     if (camel) json = cckd(json);
     return json;
   } catch (e) {
-    return e;
+    return clone.text();
   }
+}
+
+export function init(f) {
+  useEffect(() => {
+    f();
+    return;
+  }, []);
+}
+
+export function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(
+    () => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+    [value]
+  );
+
+  return debouncedValue;
 }

@@ -105,6 +105,8 @@
   "priceError": "Unable to get local pricing fee from rita server",
   "priceSetError": "An error occured, the price could not be updated",
   "priceQuality": "Price/Quality Tradeoff",
+  "privateKeyError": "There was a problem importing the private key",
+  "privateKeyImported": "Private key imported successfully",
   "privateKeys": "Private Keys",
   "privateKeyString": "Private Key String",
   "proceed": "Do you wish to proceed?",
