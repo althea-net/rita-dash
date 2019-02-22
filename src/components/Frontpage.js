@@ -3,8 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Context } from "../store";
 
 import Finances from "./Finances";
-import UsageMetrics from "./UsageMetrics";
-import NetworkConnection from "./NetworkConnection";
 import NodeInformation from "./NodeInformation";
 
 const Frontpage = () => {
@@ -20,8 +18,6 @@ const Frontpage = () => {
       <h1>{t("welcome")}</h1>
       <p>{t("version", { version, ritaVersion })}</p>
       <Finances />
-      <UsageMetrics />
-      <NetworkConnection />
       <NodeInformation />
     </>
   );

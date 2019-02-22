@@ -11,7 +11,6 @@ const AltheaNav = ({ page }) => {
     dashboard: t("dashboard"),
     router_settings: t("wifiAndPorts"),
     network_settings: t("networkConnection"),
-    billing: t("billing"),
     payments: t("paymentSettings"),
     advanced: t("advancedSettings")
   };
