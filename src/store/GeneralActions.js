@@ -1,21 +1,7 @@
 import { get } from "./fetch";
 import { BigNumber } from "bignumber.js";
 
-const initialSettings = {
-  network: {
-    meshIp: null
-  },
-  payment: {
-    ethAddress: null
-  }
-};
-
 export default {
-  getPrivateKey: async ({ setState, state }) => {
-    let { ethPrivateKey } = await get("/eth_private_key");
-    return { ethPrivateKey };
-  },
-
   getInfo: async ({ setState, state }) => {
     setState({ loading: true });
 
@@ -46,7 +32,7 @@ export default {
       return {
         error: state.t("settingsError"),
         loadingSettings: false,
-        settings: initialSettings
+        settings: null
       };
     }
 

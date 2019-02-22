@@ -3,13 +3,20 @@ import { useTranslation } from "react-i18next";
 import { Card, CardBody, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { get } from "../store/fetch";
 
-export default ({ privateKey, exporting, setExporting }) => {
+export default ({ open, setOpen }) => {
   let [t] = useTranslation();
   let [copied, setCopied] = useState(false);
+  let [privateKey, setPrivateKey] = useState("");
+
+  let init = async () => {
+    let { ethPrivateKey } = await get("/eth_private_key");
+    setPrivateKey(ethPrivateKey);
+  };
 
   return (
-    <Modal isOpen={exporting} centered toggle={() => setExporting(!exporting)}>
+    <Modal isOpen={open} centered toggle={() => setOpen(!open)} onOpened={init}>
       <ModalHeader>{t("exportPrivateKey")}</ModalHeader>
       <ModalBody>
         <p>{t("saveKey")}</p>

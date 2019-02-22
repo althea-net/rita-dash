@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody, Form, Input } from "reactstrap";
-import { actions, connect } from "../store";
+import { get, post, init, useDebounce } from "../store/fetch";
 import "../styles/slider.css";
 
-export default connect(["factor"])(({ state: { factor } }) => {
-  useEffect(() => actions.getFactor());
-
+export default () => {
   let [t] = useTranslation();
-  let [localFactor, setFactor] = useState(3000);
+  let [factor, setFactor] = useState(0);
 
-  let onSubmit = () => {
-    actions.setFactor(localFactor);
-  };
+  init(async () => {
+    let { metricFactor } = await get("/metric_factor");
+    setFactor(metricFactor);
+  });
+
+  let debouncedFactor = useDebounce(factor, 500);
+  useEffect(
+    () => {
+      post(`/metric_factor/${factor}`);
+    },
+    [debouncedFactor]
+  );
 
   return (
     <Card className="mb-4">
@@ -22,30 +29,22 @@ export default connect(["factor"])(({ state: { factor } }) => {
           Assuming you have more than one "neighbor node", these settings
           control which neighbor your router connects with.
         </p>
-
-        <Form onSubmit={onSubmit}>
-          <div className="d-flex">
-            <div className="w-50">
-              <Input
-                type="range"
-                min={0}
-                max={6000}
-                value={localFactor}
-                onChange={e => setFactor(e.target.value)}
-              />
-              <div className="d-flex justify-content-between">
-                <b>{t("preferLow")}</b>
-                <b>{t("preferHigh")}</b>
-              </div>
-            </div>
-            <div>
-              <Button color="primary" className="ml-2" style={{ width: 100 }}>
-                {t("save")}
-              </Button>
+        <div className="d-flex">
+          <div className="w-50">
+            <Input
+              type="range"
+              min={0}
+              max={6000}
+              value={factor}
+              onChange={e => setFactor(e.target.value)}
+            />
+            <div className="d-flex justify-content-between">
+              <b>{t("preferLow")}</b>
+              <b>{t("preferHigh")}</b>
             </div>
           </div>
-        </Form>
+        </div>
       </CardBody>
     </Card>
   );
-});
+};
