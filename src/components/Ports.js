@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Card, CardBody, Progress } from "reactstrap";
-import { Context } from "../store";
+import { Context, getState } from "../store";
 
 import { Device } from "./PortStyles.js";
 import PortColumns from "./PortColumns";
@@ -44,9 +44,32 @@ const Ports = () => {
 
   if (!device) return <Alert color="danger">{t("noDevice")}</Alert>;
 
+  let confirm = () => {
+    setOpen(false);
+
+    actions.startPortChange();
+    actions.startWaiting();
+
+    let i = setInterval(async () => {
+      actions.keepWaiting();
+      if (getState().waiting <= 0) {
+        clearInterval(i);
+      }
+    }, 1000);
+
+    actions.setInterface(confirmIface, mode);
+  };
+
+  let cancel = () => setOpen(false);
+
   return (
     <div>
-      <Confirm open={open} setOpen={setOpen} iface={confirmIface} mode={mode} />
+      <Confirm
+        open={open}
+        setOpen={setOpen}
+        confirm={confirm}
+        cancel={cancel}
+      />
 
       <Card>
         <CardBody>

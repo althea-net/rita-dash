@@ -8,26 +8,9 @@ import {
   ModalFooter,
   ModalHeader
 } from "reactstrap";
-import { actions, getState } from "../store";
 
-export default ({ iface, mode, open, setOpen }) => {
+export default ({ open, cancel, confirm }) => {
   let [t] = useTranslation();
-
-  let confirm = () => {
-    setOpen(false);
-
-    actions.startPortChange();
-    actions.startWaiting();
-
-    let i = setInterval(async () => {
-      actions.keepWaiting();
-      if (getState().waiting <= 0) {
-        clearInterval(i);
-      }
-    }, 1000);
-
-    actions.setInterface(iface, mode);
-  };
 
   return (
     <Modal isOpen={open} centered>
@@ -40,7 +23,7 @@ export default ({ iface, mode, open, setOpen }) => {
         <Button color="primary" onClick={confirm}>
           {t("yes")}
         </Button>
-        <Button color="secondary" onClick={() => setOpen(false)}>
+        <Button color="secondary" onClick={cancel}>
           {t("no")}
         </Button>
       </ModalFooter>

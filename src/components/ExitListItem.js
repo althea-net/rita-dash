@@ -22,15 +22,25 @@ const Flag = styled.img`
   margin-right: 20px;
 `;
 
-const Status = styled.span`
-  color: #27d38d;
-  margin-left: 5px;
-`;
-
 export default ({ exit, click }) => {
   if (!exit.exitSettings) return null;
-  let { exitSettings, nickname } = exit;
-  let { description } = exitSettings.generalDetails;
+  let {
+    exitSettings: { description, state },
+    nickname,
+    isSelected,
+    isReachable,
+    haveRoute
+  } = exit;
+
+  let connected = isReachable && haveRoute;
+  let pseudostate = state;
+
+  if (state === "Registered" && isSelected) {
+    connected = exit.isTunnelWorking;
+    pseudostate = connected && "Connected";
+  }
+
+  if (!connected) pseudostate = "Problem";
 
   return (
     <Item className="d-flex" onClick={click}>
@@ -40,10 +50,21 @@ export default ({ exit, click }) => {
           <h5>{nickname}</h5>
           <p className="mb-0">{description}</p>
         </div>
-        <div className="ml-2">
-          <FontAwesomeIcon color="#27D38D" icon="check-circle" />
-          <Status>Great connection</Status>
-        </div>
+        {pseudostate === "Problem" ? (
+          <div className="ml-2">
+            <FontAwesomeIcon color="red" icon="exclamation-triangle" />
+            <span style={{ marginLeft: 5, color: "red" }}>
+              Connection problem
+            </span>
+          </div>
+        ) : (
+          <div className="ml-2">
+            <FontAwesomeIcon color="#27D38D" icon="check-circle" />
+            <span style={{ marginLeft: 5, color: "#27d38d" }}>
+              Great connection
+            </span>
+          </div>
+        )}
       </div>
     </Item>
   );

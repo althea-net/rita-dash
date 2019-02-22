@@ -228,10 +228,28 @@ class SubnetSelection extends Component {
     else this.setState({ validationWarning: true });
   };
 
+  cancel = () => this.setState({ confirming: false });
+
+  confirm = () => {
+    let { daoAddress, meshIp } = this.state.fields;
+    actions.startWaiting();
+
+    let i = setInterval(async () => {
+      actions.keepWaiting();
+      if (getState().waiting <= 0) {
+        clearInterval(i);
+      }
+    }, 1000);
+
+    actions.joinSubnetDao(daoAddress, meshIp);
+
+    this.setState({ confirming: false });
+  };
+
   render() {
     let { daos, daosError, info } = this.props.state;
     let { t } = this.props;
-    let { daoAddress, meshIp } = this.state.fields;
+    let { meshIp } = this.state.fields;
     let { confirming, joining, showQR, ipNeedsFormatting } = this.state;
     let ethAddress = info.address;
     let defaultMeshIp = this.props.state.meshIp;
@@ -343,23 +361,9 @@ class SubnetSelection extends Component {
               </InputGroupAddon>
             </InputGroup>
             <Confirm
-              show={confirming}
-              t={t}
-              cancel={() => this.setState({ confirming: false })}
-              confirm={() => {
-                actions.startWaiting();
-
-                let i = setInterval(async () => {
-                  actions.keepWaiting();
-                  if (getState().waiting <= 0) {
-                    clearInterval(i);
-                  }
-                }, 1000);
-
-                actions.joinSubnetDao(daoAddress, meshIp);
-
-                this.setState({ confirming: false });
-              }}
+              open={confirming}
+              cancel={this.cancel}
+              confirm={this.confirm}
             />
             {this.state.validationWarning && (
               <Alert color="danger">

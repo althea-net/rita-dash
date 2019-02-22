@@ -11,7 +11,11 @@ export default {
     let mesh_ip = ipAddress;
 
     await post(`/dao_list/add/${daoAddress}`);
-    await post("/mesh_ip", { mesh_ip });
+    try {
+      await post("/mesh_ip", { mesh_ip });
+    } catch (e) {
+      console.log(e);
+    }
 
     return { daoAddress, ipAddress };
   },
