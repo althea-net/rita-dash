@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Card, CardBody, Form, Input } from "reactstrap";
+import { Card, CardBody, Input } from "reactstrap";
 import { get, post, init, useDebounce } from "../store/fetch";
 import "../styles/slider.css";
 
