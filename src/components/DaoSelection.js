@@ -2,21 +2,23 @@ import React, { Component } from "react";
 import {
   Alert,
   Button,
-  Card,
-  CardBody,
   Form,
   FormGroup,
   FormFeedback,
-  Input
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText
 } from "reactstrap";
 import { actions, connect, getState } from "../store";
-import web3 from "web3";
+import Web3 from "web3";
 import Confirm from "./Confirm";
 import Error from "./Error";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import QrReader from "react-qr-reader";
 import QrCode from "qrcode.react";
 import { Address6 } from "ip-address";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class ControlledInput extends Component {
   state = {
@@ -91,10 +93,10 @@ class DaoSelection extends Component {
       newDaoAddress: ""
     };
     this.validators = {
-      daoAddress: a => web3.utils.isAddress(a),
+      daoAddress: a => this.web3.utils.isAddress(a),
       meshIp: ip => new Address6(ip).isValid()
     };
-    this.web3 = new web3();
+    this.web3 = new Web3(Web3.givenProvider);
   }
 
   componentDidMount() {
@@ -230,7 +232,7 @@ class DaoSelection extends Component {
     let { daos, daosError, info } = this.props.state;
     let { t } = this.props;
     let { daoAddress, meshIp } = this.state.fields;
-    let { confirming, joining, ipNeedsFormatting } = this.state;
+    let { confirming, joining, showQR, ipNeedsFormatting } = this.state;
     let ethAddress = info.address;
     let defaultMeshIp = this.props.state.meshIp;
 
@@ -246,125 +248,131 @@ class DaoSelection extends Component {
     }
 
     return (
-      <div>
-        <h2>{t("subnetDao")}</h2>
+      <>
+        <p>{t("yourOrganizer")}</p>
+        <Form style={{ marginTop: 15 }}>
+          <FormGroup>
+            {ipNeedsFormatting && (
+              <Alert color="info">
+                <strong>IP Subnet Detected</strong>
+                <p>
+                  The router will be assigned the first non-zero address in the
+                  range: {meshIp}
+                </p>
+              </Alert>
+            )}
+            <ControlledInput
+              name="meshIp"
+              placeholder={t("ipAddress")}
+              defaultValue={defaultMeshIp}
+              onBlur={this.onBlur}
+              onChange={this.onFieldChange}
+              valid={this.state.valid.meshIp && this.state.blurred.meshIp}
+              invalid={!this.state.valid.meshIp}
+              key={defaultMeshIp}
+              newValue={this.state.newIpAddress}
+            />
+            <FormFeedback invalid="true">{t("enterIpAddress")}</FormFeedback>
+          </FormGroup>
+          <FormGroup>
+            <ControlledInput
+              name="daoAddress"
+              placeholder={t("subnetAddress")}
+              defaultValue={defaultDaoAddress}
+              onBlur={this.onBlur}
+              onChange={this.onFieldChange}
+              valid={
+                this.state.valid.daoAddress && this.state.blurred.daoAddress
+              }
+              invalid={!this.state.valid.daoAddress}
+              key={defaultDaoAddress}
+              newValue={this.state.newDaoAddress}
+            />
+            <FormFeedback invalid="true">{t("enterEthAddress")}</FormFeedback>
+          </FormGroup>
+          <div className="d-flex">
+            <Button
+              onClick={this.startJoining}
+              className="mr-2"
+              outline
+              color="primary"
+              style={{ width: 180 }}
+            >
+              {t("scanQR")}
+            </Button>
+            <Button
+              color="primary"
+              onClick={this.submit}
+              style={{ width: 180 }}
+            >
+              {t("save")}
+            </Button>
+          </div>
+        </Form>
+        <hr />
         {daosError ? (
           <Error error={daosError} />
         ) : (
           <div>
-            <Card>
-              <CardBody>
-                <p>{t("presentQR")}</p>
-                <figure className="text-center">
-                  {ethAddress && <QrCode value={ethAddress} size={300} />}
-                  <figcaption>{ethAddress}</figcaption>
-                </figure>
-              </CardBody>
-            </Card>
-            <Card>
-              <CardBody>
-                <div id="viewer" style={{ width: "300px" }} />
-                {joining ? (
-                  <QrReader
-                    onScan={this.handleScan}
-                    onError={this.handleError}
-                    style={{ width: "300px" }}
-                  />
-                ) : (
-                  <Button color="primary" onClick={this.startJoining}>
-                    {t("scanQR")}
-                  </Button>
-                )}
-                <Confirm
-                  show={confirming}
-                  t={t}
-                  cancel={() => this.setState({ confirming: false })}
-                  confirm={() => {
-                    actions.startWaiting();
-
-                    let i = setInterval(async () => {
-                      actions.keepWaiting();
-                      if (getState().waiting <= 0) {
-                        clearInterval(i);
-                      }
-                    }, 1000);
-
-                    actions.joinSubnetDao(daoAddress, meshIp);
-
-                    this.setState({ confirming: false });
+            <p>{t("presentQR")}</p>
+            {showQR && (
+              <figure className="text-center">
+                {ethAddress && <QrCode value={ethAddress} size={300} />}
+                <figcaption>{ethAddress}</figcaption>
+              </figure>
+            )}
+            <InputGroup>
+              <Input readOnly value={ethAddress || ""} />
+              <InputGroupAddon addonType="append">
+                <InputGroupText
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    this.setState({ showQR: !showQR });
                   }}
-                />
-                {this.state.validationWarning && (
-                  <Alert color="danger">
-                    There were validation errors when submitting the form
-                  </Alert>
-                )}
-                <Form style={{ marginTop: 15 }}>
-                  <FormGroup>
-                    <ControlledInput
-                      name="daoAddress"
-                      placeholder="Subnet DAO Contract Address"
-                      defaultValue={defaultDaoAddress}
-                      onBlur={this.onBlur}
-                      onChange={this.onFieldChange}
-                      valid={
-                        this.state.valid.daoAddress &&
-                        this.state.blurred.daoAddress
-                      }
-                      invalid={!this.state.valid.daoAddress}
-                      key={defaultDaoAddress}
-                      newValue={this.state.newDaoAddress}
-                    />
-                    <FormFeedback invalid="true">
-                      {t("enterEthAddress")}
-                    </FormFeedback>
-                  </FormGroup>
-                  <FormGroup>
-                    {ipNeedsFormatting && (
-                      <Alert color="info">
-                        <strong>IP Subnet Detected</strong>
-                        <p>
-                          The router will be assigned the first non-zero address
-                          in the range: {meshIp}
-                        </p>
-                      </Alert>
-                    )}
-                    <ControlledInput
-                      name="meshIp"
-                      placeholder="Ip Address"
-                      defaultValue={defaultMeshIp}
-                      onBlur={this.onBlur}
-                      onChange={this.onFieldChange}
-                      valid={
-                        this.state.valid.meshIp && this.state.blurred.meshIp
-                      }
-                      invalid={!this.state.valid.meshIp}
-                      key={defaultMeshIp}
-                      newValue={this.state.newIpAddress}
-                    />
-                    <FormFeedback invalid="true">
-                      {t("enterIpAddress")}
-                    </FormFeedback>
-                  </FormGroup>
-                  <FormGroup>
-                    <Button
-                      color="primary"
-                      className="float-right"
-                      onClick={this.submit}
-                    >
-                      Submit
-                    </Button>
-                  </FormGroup>
-                </Form>
-              </CardBody>
-            </Card>
+                >
+                  <FontAwesomeIcon icon="qrcode" />
+                </InputGroupText>
+              </InputGroupAddon>
+            </InputGroup>
+            <div id="viewer" style={{ width: "300px" }} />
+            {joining && (
+              <QrReader
+                onScan={this.handleScan}
+                onError={this.handleError}
+                style={{ width: "300px" }}
+              />
+            )}
+            <Confirm
+              show={confirming}
+              t={t}
+              cancel={() => this.setState({ confirming: false })}
+              confirm={() => {
+                actions.startWaiting();
+
+                let i = setInterval(async () => {
+                  actions.keepWaiting();
+                  if (getState().waiting <= 0) {
+                    clearInterval(i);
+                  }
+                }, 1000);
+
+                actions.joinSubnetDao(daoAddress, meshIp);
+
+                this.setState({ confirming: false });
+              }}
+            />
+            {this.state.validationWarning && (
+              <Alert color="danger">
+                There were validation errors when submitting the form
+              </Alert>
+            )}
           </div>
         )}
-      </div>
+      </>
     );
   }
 }
 
 export default connect(["daoAddress", "meshIp", "daos", "daosError", "info"])(
-  translate()(DaoSelection)
+  withTranslation()(DaoSelection)
 );

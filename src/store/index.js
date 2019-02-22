@@ -1,5 +1,4 @@
 import { initStore } from "react-stateful";
-import Backend from "../libs/backend";
 import {
   DaoActions,
   ExitActions,
@@ -18,8 +17,6 @@ const initialSettings = {
   }
 };
 
-const backend = new Backend();
-
 const store = {
   initialState: {
     autoPricing: false,
@@ -29,14 +26,15 @@ const store = {
     daoAddress: null,
     daos: [],
     daosError: null,
-    depositing: false,
     error: null,
     exits: null,
     exitsError: null,
     factor: 0,
     factorError: null,
     initializing: true,
+    ipAddress: null,
     loadingBlockchain: false,
+    loadingExits: null,
     loadingInterfaces: null,
     loadingIp: null,
     loadingPrice: false,
@@ -64,17 +62,16 @@ const store = {
     wifiChange: null,
     wifiError: null,
     wifiSettings: null,
-    withdrawing: false,
     withdrawalError: null,
     withdrawalSuccess: false
   },
   actions: {
-    ...GeneralActions(backend),
-    ...DaoActions(backend),
-    ...ExitActions(backend),
-    ...NeighborActions(backend),
-    ...PaymentActions(backend),
-    ...RouterActions(backend),
+    ...GeneralActions,
+    ...DaoActions,
+    ...ExitActions,
+    ...NeighborActions,
+    ...PaymentActions,
+    ...RouterActions,
 
     changePage: (_, page) => ({
       error: "",
@@ -95,5 +92,6 @@ export const {
   actions,
   getState,
   connect,
-  subscribe
+  subscribe,
+  Context
 } = initStore(store);

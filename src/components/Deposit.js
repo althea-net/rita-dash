@@ -1,57 +1,53 @@
-import React from "react";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Modal,
-  ModalHeader,
-  ModalBody
-} from "reactstrap";
-import { actions, connect } from "../store";
-import { translate } from "react-i18next";
+import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Card, CardBody, Modal, ModalHeader, ModalBody } from "reactstrap";
 import QR from "qrcode.react";
-import { BigNumber } from "bignumber.js";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const weiPerEth = BigNumber("1000000000000000000");
+import { Context } from "../store";
 
-const Deposit = ({ state, t }) => {
-  let { info, depositing, symbol } = state;
-  let { address } = info;
-  let balance = BigNumber(info.balance.toString())
-    .div(weiPerEth)
-    .toFixed(8);
+export default ({ open, setOpen }) => {
+  let [t] = useTranslation();
+  let [copied, setCopied] = useState(false);
+  let {
+    state: {
+      info: { address },
+      symbol
+    }
+  } = useContext(Context);
+
+  if (!(address && symbol)) return null;
 
   return (
-    <div>
-      <Modal isOpen={depositing} centered>
-        <ModalHeader>{t("depositFunds")}</ModalHeader>
-        <ModalBody>
-          <Card>
-            <CardBody className="text-center">
-              <h2>
-                <span>{t("currentBalance")} </span>
-                <span>
-                  {balance} {symbol}
-                </span>
-              </h2>
-              <QR
-                style={{
-                  height: "auto",
-                  width: "100%"
-                }}
-                value={address}
+    <Modal isOpen={open} centered toggle={() => setOpen(!open)}>
+      <ModalHeader>
+        {t("deposit")} {symbol}
+      </ModalHeader>
+      <ModalBody>
+        <Card className="mb-4">
+          <CardBody className="d-flex">
+            <h5 style={{ wordBreak: "break-word" }}>{address}</h5>
+            <CopyToClipboard text={address} onCopy={() => setCopied(true)}>
+              <FontAwesomeIcon
+                size="lg"
+                icon="copy"
+                style={{ cursor: "pointer", marginLeft: 10 }}
               />
-              <h3 className="p-4">{address}</h3>
-            </CardBody>
-            <CardFooter className="text-right">
-              <Button onClick={actions.stopDepositing}>Close</Button>
-            </CardFooter>
-          </Card>
-        </ModalBody>
-      </Modal>
-    </div>
+            </CopyToClipboard>
+            {copied && <p className="ml-2">Copied!</p>}
+          </CardBody>
+        </Card>
+        <div className="w-100 text-center">
+          <QR
+            style={{
+              height: "auto",
+              width: 300
+            }}
+            value={address}
+          />
+        </div>
+      </ModalBody>
+    </Modal>
   );
 };
-
-export default connect(["info", "depositing", "symbol"])(translate()(Deposit));

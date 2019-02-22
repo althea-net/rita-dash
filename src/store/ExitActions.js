@@ -1,14 +1,23 @@
-const getExits = async ({ setState, state }, backend) => {
-  if (state.loading) return;
-  setState({ initializing: false, loading: true });
+import { getBlockchain } from "./PaymentActions";
+import { get, post } from "./fetch";
 
-  let exits = await backend.getExits();
+export const getExits = async ({ setState, state }) => {
+  if (state.loadingExits) return;
+  setState({ exitsError: false, initializing: false, loadingExits: true });
+
+  let { blockchain } = state;
+  if (!blockchain)
+    blockchain = (await getBlockchain({ setState, state })).blockchain;
+
+  let exits = [];
+  exits = await get("/exits", true, 5000);
+
   if (exits instanceof Error) {
     return setState({
       exitsError: state.t("exitsError"),
       exits: null,
       initializing: false,
-      loading: false
+      loadingExits: false
     });
   }
 
@@ -18,47 +27,60 @@ const getExits = async ({ setState, state }, backend) => {
     });
   };
 
-  exits = exits
-    .filter(exit => {
-      return (
-        exit.exitSettings.generalDetails &&
-        exit.exitSettings.generalDetails.exitCurrency === state.blockchain
-      );
-    })
-    .sort(sort);
+  if (exits.length)
+    exits = exits
+      .filter(exit => {
+        return (
+          exit.exitSettings.generalDetails &&
+          exit.exitSettings.generalDetails.exitCurrency === blockchain
+        );
+      })
+      .sort(sort);
 
   setState({
     exitsError: null,
     exits,
     initializing: false,
-    loading: false
+    loadingExits: false
   });
 };
 
-const actions = backend => {
-  return {
-    getExits: async ({ setState, state }) => {
-      getExits({ setState, state }, backend);
-    },
-    registerExit: async ({ setState, state }, nickname, email) => {
-      await backend.registerExit(nickname, email);
-      if (!email) await backend.selectExit(nickname);
-      await getExits({ setState, state }, backend);
-    },
-    resetExit: async ({ setState, state }, nickname) => {
-      await backend.resetExit(nickname);
-      await getExits({ setState, state }, backend);
-    },
-    selectExit: async ({ setState, state }, nickname) => {
-      await backend.selectExit(nickname);
-      await getExits({ setState, state }, backend);
-    },
-    verifyExit: async ({ setState, state }, nickname, code) => {
-      await backend.verifyExit(nickname, code);
-      await backend.selectExit(nickname);
-      await getExits({ setState, state }, backend);
-    }
-  };
+const registerExit = async (nickname, email) => {
+  if (email) {
+    await post(`/settings`, {
+      exit_client: {
+        reg_details: {
+          email: email
+        }
+      }
+    });
+  } else {
+    await post(`/exits/${nickname}/register`);
+  }
+
+  return post(`/exits/${nickname}/register`);
 };
 
-export default actions;
+export default {
+  getExits: async ({ setState, state }) => {
+    getExits({ setState, state });
+  },
+  registerExit: async ({ setState, state }, nickname, email) => {
+    await registerExit(nickname, email);
+    if (!email) await post(`/exits/${nickname}/select`);
+    await getExits({ setState, state });
+  },
+  resetExit: async ({ setState, state }, nickname) => {
+    await post(`/exits/${nickname}/reset`);
+    await getExits({ setState, state });
+  },
+  selectExit: async ({ setState, state }, nickname) => {
+    await post(`/exits/${nickname}/select`);
+    await getExits({ setState, state });
+  },
+  verifyExit: async ({ setState, state }, nickname, code) => {
+    await post(`/exits/${nickname}/verify/${code}`);
+    await post(`/exits/${nickname}/select`);
+    await getExits({ setState, state });
+  }
+};

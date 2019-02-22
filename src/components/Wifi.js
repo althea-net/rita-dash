@@ -1,16 +1,8 @@
 import React, { Component } from "react";
 import { actions, connect } from "../store";
 import WifiSettingsForm from "./WifiSettingsForm";
-import styled from "styled-components";
 import { Alert, Progress } from "reactstrap";
-import { translate } from "react-i18next";
-
-const WifiContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  padding: 10;
-  margin: -20;
-`;
+import { withTranslation } from "react-i18next";
 
 class Wifi extends Component {
   componentDidMount = () => {
@@ -38,18 +30,15 @@ class Wifi extends Component {
       else return <Alert color="info">{t("noWifi")}</Alert>;
 
     return (
-      <React.Fragment>
-        <h2>{t("wifi")}</h2>
-        <WifiContainer>
-          {wifiSettings.map((settings, i) => (
-            <WifiSettingsForm
-              state={this.props.state}
-              key={i}
-              wifiSettings={settings}
-            />
-          ))}
-        </WifiContainer>
-      </React.Fragment>
+      <>
+        {wifiSettings.map((settings, i) => (
+          <WifiSettingsForm
+            state={this.props.state}
+            key={i}
+            wifiSettings={settings}
+          />
+        ))}
+      </>
     );
   }
 }
@@ -59,4 +48,4 @@ export default connect([
   "wifiError",
   "loadingWifi",
   "wifiSettings"
-])(translate()(Wifi));
+])(withTranslation()(Wifi));

@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { actions } from "../store";
 import animatedScrollTo from "animated-scroll-to";
-import { translate } from "react-i18next";
+import { withTranslation } from "react-i18next";
 
 class VerifyForm extends Component {
   constructor(props) {
@@ -153,4 +153,4 @@ class VerifyForm extends Component {
   }
 }
 
-export default translate()(VerifyForm);
+export default withTranslation()(VerifyForm);

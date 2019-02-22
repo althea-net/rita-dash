@@ -1,62 +1,50 @@
-import React, { Component } from "react";
-import { Button, Card, CardBody, Form, FormGroup, Input } from "reactstrap";
-import { actions, connect } from "../store";
-import { translate } from "react-i18next";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Card, CardBody, Input } from "reactstrap";
+import { get, post, init, useDebounce } from "../store/fetch";
+import "../styles/slider.css";
 
-class PriceQualityForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      factor: 0
-    };
-  }
+export default () => {
+  let [t] = useTranslation();
+  let [factor, setFactor] = useState(0);
 
-  componentDidMount = () => {
-    actions.getFactor();
-  };
+  init(async () => {
+    let { metricFactor } = await get("/metric_factor");
+    setFactor(metricFactor);
+  });
 
-  setFactor = e => {
-    let factor = e.target.value;
-    this.setState({ factor });
-  };
+  let debouncedFactor = useDebounce(factor, 500);
+  useEffect(
+    () => {
+      post(`/metric_factor/${factor}`);
+    },
+    [debouncedFactor]
+  );
 
-  onSubmit = e => {
-    e.preventDefault();
-    actions.setFactor(this.state.factor);
-  };
-
-  render() {
-    let { t } = this.props;
-    let { factor } = this.state;
-    if (!factor) factor = this.props.state.factor;
-
-    return (
-      <Card>
-        <CardBody>
-          <h3>{t("priceQuality")}</h3>
-
-          <Form onSubmit={this.onSubmit}>
-            <FormGroup>
-              <Input
-                type="range"
-                min={0}
-                max={6000}
-                value={factor || ""}
-                onChange={this.setFactor}
-              />
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <small>{t("preferLow")}</small>
-                <small>{t("preferHigh")}</small>
-              </div>
-            </FormGroup>
-            <FormGroup>
-              <Button color="primary">{t("save")}</Button>
-            </FormGroup>
-          </Form>
-        </CardBody>
-      </Card>
-    );
-  }
-}
-
-export default connect(["factor"])(translate()(PriceQualityForm));
+  return (
+    <Card className="mb-4">
+      <CardBody>
+        <h3>{t("priceQuality")}</h3>
+        <p>
+          Assuming you have more than one "neighbor node", these settings
+          control which neighbor your router connects with.
+        </p>
+        <div className="d-flex">
+          <div className="w-50">
+            <Input
+              type="range"
+              min={0}
+              max={6000}
+              value={factor}
+              onChange={e => setFactor(e.target.value)}
+            />
+            <div className="d-flex justify-content-between">
+              <b>{t("preferLow")}</b>
+              <b>{t("preferHigh")}</b>
+            </div>
+          </div>
+        </div>
+      </CardBody>
+    </Card>
+  );
+};

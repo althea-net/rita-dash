@@ -18,26 +18,29 @@ async function get(url, camel = true, timeout = 10000) {
   const controller = new AbortController();
   const signal = controller.signal;
 
+  let timer = setTimeout(() => controller.abort(), timeout);
+  let res;
+
   try {
-    let timer = setTimeout(() => controller.abort(), timeout);
-    const res = await fetch(base + url, { signal });
-    clearTimeout(timer);
-
-    if (!res.ok) return new Error(res.status);
-
-    let clone = res.clone();
-    try {
-      let json = await res.json();
-      if (json && json.error) {
-        return new Error(json.error);
-      }
-      if (camel) json = cckd(json);
-      return json;
-    } catch (e) {
-      return clone.text();
-    }
+    res = await fetch(base + url, { signal });
   } catch (e) {
     return e;
+  }
+
+  clearTimeout(timer);
+
+  if (!res.ok) return new Error(res.status);
+
+  let clone = res.clone();
+  try {
+    let json = await res.json();
+    if (json && json.error) {
+      return new Error(json.error);
+    }
+    if (camel) json = cckd(json);
+    return json;
+  } catch (e) {
+    return clone.text();
   }
 }
 
@@ -112,7 +115,7 @@ export default class Backend {
   }
 
   async getExits() {
-    return get("/exits");
+    return get("/exits", true, 5000);
   }
 
   async getFactor() {
