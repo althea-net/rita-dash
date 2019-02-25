@@ -10,7 +10,7 @@ export default () => {
   let [t] = useTranslation();
   let {
     actions,
-    state: { exits, exitsError, initializing, daoAddress }
+    state: { exits, exitsError, initializing }
   } = useContext(Context);
 
   useEffect(() => {
@@ -38,46 +38,42 @@ export default () => {
     <Card>
       <CardBody>
         <h2>{t("exitNode")}</h2>
-        {daoAddress ? (
-          <div>
-            <p>{t("exitNodesP1")}</p>
-            {selected ? (
-              <>
-                <ExitListItem
-                  exit={selected}
-                  click={() => setSelectingExit(true)}
-                />
-                <Button
-                  color="secondary"
-                  style={{ width: 240 }}
-                  onClick={() => setSelectingExit(true)}
-                >
-                  {t("updateExit")}
-                </Button>
-              </>
-            ) : (
-              <div>
-                <p>{t("exitNodesP2")}</p>
-                <Button
-                  color="primary"
-                  style={{ width: 240 }}
-                  onClick={() => setSelectingExit(true)}
-                >
-                  {t("setupExitNode")}
-                </Button>
-              </div>
-            )}
-            {selectingExit && (
-              <ExitNodeSetup
-                open={selectingExit}
-                setOpen={setSelectingExit}
-                exits={available}
+        <div>
+          <p>{t("exitNodesP1")}</p>
+          {selected ? (
+            <>
+              <ExitListItem
+                exit={selected}
+                click={() => setSelectingExit(true)}
               />
-            )}
-          </div>
-        ) : (
-          <p>{t("exitNodesSetup")}</p>
-        )}
+              <Button
+                color="secondary"
+                style={{ width: 240 }}
+                onClick={() => setSelectingExit(true)}
+              >
+                {t("updateExit")}
+              </Button>
+            </>
+          ) : (
+            <div>
+              <p>{t("exitNodesP2")}</p>
+              <Button
+                color="primary"
+                style={{ width: 240 }}
+                onClick={() => setSelectingExit(true)}
+              >
+                {t("setupExitNode")}
+              </Button>
+            </div>
+          )}
+          {selectingExit && (
+            <ExitNodeSetup
+              open={selectingExit}
+              setOpen={setSelectingExit}
+              exits={available}
+            />
+          )}
+        </div>
         <Error error={exitsError} />
         {!exits &&
           initializing && <Progress animated color="info" value="100" />}
