@@ -1,7 +1,7 @@
-export { default as AdvancedSettings } from "../components/AdvancedSettings";
-export { default as Billing } from "../components/Billing";
-export { default as Frontpage } from "../components/Frontpage";
-export { default as Neighbors } from "../components/Neighbors";
-export { default as NetworkSettings } from "../components/NetworkSettings";
-export { default as Payments } from "../components/Payments";
-export { default as RouterSettings } from "../components/RouterSettings";
+export { default as AdvancedSettings } from "AdvancedSettings";
+export { default as Billing } from "Billing";
+export { default as Frontpage } from "Frontpage";
+export { default as Neighbors } from "Neighbors";
+export { default as NetworkSettings } from "NetworkSettings";
+export { default as Payments } from "Payments";
+export { default as RouterSettings } from "RouterSettings";

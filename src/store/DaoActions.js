@@ -1,23 +1,28 @@
 import { get, post } from "./fetch";
 
 export default {
-  joinSubnetDao: async ({ setState, state }, daoAddress, ipAddress) => {
+  joinSubnetDao: async ({ setState, state }, daoAddress, meshIp) => {
     // for now we only support joining one DAO at a time so
     // just clear the list before joining
     await Promise.all(
       state.daos.map(address => post(`/dao_list/remove/${address}`))
     );
 
-    let mesh_ip = ipAddress;
+    let mesh_ip = meshIp;
 
-    await post(`/dao_list/add/${daoAddress}`);
+    try {
+      await post(`/dao_list/add/${daoAddress}`);
+    } catch (e) {
+      console.log(e);
+    }
+
     try {
       await post("/mesh_ip", { mesh_ip });
     } catch (e) {
       console.log(e);
     }
 
-    return { daoAddress, ipAddress };
+    return { daoAddress, meshIp };
   },
 
   getMeshIp: async ({ setState, state }) => {

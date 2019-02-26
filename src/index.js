@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./components/App";
+import App from "./App";
 import "./styles/althea.scss";
 import "./icons";
-import { Provider } from "./store";
+import { Provider } from "store";
 
 import "./i18n";
 

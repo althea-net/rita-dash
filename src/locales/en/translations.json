@@ -100,7 +100,7 @@
   "ports": "Ports",
   "preferHigh": "Prefer high quality",
   "preferLow": "Prefer low price",
-  "presentQR": "This is your Ethereum address that is used for payments. This should be provided to the organizer, to enable your router to connect to the subnet.",
+  "presentQR": "This is your Ethereum address that is used for payments. This should be provided to the organizer, to enable your router to connect to the subnet:",
   "price": "Price",
   "priceError": "Unable to get local pricing fee from rita server",
   "priceSetError": "An error occured, the price could not be updated",

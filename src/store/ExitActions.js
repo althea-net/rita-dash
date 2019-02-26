@@ -10,7 +10,7 @@ export const getExits = async ({ setState, state }) => {
     blockchain = (await getBlockchain({ setState, state })).blockchain;
 
   let exits = [];
-  exits = await get("/exits", true, 5000);
+  exits = await get("/exits", true, 500000);
 
   if (exits instanceof Error) {
     return setState({
