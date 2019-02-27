@@ -11,7 +11,7 @@ export default ({ nickname, registered }) => {
   let [waiting, setWaiting] = useState(false);
   let [expired, setExpired] = useState(false);
 
-  let handleCode = async ({ target: { value } }) => {
+  let handleCode = ({ target: { value } }) => {
     setCode(value);
     setWaiting(true);
     setTimeout(() => {

@@ -1,13 +1,27 @@
 import React from "react";
 import usa from "images/usa.svg";
 import { useTranslation } from "react-i18next";
+import { Button } from "reactstrap";
+import { actions } from "store";
 
 export default ({ exit }) => {
   let [t] = useTranslation();
 
-  if (!exit || !exit.exitSettings) return null;
-  let { exitSettings, nickname } = exit;
-  let { description } = exitSettings.generalDetails;
+  if (!exit) return null;
+
+  let {
+    exitSettings: {
+      generalDetails: { description } = { description: null },
+      state,
+      message
+    },
+    nickname
+  } = exit;
+
+  let reset = () => {
+    exit.exitSettings.state = "GotInfo";
+    actions.resetExit(nickname);
+  };
 
   return (
     <div>
@@ -22,6 +36,12 @@ export default ({ exit }) => {
           <div>
             <h5>{nickname}</h5>
             <p className="mb-0">{description}</p>
+            {state === "Denied" && (
+              <>
+                <p>{message}</p>
+                <Button onClick={reset}>Reset</Button>
+              </>
+            )}
           </div>
         </div>
       </div>

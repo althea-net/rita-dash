@@ -29,11 +29,6 @@ export default () => {
     return exit.isSelected && state === "Registered";
   });
 
-  let available = exits.filter(exit => {
-    let { state } = exit.exitSettings;
-    return state !== "Disabled" && state !== "New";
-  });
-
   return (
     <Card>
       <CardBody>
@@ -70,7 +65,7 @@ export default () => {
             <ExitNodeSetup
               open={selectingExit}
               setOpen={setSelectingExit}
-              exits={available}
+              exits={exits}
             />
           )}
         </div>

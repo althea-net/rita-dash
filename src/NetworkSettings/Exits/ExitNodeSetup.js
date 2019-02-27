@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Modal, ModalBody } from "reactstrap";
+import { Button, Modal, ModalBody, Progress } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import validator from "email-validator";
 
@@ -12,28 +12,50 @@ import { Context } from "store";
 export default ({ exits, open, setOpen }) => {
   let { actions } = useContext(Context);
   let [t] = useTranslation();
-  let [step, setStep] = useState(1);
+
   let [exit, setExit] = useState(null);
   let [valid, setValid] = useState(false);
-
   let [email, setEmail] = useState("");
+  let [registering, setRegistering] = useState(false);
+
+  if (validator.validate(email)) valid = true;
 
   let registered = false;
+  let denied = false;
+  let pending = false;
+  let gotinfo = false;
+  let verify = false;
 
   if (exit) {
-    let {
-      exitSettings: { state }
-    } = exits.find(e => e.nickname === exit.nickname);
-    registered = state === "Registered";
+    exit = exits.find(e => e.nickname === exit.nickname);
+    if (exit) {
+      let { state } = exit.exitSettings;
+
+      registered = state === "Registered";
+      denied = state === "Denied";
+      pending = state === "Pending";
+      gotinfo = state === "GotInfo";
+
+      if (exit.exitSettings.generalDetails) {
+        let { verifMode } = exit.exitSettings.generalDetails;
+        verify = verifMode === "Email";
+      }
+    }
   }
+
+  let available = exits.filter(exit => {
+    let { state } = exit.exitSettings;
+    return state !== "Disabled" && state !== "New";
+  });
 
   let selectExit = exit => {
     if (exit.exitSettings.state === "Registered") {
       actions.selectExit(exit.nickname);
       setOpen(false);
     }
+
+    if (!verify && gotinfo) actions.registerExit(exit.nickname);
     setExit(exit);
-    setStep(step + 1);
   };
 
   let handleEmail = ({ target: { value } }) => {
@@ -44,7 +66,7 @@ export default ({ exits, open, setOpen }) => {
 
   let next = () => {
     setValid(false);
-    setStep(3);
+    setRegistering(true);
     actions.registerExit(exit.nickname, email);
   };
 
@@ -70,7 +92,7 @@ export default ({ exits, open, setOpen }) => {
             <h4 className="ml-2">{t("exitNodeSetup")}</h4>
           </div>
 
-          {step === 2 && (
+          {!(registered || denied) ? (
             <Button
               color="primary"
               className="ml-auto"
@@ -80,14 +102,12 @@ export default ({ exits, open, setOpen }) => {
             >
               {t("next")}
             </Button>
-          )}
-          {step === 3 && (
+          ) : (
             <Button
               color="primary"
               className="ml-auto"
               onClick={finish}
               style={{ width: 150 }}
-              disabled={!registered}
             >
               {t("finish")}
             </Button>
@@ -95,14 +115,22 @@ export default ({ exits, open, setOpen }) => {
         </div>
         <SelectedExit exit={exit} />
         <ModalBody>
-          {step === 1 && (
+          {!exit && (
             <div>
               <p>{t("selectNode")}</p>
-              <ExitList exits={exits} selectExit={selectExit} />
+              <ExitList exits={available} selectExit={selectExit} />
             </div>
           )}
-          {step === 2 && <EmailForm email={email} handleEmail={handleEmail} />}
-          {step === 3 && (
+
+          {gotinfo &&
+            verify &&
+            (registering ? (
+              <Progress value={100} animated color="info" />
+            ) : (
+              <EmailForm email={email} handleEmail={handleEmail} />
+            ))}
+
+          {(pending || registered) && (
             <CodeForm nickname={exit.nickname} registered={registered} />
           )}
         </ModalBody>
