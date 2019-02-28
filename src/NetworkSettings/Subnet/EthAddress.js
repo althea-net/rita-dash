@@ -4,9 +4,12 @@ import { Context, init } from "store";
 import QrCode from "qrcode.react";
 import { Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const EthAddress = () => {
   let [t] = useTranslation();
+
+  let [copied, setCopied] = useState(false);
   let [show, setShow] = useState(false);
 
   let {
@@ -19,6 +22,9 @@ const EthAddress = () => {
   init(() => {
     actions.getInfo();
   });
+
+  let toggle = () => setShow(!show);
+  let copy = () => setCopied(true);
 
   return (
     <>
@@ -33,14 +39,19 @@ const EthAddress = () => {
       <InputGroup>
         <Input readOnly value={address || ""} />
         <InputGroupAddon addonType="append">
-          <InputGroupText
-            style={{ cursor: "pointer" }}
-            onClick={() => setShow(true)}
-          >
+          <InputGroupText style={{ cursor: "pointer" }} onClick={toggle}>
             <FontAwesomeIcon icon="qrcode" />
           </InputGroupText>
         </InputGroupAddon>
+        <InputGroupAddon addonType="append">
+          <InputGroupText style={{ cursor: "pointer" }}>
+            <CopyToClipboard text={address} onCopy={copy}>
+              <FontAwesomeIcon icon="copy" />
+            </CopyToClipboard>
+          </InputGroupText>
+        </InputGroupAddon>
       </InputGroup>
+      {copied && <p>{t("copied")}</p>}
     </>
   );
 };

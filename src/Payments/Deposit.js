@@ -4,8 +4,11 @@ import { Card, CardBody, Modal, ModalHeader, ModalBody } from "reactstrap";
 import QR from "qrcode.react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { Context } from "store";
+
+const qrStyle = { height: "auto", width: 300 };
+const iconStyle = { cursor: "pointer", marginLeft: 10 };
+const addressStyle = { wordBreak: "break-word" };
 
 export default ({ open, setOpen }) => {
   let [t] = useTranslation();
@@ -27,25 +30,15 @@ export default ({ open, setOpen }) => {
       <ModalBody>
         <Card className="mb-4">
           <CardBody className="d-flex">
-            <h5 style={{ wordBreak: "break-word" }}>{address}</h5>
+            <h5 style={addressStyle}>{address}</h5>
             <CopyToClipboard text={address} onCopy={() => setCopied(true)}>
-              <FontAwesomeIcon
-                size="lg"
-                icon="copy"
-                style={{ cursor: "pointer", marginLeft: 10 }}
-              />
+              <FontAwesomeIcon size="lg" icon="copy" style={iconStyle} />
             </CopyToClipboard>
-            {copied && <p className="ml-2">Copied!</p>}
+            {copied && <p className="ml-2">{t("copied")}</p>}
           </CardBody>
         </Card>
         <div className="w-100 text-center">
-          <QR
-            style={{
-              height: "auto",
-              width: 300
-            }}
-            value={address}
-          />
+          <QR style={qrStyle} value={address} />
         </div>
       </ModalBody>
     </Modal>

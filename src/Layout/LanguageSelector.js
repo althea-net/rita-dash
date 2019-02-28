@@ -8,7 +8,6 @@ import {
 } from "reactstrap";
 
 const languages = {
-  "en-GB": "English",
   en: "English",
   es: "Español",
   fr: "Français"
@@ -32,15 +31,11 @@ export default () => {
         {languages[i18n.language]}
       </DropdownToggle>
       <DropdownMenu>
-        <DropdownItem onClick={() => i18n.changeLanguage("en")}>
-          English
-        </DropdownItem>
-        <DropdownItem onClick={() => i18n.changeLanguage("es")}>
-          Español
-        </DropdownItem>
-        <DropdownItem onClick={() => i18n.changeLanguage("fr")}>
-          Français
-        </DropdownItem>
+        {Object.keys(languages).map(lang => (
+          <DropdownItem onClick={() => i18n.changeLanguage(lang)}>
+            {languages[lang]}
+          </DropdownItem>
+        ))}
       </DropdownMenu>
     </ButtonDropdown>
   );

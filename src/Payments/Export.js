@@ -30,7 +30,7 @@ export default ({ open, setOpen }) => {
                 style={{ cursor: "pointer", marginLeft: 10 }}
               />
             </CopyToClipboard>
-            {copied && <p className="ml-2">Copied!</p>}
+            {copied && <p className="ml-2">{t("copied")}</p>}
           </CardBody>
         </Card>
       </ModalBody>

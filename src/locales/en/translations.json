@@ -21,6 +21,7 @@
   "codeSent": "A six-digit registration code is being sent to your email address.",
   "confirmationCode": "Confirmation Code",
   "connect": "Connect",
+  "copied": "Copied!",
   "currentBalance": "Account Balance",
   "currentDebt": "Current debt",
   "daoError": "Unable to retrieve Subnet DAOs",
