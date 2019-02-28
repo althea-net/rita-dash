@@ -12,27 +12,40 @@ import {
 import { Address6 } from "ip-address";
 import QrReader from "react-qr-reader";
 import Confirm from "Utils/Confirm";
+import Web3 from "web3";
+
+const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 
 const SubnetForm = () => {
   let [t] = useTranslation();
   let [ipAddress, setIpAddress] = useState("");
   let [daoAddress, setDaoAddress] = useState("");
   let [scanning, setScanning] = useState(false);
-  let [ipNeedsFormatting, setIpNeedsFormatting] = useState(false);
   let [confirming, setConfirming] = useState(false);
+
+  if (!ipAddress) ipAddress = "";
+  let ip = new Address6(ipAddress);
+  let formattedIp = ip.canonicalForm();
+
+  let ipNeedsFormatting = ip.isValid() && ip.subnet !== "/128";
+  if (ipNeedsFormatting) {
+    formattedIp = formattedIp.substr(0, formattedIp.length - 1) + 1;
+  }
 
   init(async () => {
     let { meshIp } = await get("/mesh_ip");
     let daos = await get("/dao_list");
     if (daos.length) setDaoAddress(daos[0]);
+    actions.getSubnetDaos();
     setIpAddress(meshIp);
   });
 
-  let handleIp = e => setIpAddress(e.target.value);
+  let handleIp = e => {
+    setIpAddress(e.target.value);
+  };
+
   let handleDao = e => {
     setDaoAddress(e.target.value);
-    let meshIp = new Address6(e.target.value);
-    setIpNeedsFormatting(meshIp.isValid() && meshIp.subnet !== "/128");
   };
 
   let handleScan = result => {
@@ -57,13 +70,19 @@ const SubnetForm = () => {
       }
     }, 1000);
 
-    actions.joinSubnetDao(daoAddress, ipAddress);
+    actions.joinSubnetDao(daoAddress, formattedIp);
 
     setConfirming(false);
   };
 
+  let ipValid = ip.isValid();
+  let daoValid = !!(daoAddress && web3.utils.isAddress(daoAddress));
+  let valid = ipValid && daoValid;
+
+  let submit = () => setConfirming(true);
+
   return (
-    <Form className="my-2">
+    <Form className="my-2" onSubmit={submit}>
       <Confirm open={confirming} cancel={cancel} confirm={confirm} />
       <div id="viewer" style={{ width: "300px" }} />
       {scanning && (
@@ -76,17 +95,16 @@ const SubnetForm = () => {
       <FormGroup>
         {ipNeedsFormatting && (
           <Alert color="info">
-            <strong>IP Subnet Detected</strong>
-            <p>
-              The router will be assigned the first non-zero address in the
-              range: {ipAddress}
-            </p>
+            <strong>{t("subnetDetected")}</strong>
+            <p>{t("ipWillBeAssigned", { ipAddress: formattedIp })}</p>
           </Alert>
         )}
         <Input
           placeholder={t("ipAddress")}
           value={ipAddress}
           onChange={handleIp}
+          valid={ipValid}
+          invalid={!ipValid}
         />
         <FormFeedback invalid="true">{t("enterIpAddress")}</FormFeedback>
       </FormGroup>
@@ -95,6 +113,8 @@ const SubnetForm = () => {
           placeholder={t("subnetAddress")}
           onChange={handleDao}
           value={daoAddress}
+          valid={daoValid}
+          invalid={!daoValid}
         />
         <FormFeedback invalid="true">{t("enterEthAddress")}</FormFeedback>
       </FormGroup>
@@ -109,9 +129,11 @@ const SubnetForm = () => {
           {t("scanQR")}
         </Button>
         <Button
+          type="submit"
           color="primary"
-          onClick={() => setConfirming(true)}
+          onClick={submit}
           style={{ width: 180 }}
+          disabled={!valid}
         >
           {t("save")}
         </Button>

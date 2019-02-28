@@ -13,7 +13,7 @@ export default ({ open, cancel, confirm }) => {
   let [t] = useTranslation();
 
   return (
-    <Modal isOpen={open} centered>
+    <Modal isOpen={open} centered toggle={cancel}>
       <ModalHeader>{t("Are you sure?")}</ModalHeader>
       <ModalBody>
         <Alert color="warning">{t("thisAction")}</Alert>
