@@ -1,6 +1,6 @@
 import React from "react";
 import { render, cleanup } from "react-testing-library";
-import PrivateKeys from "../components/PrivateKeys";
+import PrivateKeys from "../Payments/PrivateKeys";
 import "../i18n";
 
 afterEach(cleanup);
