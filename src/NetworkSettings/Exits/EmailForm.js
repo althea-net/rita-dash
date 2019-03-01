@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import envelope from "images/email.png";
 import { Form, FormGroup, Input } from "reactstrap";
 
 export default ({ email, handleEmail }) => {
   let [t] = useTranslation();
+  let [phone, setPhone] = useState(null);
 
   return (
     <div>
       <h5>{t("emailAddress")}</h5>
+
       <div className="d-flex p-4">
         <img src={envelope} alt="Envelope" className="mr-4" />
         <div>

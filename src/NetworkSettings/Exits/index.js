@@ -21,7 +21,7 @@ export default () => {
     };
   }, []);
 
-  let [selectingExit, setSelectingExit] = useState(false);
+  let [selectingExit, setSelectingExit] = useState(true);
 
   exits = exits || [];
   let selected = exits.find(exit => {

@@ -1,13 +1,18 @@
 import React, { useContext, useState } from "react";
 import { Button, Modal, ModalBody, Progress } from "reactstrap";
 import { useTranslation } from "react-i18next";
-import validator from "email-validator";
+
+import emailValidator from "email-validator";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 import ExitList from "./ExitList";
 import EmailForm from "./EmailForm";
+import PhoneForm from "./PhoneForm";
 import CodeForm from "./CodeForm";
 import SelectedExit from "./SelectedExit";
 import { Context } from "store";
+
+const isValidEmail = emailValidator.validate;
 
 export default ({ exits, open, setOpen }) => {
   let { actions } = useContext(Context);
@@ -16,15 +21,14 @@ export default ({ exits, open, setOpen }) => {
   let [exit, setExit] = useState(null);
   let [valid, setValid] = useState(false);
   let [email, setEmail] = useState("");
-  let [registering, setRegistering] = useState(false);
-
-  if (validator.validate(email)) valid = true;
+  let [phone, setPhone] = useState("");
+  let [registering, setRegistering] = useState(true);
 
   let registered = false;
   let denied = false;
   let pending = false;
   let gotinfo = false;
-  let verify = false;
+  let verifMode;
 
   if (exit) {
     exit = exits.find(e => e.nickname === exit.nickname);
@@ -37,8 +41,7 @@ export default ({ exits, open, setOpen }) => {
       gotinfo = state === "GotInfo";
 
       if (exit.exitSettings.generalDetails) {
-        let { verifMode } = exit.exitSettings.generalDetails;
-        verify = verifMode === "Email";
+        verifMode = exit.exitSettings.generalDetails.verifMode;
       }
     }
   }
@@ -54,14 +57,19 @@ export default ({ exits, open, setOpen }) => {
       setOpen(false);
     }
 
-    if (!verify && gotinfo) actions.registerExit(exit.nickname);
+    if (!verifMode && gotinfo) actions.registerExit(exit.nickname);
     setExit(exit);
   };
 
-  let handleEmail = ({ target: { value } }) => {
-    setValid(false);
+  let handleEmail = e => {
+    let { value } = e.target;
     setEmail(value);
-    if (validator.validate(value)) setValid(true);
+    setValid(isValidEmail(value));
+  };
+
+  let handlePhone = value => {
+    setPhone(value);
+    setValid(isValidPhoneNumber(value));
   };
 
   let next = () => {
@@ -79,16 +87,9 @@ export default ({ exits, open, setOpen }) => {
       <Modal isOpen={open} centered size="lg" toggle={() => setOpen(!open)}>
         <div className="modal-header d-flex justify-content-between">
           <div className="d-flex mr-auto">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              onClick={() => setOpen(false)}
-            >
-              <h4 aria-hidden="true">&times;</h4>
-            </button>
-
+            <h4 className="modal-close" onClick={() => setOpen(false)}>
+              &times;
+            </h4>
             <h4 className="ml-2">{t("exitNodeSetup")}</h4>
           </div>
 
@@ -123,12 +124,17 @@ export default ({ exits, open, setOpen }) => {
           )}
 
           {gotinfo &&
-            verify &&
-            (registering ? (
-              <Progress value={100} animated color="info" />
-            ) : (
-              <EmailForm email={email} handleEmail={handleEmail} />
-            ))}
+            registering &&
+            (() => {
+              switch (verifMode) {
+                case "Email":
+                  return <EmailForm email={email} handleEmail={handleEmail} />;
+                case "Phone":
+                  return <PhoneForm phone={phone} handlePhone={handlePhone} />;
+                default:
+                  return <Progress value={100} animated color="info" />;
+              }
+            })()}
 
           {(pending || registered) && (
             <CodeForm nickname={exit.nickname} registered={registered} />
