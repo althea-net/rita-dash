@@ -15,8 +15,11 @@ import {
   ModalBody
 } from "reactstrap";
 import { actions, Context } from "store";
+import { Error, Success } from "utils";
 import { BigNumber } from "bignumber.js";
-import web3 from "web3";
+import Web3 from "web3";
+
+const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 
 const weiPerEth = BigNumber("1000000000000000000");
 
@@ -27,19 +30,11 @@ export default ({ open, setOpen }) => {
   let [amount, setAmount] = useState("");
 
   let {
-    state: { balance, symbol }
+    state: { balance, symbol, withdrawalError, withdrawalSuccess }
   } = useContext(Context);
-
-  let validate = param => {
-    return {
-      address: a => web3.utils.isAddress(a),
-      amount: a => !isNaN(a) && a > 0 && a <= balance
-    }[Object.keys(param)[0]];
-  };
 
   let onSubmit = async e => {
     e.preventDefault();
-    if (!validate.address(address)) return;
 
     amount = BigNumber(amount.toString())
       .times(weiPerEth)
@@ -48,6 +43,11 @@ export default ({ open, setOpen }) => {
     actions.withdraw(address, amount);
   };
 
+  let fAmount = parseFloat(amount);
+  let addressValid = !!(address && web3.utils.isAddress(address));
+  let amountValid = !!(!isNaN(fAmount) && fAmount > 0 && fAmount <= balance);
+  let valid = addressValid && amountValid;
+
   return (
     <div>
       <Modal isOpen={open} toggle={() => setOpen(!open)}>
@@ -55,6 +55,9 @@ export default ({ open, setOpen }) => {
           {t("withdraw")} {symbol}
         </ModalHeader>
         <ModalBody>
+          <Error error={withdrawalError} />
+          <Success message={withdrawalSuccess} />
+
           <Form onSubmit={onSubmit} className="text-left">
             <FormGroup id="form">
               <Label for="address" style={{ marginRight: 5 }}>
@@ -68,6 +71,8 @@ export default ({ open, setOpen }) => {
                 placeholder={t("enterEthAddress")}
                 onChange={e => setAddress(e.target.value)}
                 value={address}
+                valid={addressValid}
+                invalid={!!(address && !addressValid)}
               />
               <FormFeedback invalid="true">{t("addressRequired")}</FormFeedback>
             </FormGroup>
@@ -75,15 +80,19 @@ export default ({ open, setOpen }) => {
               <Label for="amount" style={{ marginRight: 5 }}>
                 <b>{t("amount")}</b>
               </Label>
-              <InputGroup>
+              <InputGroup
+                className={amount && !amountValid ? "is-invalid" : null}
+              >
                 <Input
                   id={"amount"}
                   label={t("to")}
-                  type="text"
+                  type="number"
                   name="amount"
                   placeholder={0}
                   onChange={e => setAmount(e.target.value)}
                   value={amount}
+                  valid={amountValid}
+                  invalid={!!(amount && !amountValid)}
                 />
                 <InputGroupAddon addonType="append">
                   <InputGroupText
@@ -109,18 +118,22 @@ export default ({ open, setOpen }) => {
                 padding: 10
               }}
             />
+
+            <div className="d-flex justify-content-center">
+              <Button
+                type="button"
+                color="primary"
+                outline
+                onClick={() => setOpen(false)}
+                className="mr-2"
+              >
+                Cancel
+              </Button>
+              <Button color="primary" disabled={!valid}>
+                {t("withdraw")}
+              </Button>
+            </div>
           </Form>
-          <div className="d-flex justify-content-center">
-            <Button
-              color="primary"
-              outline
-              onClick={() => setOpen(false)}
-              className="mr-2"
-            >
-              Cancel
-            </Button>
-            <Button color="primary">{t("withdraw")}</Button>
-          </div>
         </ModalBody>
       </Modal>
     </div>

@@ -122,6 +122,8 @@ export default {
   },
 
   withdraw: async ({ setState, state }, address, amount) => {
+    setState({ withdrawalSuccess: false });
+
     let res = await post(`/withdraw/${address}/${amount}`);
 
     if (res instanceof Error) {

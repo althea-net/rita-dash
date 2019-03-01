@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { actions, connect } from "store";
+import { connect } from "store";
 import { BigNumber } from "bignumber.js";
 
 import Account from "../Frontpage/Account";
@@ -8,8 +8,7 @@ import PriceForm from "./PriceForm";
 import QualityForm from "./QualityForm";
 import PrivateKeys from "./PrivateKeys";
 
-import Error from "Utils/Error";
-import Success from "Utils/Success";
+import { Error, Success } from "utils";
 
 const weiPerEth = BigNumber("1000000000000000000");
 

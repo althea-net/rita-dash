@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Alert, Card, CardBody, CardTitle, Progress } from "reactstrap";
 
 import { actions, connect } from "store";
-import Error from "Utils/Error";
+import { Error } from "utils";
 import { withTranslation } from "react-i18next";
 import { BigNumber } from "bignumber.js";
 

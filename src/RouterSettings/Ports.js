@@ -5,7 +5,7 @@ import { Context, getState } from "store";
 
 import { Device } from "./PortStyles.js";
 import PortColumns from "./PortColumns";
-import Confirm from "Utils/Confirm";
+import { Confirm } from "utils";
 
 const Ports = () => {
   let [t] = useTranslation();

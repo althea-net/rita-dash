@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Nav } from "reactstrap";
 import AltheaNav from "./Layout/Nav";
 import Topbar from "./Layout/Topbar";
-import NoConnection from "Utils/NoConnection";
+import { NoConnection } from "utils";
 import Router from "Router";
 import { actions } from "store";
 

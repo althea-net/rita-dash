@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Deposit from "../Payments/Deposit";
 import Withdraw from "../Payments/Withdraw";
 
-import { Btn, Card } from "Utils/AltheaUI";
+import { Btn, Card } from "ui";
 import { Context } from "store";
 
 export default () => {

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Card, CardBody, Progress } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { Context } from "store";
-import Error from "Utils/Error";
+import { Error } from "utils";
 import ExitListItem from "./ExitListItem";
 import ExitNodeSetup from "./ExitNodeSetup";
 
@@ -24,6 +24,7 @@ export default () => {
   let [selectingExit, setSelectingExit] = useState(false);
 
   exits = exits || [];
+
   let selected = exits.find(exit => {
     let { state } = exit.exitSettings;
     return exit.isSelected && state === "Registered";

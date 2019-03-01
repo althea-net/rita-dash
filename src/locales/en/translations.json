@@ -5,6 +5,7 @@
   "add1": "Add funds",
   "address": "Address",
   "addSubnetDao": "Add subnet DAO",
+  "addressRequired": "Enter a valid Ethereum address",
   "advancedSettings": "Advanced Settings",
   "amount": "Amount",
   "amountRequired": "Please enter an amount between 0 and {{balance}}",
