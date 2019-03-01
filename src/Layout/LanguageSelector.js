@@ -28,11 +28,11 @@ export default () => {
   return (
     <ButtonDropdown isOpen={open} toggle={toggle}>
       <DropdownToggle className="dropdown-toggle" caret style={toggleStyles}>
-        {languages[i18n.language]}
+        {languages[i18n.language] || languages["en"]}
       </DropdownToggle>
       <DropdownMenu>
         {Object.keys(languages).map(lang => (
-          <DropdownItem onClick={() => i18n.changeLanguage(lang)}>
+          <DropdownItem key={lang} onClick={() => i18n.changeLanguage(lang)}>
             {languages[lang]}
           </DropdownItem>
         ))}
