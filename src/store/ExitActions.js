@@ -31,8 +31,9 @@ export const getExits = async ({ setState, state }) => {
     exits = exits
       .filter(exit => {
         return (
-          exit.exitSettings.generalDetails &&
-          exit.exitSettings.generalDetails.exitCurrency === blockchain
+          (exit.exitSettings.generalDetails &&
+            exit.exitSettings.generalDetails.exitCurrency === blockchain) ||
+          exit.exitSettings.state === "Denied"
         );
       })
       .sort(sort);
@@ -45,18 +46,15 @@ export const getExits = async ({ setState, state }) => {
   });
 };
 
-const registerExit = async (nickname, email) => {
-  if (email) {
-    await post(`/settings`, {
-      exit_client: {
-        reg_details: {
-          email: email
-        }
+const registerExit = async (nickname, email, phone) => {
+  await post(`/settings`, {
+    exit_client: {
+      reg_details: {
+        email,
+        phone
       }
-    });
-  } else {
-    await post(`/exits/${nickname}/register`);
-  }
+    }
+  });
 
   return post(`/exits/${nickname}/register`);
 };
@@ -65,9 +63,9 @@ export default {
   getExits: async ({ setState, state }) => {
     getExits({ setState, state });
   },
-  registerExit: async ({ setState, state }, nickname, email) => {
-    await registerExit(nickname, email);
-    if (!email) await post(`/exits/${nickname}/select`);
+  registerExit: async ({ setState, state }, nickname, email, phone) => {
+    await registerExit(nickname, email, phone);
+    if (!(email || phone)) await post(`/exits/${nickname}/select`);
     await getExits({ setState, state });
   },
   resetExit: async ({ setState, state }, nickname) => {

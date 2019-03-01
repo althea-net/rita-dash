@@ -75,7 +75,8 @@ export default ({ exits, open, setOpen }) => {
   let next = () => {
     setValid(false);
     setRegistering(true);
-    actions.registerExit(exit.nickname, email);
+    console.log(phone);
+    actions.registerExit(exit.nickname, email, phone);
   };
 
   let finish = () => {
@@ -124,20 +125,31 @@ export default ({ exits, open, setOpen }) => {
           )}
 
           {gotinfo &&
-            registering &&
-            (() => {
-              switch (verifMode) {
-                case "Email":
-                  return <EmailForm email={email} handleEmail={handleEmail} />;
-                case "Phone":
-                  return <PhoneForm phone={phone} handlePhone={handlePhone} />;
-                default:
-                  return <Progress value={100} animated color="info" />;
-              }
-            })()}
+            (registering ? (
+              <Progress value={100} animated color="info" />
+            ) : (
+              (() => {
+                switch (verifMode) {
+                  case "Email":
+                    return (
+                      <EmailForm email={email} handleEmail={handleEmail} />
+                    );
+                  case "Phone":
+                    return (
+                      <PhoneForm phone={phone} handlePhone={handlePhone} />
+                    );
+                  default:
+                    return null;
+                }
+              })()
+            ))}
 
           {(pending || registered) && (
-            <CodeForm nickname={exit.nickname} registered={registered} />
+            <CodeForm
+              nickname={exit.nickname}
+              registered={registered}
+              targetLength={verifMode === "Email" ? 6 : 4}
+            />
           )}
         </ModalBody>
       </Modal>

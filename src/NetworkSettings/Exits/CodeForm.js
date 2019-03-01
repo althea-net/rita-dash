@@ -4,7 +4,7 @@ import key from "images/key.png";
 import { Form, FormGroup, Input, Progress } from "reactstrap";
 import { Context } from "store";
 
-export default ({ nickname, registered }) => {
+export default ({ nickname, registered, targetLength }) => {
   let { actions } = useContext(Context);
   let [t] = useTranslation();
   let [code, setCode] = useState("");
@@ -19,7 +19,7 @@ export default ({ nickname, registered }) => {
       setExpired(true);
     }, 12000);
 
-    if (value.length === 6) {
+    if (value.length === targetLength) {
       actions.verifyExit(nickname, value);
     }
   };
