@@ -31,12 +31,6 @@ export default connect([
       symbol
     }
   }) => {
-    useEffect(() => {
-      actions.getInfo();
-      let timer = setInterval(actions.getInfo, 10000);
-      return () => clearInterval(timer);
-    }, []);
-
     let [t] = useTranslation();
 
     let balance = BigNumber(info.balance.toString())

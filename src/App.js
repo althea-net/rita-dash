@@ -17,8 +17,14 @@ export default () => {
     actions.getBlockchain();
     actions.getInfo();
     actions.getSettings();
-    let timer = setInterval(actions.getVersion, 2000);
-    return () => clearInterval(timer);
+
+    let infoPoll = setInterval(actions.getInfo, 5000);
+    let versionPoll = setInterval(actions.getVersion, 2000);
+
+    return () => {
+      clearInterval(infoPoll);
+      clearInterval(versionPoll);
+    };
   }, []);
 
   return (
