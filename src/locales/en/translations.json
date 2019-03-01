@@ -1,6 +1,7 @@
 {
   "2ghz": "2.4 GHz Wireless Network",
   "5ghz": "5 GHz Wireless Network",
+  "accountEmpty": "Your account is empty. You are currently using the free service tier which is very slow.",
   "add1": "Add funds",
   "address": "Address",
   "addSubnetDao": "Add subnet DAO",

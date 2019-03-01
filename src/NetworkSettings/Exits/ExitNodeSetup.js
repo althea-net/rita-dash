@@ -22,7 +22,7 @@ export default ({ exits, open, setOpen }) => {
   let [valid, setValid] = useState(false);
   let [email, setEmail] = useState("");
   let [phone, setPhone] = useState("");
-  let [registering, setRegistering] = useState(true);
+  let [registering, setRegistering] = useState(false);
 
   let registered = false;
   let denied = false;

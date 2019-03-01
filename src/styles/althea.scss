@@ -124,18 +124,13 @@ a.nav-link {
 
 #sidebar {
   font-size: 1rem;
-  padding-top: 30px;
-  padding-left: 60px;
   width: 300px;
-  position: fixed;
-  top: 78px;
-  left: 0;
-  height: 100vh;
-  z-index: 999;
   background: #F8F9FA;
   color: #000;
   transition: all 0.3s;
   border-right: 1px solid #ddd;
+  padding-top: 30px;
+  padding-left: 40px;
 }
 
 #content, .modal-content {
@@ -147,8 +142,7 @@ a.nav-link {
 
 #content {
   padding: 15px;
-  margin-top: 100px;
-  margin-left: 320px;
+  padding-top: 30px;
   width: 100%;
   transition: all 0.3s;
   text-align: left;
@@ -183,3 +177,14 @@ a.nav-link {
   margin-top: -7px;
   margin-right: 10px;
 }
+
+.low-balance {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: calc(100% + 20px);
+  margin: 10px -10px -20px -10px;
+  background: #B63232;
+} 

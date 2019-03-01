@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import envelope from "images/email.png";
 import { Form, FormGroup, Input } from "reactstrap";
 
 export default ({ email, handleEmail }) => {
   let [t] = useTranslation();
-  let [phone, setPhone] = useState(null);
 
   return (
     <div>

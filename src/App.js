@@ -8,8 +8,12 @@ import { actions } from "store";
 
 export default () => {
   const [page, setPage] = useState("dashboard");
+  let style;
 
   useEffect(() => {
+    let h = document.querySelector(".navbar").offsetHeight;
+    style = { minHeight: `calc(100vh - ${h}px)` };
+
     actions.getBlockchain();
     actions.getInfo();
     actions.getSettings();
@@ -20,12 +24,14 @@ export default () => {
   return (
     <>
       <Topbar />
-      <div id="content">
+      <div className="d-flex" style={style}>
         <Nav id="sidebar" navbar>
           <AltheaNav page={page} />
         </Nav>
         <NoConnection />
-        <Router page={page} setPage={setPage} />
+        <div id="content">
+          <Router page={page} setPage={setPage} />
+        </div>
       </div>
     </>
   );
