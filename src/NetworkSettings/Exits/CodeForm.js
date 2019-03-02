@@ -40,7 +40,7 @@ export default ({ nickname, registered, targetLength }) => {
             <FormGroup>
               {registered ? (
                 <div>Success!</div>
-              ) : waiting && code.length === 6 ? (
+              ) : waiting && code.length === targetLength ? (
                 <Progress animated color="info" value="100" />
               ) : (
                 <>

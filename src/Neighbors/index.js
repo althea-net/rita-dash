@@ -40,7 +40,7 @@ class Neighbors extends Component {
           !peers.length && <Alert color="info">{t("noPeers")}</Alert>}
         {error && <Error error={error} />}
         {peers.map(n => (
-          <NodeInfo {...n} symbol={symbol} key={n.nickname} t={t} />
+          <NodeInfo {...n} symbol={symbol} key={n.ip} t={t} />
         ))}
       </div>
     );
