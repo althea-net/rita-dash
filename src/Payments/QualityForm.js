@@ -30,7 +30,7 @@ export default () => {
           control which neighbor your router connects with.
         </p>
         <div className="d-flex">
-          <div className="w-50">
+          <div className="w-100">
             <Input
               type="range"
               min={0}
