@@ -1,7 +1,7 @@
 {
   "name": "althea-dash",
   "productName": "althea",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "PORT=3005 react-scripts start",
@@ -81,11 +81,11 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "cordova-android": "~7.1.1",
+    "cordova-ios": "^4.5.5",
     "debounce": "^1.2.0",
     "email-validator": "^2.0.4",
     "react-copy-to-clipboard": "^5.0.1",
-    "react-testing-library": "^5.9.0",
-    "cordova-android": "~7.1.1",
-    "cordova-ios": "^4.5.5"
+    "react-testing-library": "^5.9.0"
   }
 }
