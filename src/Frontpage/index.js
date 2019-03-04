@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Context } from "store";
+import { actions, Context } from "store";
 
 import Finances from "./Finances";
 import NodeInformation from "./NodeInformation";
@@ -12,6 +12,10 @@ const Frontpage = () => {
       info: { ritaVersion, version }
     }
   } = useContext(Context);
+
+  useEffect(() => {
+    actions.getSettings();
+  }, []);
 
   return (
     <>
