@@ -172,7 +172,7 @@
   "whenEmail": "When email notifications are enabled you will receive low balance alerts.",
   "wifi": "Wifi",
   "wifiAndPorts": "Wi-Fi and Ports",
-  "wifiChange": "Wifi settings were recently changed. You may need to reconnect.",
+  "wifiChange": "Wifi settings were updated. You may need to reconnect with a new SSID or password if you were using the network that was changed.",
   "wifiError": "Wifi settings could not be parsed. The router may not support Wifi.",
   "wifiSettings": "WiFi Settings",
   "wireguardPublicKey": "WireGuard Public Key",

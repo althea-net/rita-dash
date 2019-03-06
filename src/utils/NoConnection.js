@@ -24,9 +24,10 @@ const NoConnection = ({ state, t }) => (
               ) : (
                 <Alert color="info">{t("safeToReboot")}</Alert>
               ))}
-            {state.wifiChange && (
-              <Alert color="danger">{t("wifiChange")}</Alert>
-            )}
+            {state.wifiChange &&
+              state.waiting < 115 && (
+                <Alert color="danger">{t("wifiChange")}</Alert>
+              )}
             {state.waiting > 0
               ? t("waiting", { seconds: state.waiting })
               : t("noRita")}

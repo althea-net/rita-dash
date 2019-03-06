@@ -93,29 +93,19 @@ export default {
     };
   },
 
-  saveWifiSetting: async ({ state, setState }, setting, radioType) => {
-    let { wifiSettings } = state;
-    setState({ loadingWifi: radioType, success: false });
+  saveWifiSettings: async ({ state, setState }, wifiSettings) => {
+    setState({ loadingWifi: true, success: false, wifiChange: true });
 
-    let i = wifiSettings.findIndex(
-      s => s.device.sectionName === setting.device.sectionName
-    );
+    wifiSettings.map(async setting => {
+      let radio = setting.device.sectionName;
+      let { ssid, key, channel } = setting;
+      channel = parseInt(channel, 10);
 
-    setState({
-      wifiChange:
-        wifiSettings[i].ssid !== setting.ssid ||
-        wifiSettings[i].key !== setting.key
+      await post("/wifi_settings/ssid", { radio, ssid });
+      await post("/wifi_settings/pass", { radio, pass: key });
+      await post("/wifi_settings/channel", { radio, channel });
     });
 
-    let radio = setting.device.sectionName;
-    let { ssid, key, channel } = setting;
-    channel = parseInt(channel, 10);
-
-    await post("/wifi_settings/ssid", { radio, ssid });
-    await post("/wifi_settings/pass", { radio, pass: key });
-    await post("/wifi_settings/channel", { radio, channel });
-
-    wifiSettings[i] = setting;
-    return { loadingWifi: false, success: radioType, wifiSettings };
+    return { loadingWifi: false, success: true, wifiSettings };
   }
 };

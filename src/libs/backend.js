@@ -102,10 +102,6 @@ export default class Backend {
     await post("/wifi_settings/channel", { radio, channel });
   }
 
-  async getChannels(radio) {
-    return get(`/wifi_settings/get_channels/${radio}`);
-  }
-
   async setChannel(radio, channel) {
     return post("/wifi_settings/get_channels", { radio, channel });
   }

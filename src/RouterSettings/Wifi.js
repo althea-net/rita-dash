@@ -1,51 +1,68 @@
-import React, { Component } from "react";
-import { actions, connect } from "store";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Context, getState } from "store";
 import WifiSettingsForm from "./WifiSettingsForm";
-import { Alert, Progress } from "reactstrap";
-import { withTranslation } from "react-i18next";
+import { Alert, Card, CardBody, Form, Button, Progress } from "reactstrap";
 
-class Wifi extends Component {
-  componentDidMount = () => {
+const Wifi = () => {
+  let [t] = useTranslation();
+  let [submitting, setSubmitting] = useState(false);
+
+  let {
+    actions,
+    state: { initializing, wifiError, loadingWifi, wifiSettings }
+  } = useContext(Context);
+
+  let [newSettings, setSettings] = useState(wifiSettings);
+
+  useEffect(() => {
     actions.getWifiSettings();
+  });
+
+  if (!wifiSettings || !wifiSettings.length)
+    if (loadingWifi && !wifiError)
+      return initializing ? (
+        <Progress animated color="info" value={100} />
+      ) : null;
+    else return <Alert color="info">{t("noWifi")}</Alert>;
+
+  if (!newSettings) newSettings = wifiSettings;
+
+  let submit = e => {
+    setSubmitting(true);
+    e.preventDefault();
+
+    actions.startWaiting();
+
+    let i = setInterval(async () => {
+      actions.keepWaiting();
+      if (getState().waiting <= 0) {
+        clearInterval(i);
+      }
+    }, 1000);
+
+    actions.saveWifiSettings(newSettings);
   };
 
-  componentWillUnmount = () => {
-    clearInterval(this.timer);
-  };
+  return (
+    <Card>
+      <CardBody>
+        <Form onSubmit={submit}>
+          {wifiSettings.map((_, i) => (
+            <WifiSettingsForm
+              key={i}
+              index={i}
+              submitting={submitting}
+              wifiSettings={newSettings}
+              setSettings={setSettings}
+            />
+          ))}
 
-  render() {
-    let { t } = this.props;
-    const {
-      initializing,
-      wifiError,
-      loadingWifi,
-      wifiSettings
-    } = this.props.state;
+          <Button color="primary">{t("save")}</Button>
+        </Form>
+      </CardBody>
+    </Card>
+  );
+};
 
-    if (!wifiSettings)
-      if (loadingWifi && !wifiError)
-        return initializing ? (
-          <Progress animated color="info" value={100} />
-        ) : null;
-      else return <Alert color="info">{t("noWifi")}</Alert>;
-
-    return (
-      <>
-        {wifiSettings.map((settings, i) => (
-          <WifiSettingsForm
-            state={this.props.state}
-            key={i}
-            wifiSettings={settings}
-          />
-        ))}
-      </>
-    );
-  }
-}
-
-export default connect([
-  "initializing",
-  "wifiError",
-  "loadingWifi",
-  "wifiSettings"
-])(withTranslation()(Wifi));
+export default Wifi;
