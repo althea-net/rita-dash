@@ -10,7 +10,7 @@ const symbols = {
 };
 
 export async function getBlockchain({ setState, state }) {
-  setState({ loadingBlockchain: true });
+  setState({ loadingBlockchain: true, blockchainSuccess: false });
   let res = await get("/blockchain/get/");
   let blockchain = res;
   let symbol = symbols[blockchain];
@@ -113,6 +113,7 @@ export default {
     }
 
     let symbol = symbols[blockchain];
+
     return {
       blockchain,
       loadingBlockchain: false,

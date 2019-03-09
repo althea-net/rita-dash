@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Alert,
   Button,
@@ -9,74 +10,63 @@ import {
   Input,
   Progress
 } from "reactstrap";
-import { actions, connect } from "store";
-import { withTranslation } from "react-i18next";
+import { actions, Context } from "store";
 
-class AdvancedSettings extends Component {
-  state = {
-    blockchain: null
-  };
+const Blockchain = () => {
+  let [t] = useTranslation();
 
-  componentDidMount() {
+  let {
+    state: { blockchain, loadingBlockchain, blockchainSuccess }
+  } = useContext(Context);
+
+  useEffect(() => {
     actions.getBlockchain();
-  }
+  }, []);
 
-  setBlockchain = e => {
-    let blockchain = e.target.value;
-    this.setState({ blockchain });
-    actions.clearBlockchainSuccess();
-  };
+  let [newBlockchain, setBlockchain] = useState(blockchain);
+  if (!newBlockchain) newBlockchain = blockchain;
 
-  onSubmit = e => {
+  let submit = async e => {
     e.preventDefault();
-    let blockchain = this.state.blockchain;
-    actions.setBlockchain(blockchain);
+    await actions.setBlockchain(newBlockchain);
+    actions.getInfo();
   };
 
-  render() {
-    let { t } = this.props;
-    let { blockchain } = this.state;
-    if (blockchain === null) blockchain = this.props.state.blockchain;
-    let { loadingBlockchain, blockchainSuccess } = this.props.state;
+  return (
+    <Card style={{ height: "100%", marginBottom: 20 }}>
+      <CardBody>
+        <Form onSubmit={submit}>
+          <FormGroup id="form">
+            <h3>{t("systemBlockchain")}</h3>
+            {blockchainSuccess ? (
+              <Alert color="success">{t("blockchainSuccess")}</Alert>
+            ) : (
+              <Alert color="danger">{t("blockchainWarning")}</Alert>
+            )}
+            {loadingBlockchain ? (
+              <Progress animated color="info" value="100" />
+            ) : (
+              <Input
+                label={t("blockchain")}
+                name="blockchain"
+                placeholder={t("enterBlockchain")}
+                onChange={e => setBlockchain(e.target.value)}
+                value={newBlockchain}
+                type="select"
+              >
+                <option value="Ethereum">Ethereum</option>
+                <option value="Rinkeby">Rinkeby</option>
+                <option value="Xdai">Xdai</option>
+              </Input>
+            )}
+          </FormGroup>
+          <FormGroup>
+            <Button color="primary">{t("save")}</Button>
+          </FormGroup>
+        </Form>
+      </CardBody>
+    </Card>
+  );
+};
 
-    return (
-      <Card style={{ height: "100%", marginBottom: 20 }}>
-        <CardBody>
-          <Form onSubmit={this.onSubmit}>
-            <FormGroup id="form">
-              <h3>{t("systemBlockchain")}</h3>
-              {blockchainSuccess && (
-                <Alert color="success">{t("blockchainSuccess")}</Alert>
-              )}
-              {loadingBlockchain ? (
-                <Progress animated color="info" value="100" />
-              ) : (
-                <Input
-                  label={t("blockchain")}
-                  name="blockchain"
-                  placeholder={t("enterBlockchain")}
-                  onChange={this.setBlockchain}
-                  value={blockchain || ""}
-                  type="select"
-                >
-                  <option value="Ethereum">Ethereum</option>
-                  <option value="Rinkeby">Rinkeby</option>
-                  <option value="Xdai">Xdai</option>
-                </Input>
-              )}
-            </FormGroup>
-            <FormGroup>
-              <Button color="primary">{t("save")}</Button>
-            </FormGroup>
-          </Form>
-        </CardBody>
-      </Card>
-    );
-  }
-}
-
-export default connect([
-  "blockchain",
-  "loadingBlockchain",
-  "blockchainSuccess"
-])(withTranslation()(AdvancedSettings));
+export default Blockchain;
