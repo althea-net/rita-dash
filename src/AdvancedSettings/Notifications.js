@@ -67,6 +67,8 @@ export default ({ balance, symbol }) => {
           }
         });
 
+        post(`/low_balance_notification/${checked}`);
+
         setSuccess(t("settingsSaved"));
       } catch (e) {}
     }
