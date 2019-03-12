@@ -31,7 +31,7 @@ export default () => {
   });
 
   return (
-    <Card>
+    <Card className="mb-2">
       <CardBody>
         <h2>{t("exitNode")}</h2>
         <div>

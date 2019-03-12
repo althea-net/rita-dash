@@ -10,8 +10,8 @@ export default () => {
   return (
     <div>
       <h1>{t("networkConnection")}</h1>
-      <Subnet />
       <Exits />
+      <Subnet />
     </div>
   );
 };
