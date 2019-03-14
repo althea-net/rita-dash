@@ -3105,7 +3105,7 @@ copy-to-clipboard@^3:
   dependencies:
     toggle-selection "^1.0.3"
 
-cordova-android@^7.1.1:
+cordova-android@~7.1.1:
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/cordova-android/-/cordova-android-7.1.4.tgz#25261ad66cc64f42a30b70be005901fa30e2430e"
   integrity sha512-Rtvu002I83uzfVyCsE6p2krFKVHt9TSAqZUATes+zH+o9cdxYGrLHY+PKCQo4SLCdSMdrkIHCDnQPTYTp/d7+g==
@@ -7829,10 +7829,10 @@ libnpx@^10.2.0:
     y18n "^4.0.0"
     yargs "^11.0.0"
 
-libphonenumber-js@^1.7.9:
-  version "1.7.9"
-  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.7.9.tgz#687ee7e19bd29d11b1aaa1f769b9c3bdb6fab122"
-  integrity sha512-Pi5XtTeC2E727x46a4jgV/vgZPe9/R6w/ApkFXFqwUzZXS2qZUbRSIgR4yR42SOJWkPHxfIK8lG8CXLOgcsEFQ==
+libphonenumber-js@^1.7.11:
+  version "1.7.11"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.7.11.tgz#f3e7519237918a424c5582465eb3d5f403e9e280"
+  integrity sha512-ghNsLd0QO4LeETQWTTOWll1cdbYieKvVP1zjkc6TVc+ZqMwGk6afW1K50akxVIlhEZtN6r6GRyQYLhdyFU1Wag==
   dependencies:
     minimist "^1.2.0"
     semver-compare "^1.0.0"
@@ -10880,9 +10880,9 @@ react-is@^16.3.1, react-is@^16.7.0:
   integrity sha512-ioMCzVDWvCvKD8eeT+iukyWrBGrA3DiFYkXfBsVYIRdaREZuBjENG+KjrikavCLasozqRWTwFUagU/O4vPpRMA==
 
 react-is@^16.8.1:
-  version "16.8.3"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
-  integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
+  version "16.8.4"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
+  integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
 
 react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
@@ -10899,14 +10899,13 @@ react-modal@^3.8.1:
     react-lifecycles-compat "^3.0.0"
     warning "^3.0.0"
 
-react-phone-number-input@^2.3.7:
-  version "2.3.7"
-  resolved "https://registry.yarnpkg.com/react-phone-number-input/-/react-phone-number-input-2.3.7.tgz#703bed982b2e21b52ddb23fba18a501bf29c9940"
-  integrity sha512-Ay25AKaxVVYjcb0gZBeRadfzcSMshPg2UUabwycK8uLbRNdFmCMRxEC6Ne6gOcMt5diKhCzivDrotmIcEjQoBg==
+"react-phone-number-input@https://github.com/asoltys/react-phone-number-input":
+  version "2.3.9"
+  resolved "https://github.com/asoltys/react-phone-number-input#3b5eb6eb7e00253685f580189b3112ec68b59a3e"
   dependencies:
     classnames "^2.2.5"
     input-format "^0.2.2"
-    libphonenumber-js "^1.7.9"
+    libphonenumber-js "^1.7.11"
     prop-types "^15.5.6"
     react-lifecycles-compat "^3.0.4"
     react-responsive-ui "^0.14.123"
@@ -10929,9 +10928,9 @@ react-qr-reader@^2.1.1:
     webrtc-adapter "^6.4.0"
 
 react-responsive-ui@^0.14.123:
-  version "0.14.128"
-  resolved "https://registry.yarnpkg.com/react-responsive-ui/-/react-responsive-ui-0.14.128.tgz#9c9068c72649a100349213f6cc958eea0573e22b"
-  integrity sha512-DaIQWa9DxeFSPMVDntbRHA+lPOALBqY36iti5DRvpUKByIzeUaZ8HkO/PTYDGbnQm4pfUwZ8j253ED6EXmwFuA==
+  version "0.14.129"
+  resolved "https://registry.yarnpkg.com/react-responsive-ui/-/react-responsive-ui-0.14.129.tgz#5f4ff97c120514dd04e2e16bae3fe0dd10b604d1"
+  integrity sha512-w0SYYXxuzkHmMMNO7rwNTgJ1A83T1wOVlKHi+8mjgMZkdPf6fU5oBkXCAJIyl/odgduG0QVYIMY399Vhq8rFLg==
   dependencies:
     classnames "^2.2.5"
     create-react-context "^0.2.2"
