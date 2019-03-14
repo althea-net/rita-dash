@@ -4,6 +4,7 @@ import phoneIcon from "images/phone.svg";
 import { Form, FormGroup } from "reactstrap";
 import PhoneInput from "react-phone-number-input";
 import SmartInput from "react-phone-number-input/smart-input";
+import flags from "react-phone-number-input/flags";
 
 export default ({ phone, handlePhone }) => {
   let [t] = useTranslation();
@@ -19,6 +20,7 @@ export default ({ phone, handlePhone }) => {
           <Form>
             <FormGroup>
               <PhoneInput
+                flags={flags}
                 country="US"
                 inputComponent={SmartInput}
                 placeholder={t("phoneNumber")}

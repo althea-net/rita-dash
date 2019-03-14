@@ -15,6 +15,7 @@ import PhoneInput from "react-phone-number-input";
 import SmartInput from "react-phone-number-input/smart-input";
 import emailValidator from "email-validator";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import flags from "react-phone-number-input/flags";
 import { Success } from "utils";
 
 const isValidEmail = emailValidator.validate;
@@ -106,6 +107,7 @@ export default ({ balance, symbol }) => {
             <FormGroup className="mr-2">
               <Label for="phone">{t("phoneNumber")}</Label>
               <PhoneInput
+                flags={flags}
                 country="US"
                 inputComponent={SmartInput}
                 placeholder={t("phoneNumber")}
