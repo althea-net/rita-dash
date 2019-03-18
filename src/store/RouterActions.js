@@ -94,17 +94,33 @@ export default {
   },
 
   saveWifiSettings: async ({ state, setState }, wifiSettings) => {
-    setState({ loadingWifi: true, success: false, wifiChange: true });
-
-    wifiSettings.map(async setting => {
-      let radio = setting.device.sectionName;
-      let { ssid, key, channel } = setting;
-      channel = parseInt(channel, 10);
-
-      await post("/wifi_settings/ssid", { radio, ssid });
-      await post("/wifi_settings/pass", { radio, pass: key });
-      await post("/wifi_settings/channel", { radio, channel });
+    setState({
+      loadingWifi: true,
+      success: false,
+      wifiChange: true,
+      wifiError: false
     });
+
+    try {
+      await Promise.all(
+        wifiSettings.map(async setting => {
+          let radio = setting.device.sectionName;
+          let { ssid, key } = setting;
+          let channel = parseInt(setting.device.channel, 10);
+
+          let ssidRes = await post("/wifi_settings/ssid", { radio, ssid });
+          if (ssidRes instanceof Error) throw ssidRes;
+
+          let passRes = await post("/wifi_settings/pass", { radio, pass: key });
+          if (passRes instanceof Error) throw passRes;
+
+          let channelRes = post("/wifi_settings/channel", { radio, channel });
+          if (channelRes instanceof Error) throw channelRes;
+        })
+      );
+    } catch (e) {
+      return { loadingWifi: false, wifiError: e.message };
+    }
 
     return { loadingWifi: false, success: true, wifiSettings };
   }

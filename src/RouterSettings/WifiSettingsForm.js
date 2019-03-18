@@ -1,38 +1,46 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, FormGroup, Input, Label, Progress } from "reactstrap";
-import { Context } from "store";
+import { FormGroup, Input, Label } from "reactstrap";
 
-const WifiSettingsForm = ({ index, wifiSettings, setSettings, submitting }) => {
+const WifiSettingsForm = ({
+  index,
+  wifiSettings,
+  setWifiSettings,
+  submitting,
+  channels
+}) => {
   let [t] = useTranslation();
 
   let settings = wifiSettings[index];
-  let [ssid, setSSID] = useState(settings.ssid);
-  let [key, setKey] = useState(settings.key);
-  let [channel, setChannel] = useState(settings.device.channel);
-
-  let newSettings = wifiSettings;
-  newSettings[index] = { ...newSettings[index], ssid, key, channel };
-  setSettings(newSettings);
 
   let radioType = settings.device.radioType;
   let radio = settings.device.sectionName;
 
-  let {
-    state: { loadingWifi, success, channels }
-  } = useContext(Context);
+  let ssidValid = settings.ssid.length >= 8;
+  let keyValid = settings.key.length >= 8;
 
-  let ssidValid = ssid.length >= 8;
-  let keyValid = key.length >= 8;
+  let saveSettings = () => {
+    wifiSettings[index] = settings;
+    setWifiSettings(JSON.parse(JSON.stringify(wifiSettings)));
+  };
+
+  let setSSID = e => {
+    settings.ssid = e.target.value;
+    saveSettings();
+  };
+
+  let setKey = e => {
+    settings.key = e.target.value;
+    saveSettings();
+  };
+
+  let setChannel = e => {
+    settings.device.channel = e.target.value;
+    saveSettings();
+  };
 
   return (
     <>
-      {success === radioType && (
-        <Alert color="success">{t("settingsSaved")}</Alert>
-      )}
-      {loadingWifi === radioType && (
-        <Progress animated color="info" value="100" />
-      )}
       <h4 className="mb-0">{t(radioType)}</h4>
       <div className="d-flex flex-wrap mb-4 mt-0">
         <FormGroup id="form" className="pr-2 mb-0">
@@ -42,8 +50,8 @@ const WifiSettingsForm = ({ index, wifiSettings, setSettings, submitting }) => {
             name="ssid"
             placeholder="min. 8 characters"
             invalid={submitting && !ssidValid}
-            onChange={e => setSSID(e.target.value)}
-            value={ssid}
+            onChange={setSSID}
+            value={settings.ssid}
           />
         </FormGroup>
         <FormGroup className="pr-2 mb-0">
@@ -53,18 +61,17 @@ const WifiSettingsForm = ({ index, wifiSettings, setSettings, submitting }) => {
             name="key"
             placeholder="min. 8 characters"
             invalid={submitting && !keyValid}
-            onChange={e => setKey(e.target.value)}
-            value={key}
+            onChange={setKey}
+            value={settings.key}
           />
         </FormGroup>
         <FormGroup className="pr-2 mb-0">
           <Label for="channel">{t("channel")}</Label>
           <Input
             type="select"
-            id={radio + "-channel"}
             name="channel"
-            onChange={e => setChannel(e.target.value)}
-            value={channel}
+            onChange={setChannel}
+            value={settings.device.channel}
           >
             {channels[radio] &&
               channels[radio].length &&

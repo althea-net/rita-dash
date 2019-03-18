@@ -75,7 +75,6 @@ export default ({ exits, open, setOpen }) => {
   let next = () => {
     setValid(false);
     setRegistering(true);
-    console.log(phone);
     actions.registerExit(exit.nickname, email, phone);
   };
 

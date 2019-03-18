@@ -54,7 +54,7 @@ export async function post(url, data, camel = true) {
     }
   });
 
-  if (!res.ok) return new Error(res.status);
+  if (!res.ok) return new Error((await res.json()).error);
 
   let clone = res.clone();
   try {
