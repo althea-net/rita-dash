@@ -6,7 +6,6 @@ const WifiSettingsForm = ({
   index,
   wifiSettings,
   setWifiSettings,
-  submitting,
   channels
 }) => {
   let [t] = useTranslation();
@@ -49,7 +48,7 @@ const WifiSettingsForm = ({
             type="text"
             name="ssid"
             placeholder="min. 8 characters"
-            invalid={submitting && !ssidValid}
+            invalid={!ssidValid}
             onChange={setSSID}
             value={settings.ssid}
           />
@@ -60,7 +59,7 @@ const WifiSettingsForm = ({
             type="text"
             name="key"
             placeholder="min. 8 characters"
-            invalid={submitting && !keyValid}
+            invalid={!keyValid}
             onChange={setKey}
             value={settings.key}
           />

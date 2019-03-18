@@ -7,7 +7,6 @@ import { Error } from "utils";
 
 const Wifi = () => {
   let [t] = useTranslation();
-  let [submitting, setSubmitting] = useState(false);
   let [wifiError, setWifiError] = useState(null);
   let [wifiSettings, setWifiSettings] = useState(null);
   let [loading, setLoading] = useState(false);
@@ -46,7 +45,6 @@ const Wifi = () => {
     else return <Alert color="info">{t("noWifi")}</Alert>;
 
   let submit = e => {
-    setSubmitting(true);
     e.preventDefault();
 
     actions.startWaiting();
@@ -76,7 +74,6 @@ const Wifi = () => {
               channels={channels}
               key={i}
               index={i}
-              submitting={submitting}
               wifiSettings={wifiSettings}
               setWifiSettings={setWifiSettings}
             />
