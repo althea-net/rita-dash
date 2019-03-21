@@ -53,6 +53,7 @@ const store = {
     portChange: false,
     price: 0,
     priceError: null,
+    resetting: [],
     scanning: false,
     settings: initialSettings,
     symbol: null,

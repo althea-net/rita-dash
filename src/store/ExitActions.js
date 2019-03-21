@@ -2,10 +2,11 @@ import { getBlockchain } from "./PaymentActions";
 import { get, post } from "./fetch";
 
 export const getExits = async ({ setState, state }) => {
-  if (state.loadingExits) return;
+  let { blockchain, resetting, loadingExits } = state;
+
+  if (loadingExits) return;
   setState({ exitsError: false, initializing: false, loadingExits: true });
 
-  let { blockchain } = state;
   if (!blockchain)
     blockchain = (await getBlockchain({ setState, state })).blockchain;
 
@@ -38,11 +39,19 @@ export const getExits = async ({ setState, state }) => {
       })
       .sort(sort);
 
+  resetting = resetting.filter(
+    nick =>
+      exits
+        .filter(e => e.exitSettings.state !== "New")
+        .findIndex(e => e.nickname === e.nick) > -1
+  );
+
   setState({
     exitsError: null,
     exits,
     initializing: false,
-    loadingExits: false
+    loadingExits: false,
+    resetting
   });
 };
 
@@ -68,9 +77,13 @@ export default {
     if (!(email || phone)) await post(`/exits/${nickname}/select`);
     await getExits({ setState, state });
   },
-  resetExit: async ({ setState, state }, nickname) => {
+  resetExit: async ({ setState, state }, exit) => {
+    let { resetting } = state;
+    let { exitSettings, nickname } = exit;
+    if (exitSettings.state === "Pending") resetting.push(nickname);
     await post(`/exits/${nickname}/reset`);
     await getExits({ setState, state });
+    return { resetting };
   },
   selectExit: async ({ setState, state }, nickname) => {
     await post(`/exits/${nickname}/select`);

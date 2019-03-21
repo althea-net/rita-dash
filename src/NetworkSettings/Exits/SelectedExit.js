@@ -1,11 +1,12 @@
-import React from "react";
-import usa from "images/usa.svg";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "reactstrap";
-import { actions } from "store";
+import ExitsContext from "store/Exits";
+import usa from "images/usa.svg";
 
-export default ({ exit }) => {
+export default ({ exit, setExit, setRegistering }) => {
   let [t] = useTranslation();
+  let { resetExit } = useContext(ExitsContext);
 
   if (!exit) return null;
 
@@ -20,7 +21,9 @@ export default ({ exit }) => {
 
   let reset = () => {
     exit.exitSettings.state = "GotInfo";
-    actions.resetExit(nickname);
+    setRegistering(false);
+    resetExit(exit);
+    setExit(null);
   };
 
   return (
@@ -39,7 +42,7 @@ export default ({ exit }) => {
             {state === "Denied" && (
               <>
                 <p>{message}</p>
-                <Button onClick={reset}>Reset</Button>
+                <Button onClick={reset}>{t("reset")}</Button>
               </>
             )}
           </div>

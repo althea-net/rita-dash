@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { Alert, ListGroup } from "reactstrap";
 import ExitListItem from "./ExitListItem";
 
-export default ({ exits, selectExit }) => {
-  let [t] = useTranslation();
+const ExitList = ({ exits, selectExit }) => {
+  const [t] = useTranslation();
 
   return (
     <div>
@@ -24,3 +24,5 @@ export default ({ exits, selectExit }) => {
     </div>
   );
 };
+
+export default ExitList;

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Modal, ModalBody, Progress } from "reactstrap";
+import { Alert, Button, Modal, ModalBody, Progress } from "reactstrap";
 import { useTranslation } from "react-i18next";
 
 import emailValidator from "email-validator";
@@ -10,18 +10,17 @@ import EmailForm from "./EmailForm";
 import PhoneForm from "./PhoneForm";
 import CodeForm from "./CodeForm";
 import SelectedExit from "./SelectedExit";
-import { Context } from "store";
+import ExitsContext from "store/Exits";
 
 const isValidEmail = emailValidator.validate;
 
-export default ({ exits, open, setOpen }) => {
-  let { actions } = useContext(Context);
+const ExitNodeSetup = ({ open, setOpen }) => {
   let [t] = useTranslation();
 
   let [exit, setExit] = useState(null);
-  let [valid, setValid] = useState(false);
   let [email, setEmail] = useState("");
   let [phone, setPhone] = useState("");
+  let [valid, setValid] = useState(false);
   let [registering, setRegistering] = useState(false);
 
   let registered = false;
@@ -29,6 +28,15 @@ export default ({ exits, open, setOpen }) => {
   let pending = false;
   let gotinfo = false;
   let verifMode;
+
+  let {
+    exits,
+    resetting,
+    resetExit,
+    initialized,
+    registerExit,
+    selectExit
+  } = useContext(ExitsContext);
 
   if (exit) {
     exit = exits.find(e => e.nickname === exit.nickname);
@@ -51,13 +59,18 @@ export default ({ exits, open, setOpen }) => {
     return state !== "Disabled" && state !== "New";
   });
 
-  let selectExit = exit => {
+  let onSelectExit = exit => {
+    let { nickname } = exit;
+
     if (exit.exitSettings.state === "Registered") {
-      actions.selectExit(exit.nickname);
+      selectExit(nickname);
       setOpen(false);
     }
 
-    if (!verifMode && gotinfo) actions.registerExit(exit.nickname);
+    if (!verifMode && gotinfo) {
+      registerExit(nickname, email, phone);
+    }
+
     setExit(exit);
   };
 
@@ -73,12 +86,17 @@ export default ({ exits, open, setOpen }) => {
   };
 
   let next = () => {
-    setValid(false);
     setRegistering(true);
-    actions.registerExit(exit.nickname, email, phone);
+    registerExit(exit.nickname, email, phone);
+  };
+
+  let reset = () => {
+    setRegistering(false);
+    resetExit(exit);
   };
 
   let finish = () => {
+    setRegistering(false);
     setOpen(false);
   };
 
@@ -92,18 +110,34 @@ export default ({ exits, open, setOpen }) => {
             </h4>
             <h4 className="ml-2">{t("exitNodeSetup")}</h4>
           </div>
-
-          {!(registered || denied) ? (
+          {pending && (
             <Button
               color="primary"
-              className="ml-auto"
+              className="ml-auto mr-2"
+              onClick={reset}
+              style={{ width: 150 }}
+            >
+              {t("back")}
+            </Button>
+          )}
+
+          {!(
+            registered ||
+            denied ||
+            pending ||
+            resetting.length ||
+            registering
+          ) && (
+            <Button
+              color="primary"
               onClick={next}
               style={{ width: 150 }}
               disabled={!valid}
             >
               {t("next")}
             </Button>
-          ) : (
+          )}
+          {(registered || denied) && (
             <Button
               color="primary"
               className="ml-auto"
@@ -114,44 +148,62 @@ export default ({ exits, open, setOpen }) => {
             </Button>
           )}
         </div>
-        <SelectedExit exit={exit} />
-        <ModalBody>
-          {!exit && (
-            <div>
-              <p>{t("selectNode")}</p>
-              <ExitList exits={available} selectExit={selectExit} />
-            </div>
-          )}
-
-          {gotinfo &&
-            (registering ? (
-              <Progress value={100} animated color="info" />
-            ) : (
-              (() => {
-                switch (verifMode) {
-                  case "Email":
-                    return (
-                      <EmailForm email={email} handleEmail={handleEmail} />
-                    );
-                  case "Phone":
-                    return (
-                      <PhoneForm phone={phone} handlePhone={handlePhone} />
-                    );
-                  default:
-                    return null;
-                }
-              })()
-            ))}
-
-          {(pending || registered) && (
-            <CodeForm
-              nickname={exit.nickname}
-              registered={registered}
-              targetLength={verifMode === "Email" ? 6 : 4}
+        {resetting.length ? (
+          <ModalBody>
+            <Alert color="info">{t("resetting")}</Alert>
+            <Progress value={100} animated color="info" />
+          </ModalBody>
+        ) : (
+          <>
+            <SelectedExit
+              exit={exit}
+              setExit={setExit}
+              setRegistering={setRegistering}
             />
-          )}
-        </ModalBody>
+            <ModalBody>
+              {!exit && (
+                <div>
+                  <p>{t("selectNode")}</p>
+                  {initialized ? (
+                    <ExitList exits={available} selectExit={onSelectExit} />
+                  ) : (
+                    <Progress animated color="info" value="100" />
+                  )}
+                </div>
+              )}
+              {gotinfo &&
+                (registering ? (
+                  <Progress value={100} animated color="info" />
+                ) : (
+                  (() => {
+                    switch (verifMode) {
+                      case "Email":
+                        return (
+                          <EmailForm email={email} handleEmail={handleEmail} />
+                        );
+                      case "Phone":
+                        return (
+                          <PhoneForm phone={phone} handlePhone={handlePhone} />
+                        );
+                      default:
+                        return null;
+                    }
+                  })()
+                ))}
+              {!resetting.length &&
+                (pending || registered) && (
+                  <CodeForm
+                    nickname={exit.nickname}
+                    registered={registered}
+                    targetLength={verifMode === "Email" ? 6 : 4}
+                  />
+                )}
+            </ModalBody>
+          </>
+        )}
       </Modal>
     </div>
   );
 };
+
+export default ExitNodeSetup;

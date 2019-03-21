@@ -1,26 +1,34 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import key from "images/key.png";
 import { Form, FormGroup, Input, Progress } from "reactstrap";
-import { Context } from "store";
+import ExitsContext from "store/Exits";
 
 export default ({ nickname, registered, targetLength }) => {
-  let { actions } = useContext(Context);
   let [t] = useTranslation();
   let [code, setCode] = useState("");
   let [waiting, setWaiting] = useState(false);
   let [expired, setExpired] = useState(false);
+  let [timer, setTimer] = useState(null);
 
-  let handleCode = ({ target: { value } }) => {
+  let { verifyExit } = useContext(ExitsContext);
+
+  useEffect(() => () => clearTimeout(timer), []);
+
+  let handleCode = e => {
+    let { value } = e.target;
     setCode(value);
     setWaiting(true);
-    setTimeout(() => {
-      setWaiting(false);
-      setExpired(true);
-    }, 12000);
+
+    setTimer(
+      setTimeout(() => {
+        setWaiting(false);
+        setExpired(true);
+      }, 12000)
+    );
 
     if (value.length === targetLength) {
-      actions.verifyExit(nickname, value);
+      verifyExit(nickname, value);
     }
   };
 
