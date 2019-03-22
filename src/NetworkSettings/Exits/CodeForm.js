@@ -9,23 +9,25 @@ export default ({ nickname, registered, targetLength }) => {
   let [code, setCode] = useState("");
   let [waiting, setWaiting] = useState(false);
   let [expired, setExpired] = useState(false);
-  let [timer, setTimer] = useState(null);
 
   let { verifyExit } = useContext(ExitsContext);
 
-  useEffect(() => () => clearTimeout(timer), []);
+  useEffect(
+    () => {
+      const timer = setTimeout(() => {
+        setWaiting(false);
+        setExpired(true);
+      }, 12000);
+
+      return () => clearTimeout(timer);
+    },
+    [code]
+  );
 
   let handleCode = e => {
     let { value } = e.target;
     setCode(value);
     setWaiting(true);
-
-    setTimer(
-      setTimeout(() => {
-        setWaiting(false);
-        setExpired(true);
-      }, 12000)
-    );
 
     if (value.length === targetLength) {
       verifyExit(nickname, value);
