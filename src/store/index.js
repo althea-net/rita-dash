@@ -112,9 +112,9 @@ const base =
 
 const AbortController = window.AbortController;
 
-export async function get(url, camel = true, timeout = 10000) {
+export async function get(url, camel = true, timeout = 10000, signal) {
   const controller = new AbortController();
-  const signal = controller.signal;
+  // signal = signal || controller.signal;
 
   let timer = setTimeout(() => controller.abort(), timeout);
   let res;
@@ -122,6 +122,7 @@ export async function get(url, camel = true, timeout = 10000) {
   try {
     res = await fetch(base + url, { signal });
   } catch (e) {
+    if (e.name === "AbortError") throw e;
     return e;
   }
 
