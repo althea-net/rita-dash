@@ -36,6 +36,7 @@
   "debuggingMessage": "{{show}} advanced debugging message",
   "deposit": "Deposit",
   "depositFunds": "Deposit Funds",
+  "deviceNotRecognized": "Could not find port settings for your device",
   "edit": "Edit",
   "email": "Email",
   "emailAddress": "Email Address",

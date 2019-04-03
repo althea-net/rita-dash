@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import { Alert } from "reactstrap";
 import { PortColumn, PortNumber, PortToggle } from "./PortStyles.js";
 
 import portOrderings from "../portOrderings";
@@ -9,6 +10,9 @@ import portImage from "images/port.png";
 const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
   let [t] = useTranslation();
   let modes = [t("LAN"), t("Mesh"), t("WAN")];
+
+  if (!portOrderings[device])
+    return <Alert color="danger">{t("deviceNotRecognized")}</Alert>;
 
   return (
     <div className="d-flex flex-wrap justify-content-center mb-2 mx-0 px-0">
