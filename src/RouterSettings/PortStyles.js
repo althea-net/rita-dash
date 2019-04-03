@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button, Card, CardBody } from "reactstrap";
 import glImage from "images/gl.jpg";
+import linksysImage from "images/linksyswrt3200acm.jpg";
 
 export const PortNumber = styled.div`
   position: absolute;
@@ -45,8 +46,13 @@ const GL = () => {
   return <RouterImage src={glImage} alt="GL B-1300" />;
 };
 
+const LinkSys = () => {
+  return <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />;
+};
+
 const deviceImages = {
-  "gl-b1300": <GL />
+  "gl-b1300": <GL />,
+  "linksys-wrt3200acm": <LinkSys />
 };
 
 export const Device = ({ device }) => (
