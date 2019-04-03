@@ -13,25 +13,27 @@ const Wifi = () => {
   let [channels, setChannels] = useState({});
 
   let getWifiSettings = async () => {
-    let settings = await get("/wifi_settings");
-    if (settings instanceof Error) {
+    try {
+      let settings = await get("/wifi_settings");
+
+      await Promise.all(
+        settings.map(async setting => {
+          let radio = setting.device.sectionName;
+          channels[radio] = [];
+          try {
+            channels[radio] = await get(`/wifi_settings/get_channels/${radio}`);
+          } catch (e) {}
+          return channels[radio];
+        })
+      );
+
+      setChannels(channels);
+      setWifiSettings(settings);
+    } catch (e) {
       setWifiError(t("wifiError"));
       setLoading(false);
+      return;
     }
-
-    await Promise.all(
-      settings.map(async setting => {
-        let radio = setting.device.sectionName;
-        channels[radio] = [];
-        try {
-          channels[radio] = await get(`/wifi_settings/get_channels/${radio}`);
-        } catch (e) {}
-        return channels[radio];
-      })
-    );
-
-    setChannels(channels);
-    setWifiSettings(settings);
   };
 
   useEffect(() => {

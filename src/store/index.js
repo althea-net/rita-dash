@@ -114,7 +114,7 @@ const AbortController = window.AbortController;
 
 export async function get(url, camel = true, timeout = 10000, signal) {
   const controller = new AbortController();
-  // signal = signal || controller.signal;
+  signal = signal || controller.signal;
 
   let timer = setTimeout(() => controller.abort(), timeout);
   let res;
