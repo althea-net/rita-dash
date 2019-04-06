@@ -1,0 +1,196 @@
+$primary: #3DADF5;
+$btn-border-radius: 0;
+@import "~bootstrap/scss/bootstrap";
+@import "./react-phonenumber";
+
+label {
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+} 
+
+.table-striped>thead>tr>th {
+  border-bottom: 1px solid #dadada;
+} 
+
+.table-striped>tbody>tr {
+  >td {
+    border: none;
+  } 
+
+  &:nth-child(odd)>td {
+    background-color: #f8f9fa;
+  }
+}
+
+@keyframes ScrollRight {
+  0% {
+    background-position: 0px;
+  }
+  100% {
+    background-position: 1000px;
+  }
+}
+
+@keyframes ScrollLeft {
+  0% {
+    background-position: 1000px;
+  }
+  100% {
+    background-position: 0px;
+  }
+}
+
+.nav-item.active {
+  background: #ccc
+} 
+
+.dropdown-toggle::after {
+  right: 0;
+  margin-right: 10px;
+}
+
+#camcontrols {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+} 
+
+#crosshair {
+  position: absolute;
+  display: block;
+  width: 200px;
+  height: 200px;
+  border: 10px dashed white;
+  top: 50%;
+  left: 50%;
+  margin: -100px 0 0 -100px;
+} 
+
+#controls {
+  position: absolute;
+  margin-left: auto;
+  left: 50%;
+  display: block;
+  width: 300px;
+  bottom: 10px;
+  background: white;
+  text-align: center;
+  color: black;
+  font-family: Roboto, sans-serif;
+  font-size: 32px;
+  border-radius: 15px;
+  z-index: 500;
+  margin: 0 0 0 -150px;
+} 
+
+.nav-link {
+  margin-top: 5px;
+  margin-bottom: 5px;
+} 
+
+a.nav-link {
+  color: #333;
+} 
+
+.nav-item.active {
+  background: inherit !important;
+  font-weight: bold;
+} 
+
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 40px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px dashed #ddd;
+    margin: 40px 0;
+}
+
+#sidebar {
+  font-size: 1rem;
+  width: 300px;
+  background: #F8F9FA;
+  color: #000;
+  transition: all 0.3s;
+  border-right: 1px solid #ddd;
+  padding-top: 30px;
+  padding-left: 40px;
+}
+
+#content, .modal-content {
+  font-size: 14px;
+  p {
+    color: gray;
+  } 
+}
+
+#content {
+  padding: 15px;
+  padding-top: 30px;
+  width: 100%;
+  transition: all 0.3s;
+  text-align: left;
+  max-width: 800px;
+} 
+
+#content.active {
+    width: 100%;
+}
+
+@media (max-width: 991px) {
+    #sidebar {
+       display: none; 
+    }
+
+    #content {
+      margin-left: 0;
+    } 
+}
+
+.text-break {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+}
+
+.modal-close {
+  cursor: pointer;
+  font-size: 34px;
+  margin-top: -7px;
+  margin-right: 10px;
+}
+
+.low-balance {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: calc(100% + 20px);
+  margin: 10px -10px -20px -10px;
+  background: #B63232;
+} 
+
+.input-group.is-invalid {
+  ~ .invalid-feedback {
+    display: block;
+  }
+}

@@ -1,13 +1,14 @@
+import cckd from "camelcase-keys-deep";
+import { useEffect, useState } from "react";
 import { initStore } from "react-stateful";
-import Backend from "../libs/backend";
 import {
   DaoActions,
   ExitActions,
+  GeneralActions,
   NeighborActions,
-  RouterActions
+  RouterActions,
+  PaymentActions
 } from "./actions";
-
-const backend = new Backend();
 
 const initialSettings = {
   network: {
@@ -20,67 +21,70 @@ const initialSettings = {
 
 const store = {
   initialState: {
+    autoPricing: false,
+    blockchain: null,
+    blockchainSuccess: false,
+    channels: null,
+    daoAddress: null,
     daos: [],
     daosError: null,
     error: null,
     exits: null,
     exitsError: null,
+    factor: 0,
+    factorError: null,
+    initializing: true,
+    ipAddress: null,
+    loadingBlockchain: false,
+    loadingExits: null,
     loadingInterfaces: null,
+    loadingIp: null,
+    loadingPrice: false,
     loadingSettings: false,
+    loadingVersion: false,
     loading: null,
     info: { balance: 0, device: null, version: "" },
     interfaces: null,
+    meshIp: null,
     neighbors: null,
     neighborsError: null,
     page: "",
     port: null,
+    portChange: false,
+    price: 0,
+    priceError: null,
+    resetting: [],
+    scanning: false,
     settings: initialSettings,
+    symbol: null,
     success: false,
     t: () => {},
+    version: true,
+    versionError: null,
+    waiting: 0,
+    wifiChange: null,
     wifiError: null,
-    wifiSettings: null
+    wifiSettings: null,
+    withdrawalError: null,
+    withdrawalSuccess: false
   },
   actions: {
-    ...DaoActions(backend),
-    ...ExitActions(backend),
-    ...NeighborActions(backend),
-    ...RouterActions(backend),
+    ...GeneralActions,
+    ...DaoActions,
+    ...ExitActions,
+    ...NeighborActions,
+    ...PaymentActions,
+    ...RouterActions,
 
-    changePage: (_, page) => ({ error: "", loading: false, page: page }),
+    changePage: (_, page) => ({
+      error: "",
+      initializing: true,
+      loading: false,
+      page: page
+    }),
+
     init: async ({ setState, state }, t) => {
       setState({ t });
-    },
-
-    getInfo: async ({ setState, state }) => {
-      setState({ loading: true });
-
-      let info = await backend.getInfo();
-
-      if (info instanceof Error) {
-        return {
-          error: state.t("infoError"),
-          loading: false
-        };
-      }
-
-      return { loading: false, info };
-    },
-
-    getSettings: async ({ setState, state }) => {
-      let settings = await backend.getSettings();
-      if (state.loadingSettings) return;
-
-      setState({ loadingSettings: true });
-
-      if (settings instanceof Error) {
-        return {
-          error: state.t("settingsError"),
-          loadingSettings: false,
-          settings: initialSettings
-        };
-      }
-
-      return { error: null, loadingSettings: false, settings };
     }
   }
 };
@@ -91,5 +95,101 @@ export const {
   actions,
   getState,
   connect,
-  subscribe
+  subscribe,
+  Context
 } = initStore(store);
+
+let { protocol, hostname } = window.location;
+
+if (protocol === "file:") {
+  protocol = "http:";
+  hostname = "192.168.10.1";
+}
+
+const port = 4877;
+const base =
+  process.env.REACT_APP_BACKEND_URL || `${protocol}//${hostname}:${port}`;
+
+const AbortController = window.AbortController;
+
+export async function get(url, camel = true, timeout = 10000, signal) {
+  const controller = new AbortController();
+  signal = signal || controller.signal;
+
+  let timer = setTimeout(() => controller.abort(), timeout);
+  let res;
+
+  try {
+    res = await fetch(base + url, { signal });
+  } catch (e) {
+    if (e.name === "AbortError") throw e;
+    return e;
+  }
+
+  clearTimeout(timer);
+
+  if (!res.ok) return new Error(res.status);
+
+  let clone = res.clone();
+  try {
+    let json = await res.json();
+    if (json && json.error) {
+      return new Error(json.error);
+    }
+    if (camel) json = cckd(json);
+    return json;
+  } catch (e) {
+    return clone.text();
+  }
+}
+
+export async function post(url, data, camel = true) {
+  const res = await fetch(base + url, {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  });
+
+  if (!res.ok) throw new Error(res.status);
+
+  let clone = res.clone();
+  try {
+    let json = await res.json();
+    if (json && json.error) {
+      throw new Error(json.error);
+    }
+    if (camel) json = cckd(json);
+    return json;
+  } catch (e) {
+    return clone.text();
+  }
+}
+
+export function init(f) {
+  useEffect(() => {
+    f();
+    return;
+  }, []);
+}
+
+export function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(
+    () => {
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+    [value]
+  );
+
+  return debouncedValue;
+}
