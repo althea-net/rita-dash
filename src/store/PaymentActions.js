@@ -3,21 +3,35 @@ import { BigNumber } from "bignumber.js";
 
 const weiPerEth = BigNumber("1000000000000000000");
 const bytesPerGb = BigNumber("1000000000");
-const symbols = {
+const currencies = {
   Ethereum: "ETH",
   Rinkeby: "tETH",
-  Xdai: "DAI"
+  Xdai: null
+};
+const symbols = {
+  Ethereum: null, //Ξ
+  Rinkeby: null, //☷
+  Xdai: "$"
 };
 
 export async function getBlockchain({ setState, state }) {
   setState({ loadingBlockchain: true, blockchainSuccess: false });
   let res = await get("/blockchain/get/");
   let blockchain = res;
-  let symbol = symbols[blockchain];
+  let symbol = null;
+  let currency = null;
+  if (symbols[blockchain] != null) {
+    symbol = symbols[blockchain];
+    currency = " ";
+  } else {
+    symbol = " ";
+    currency = currencies[blockchain];
+  }
   return {
     blockchain,
     loadingBlockchain: false,
-    symbol
+    symbol,
+    currency
   };
 }
 

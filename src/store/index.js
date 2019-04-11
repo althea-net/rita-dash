@@ -25,6 +25,7 @@ const store = {
     blockchain: null,
     blockchainSuccess: false,
     channels: null,
+    currency: null,
     daoAddress: null,
     daos: [],
     daosError: null,

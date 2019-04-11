@@ -14,7 +14,7 @@ export default () => {
   let [withdrawing, setWithdrawing] = useState(false);
 
   let {
-    state: { balance, symbol }
+    state: { currency, balance, symbol }
   } = useContext(Context);
 
   return (
@@ -25,7 +25,7 @@ export default () => {
         <div className="d-flex justify-content-between">
           <h4>{t("currentBalance")}</h4>
           <h4>
-            {balance} {symbol}
+          {symbol}{balance} {currency}
           </h4>
         </div>
         <div className="d-flex justify-content-center">
