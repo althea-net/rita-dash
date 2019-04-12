@@ -49,17 +49,14 @@ export default ({ nickname, registered, targetLength }) => {
           <Form>
             <FormGroup>
               {registered ? (
-                <div>Success!</div>
+                <div>{t("success")}</div>
               ) : waiting && code.length === targetLength ? (
                 <Progress animated color="info" value="100" />
               ) : (
                 <>
                   {expired &&
                     code.length === targetLength && (
-                      <div className="mb-2">
-                        Registration did not succeed. Did you enter the right
-                        code?
-                      </div>
+                      <div className="mb-2">{t("registrationFailed")}</div>
                     )}
                   <Input
                     value={code}

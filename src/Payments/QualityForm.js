@@ -25,10 +25,7 @@ export default () => {
     <Card className="mb-4">
       <CardBody>
         <h3>{t("priceQuality")}</h3>
-        <p>
-          Assuming you have more than one "neighbor node", these settings
-          control which neighbor your router connects with.
-        </p>
+        <p>{t("neighbours")}</p>
         <div className="d-flex">
           <div className="w-100">
             <Input
