@@ -8,19 +8,24 @@ export default {
       state.daos.map(address => post(`/dao_list/remove/${address}`))
     );
 
-    let mesh_ip = meshIp;
-
     try {
       await post(`/dao_list/add/${daoAddress}`);
     } catch (e) {
       console.log(e);
     }
 
+    /* 
+     * Removing support for this as there seems to be an issue with losing 
+     * reachability to exits after the router comes back up after this action
+
+    let mesh_ip = meshIp;
     try {
       await post("/mesh_ip", { mesh_ip });
     } catch (e) {
       console.log(e);
     }
+
+    */
 
     return { daoAddress, meshIp };
   },
