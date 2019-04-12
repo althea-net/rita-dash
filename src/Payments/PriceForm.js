@@ -27,13 +27,14 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
 
     let [t] = useTranslation();
 
-    const [newPrice, setNewPrice] = useState(0);
+    const [newPrice, setNewPrice] = useState(price);
 
     const onSubmit = () => {
       actions.setPrice(newPrice);
     };
 
     const togglePricing = () => {
+      if (!autoPricing) setNewPrice(0);
       actions.toggleAutoPricing();
     };
 
@@ -42,9 +43,9 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
         <CardBody>
           <Form onSubmit={onSubmit}>
             <FormGroup id="form">
-              {loadingPrice && <Progress animated color="info" value="100" />}
               <h3>{t("sellingBandwidth")}</h3>
               <p>Set the price for your bandwidth.</p>
+              {loadingPrice && <Progress animated color="info" value="100" />}
 
               <Label for="price">{t("bandwidthPrice")}</Label>
 
@@ -54,8 +55,8 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
                     label={t("price")}
                     name="price"
                     placeholder={t("enterPrice")}
-                    onChange={setNewPrice}
-                    value={newPrice}
+                    onChange={e => setNewPrice(e.target.value)}
+                    value={newPrice || price}
                     readOnly={autoPricing}
                     style={{ borderRight: "none" }}
                   />
