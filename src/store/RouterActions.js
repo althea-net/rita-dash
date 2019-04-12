@@ -102,22 +102,19 @@ export default {
     });
 
     try {
-      await Promise.all(
-        wifiSettings.map(async setting => {
-          let radio = setting.device.sectionName;
-          let { ssid, key } = setting;
-          let channel = parseInt(setting.device.channel, 10);
+      let data = [];
 
-          let ssidRes = await post("/wifi_settings/ssid", { radio, ssid });
-          if (ssidRes instanceof Error) throw ssidRes;
+      wifiSettings.map(async setting => {
+        let radio = setting.device.sectionName;
+        let { ssid, key } = setting;
+        let channel = parseInt(setting.device.channel, 10);
 
-          let passRes = await post("/wifi_settings/pass", { radio, pass: key });
-          if (passRes instanceof Error) throw passRes;
+        data.push({ WifiChannel: { radio, channel } });
+        data.push({ WifiSSID: { radio, ssid } });
+        data.push({ WifiPass: { radio, pass: key } });
+      });
 
-          let channelRes = post("/wifi_settings/channel", { radio, channel });
-          if (channelRes instanceof Error) throw channelRes;
-        })
-      );
+      await post("/wifi_settings", data);
     } catch (e) {
       return { loadingWifi: false, wifiError: e.message };
     }
