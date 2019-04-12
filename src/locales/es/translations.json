@@ -175,7 +175,7 @@
   "waiting": "Esperando {{seconds}} segundos para que el router vuelva a encenderse",
   "weiPerGB": "Ξ / GB",
   "welcome": "Bienvenido a Althea",
-  "whenEmail": "Cuando las notificacione estan activadas usted va a recibir alertas a su teléfono o a su email dependiendo en el cual uso para registrase con el nodo de salida.",
+  "whenEmail": "Cuando las notificacione esten activadas usted va a recibir alertas a su teléfono o a su email dependiendo en el cual uso para registrase con el nodo de salida.",
   "wifi": "Wifi",
   "wifiAndPorts": "Wifi y puertos",
   "wifiChange": "Las opciones de wifi fueron actualizadas. Es probable que hay que reconectarse al wifi nuevamente con el nuevo nombre de la red o contraseña",
