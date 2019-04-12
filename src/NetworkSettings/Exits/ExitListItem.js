@@ -3,6 +3,7 @@ import { ListGroupItem } from "reactstrap";
 import usa from "images/usa.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 
 const Item = styled(ListGroupItem)`
   border-radius: 0 !important;
@@ -24,6 +25,7 @@ const Flag = styled.img`
 
 export default ({ exit, click }) => {
   if (!exit.exitSettings) return null;
+  const [t] = useTranslation();
   let {
     exitSettings: { description, state },
     nickname,
@@ -54,14 +56,14 @@ export default ({ exit, click }) => {
           <div className="ml-2">
             <FontAwesomeIcon color="red" icon="exclamation-triangle" />
             <span style={{ marginLeft: 5, color: "red" }}>
-              Connection problem
+              {t("connectionProblem")}
             </span>
           </div>
         ) : (
           <div className="ml-2">
             <FontAwesomeIcon color="#27D38D" icon="check-circle" />
             <span style={{ marginLeft: 5, color: "#27d38d" }}>
-              Great connection
+              {t("greatConnection")}
             </span>
           </div>
         )}

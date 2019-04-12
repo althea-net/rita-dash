@@ -23,24 +23,22 @@ export default ({ open, setOpen }) => {
       {updated ? (
         <ModalBody className="text-center">
           <img src={bigGreenCheck} alt="Checkmark" className="mb-2" />
-          <h5>Your firmware is currently up to date!</h5>
+          <h5>t("updatedFirmware")</h5>
         </ModalBody>
       ) : (
         <ModalBody className="text-center">
           <img src={router} alt="Router" className="mb-2" />
-          <p>
-            <b>A new version of the firmware is available (4.3.4)</b>
-          </p>
+          <p>{t("newFirmwareAvailable", { version: "4.3.4" })}</p>
           <Button
             className="mb-2"
             color="primary"
             style={{ width: 250 }}
             onClick={() => setUpdated(true)}
           >
-            Update Now
+            {t("updateNow")}
           </Button>
           <p>
-            <small>After you update, you will have to log in again.</small>
+            <small>{t("updateRestart")}</small>
           </p>
         </ModalBody>
       )}

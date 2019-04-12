@@ -18,7 +18,7 @@ export default (daoAddress, ipAddress) => {
                 style={{ whiteSpace: "nowrap", fontSize: 16, color: "#666" }}
                 className="mt-2 mr-2"
               >
-                Display Period
+                {t("displayPeriod")}
               </div>
               <Input type="select" style={{ color: "#666" }}>
                 <option>Weekly</option>
