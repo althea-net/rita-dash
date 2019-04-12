@@ -82,7 +82,7 @@
   "mode": "Modo",
   "monthlyUse": "% del uso mensual promedio",
   "neighbors": "Vecinos",
-  "neighbours": "Si tienes más de un vecinos, estas opciones te permite controlar como conectarce a ellos.",
+  "neighbours": "Si tienes más de un vecinos, esta configuración te permite controlar como conectarce a ellos.",
   "neighborsError": "Problemas para reconectarse con los vecinos",
   "networkConnection": "Conexión de la red",
   "networkPassword": "Contraseña de la red",
