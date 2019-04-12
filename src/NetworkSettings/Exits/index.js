@@ -95,8 +95,12 @@ const Exits = () => {
   };
 
   const verifyExit = async (nickname, code) => {
-    await post(`/exits/${nickname}/verify/${code}`);
-    await post(`/exits/${nickname}/select`);
+    try {
+      await post(`/exits/${nickname}/verify/${code}`);
+      await post(`/exits/${nickname}/select`);
+    } catch (e) {
+      setExitsError("There was a problem submitting the code");
+    }
     getExits();
   };
 
@@ -140,6 +144,7 @@ const Exits = () => {
     <Provider value={store}>
       <Card className="mb-2">
         <CardBody>
+          <Error error={exitsError} />
           <h2>{t("exitNode")}</h2>
           <div>
             <p>{t("exitNodesP1")}</p>
@@ -173,7 +178,6 @@ const Exits = () => {
               <ExitNodeSetup open={selectingExit} setOpen={setSelectingExit} />
             )}
           </div>
-          <Error error={exitsError} />
         </CardBody>
       </Card>
     </Provider>
