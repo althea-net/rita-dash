@@ -26,7 +26,7 @@ const Exits = () => {
       const blockchain = await get("/blockchain/get/", true, 5000, signal);
 
       let exits = [];
-      exits = await get("/exits", true, 500000, signal);
+      exits = await get("/exits", true, 5000, signal);
 
       if (exits instanceof Error) setExitsError(t("exitsError"));
 
