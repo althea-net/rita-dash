@@ -54,7 +54,7 @@ export default ({ nickname, registered, targetLength }) => {
                 <Progress animated color="info" value="100" />
               ) : (
                 <>
-                  {expired && <div>{t("failedRegistarion")}</div>}
+                  {expired && <div>{t("registrationFailed")}</div>}
                   <Input
                     value={code}
                     onChange={handleCode}
