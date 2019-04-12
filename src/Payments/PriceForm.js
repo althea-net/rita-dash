@@ -44,7 +44,7 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
             <FormGroup id="form">
               {loadingPrice && <Progress animated color="info" value="100" />}
               <h3>{t("sellingBandwidth")}</h3>
-              <p>Set the price for your bandwidth.</p>
+              <p>{t("setYourBandwidth")}</p>
 
               <Label for="price">{t("bandwidthPrice")}</Label>
 
