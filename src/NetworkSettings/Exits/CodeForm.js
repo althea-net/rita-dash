@@ -54,12 +54,13 @@ export default ({ nickname, registered, targetLength }) => {
                 <Progress animated color="info" value="100" />
               ) : (
                 <>
-                  {expired && (
-                    <div>
-                      Registration did not succeed. Did you enter the right
-                      code?
-                    </div>
-                  )}
+                  {expired &&
+                    code.length === targetLength && (
+                      <div className="mb-2">
+                        Registration did not succeed. Did you enter the right
+                        code?
+                      </div>
+                    )}
                   <Input
                     value={code}
                     onChange={handleCode}
