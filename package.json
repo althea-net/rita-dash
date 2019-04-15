@@ -1,7 +1,7 @@
 {
   "name": "althea-dash",
   "productName": "althea",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "scripts": {
     "start": "PORT=3005 react-scripts start",
