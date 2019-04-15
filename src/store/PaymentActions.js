@@ -6,7 +6,7 @@ const bytesPerGb = BigNumber("1000000000");
 const symbols = {
   Ethereum: "ETH",
   Rinkeby: "tETH",
-  Xdai: "DAI"
+  Xdai: "USD"
 };
 
 export async function getBlockchain({ setState, state }) {
