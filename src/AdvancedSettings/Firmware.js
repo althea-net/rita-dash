@@ -23,7 +23,7 @@ export default connect(["info"])(({ state: { info } }) => {
           style={{ width: 200 }}
           onClick={() => setChecking(true)}
         >
-          {t("checkForUpdates")}
+          {t("updateNow")}
         </Button>
       </CardBody>
     </Card>

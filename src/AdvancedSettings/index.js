@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import Blockchain from "./Blockchain";
 import Notifications from "./Notifications";
+import Firmware from "./Firmware";
 
 export default () => {
   let [t] = useTranslation();
@@ -13,6 +14,7 @@ export default () => {
 
       <Notifications />
       <Blockchain />
+      <Firmware />
     </div>
   );
 };
