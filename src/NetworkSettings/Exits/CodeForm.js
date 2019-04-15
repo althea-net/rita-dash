@@ -62,7 +62,6 @@ export default ({ nickname, registered, targetLength }) => {
                     value={code}
                     onChange={handleCode}
                     placeholder={t("confirmationCode")}
-                    style={{ width: 300 }}
                   />
                 </>
               )}
