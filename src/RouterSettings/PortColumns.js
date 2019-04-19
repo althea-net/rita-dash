@@ -18,11 +18,12 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
     <div className="d-flex flex-wrap justify-content-center mb-2 mx-0 px-0">
       {portOrderings[device].map((iface, i) => {
         let last = i === portOrderings[device].length - 1;
+        let column = i;
 
         return (
           <PortColumn last={last} key={i}>
             <img src={portImage} alt={iface} width="60px" />
-            <PortNumber>{i + 1}</PortNumber>
+            <PortNumber id={"port_" + i}>{i + 1}</PortNumber>
 
             <div className="d-flex flex-column mt-3">
               {modes.map((mode, i) => {
@@ -30,6 +31,7 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                   mode !== "Mesh" && Object.values(interfaces).includes(mode);
                 return (
                   <PortToggle
+                    id={mode + "_" + column}
                     key={i}
                     selected={mode === interfaces[iface]}
                     onClick={() => setInterfaceMode(iface, mode)}

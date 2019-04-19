@@ -47,6 +47,7 @@ const WifiSettingsForm = ({
           <Input
             type="text"
             name="ssid"
+            id={"ssid_" + radioType}
             placeholder="min. 8 characters"
             invalid={!ssidValid}
             onChange={setSSID}
@@ -58,6 +59,7 @@ const WifiSettingsForm = ({
           <Input
             type="text"
             name="key"
+            id={"key_" + radioType}
             placeholder="min. 8 characters"
             invalid={!keyValid}
             onChange={setKey}
@@ -69,6 +71,7 @@ const WifiSettingsForm = ({
           <Input
             type="select"
             name="channel"
+            id={"channel_" + radioType}
             onChange={setChannel}
             value={settings.device.channel}
           >
