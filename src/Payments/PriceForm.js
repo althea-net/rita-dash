@@ -56,6 +56,7 @@ export default connect(["autoPricing", "price", "loadingPrice", "symbol"])(
                   <Input
                     label={t("price")}
                     name="price"
+                    id="price"
                     placeholder={t("enterPrice")}
                     onChange={e => setNewPrice(e.target.value)}
                     value={newPrice || price}

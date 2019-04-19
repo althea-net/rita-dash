@@ -30,6 +30,7 @@ export default () => {
           <div className="w-100">
             <Input
               type="range"
+              id="priceQuality"
               min={0}
               max={6000}
               value={factor}
