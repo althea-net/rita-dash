@@ -1,7 +1,8 @@
 {
   "2ghz": "2.4 GHz Wireless Network",
   "5ghz": "5 GHz Wireless Network",
-  "accountEmpty": "Your account is empty. You are currently using the free service tier which is very slow.",
+  "accountThrottled": "Your account is empty. You are currently using the free service tier which is very slow.",
+  "accountWarning": "You're running low on funds, your service will soon be reduced to the free tier, which is very slow.",
   "add1": "Add funds",
   "addSubnetDao": "Add subnet DAO",
   "address": "Address",
@@ -120,6 +121,7 @@
   "proceed": "Do you wish to proceed?",
   "putAddress": "Put subnet DAO eth address here...",
   "reassignPorts": "Re-assign the modes of your router ports. They are visually displayed in the same order as on your router.",
+  "recommendedDeposit": "Please deposit at least {{recommendedDeposit}} to resume service.",
   "register": "Register",
   "registrationTimeout": "Registration timed out possibly due to an invalid code",
   "registrationFailed": "Registration did not succeed. Did you enter the right code?",

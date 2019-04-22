@@ -1,22 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
 import logo from "images/althea.png";
 import AltheaNav from "./Nav";
 import LanguageSelector from "./LanguageSelector";
-import { useTranslation } from "react-i18next";
-import { Context } from "store";
+import LowBalance from "utils/LowBalance";
 
 const logoStyles = { width: 50, height: 50, marginLeft: 10, marginRight: 20 };
 
 const Topbar = () => {
-  let [t] = useTranslation();
-
   let [open, setOpen] = useState(false);
   let toggle = () => setOpen(!open);
-
-  let {
-    state: { info }
-  } = useContext(Context);
 
   useEffect(() => {
     window.addEventListener("hashchange", () => setOpen(false), false);
@@ -47,9 +40,7 @@ const Topbar = () => {
           </Nav>
         </Collapse>
       </div>
-      {info.lowBalance && (
-        <div className="low-balance">{t("accountEmpty")}</div>
-      )}
+      <LowBalance />
     </Navbar>
   );
 };
