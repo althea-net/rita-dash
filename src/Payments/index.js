@@ -34,7 +34,7 @@ export default connect([
 
     let balance = BigNumber(info.balance.toString())
       .div(weiPerEth)
-      .toFixed(3);
+      .toFixed(4);
 
     if (!(info && settings)) return null;
     return (

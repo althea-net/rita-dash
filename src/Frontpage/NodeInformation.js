@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Context } from "store";
 
 import QR from "qrcode.react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,19 +12,18 @@ import {
   InputGroupText,
   Label
 } from "reactstrap";
+import AppContext from "store/App";
 
 const NodeInformation = () => {
-  let [t] = useTranslation();
-  let [qr, setQR] = useState("");
+  const [t] = useTranslation();
+  const [qr, setQR] = useState("");
 
-  let {
-    state: {
-      info: { address },
-      settings: {
-        network: { meshIp, wgPublicKey }
-      }
+  const {
+    info: { address },
+    settings: {
+      network: { meshIp, wgPublicKey }
     }
-  } = useContext(Context);
+  } = useContext(AppContext);
 
   return (
     <>

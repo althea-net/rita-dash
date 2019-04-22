@@ -8,12 +8,12 @@ import { Btn, Card } from "ui";
 import { Context } from "store";
 
 export default () => {
-  let [t] = useTranslation();
+  const [t] = useTranslation();
 
-  let [depositing, setDepositing] = useState(false);
-  let [withdrawing, setWithdrawing] = useState(false);
+  const [depositing, setDepositing] = useState(false);
+  const [withdrawing, setWithdrawing] = useState(false);
 
-  let {
+  const {
     state: { balance, symbol }
   } = useContext(Context);
 
@@ -23,7 +23,7 @@ export default () => {
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
       <div style={{ paddingLeft: 20 }}>
         <div className="d-flex justify-content-between">
-          <h4>{t("currentBalance")}</h4>
+          <h4 className="mr-1">{t("currentBalance")}</h4>
           <h4>
             {balance} {symbol}
           </h4>

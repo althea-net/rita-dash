@@ -26,7 +26,7 @@ export default {
     let weiPerEth = BigNumber("1000000000000000000");
     let balance = BigNumber(info.balance.toString())
       .div(weiPerEth)
-      .toFixed(3);
+      .toFixed(4);
 
     return { balance, loading: false, info };
   },

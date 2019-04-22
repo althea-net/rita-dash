@@ -120,18 +120,32 @@ export default ({ open, setOpen }) => {
             />
 
             <div className="d-flex justify-content-center">
-              <Button
-                type="button"
-                color="primary"
-                outline
-                onClick={() => setOpen(false)}
-                className="mr-2"
-              >
-                Cancel
-              </Button>
-              <Button color="primary" disabled={!valid}>
-                {t("withdraw")}
-              </Button>
+              {withdrawalSuccess ? (
+                <Button
+                  type="button"
+                  color="primary"
+                  outline
+                  onClick={() => setOpen(false)}
+                  className="mr-2"
+                >
+                  {t("Close")}
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    type="button"
+                    color="primary"
+                    outline
+                    onClick={() => setOpen(false)}
+                    className="mr-2"
+                  >
+                    Cancel
+                  </Button>
+                  <Button color="primary" disabled={!valid}>
+                    {t("withdraw")}
+                  </Button>
+                </>
+              )}
             </div>
           </Form>
         </ModalBody>

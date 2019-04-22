@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -7,29 +7,23 @@ import {
   CardBody,
   Form,
   FormGroup,
-  Input,
-  Progress
+  Input
 } from "reactstrap";
-import { actions, Context } from "store";
+import AppContext from "store/App";
+import { post } from "store";
 
 const Blockchain = () => {
-  let [t] = useTranslation();
+  const [t] = useTranslation();
+  const [success, setSuccess] = useState(false);
 
-  let {
-    state: { blockchain, loadingBlockchain, blockchainSuccess }
-  } = useContext(Context);
-
-  useEffect(() => {
-    actions.getBlockchain();
-  }, []);
-
-  let [newBlockchain, setBlockchain] = useState(blockchain);
-  if (!newBlockchain) newBlockchain = blockchain;
+  const { blockchain, getBlockchain } = useContext(AppContext);
+  const [newBlockchain, setBlockchain] = useState(blockchain);
 
   let submit = async e => {
     e.preventDefault();
-    await actions.setBlockchain(newBlockchain);
-    actions.getInfo();
+    await post(`/blockchain/set/${newBlockchain}`);
+    getBlockchain();
+    setSuccess(true);
   };
 
   return (
@@ -38,27 +32,23 @@ const Blockchain = () => {
         <Form onSubmit={submit}>
           <FormGroup id="form">
             <h3>{t("systemBlockchain")}</h3>
-            {blockchainSuccess ? (
+            {success ? (
               <Alert color="success">{t("blockchainSuccess")}</Alert>
             ) : (
               <Alert color="danger">{t("blockchainWarning")}</Alert>
             )}
-            {loadingBlockchain ? (
-              <Progress animated color="info" value="100" />
-            ) : (
-              <Input
-                label={t("blockchain")}
-                name="blockchain"
-                placeholder={t("enterBlockchain")}
-                onChange={e => setBlockchain(e.target.value)}
-                value={newBlockchain}
-                type="select"
-              >
-                <option value="Ethereum">Ethereum (ETH)</option>
-                <option value="Rinkeby">Rinkeby (tETH)</option>
-                <option value="Xdai">Xdai (USD)</option>
-              </Input>
-            )}
+            <Input
+              label={t("blockchain")}
+              name="blockchain"
+              placeholder={t("enterBlockchain")}
+              onChange={e => setBlockchain(e.target.value)}
+              value={newBlockchain}
+              type="select"
+            >
+              <option value="Ethereum">Ethereum (ETH)</option>
+              <option value="Rinkeby">Rinkeby (tETH)</option>
+              <option value="Xdai">Xdai (USD)</option>
+            </Input>
           </FormGroup>
           <FormGroup>
             <Button color="primary">{t("save")}</Button>

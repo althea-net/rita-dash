@@ -1,25 +1,42 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Card, CardBody, Progress } from "reactstrap";
-import { Context, getState } from "store";
+import { Card, CardBody, Progress } from "reactstrap";
+import { actions, get, getState } from "store";
+import AppContext from "store/App";
 
 import { Device } from "./PortStyles.js";
 import PortColumns from "./PortColumns";
 import { Confirm } from "utils";
 
 const Ports = () => {
-  let [t] = useTranslation();
-  let [open, setOpen] = useState(false);
-  let [confirmIface, setConfirmIface] = useState("");
-  let [mode, setMode] = useState("");
+  const [t] = useTranslation();
+  const [open, setOpen] = useState(false);
+  const [confirmIface, setConfirmIface] = useState("");
+  const [mode, setMode] = useState("");
+  const [interfaces, setInterfaces] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  let {
-    actions,
-    state: { initializing, info, loadingInterfaces, interfaces }
-  } = useContext(Context);
+  const {
+    info: { device }
+  } = useContext(AppContext);
+
+  const getInterfaces = async () => {
+    setLoading(true);
+
+    let res = await get("/interfaces", false);
+
+    /*eslint no-sequences: 0*/
+    setInterfaces(
+      Object.keys(res)
+        .filter(i => !i.startsWith("wlan"))
+        .reduce((a, b) => ((a[b] = res[b]), a), {})
+    );
+
+    setLoading(false);
+  };
 
   useEffect(() => {
-    actions.getInterfaces();
+    getInterfaces();
     let timer = setInterval(actions.getInterfaces, 10000);
     return () => {
       clearInterval(timer);
@@ -32,17 +49,9 @@ const Ports = () => {
     setOpen(true);
   };
 
-  let { device } = info;
-
-  if (!interfaces)
-    if (loadingInterfaces === false) {
-      return <Alert color="info">{t("noInterfaces")}</Alert>;
-    } else
-      return initializing ? (
-        <Progress animated color="info" value={100} />
-      ) : null;
-
-  if (!device) return <Alert color="danger">{t("noDevice")}</Alert>;
+  if (loading) {
+    return <Progress animated color="info" value={100} />;
+  }
 
   let confirm = () => {
     setOpen(false);
