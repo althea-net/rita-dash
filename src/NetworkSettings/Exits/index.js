@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, CardBody } from "reactstrap";
+import { Button, Card, CardBody, Progress } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { Error } from "utils";
 import ExitListItem from "./ExitListItem";
@@ -59,7 +59,6 @@ const Exits = () => {
       }
 
       setLoadingExits(false);
-      setInitialized(true);
     } catch (e) {}
   };
 
@@ -104,11 +103,16 @@ const Exits = () => {
     getExits();
   };
 
+  const init = async signal => {
+    await getExits(signal);
+    setInitialized(true);
+  };
+
   useEffect(() => {
     let controller = new AbortController();
     let signal = controller.signal;
 
-    getExits(signal);
+    init(signal);
 
     let timer = setInterval(() => getExits(signal), 5000);
     return () => {
@@ -135,8 +139,6 @@ const Exits = () => {
     resetting,
     selectExit,
     setResetting,
-    initialized,
-    setInitialized,
     verifyExit
   };
 
@@ -146,38 +148,45 @@ const Exits = () => {
         <CardBody>
           <Error error={exitsError} />
           <h2>{t("exitNode")}</h2>
-          <div>
-            <p>{t("exitNodesP1")}</p>
-            {selected ? (
-              <>
-                <ExitListItem
-                  exit={selected}
-                  click={() => setSelectingExit(true)}
+          {!initialized && loadingExits ? (
+            <Progress value={100} animated color="info" />
+          ) : (
+            <div>
+              <p>{t("exitNodesP1")}</p>
+              {selected ? (
+                <>
+                  <ExitListItem
+                    exit={selected}
+                    click={() => setSelectingExit(true)}
+                  />
+                  <Button
+                    color="secondary"
+                    style={{ width: 240 }}
+                    onClick={() => setSelectingExit(true)}
+                  >
+                    {t("updateExit")}
+                  </Button>
+                </>
+              ) : (
+                <div>
+                  <p>{t("exitNodesP2")}</p>
+                  <Button
+                    color="primary"
+                    style={{ width: 240 }}
+                    onClick={() => setSelectingExit(true)}
+                  >
+                    {t("setupExitNode")}
+                  </Button>
+                </div>
+              )}
+              {selectingExit && (
+                <ExitNodeSetup
+                  open={selectingExit}
+                  setOpen={setSelectingExit}
                 />
-                <Button
-                  color="secondary"
-                  style={{ width: 240 }}
-                  onClick={() => setSelectingExit(true)}
-                >
-                  {t("updateExit")}
-                </Button>
-              </>
-            ) : (
-              <div>
-                <p>{t("exitNodesP2")}</p>
-                <Button
-                  color="primary"
-                  style={{ width: 240 }}
-                  onClick={() => setSelectingExit(true)}
-                >
-                  {t("setupExitNode")}
-                </Button>
-              </div>
-            )}
-            {selectingExit && (
-              <ExitNodeSetup open={selectingExit} setOpen={setSelectingExit} />
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </CardBody>
       </Card>
     </Provider>

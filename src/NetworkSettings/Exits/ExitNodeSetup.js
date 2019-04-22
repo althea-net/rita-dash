@@ -33,7 +33,6 @@ const ExitNodeSetup = ({ open, setOpen }) => {
     exits,
     resetting,
     resetExit,
-    initialized,
     registerExit,
     selectExit
   } = useContext(ExitsContext);
@@ -164,11 +163,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
               {!exit && (
                 <div>
                   <p>{t("selectNode")}</p>
-                  {initialized ? (
-                    <ExitList exits={available} selectExit={onSelectExit} />
-                  ) : (
-                    <Progress animated color="info" value="100" />
-                  )}
+                  <ExitList exits={available} selectExit={onSelectExit} />
                 </div>
               )}
               {gotinfo &&
