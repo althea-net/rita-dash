@@ -7,6 +7,7 @@ import Router from "Router";
 import { actions, get } from "store";
 import { Provider } from "store/App";
 import { BigNumber } from "bignumber.js";
+import useInterval from "utils/UseInterval";
 
 const initialSettings = {
   network: {
@@ -24,25 +25,27 @@ const symbols = {
 };
 
 export default () => {
-  const [page, setPage] = useState("dashboard");
-  const [debt, setDebt] = useState(0);
-  const [info, setInfo] = useState({});
   const [blockchain, setBlockchain] = useState();
+  const [debt, setDebt] = useState(0);
+  const [exits, setExits] = useState([]);
+  const [info, setInfo] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState("dashboard");
   const [symbol, setSymbol] = useState();
   const [settings, setSettings] = useState(initialSettings);
-  const [loading, setLoading] = useState(true);
-  const [exits, setExits] = useState(true);
-
-  let style;
 
   const init = async () => {
     setLoading(true);
 
-    await getExits();
-    await getInfo();
-    await getBlockchain();
-    await getSettings();
-    await getDebt();
+    try {
+      await getInfo();
+
+      setExits(await get("/exits"));
+      await getDebt();
+
+      await getBlockchain();
+      setSettings(await get("/settings"));
+    } catch {}
 
     setLoading(false);
   };
@@ -62,18 +65,19 @@ export default () => {
 
         setDebt(debt);
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch {}
   };
 
   const getInfo = async () => {
-    actions.getInfo();
-    setInfo(await get("/info"));
-  };
+    try {
+      const info = await get("/info", true, 2000);
+      setInfo(info);
+    } catch {
+      setInfo({});
+    }
 
-  const getExits = async () => setExits(await get("/exits"));
-  const getSettings = async () => setSettings(await get("/settings"));
+    actions.getInfo();
+  };
 
   const getBlockchain = async () => {
     const res = await get("/blockchain/get/");
@@ -81,6 +85,7 @@ export default () => {
     setSymbol(symbols[res]);
   };
 
+  let style;
   useEffect(() => {
     init();
 
@@ -90,21 +95,21 @@ export default () => {
     actions.getBlockchain();
     actions.getInfo();
     actions.getSettings();
-
-    let debtPoll = setInterval(getDebt, 5000);
-    let infoPoll = setInterval(getInfo, 5000);
-    let versionPoll = setInterval(actions.getVersion, 2000);
-
-    return () => {
-      clearInterval(debtPoll);
-      clearInterval(infoPoll);
-      clearInterval(versionPoll);
-    };
   }, []);
+
+  useInterval(getDebt, 5000);
+  useInterval(getInfo, 2000);
 
   return (
     <Provider
-      value={{ blockchain, getBlockchain, debt, info, settings, symbol }}
+      value={{
+        blockchain,
+        getBlockchain,
+        debt,
+        info,
+        settings,
+        symbol
+      }}
     >
       <Topbar />
       <div className="d-flex" style={style}>

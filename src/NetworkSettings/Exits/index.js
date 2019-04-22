@@ -6,8 +6,7 @@ import ExitListItem from "./ExitListItem";
 import ExitNodeSetup from "./ExitNodeSetup";
 import { Provider } from "store/Exits";
 import { get, post } from "store";
-
-const AbortController = window.AbortController;
+import useInterval from "utils/UseInterval";
 
 const Exits = () => {
   const [t] = useTranslation();
@@ -23,10 +22,10 @@ const Exits = () => {
     setLoadingExits(true);
 
     try {
-      const blockchain = await get("/blockchain/get/", true, 5000, signal);
+      const blockchain = await get("/blockchain/get/", true, 5000);
 
       let exits = [];
-      exits = await get("/exits", true, 5000, signal);
+      exits = await get("/exits", true, 5000);
 
       if (exits instanceof Error) setExitsError(t("exitsError"));
 
@@ -103,23 +102,16 @@ const Exits = () => {
     getExits();
   };
 
-  const init = async signal => {
-    await getExits(signal);
+  const init = async () => {
+    await getExits();
     setInitialized(true);
   };
 
   useEffect(() => {
-    let controller = new AbortController();
-    let signal = controller.signal;
-
-    init(signal);
-
-    let timer = setInterval(() => getExits(signal), 5000);
-    return () => {
-      controller.abort();
-      clearInterval(timer);
-    };
+    init();
+    return;
   }, []);
+  useInterval(getExits, 5000);
 
   let selected = exits.find(exit => {
     let { state } = exit.exitSettings;
