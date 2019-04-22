@@ -20,6 +20,7 @@ export default connect(["info"])(({ state: { info } }) => {
 
         <Button
           color="secondary"
+          id="update"
           style={{ width: 200 }}
           onClick={() => setChecking(true)}
         >

@@ -10,7 +10,7 @@ export default () => {
 
   return (
     <div>
-      <h1>{t("advancedSettings")}</h1>
+      <h1 id="advancedPage">{t("advancedSettings")}</h1>
 
       <Notifications />
       <Blockchain />
