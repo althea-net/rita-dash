@@ -60,6 +60,7 @@ export default ({ nickname, registered, targetLength }) => {
                     )}
                   <Input
                     value={code}
+                    id="confirmationCode"
                     onChange={handleCode}
                     placeholder={t("confirmationCode")}
                   />

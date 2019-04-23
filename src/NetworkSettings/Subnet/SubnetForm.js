@@ -105,6 +105,7 @@ const SubnetForm = () => {
           onChange={handleIp}
           valid={ipValid}
           invalid={!ipValid}
+          id="subnetIPV6"
         />
         <FormFeedback invalid="true">{t("enterIpAddress")}</FormFeedback>
       </FormGroup>
@@ -115,6 +116,7 @@ const SubnetForm = () => {
           value={daoAddress}
           valid={daoValid}
           invalid={!daoValid}
+          id="subnetDAOAddr"
         />
         <FormFeedback invalid="true">{t("enterEthAddress")}</FormFeedback>
       </FormGroup>
@@ -125,6 +127,7 @@ const SubnetForm = () => {
           outline
           color="primary"
           style={{ width: 180 }}
+          id="subnetQR"
         >
           {t("scanQR")}
         </Button>
@@ -134,6 +137,7 @@ const SubnetForm = () => {
           onClick={submit}
           style={{ width: 180 }}
           disabled={!valid}
+          id="subnetSave"
         >
           {t("save")}
         </Button>

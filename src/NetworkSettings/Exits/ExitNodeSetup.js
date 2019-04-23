@@ -116,6 +116,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
               className="ml-auto mr-2"
               onClick={reset}
               style={{ width: 150 }}
+              id="setupModalBackButton"
             >
               {t("back")}
             </Button>
@@ -133,6 +134,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
               onClick={next}
               style={{ width: 150 }}
               disabled={!valid}
+              id="setupModalNextButton"
             >
               {t("next")}
             </Button>
@@ -143,6 +145,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
               className="ml-auto"
               onClick={finish}
               style={{ width: 150 }}
+              id="setupModalFinishButton"
             >
               {t("finish")}
             </Button>
@@ -179,11 +182,11 @@ const ExitNodeSetup = ({ open, setOpen }) => {
                     switch (verifMode) {
                       case "Email":
                         return (
-                          <EmailForm email={email} handleEmail={handleEmail} />
+                          <EmailForm email={email} handleEmail={handleEmail}/>
                         );
                       case "Phone":
                         return (
-                          <PhoneForm phone={phone} handlePhone={handlePhone} />
+                          <PhoneForm phone={phone} handlePhone={handlePhone}/>
                         );
                       default:
                         return null;

@@ -37,7 +37,7 @@ export default ({ exit, setExit, setRegistering }) => {
         />
         <div className="d-flex">
           <div>
-            <h5>{nickname}</h5>
+            <h5 id="exitServerTitle">{nickname}</h5>
             <p className="mb-0">{description}</p>
             {state === "Denied" && (
               <>

@@ -158,6 +158,7 @@ const Exits = () => {
                   color="secondary"
                   style={{ width: 240 }}
                   onClick={() => setSelectingExit(true)}
+                  id="exitNodeButton"
                 >
                   {t("updateExit")}
                 </Button>
@@ -169,6 +170,7 @@ const Exits = () => {
                   color="primary"
                   style={{ width: 240 }}
                   onClick={() => setSelectingExit(true)}
+                  id="exitNodeButton"
                 >
                   {t("setupExitNode")}
                 </Button>
