@@ -13,7 +13,7 @@ const Body = () => {
   const { daoAddress, meshIp } = useContext(Context);
 
   return (
-    <Card className="mb-4" style={{ opacity: 0.2 }}>
+    <Card className="mb-4">
       <CardBody>
         <h2>{t("subnet")}</h2>
         {!editing && daoAddress && meshIp ? (

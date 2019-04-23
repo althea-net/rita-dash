@@ -1,95 +1,106 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { actions, getState, get, init } from "store";
+import { get, post, init } from "store";
 import {
   Alert,
   Button,
   Form,
   FormFeedback,
   Input,
-  FormGroup
+  FormGroup,
+  Progress
 } from "reactstrap";
 import { Address6 } from "ip-address";
 import QrReader from "react-qr-reader";
-import { Confirm } from "utils";
 import Web3 from "web3";
+import { Error, Success } from "utils";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+const { isAddress } = web3.utils;
 
 const SubnetForm = () => {
-  let [t] = useTranslation();
-  let [ipAddress, setIpAddress] = useState("");
-  let [daoAddress, setDaoAddress] = useState("");
-  let [scanning, setScanning] = useState(false);
-  let [confirming, setConfirming] = useState(false);
+  const [t] = useTranslation();
 
-  if (!ipAddress) ipAddress = "";
-  let ip = new Address6(ipAddress);
+  const [ipAddress, setIpAddress] = useState("");
+  const [daoAddress, setDaoAddress] = useState("");
+  const [daos, setDaos] = useState([]);
+  const [scanning, setScanning] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState();
+
+  const ip = new Address6(ipAddress || "");
   let formattedIp = ip.canonicalForm();
 
-  let ipNeedsFormatting = ip.isValid() && ip.subnet !== "/128";
+  const ipNeedsFormatting = ip.isValid() && ip.subnet !== "/128";
   if (ipNeedsFormatting) {
     formattedIp = formattedIp.substr(0, formattedIp.length - 1) + 1;
   }
 
   init(async () => {
-    let { meshIp } = await get("/mesh_ip");
-    let daos = await get("/dao_list");
-    if (daos.length) setDaoAddress(daos[0]);
-    actions.getSubnetDaos();
+    const { meshIp } = await get("/mesh_ip");
     setIpAddress(meshIp);
+
+    const daos = await get("/dao_list");
+    setDaos(daos);
+    if (daos.length) setDaoAddress(daos[0]);
   });
 
-  let handleIp = e => {
-    setIpAddress(e.target.value);
-  };
+  const handleIp = e => setIpAddress(e.target.value);
+  const handleDao = e => setDaoAddress(e.target.value);
 
-  let handleDao = e => {
-    setDaoAddress(e.target.value);
-  };
+  const handleScan = result => {
+    if (!result) return;
 
-  let handleScan = result => {
+    const address = result.replace("ethereum:", "");
+    if (isAddress(address)) {
+      setDaoAddress(address);
+    }
+
     try {
-      let { daoAddress, ipAddress } = JSON.parse(result);
+      const { daoAddress, ipAddress } = JSON.parse(result);
       setDaoAddress(daoAddress);
       setIpAddress(ipAddress);
-    } catch (e) {
-      console.log("failed to parse subnet DAO QR code");
+    } catch {}
+
+    setScanning(false);
+  };
+
+  const ipValid = ip.isValid();
+  const daoValid = !!(daoAddress && isAddress(daoAddress));
+  const valid = ipValid && daoValid;
+
+  const submit = async e => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await Promise.all(
+        daos.map(address => post(`/dao_list/remove/${address}`))
+      );
+      await post(`/dao_list/add/${daoAddress}`);
+      setSuccess(t("daoSuccess"));
+    } catch {
+      setError(t("daoError"));
     }
+
+    setLoading(false);
   };
 
-  let cancel = () => setConfirming(false);
-
-  let confirm = () => {
-    actions.startWaiting();
-
-    let i = setInterval(async () => {
-      actions.keepWaiting();
-      if (getState().waiting <= 0) {
-        clearInterval(i);
-      }
-    }, 1000);
-
-    actions.joinSubnetDao(daoAddress, formattedIp);
-
-    setConfirming(false);
-  };
-
-  let ipValid = ip.isValid();
-  let daoValid = !!(daoAddress && web3.utils.isAddress(daoAddress));
-  let valid = ipValid && daoValid;
-
-  let submit = () => setConfirming(true);
+  if (loading) return <Progress value={100} animated color="info" />;
 
   return (
     <Form className="my-2" onSubmit={submit}>
-      <Confirm open={confirming} cancel={cancel} confirm={confirm} />
-      <div id="viewer" style={{ width: "300px" }} />
+      <Error message={error} />
+      <Success message={success} />
+
       {scanning && (
         <QrReader
           onScan={handleScan}
           onError={console.log}
-          style={{ width: "300px", marginTop: 15 }}
+          style={{ maxWidth: 300 }}
+          className="mx-auto mb-4"
         />
       )}
       <FormGroup>
@@ -105,6 +116,7 @@ const SubnetForm = () => {
           onChange={handleIp}
           valid={ipValid}
           invalid={!ipValid}
+          readOnly
         />
         <FormFeedback invalid="true">{t("enterIpAddress")}</FormFeedback>
       </FormGroup>
