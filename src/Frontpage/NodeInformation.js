@@ -13,10 +13,12 @@ import {
   Label
 } from "reactstrap";
 import AppContext from "store/App";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const NodeInformation = () => {
   const [t] = useTranslation();
   const [qr, setQR] = useState("");
+  const [copied, setCopied] = useState("");
 
   const {
     info: { address },
@@ -24,6 +26,11 @@ const NodeInformation = () => {
       network: { meshIp, wgPublicKey }
     }
   } = useContext(AppContext);
+
+  const toggleQR = v => {
+    if (qr === v) return setQR("");
+    setQR(v);
+  };
 
   return (
     <>
@@ -49,12 +56,20 @@ const NodeInformation = () => {
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
-                onClick={() => setQR(meshIp)}
+                onClick={() => toggleQR(meshIp)}
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
             </InputGroupAddon>
+            <InputGroupAddon addonType="append">
+              <CopyToClipboard text={address} onCopy={() => setCopied("ip")}>
+                <InputGroupText style={{ cursor: "pointer" }}>
+                  <FontAwesomeIcon icon="copy" />
+                </InputGroupText>
+              </CopyToClipboard>
+            </InputGroupAddon>
           </InputGroup>
+          {copied === "ip" && <p>{t("copied")}</p>}
           <Label>
             <b>{t("ethereumAddress")}</b>
           </Label>
@@ -63,12 +78,23 @@ const NodeInformation = () => {
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
-                onClick={() => setQR(address)}
+                onClick={() => toggleQR(address)}
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
             </InputGroupAddon>
+            <InputGroupAddon addonType="append">
+              <CopyToClipboard
+                text={address}
+                onCopy={() => setCopied("address")}
+              >
+                <InputGroupText style={{ cursor: "pointer" }}>
+                  <FontAwesomeIcon icon="copy" />
+                </InputGroupText>
+              </CopyToClipboard>
+            </InputGroupAddon>
           </InputGroup>
+          {copied === "address" && <p>{t("copied")}</p>}
           <Label>
             <b>{t("wireguardPublicKey")}</b>
           </Label>
@@ -77,12 +103,20 @@ const NodeInformation = () => {
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
-                onClick={() => setQR(wgPublicKey)}
+                onClick={() => toggleQR(wgPublicKey)}
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
             </InputGroupAddon>
+            <InputGroupAddon addonType="append">
+              <CopyToClipboard text={address} onCopy={() => setCopied("wg")}>
+                <InputGroupText style={{ cursor: "pointer" }}>
+                  <FontAwesomeIcon icon="copy" />
+                </InputGroupText>
+              </CopyToClipboard>
+            </InputGroupAddon>
           </InputGroup>
+          {copied === "wg" && <p>{t("copied")}</p>}
         </CardBody>
       </Card>
     </>
