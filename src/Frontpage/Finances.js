@@ -13,6 +13,7 @@ export default () => {
         title={t("finances")}
         link="#payments"
         linkText={t("managePaymentSettings")}
+        id="paymentSettings"
       />
       <Account />
     </div>

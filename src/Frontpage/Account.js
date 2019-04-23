@@ -24,13 +24,13 @@ export default () => {
       <div style={{ paddingLeft: 20 }}>
         <div className="d-flex justify-content-between">
           <h4>{t("currentBalance")}</h4>
-          <h4>
+          <h4 id="balance">
             {balance} {symbol}
           </h4>
         </div>
         <div className="d-flex justify-content-center">
-          <Btn onClick={() => setDepositing(true)}>{t("topUp")}</Btn>
-          <Btn onClick={() => setWithdrawing(true)}>{t("withdraw")}</Btn>
+          <Btn id="deposit" onClick={() => setDepositing(true)}>{t("topUp")}</Btn>
+          <Btn id="withdraw" onClick={() => setWithdrawing(true)}>{t("withdraw")}</Btn>
         </div>
       </div>
     </Card>

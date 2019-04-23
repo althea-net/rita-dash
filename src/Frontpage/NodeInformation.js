@@ -39,6 +39,7 @@ const NodeInformation = () => {
                   height: "auto",
                   width: "50%"
                 }}
+                id="qr"
                 value={qr}
               />
             </div>
@@ -47,11 +48,12 @@ const NodeInformation = () => {
             <b>{t("meshIp")}</b>
           </Label>
           <InputGroup>
-            <Input readOnly value={meshIp || ""} />
+            <Input id="meshIP" readOnly value={meshIp || ""} />
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
                 onClick={() => setQR(meshIp)}
+                id="clickMeshIP"
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
@@ -61,11 +63,12 @@ const NodeInformation = () => {
             <b>{t("ethereumAddress")}</b>
           </Label>
           <InputGroup>
-            <Input readOnly value={address || ""} />
+            <Input id="ethAddr" readOnly value={address || ""} />
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
                 onClick={() => setQR(address)}
+                id="clickEthAddr"
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
@@ -75,11 +78,12 @@ const NodeInformation = () => {
             <b>{t("wireguardPublicKey")}</b>
           </Label>
           <InputGroup>
-            <Input readOnly value={wgPublicKey || ""} />
+            <Input id="wgPubKey" readOnly value={wgPublicKey || ""} />
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
                 onClick={() => setQR(wgPublicKey)}
+                id="clickWgPubKey"
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>

@@ -30,8 +30,8 @@ export default ({ open, setOpen }) => {
       <ModalBody>
         <Card className="mb-4">
           <CardBody className="d-flex">
-            <h5 style={addressStyle}>{address}</h5>
-            <CopyToClipboard text={address} onCopy={() => setCopied(true)}>
+            <h5 id="walletAddr" style={addressStyle}>{address}</h5>
+            <CopyToClipboard id="copyWalletAddr" text={address} onCopy={() => setCopied(true)}>
               <FontAwesomeIcon size="lg" icon="copy" style={iconStyle} />
             </CopyToClipboard>
             {copied && <p className="ml-2">{t("copied")}</p>}
