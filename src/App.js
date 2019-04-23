@@ -4,7 +4,7 @@ import AltheaNav from "./Layout/Nav";
 import Topbar from "./Layout/Topbar";
 import { NoConnection } from "utils";
 import Router from "Router";
-import { actions, get } from "store";
+import { get } from "store";
 import { Provider } from "store/App";
 import { BigNumber } from "bignumber.js";
 import useInterval from "utils/UseInterval";
@@ -75,8 +75,6 @@ export default () => {
     } catch {
       setInfo({});
     }
-
-    actions.getInfo();
   };
 
   const getBlockchain = async () => {
@@ -91,26 +89,22 @@ export default () => {
 
     let h = document.querySelector(".navbar").offsetHeight;
     style = { minHeight: `calc(100vh - ${h}px)` };
-
-    actions.getBlockchain();
-    actions.getInfo();
-    actions.getSettings();
   }, []);
 
   useInterval(getDebt, 5000);
   useInterval(getInfo, 2000);
 
+  const state = {
+    blockchain,
+    getBlockchain,
+    debt,
+    info,
+    settings,
+    symbol
+  };
+
   return (
-    <Provider
-      value={{
-        blockchain,
-        getBlockchain,
-        debt,
-        info,
-        settings,
-        symbol
-      }}
-    >
+    <Provider value={state}>
       <Topbar />
       <div className="d-flex" style={style}>
         <Nav id="sidebar" navbar>

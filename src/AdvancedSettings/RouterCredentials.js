@@ -9,17 +9,17 @@ import {
   Input,
   Label
 } from "reactstrap";
-import { actions } from "store";
 
 export default ({ balance, symbol }) => {
-  let [t] = useTranslation();
-  let [username, setUsername] = useState("");
-  let [password, setPassword] = useState("");
+  const [t] = useTranslation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const submit = () => {};
 
   return (
     <Card className="mb-4">
       <CardBody>
-        <Form onSubmit={() => actions.saveRouterCredentials()}>
+        <Form onSubmit={() => submit()}>
           <h3>{t("routerCredentials")}</h3>
           <p>{t("theseCredentials")}</p>
 
