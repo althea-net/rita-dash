@@ -80,12 +80,8 @@ const NodeInformation = () => {
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
-<<<<<<< HEAD
                 onClick={() => toggleQR(address)}
-=======
-                onClick={() => setQR(address)}
                 id="clickEthAddr"
->>>>>>> qa
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
@@ -110,12 +106,8 @@ const NodeInformation = () => {
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
-<<<<<<< HEAD
                 onClick={() => toggleQR(wgPublicKey)}
-=======
-                onClick={() => setQR(wgPublicKey)}
                 id="clickWgPubKey"
->>>>>>> qa
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
