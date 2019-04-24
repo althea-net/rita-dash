@@ -97,6 +97,7 @@ export default ({ balance, symbol }) => {
               <Label for="email">{t("emailAddress")}</Label>
               <Input
                 name="email"
+                id="email"
                 value={email}
                 onChange={handleEmail}
                 placeholder={t("emailAddress")}
@@ -109,6 +110,7 @@ export default ({ balance, symbol }) => {
               <PhoneInput
                 flags={flags}
                 country="US"
+                id="phoneNumber"
                 inputComponent={SmartInput}
                 placeholder={t("phoneNumber")}
                 value={phone}

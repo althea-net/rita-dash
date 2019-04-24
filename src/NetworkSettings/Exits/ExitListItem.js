@@ -43,11 +43,11 @@ export default ({ exit, click }) => {
   if (!connected) pseudostate = "Problem";
 
   return (
-    <Item className="d-flex" onClick={click}>
+    <Item className="d-flex" onClick={click} id={nickname + "_Banner"}>
       <Flag src={usa} alt="USA" />
       <div className="d-flex">
         <div>
-          <h5>{nickname}</h5>
+          <h5 id="exitServerTitle">{nickname}</h5>
           <p className="mb-0">{description}</p>
         </div>
         {pseudostate === "Problem" ? (

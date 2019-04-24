@@ -44,6 +44,7 @@ const NodeInformation = () => {
                   height: "auto",
                   width: "50%"
                 }}
+                id="qr"
                 value={qr}
               />
             </div>
@@ -52,11 +53,12 @@ const NodeInformation = () => {
             <b>{t("meshIp")}</b>
           </Label>
           <InputGroup>
-            <Input readOnly value={meshIp || ""} />
+            <Input id="meshIP" readOnly value={meshIp || ""} />
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
                 onClick={() => toggleQR(meshIp)}
+                id="clickMeshIP"
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
@@ -74,11 +76,16 @@ const NodeInformation = () => {
             <b>{t("ethereumAddress")}</b>
           </Label>
           <InputGroup>
-            <Input readOnly value={address || ""} />
+            <Input id="ethAddr" readOnly value={address || ""} />
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
+<<<<<<< HEAD
                 onClick={() => toggleQR(address)}
+=======
+                onClick={() => setQR(address)}
+                id="clickEthAddr"
+>>>>>>> qa
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>
@@ -99,11 +106,16 @@ const NodeInformation = () => {
             <b>{t("wireguardPublicKey")}</b>
           </Label>
           <InputGroup>
-            <Input readOnly value={wgPublicKey || ""} />
+            <Input id="wgPubKey" readOnly value={wgPublicKey || ""} />
             <InputGroupAddon addonType="append">
               <InputGroupText
                 style={{ cursor: "pointer" }}
+<<<<<<< HEAD
                 onClick={() => toggleQR(wgPublicKey)}
+=======
+                onClick={() => setQR(wgPublicKey)}
+                id="clickWgPubKey"
+>>>>>>> qa
               >
                 <FontAwesomeIcon icon="qrcode" />
               </InputGroupText>

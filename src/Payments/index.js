@@ -39,7 +39,7 @@ export default connect([
     if (!(info && settings)) return null;
     return (
       <div>
-        <h1>{t("payments")}</h1>
+        <h1 id="paymentsPage">{t("payments")}</h1>
 
         <Error error={factorError} />
         <Error error={priceError} />

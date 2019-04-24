@@ -22,6 +22,7 @@ export default ({ email, handleEmail }) => {
                 onChange={handleEmail}
                 placeholder={t("emailAddress")}
                 style={{ width: 300 }}
+                id="exitEmail"
               />
             </FormGroup>
           </Form>

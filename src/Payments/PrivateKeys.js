@@ -54,6 +54,7 @@ export default ({ balance, symbol }) => {
               <div className="d-flex">
                 <Input
                   className="mr-3"
+                  id="privateKey"
                   onChange={e => setPrivateKey(e.target.value)}
                   value={privateKey}
                   style={{ width: 350 }}
@@ -71,6 +72,7 @@ export default ({ balance, symbol }) => {
         </Form>
         <h4>{t("export")}</h4>
         <Button
+          id="exportKeyButton"
           color="secondary"
           style={{ width: 150 }}
           onClick={() => setExporting(true)}

@@ -9,7 +9,7 @@ export default () => {
 
   return (
     <div>
-      <h1>{t("networkConnection")}</h1>
+      <h1 id="networkPage">{t("networkConnection")}</h1>
       <Exits />
       <Subnet />
     </div>

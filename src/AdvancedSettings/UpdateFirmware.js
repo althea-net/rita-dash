@@ -56,6 +56,7 @@ export default ({ open, setOpen }) => {
             <Button
               className="mb-2"
               color="primary"
+              id="updateInModal"
               style={{ width: 250 }}
               onClick={update}
             >

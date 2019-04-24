@@ -22,6 +22,7 @@ export default ({ phone, handlePhone }) => {
               <PhoneInput
                 flags={flags}
                 country="US"
+                id="exitPhone"
                 inputComponent={SmartInput}
                 placeholder={t("phoneNumber")}
                 value={phone}

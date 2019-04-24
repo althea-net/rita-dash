@@ -40,7 +40,7 @@ export default ({ open, setOpen }) => {
       <ModalBody>
         <Card className="mb-4">
           <CardBody>
-            <h5 style={addressStyle}>{address}</h5>
+            <h5 style={addressStyle} id="walletAddr">{address}</h5>
             <CopyToClipboard text={address} onCopy={() => setCopied(true)}>
               <FontAwesomeIcon size="lg" icon="copy" style={iconStyle} />
             </CopyToClipboard>

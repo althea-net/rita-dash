@@ -18,8 +18,8 @@ const Frontpage = () => {
 
   return (
     <>
-      <h1>{t("welcome")}</h1>
-      <p>{t("version", { version, ritaVersion })}</p>
+      <h1 id="frontPage">{t("welcome")}</h1>
+      <p id="version">{t("version", { version, ritaVersion })}</p>
       <Finances />
       <NodeInformation />
     </>

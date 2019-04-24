@@ -22,7 +22,7 @@ export default ({ open, setOpen }) => {
         <p>{t("saveKey")}</p>
         <Card className="mb-4">
           <CardBody className="d-flex">
-            <h5 style={{ wordBreak: "break-word" }}>{privateKey}</h5>
+            <h5 id="privateKey" style={{ wordBreak: "break-word" }}>{privateKey}</h5>
             <CopyToClipboard text={privateKey} onCopy={() => setCopied(true)}>
               <FontAwesomeIcon
                 size="lg"

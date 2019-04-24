@@ -37,14 +37,14 @@ const EthAddress = () => {
         </figure>
       )}
       <InputGroup>
-        <Input readOnly value={address || ""} />
+        <Input readOnly value={address || ""} id="subnetAddr" />
         <InputGroupAddon addonType="append">
-          <InputGroupText style={{ cursor: "pointer" }} onClick={toggle}>
+          <InputGroupText style={{ cursor: "pointer" }} onClick={toggle} id="clickSubnetAddr" >
             <FontAwesomeIcon icon="qrcode" />
           </InputGroupText>
         </InputGroupAddon>
         <InputGroupAddon addonType="append">
-          <InputGroupText style={{ cursor: "pointer" }}>
+          <InputGroupText style={{ cursor: "pointer" }} id="copySubnetAddr">
             <CopyToClipboard text={address} onCopy={copy}>
               <FontAwesomeIcon icon="copy" />
             </CopyToClipboard>
