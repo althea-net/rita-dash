@@ -38,7 +38,10 @@ export default ({ open, setOpen }) => {
             <h5 style={addressStyle} id="walletAddr">
               {address}
             </h5>
-            <CopyToClipboard text={address} onCopy={() => setCopied(true)}>
+            <CopyToClipboard 
+              text={address} 
+              onCopy={() => setCopied(true)}
+              id="copyWalletAddr">
               <FontAwesomeIcon size="lg" icon="copy" style={iconStyle} />
             </CopyToClipboard>
             {copied && <p className="ml-2">{t("copied")}</p>}

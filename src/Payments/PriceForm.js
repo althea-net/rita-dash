@@ -108,6 +108,7 @@ const PriceForm = () => {
                 <Input
                   label={t("price")}
                   name="price"
+                  id="bandwidthPrice"
                   placeholder={t("enterPrice")}
                   onChange={changePrice}
                   value={newPrice || price}
