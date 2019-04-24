@@ -64,7 +64,7 @@ const NodeInformation = () => {
               </InputGroupText>
             </InputGroupAddon>
             <InputGroupAddon addonType="append">
-              <CopyToClipboard text={address} onCopy={() => setCopied("ip")}>
+              <CopyToClipboard text={meshIp} onCopy={() => setCopied("ip")}>
                 <InputGroupText style={{ cursor: "pointer" }}>
                   <FontAwesomeIcon icon="copy" />
                 </InputGroupText>
@@ -113,7 +113,10 @@ const NodeInformation = () => {
               </InputGroupText>
             </InputGroupAddon>
             <InputGroupAddon addonType="append">
-              <CopyToClipboard text={address} onCopy={() => setCopied("wg")}>
+              <CopyToClipboard
+                text={wgPublicKey}
+                onCopy={() => setCopied("wg")}
+              >
                 <InputGroupText style={{ cursor: "pointer" }}>
                   <FontAwesomeIcon icon="copy" />
                 </InputGroupText>
