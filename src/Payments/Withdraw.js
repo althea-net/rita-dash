@@ -15,13 +15,10 @@ import {
   ModalBody
 } from "reactstrap";
 import { actions, Context } from "store";
-import { Error, Success } from "utils";
-import { BigNumber } from "bignumber.js";
+import { Error, Success, toWei } from "utils";
 import Web3 from "web3";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-
-const weiPerEth = BigNumber("1000000000000000000");
 
 export default ({ open, setOpen }) => {
   let [t] = useTranslation();
@@ -35,12 +32,7 @@ export default ({ open, setOpen }) => {
 
   let onSubmit = async e => {
     e.preventDefault();
-
-    amount = BigNumber(amount.toString())
-      .times(weiPerEth)
-      .toString();
-
-    actions.withdraw(address, amount);
+    actions.withdraw(address, toWei(amount));
   };
 
   let fAmount = parseFloat(amount);
