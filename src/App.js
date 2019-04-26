@@ -9,6 +9,10 @@ import { Provider } from "store/App";
 import { BigNumber } from "bignumber.js";
 import useInterval from "utils/UseInterval";
 
+const initialInfo = {
+  balance: null
+};
+
 const initialSettings = {
   network: {
     meshIp: null
@@ -28,7 +32,7 @@ export default () => {
   const [blockchain, setBlockchain] = useState();
   const [debt, setDebt] = useState(0);
   const [exits, setExits] = useState([]);
-  const [info, setInfo] = useState({});
+  const [info, setInfo] = useState(initialInfo);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState("dashboard");
   const [symbol, setSymbol] = useState();
@@ -73,7 +77,7 @@ export default () => {
       const info = await get("/info", true, 2000);
       setInfo(info);
     } catch {
-      setInfo({});
+      setInfo(initialInfo);
     }
   };
 
