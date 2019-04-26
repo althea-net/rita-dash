@@ -1,9 +1,59 @@
-import React from "react";
-import { Card, Heading, Left, Right } from "./ui";
+import React, { useContext, useState } from "react";
+import { Card, Heading, Left, Right } from "ui";
 import { useTranslation } from "react-i18next";
+import { get, init } from "store";
+
+import AppContext from "store/App";
+import { toEth } from "utils";
+import { BigNumber } from "bignumber.js";
+
+const today = new Date();
+const startOfThisMonth =
+  new Date(today.getFullYear(), today.getMonth(), 1).getTime() / 3600000;
+const startOfLastMonth =
+  new Date(today.getFullYear(), today.getMonth() - 1, 1).getTime() / 3600000;
+const bytesPerGb = BigNumber("1000000000");
 
 export default () => {
-  let [t] = useTranslation();
+  const [t] = useTranslation();
+  const [usage, setUsage] = useState([]);
+  const { symbol } = useContext(AppContext);
+
+  init(async () => {
+    setUsage(await get("/usage/client"));
+  });
+
+  const initialUsage = { usage: 0, cost: 0 };
+  const sumUsage = (a, b) => {
+    return {
+      usage: a.usage + b.up + b.down,
+      cost: a.cost + b.price * (b.up + b.down)
+    };
+  };
+
+  const thisMonthData = usage
+    .filter(i => i.index > startOfThisMonth)
+    .reduce(sumUsage, initialUsage);
+
+  const lastMonthData = usage
+    .filter(i => i.index >= startOfLastMonth && i < startOfThisMonth)
+    .reduce(sumUsage, initialUsage);
+
+  const thisMonthUsage = BigNumber(thisMonthData.usage)
+    .div(bytesPerGb)
+    .toFixed(1);
+
+  const thisMonthCost = BigNumber(toEth(thisMonthData.cost).toString()).toFixed(
+    2
+  );
+
+  const lastMonthUsage = BigNumber(lastMonthData.usage)
+    .div(bytesPerGb)
+    .toFixed(1);
+
+  const lastMonthCost = BigNumber(toEth(lastMonthData.cost)).toFixed(2);
+
+  const format = n => (BigNumber(n).gt(0) ? n : "---");
 
   return (
     <div style={{ marginBottom: 40 }}>
@@ -19,13 +69,15 @@ export default () => {
             <div className="d-flex w-100 justify-content-around">
               <div>
                 <div>
-                  <h4>4.8 GB</h4>
+                  <h4>{format(thisMonthUsage)} GB</h4>
                 </div>
                 <div style={{ color: "gray" }}>Usage</div>
               </div>
               <div>
                 <div>
-                  <h4>0.24 ETH</h4>
+                  <h4>
+                    {format(thisMonthCost)} {symbol}
+                  </h4>
                 </div>
                 <div style={{ color: "gray" }}>Cost</div>
               </div>
@@ -38,13 +90,15 @@ export default () => {
             <div className="d-flex w-100 justify-content-around">
               <div>
                 <div>
-                  <h4>10.2 GB</h4>
+                  <h4>{format(lastMonthUsage)} GB</h4>
                 </div>
                 <div style={{ color: "gray" }}>Usage</div>
               </div>
               <div>
                 <div>
-                  <h4>0.45 ETH</h4>
+                  <h4>
+                    {format(lastMonthCost)} {symbol}
+                  </h4>
                 </div>
                 <div style={{ color: "gray" }}>Cost</div>
               </div>

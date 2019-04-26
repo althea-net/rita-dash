@@ -7,7 +7,7 @@ import { BigNumber } from "bignumber.js";
 const weiPerEth = BigNumber("1000000000000000000");
 
 const toEth = n => {
-  if (!n) return null;
+  if (!n && n !== 0) return null;
 
   return BigNumber(n.toString())
     .div(weiPerEth)
@@ -15,7 +15,7 @@ const toEth = n => {
 };
 
 const toWei = n => {
-  if (!n) return null;
+  if (!n && n !== 0) return null;
 
   return BigNumber(n.toString())
     .times(weiPerEth)

@@ -5,6 +5,7 @@ import AppContext from "store/App";
 
 import Finances from "./Finances";
 import NodeInformation from "./NodeInformation";
+import UsageMetrics from "./UsageMetrics";
 
 const Frontpage = () => {
   let [t] = useTranslation();
@@ -21,6 +22,7 @@ const Frontpage = () => {
       <h1 id="frontPage">{t("welcome")}</h1>
       <p id="version">{t("version", { version, ritaVersion })}</p>
       <Finances />
+      <UsageMetrics />
       <NodeInformation />
     </>
   );
