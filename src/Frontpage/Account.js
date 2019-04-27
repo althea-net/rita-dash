@@ -6,9 +6,11 @@ import Withdraw from "../Payments/Withdraw";
 
 import { Btn, Card, Left, Right } from "ui";
 import { toEth } from "utils";
+
 import AppContext from "store/App";
-import updown from "../images/up_down.png";
 import { get, init } from "store";
+
+import updown from "../images/up_down.png";
 import { BigNumber } from "bignumber.js";
 
 export default () => {
@@ -18,14 +20,14 @@ export default () => {
   const [withdrawing, setWithdrawing] = useState(false);
   const [usage, setUsage] = useState([]);
 
+  init(async () => {
+    setUsage(await get("/usage/client"));
+  });
+
   const {
     info: { balance, localFee },
     symbol
   } = useContext(AppContext);
-
-  init(async () => {
-    setUsage(await get("/usage/client"));
-  });
 
   const totalUsage = usage.reduce((a, b) => {
     return a + b.up + b.down;

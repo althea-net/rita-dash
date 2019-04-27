@@ -6,12 +6,12 @@ import { default as Confirm } from "./Confirm";
 import { BigNumber } from "bignumber.js";
 const weiPerEth = BigNumber("1000000000000000000");
 
-const toEth = n => {
+const toEth = (n, i = 4) => {
   if (!n && n !== 0) return null;
 
   return BigNumber(n.toString())
     .div(weiPerEth)
-    .toFixed(4);
+    .toFixed(i);
 };
 
 const toWei = n => {

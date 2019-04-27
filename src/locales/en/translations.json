@@ -1,4 +1,9 @@
 {
+  "period": "Period",
+  "usage": "Usage",
+  "history": "History",
+  "displayPeriod": "Display Period",
+  "bandwidthUsage": "Bandwidth Usage",
   "2ghz": "2.4 GHz Wireless Network",
   "5ghz": "5 GHz Wireless Network",
   "accountThrottled": "Your account is empty. You are currently using the free service tier which is very slow.",
