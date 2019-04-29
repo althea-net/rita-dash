@@ -4,8 +4,10 @@
   "version": "0.2.3",
   "private": true,
   "scripts": {
+  "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "PORT=3005 react-scripts start",
     "build": "react-scripts build && rm build/static/**/*.map",
+    "buildkeepmaps": "react-scripts build",
     "package-android": "cordova build android --release",
     "package-ios": "cordova build ios --release --buildFlag=\"-useModernBuildSystem=0\"",
     "test": "react-scripts test --env=jsdom",
@@ -86,6 +88,7 @@
     "email-validator": "^2.0.4",
     "react-copy-to-clipboard": "^5.0.1",
     "react-phone-number-input": "https://github.com/asoltys/react-phone-number-input",
-    "react-testing-library": "^5.9.0"
+    "react-testing-library": "^5.9.0",
+    "source-map-explorer": "^1.8.0"
   }
 }
