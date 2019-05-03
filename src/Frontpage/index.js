@@ -17,7 +17,9 @@ const Frontpage = () => {
   } = useContext(AppContext);
 
   init(async () => {
-    setUsage(await get("/usage/client"));
+    const res = await get("/usage/client");
+    if (res instanceof Error) return;
+    setUsage(res);
   });
 
   return (

@@ -21,7 +21,9 @@ export default () => {
   const [usage, setUsage] = useState([]);
 
   init(async () => {
-    setUsage(await get("/usage/client"));
+    const res = await get("/usage/client");
+    if (res instanceof Error) return;
+    setUsage(res);
   });
 
   const {
@@ -29,6 +31,7 @@ export default () => {
     symbol
   } = useContext(AppContext);
 
+  console.log(usage);
   const totalUsage = usage.reduce((a, b) => {
     return a + b.up + b.down;
   }, 0);

@@ -51,10 +51,10 @@ const Billing = (daoAddress, ipAddress) => {
         break;
     }
 
-    console.log(start);
-    if (!data[start]) data[start] = { usage: 0, cost: 0 };
+    if (!data[start]) data[start] = { up: 0, down: 0, cost: 0 };
 
-    data[start].usage += b.up + b.down;
+    data[start].up += b.up;
+    data[start].down += b.down;
     data[start].cost += b.price * (b.up + b.down);
 
     return b;
@@ -92,7 +92,7 @@ const Billing = (daoAddress, ipAddress) => {
         return format(date, "DD, YYYY");
       case "Weekly":
         date = new Date((parseInt(hour) + 7 * 24) * msPerHr);
-        return format(date, "DD, YYYY");
+        return format(date, "MMM DD, YYYY");
       case "Hourly":
       default:
         date = new Date((parseInt(hour) + 1) * msPerHr);
@@ -132,8 +132,9 @@ const Billing = (daoAddress, ipAddress) => {
             <thead>
               <tr>
                 <th>{t("period")}</th>
-                <th>{t("usage")}</th>
-                <th>{t("bandwidthUsage")}</th>
+                <th>{t("upload")}</th>
+                <th>{t("download")}</th>
+                <th>{t("cost")}</th>
               </tr>
             </thead>
             <tbody>
@@ -145,7 +146,13 @@ const Billing = (daoAddress, ipAddress) => {
                       {start(d)} - {end(d)}
                     </td>
                     <td>
-                      {BigNumber(data[d].usage)
+                      {BigNumber(data[d].up)
+                        .div(bytesPerGb)
+                        .toFixed(1)}{" "}
+                      GB
+                    </td>
+                    <td>
+                      {BigNumber(data[d].down)
                         .div(bytesPerGb)
                         .toFixed(1)}{" "}
                       GB

@@ -44,11 +44,16 @@ export default () => {
     try {
       await getInfo();
 
-      setExits(await get("/exits"));
+      let res = await get("/exits");
+      if (res instanceof Error) return;
+      setExits(res);
       await getDebt();
 
       await getBlockchain();
-      setSettings(await get("/settings"));
+
+      res = await get("/settings");
+      if (res instanceof Error) return;
+      setSettings(res);
     } catch {}
 
     setLoading(false);

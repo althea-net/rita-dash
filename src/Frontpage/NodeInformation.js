@@ -20,12 +20,13 @@ const NodeInformation = () => {
   const [qr, setQR] = useState("");
   const [copied, setCopied] = useState("");
 
+  const { info, settings } = useContext(AppContext);
+  if (!settings.network) return null;
+
+  const { address } = info;
   const {
-    info: { address },
-    settings: {
-      network: { meshIp, wgPublicKey }
-    }
-  } = useContext(AppContext);
+    network: { meshIp, wgPublicKey }
+  } = settings;
 
   const toggleQR = v => {
     if (qr === v) return setQR("");
