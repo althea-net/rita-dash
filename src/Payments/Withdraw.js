@@ -14,31 +14,46 @@ import {
   ModalHeader,
   ModalBody
 } from "reactstrap";
-import { actions, Context } from "store";
-import { Error, Success, toWei } from "utils";
+import { Error, toEth, toWei } from "utils";
 import Web3 from "web3";
+import AppContext from "store/App";
+import { post } from "store";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 
 export default ({ open, setOpen }) => {
-  let [t] = useTranslation();
+  const [t] = useTranslation();
 
-  let [address, setAddress] = useState("");
-  let [amount, setAmount] = useState("");
+  const [address, setAddress] = useState("");
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState();
 
-  let {
-    state: { balance, symbol, withdrawalError, withdrawalSuccess }
-  } = useContext(Context);
+  const {
+    info: { balance },
+    symbol
+  } = useContext(AppContext);
 
-  let onSubmit = async e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    actions.withdraw(address, toWei(amount));
+    try {
+      const res = await post(`/withdraw/${address}/${toWei(amount)}`);
+      const txid = res.replace("txid:", "");
+      setOpen(false);
+    } catch {
+      setError(t("withdrawalError"));
+    }
   };
 
-  let fAmount = parseFloat(amount);
-  let addressValid = !!(address && web3.utils.isAddress(address));
-  let amountValid = !!(!isNaN(fAmount) && fAmount > 0 && fAmount <= balance);
-  let valid = addressValid && amountValid;
+  const balanceEth = toEth(balance);
+  console.log(balanceEth);
+  const fAmount = parseFloat(amount);
+  const addressValid = !!(address && web3.utils.isAddress(address));
+  const amountValid = !!(
+    !isNaN(fAmount) &&
+    fAmount > 0 &&
+    fAmount <= balanceEth
+  );
+  const valid = addressValid && amountValid;
 
   return (
     <div>
@@ -47,8 +62,7 @@ export default ({ open, setOpen }) => {
           {t("withdraw")} {symbol}
         </ModalHeader>
         <ModalBody>
-          <Error error={withdrawalError} />
-          <Success message={withdrawalSuccess} />
+          <Error error={error} />
 
           <Form onSubmit={onSubmit} className="text-left">
             <FormGroup id="form">
@@ -99,7 +113,7 @@ export default ({ open, setOpen }) => {
                 </InputGroupAddon>
               </InputGroup>
               <FormFeedback invalid="true">
-                {t("amountRequired", { balance })}
+                {t("amountRequired", { balance: balanceEth })}
               </FormFeedback>
             </FormGroup>
             <FormGroup
@@ -112,32 +126,18 @@ export default ({ open, setOpen }) => {
             />
 
             <div className="d-flex justify-content-center">
-              {withdrawalSuccess ? (
-                <Button
-                  type="button"
-                  color="primary"
-                  outline
-                  onClick={() => setOpen(false)}
-                  className="mr-2"
-                >
-                  {t("Close")}
-                </Button>
-              ) : (
-                <>
-                  <Button
-                    type="button"
-                    color="primary"
-                    outline
-                    onClick={() => setOpen(false)}
-                    className="mr-2"
-                  >
-                    Cancel
-                  </Button>
-                  <Button color="primary" disabled={!valid}>
-                    {t("withdraw")}
-                  </Button>
-                </>
-              )}
+              <Button
+                type="button"
+                color="primary"
+                outline
+                onClick={() => setOpen(false)}
+                className="mr-2"
+              >
+                Cancel
+              </Button>
+              <Button color="primary" disabled={!valid}>
+                {t("withdraw")}
+              </Button>
             </div>
           </Form>
         </ModalBody>
