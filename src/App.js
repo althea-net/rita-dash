@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Nav } from "reactstrap";
 import AltheaNav from "./Layout/Nav";
 import Topbar from "./Layout/Topbar";
@@ -33,66 +33,72 @@ export default () => {
   const [debt, setDebt] = useState(0);
   const [exits, setExits] = useState([]);
   const [info, setInfo] = useState(initialInfo);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState();
   const [page, setPage] = useState("dashboard");
   const [symbol, setSymbol] = useState();
   const [settings, setSettings] = useState(initialSettings);
 
-  const init = async () => {
-    setLoading(true);
+  const getDebt = useCallback(
+    async () => {
+      try {
+        const debts = await get("/debts");
 
-    try {
-      await getInfo();
+        const selectedExit = exits.find(e => e.isSelected);
 
-      let res = await get("/exits");
-      if (res instanceof Error) return;
-      setExits(res);
-      await getDebt();
+        if (selectedExit) {
+          let debt = debts.reduce((a, b) => {
+            return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
+              ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
+              : a;
+          }, BigNumber("0"));
 
-      await getBlockchain();
+          setDebt(debt);
+        }
+      } catch {}
+    },
+    [exits]
+  );
 
-      res = await get("/settings");
-      if (res instanceof Error) return;
-      setSettings(res);
-    } catch {}
-
-    setLoading(false);
-  };
-
-  useInit(init);
-
-  const getDebt = async () => {
-    try {
-      const debts = await get("/debts");
-
-      const selectedExit = exits.find(e => e.isSelected);
-
-      if (selectedExit) {
-        let debt = debts.reduce((a, b) => {
-          return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
-            ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
-            : a;
-        }, BigNumber("0"));
-
-        setDebt(debt);
-      }
-    } catch {}
-  };
-
-  const getInfo = async () => {
+  const getInfo = useCallback(async () => {
     try {
       const info = await get("/info", true, 2000);
       setInfo(info);
     } catch {
       setInfo(initialInfo);
     }
-  };
+  }, []);
 
   const getBlockchain = async () => {
     const res = await get("/blockchain/get/");
     setBlockchain(res);
     setSymbol(symbols[res]);
   };
+
+  const init = useCallback(
+    async () => {
+      setLoading(true);
+
+      try {
+        await getInfo();
+
+        let res = await get("/exits");
+        if (res instanceof Error) return;
+        setExits(res);
+        await getDebt();
+
+        await getBlockchain();
+
+        res = await get("/settings");
+        if (res instanceof Error) return;
+        setSettings(res);
+      } catch {}
+
+      setLoading(false);
+    },
+    [getDebt, getInfo]
+  );
+
+  useInit(init);
 
   const styleRef = useRef();
   useEffect(() => {
