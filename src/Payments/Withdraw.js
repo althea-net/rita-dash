@@ -36,8 +36,7 @@ export default ({ open, setOpen }) => {
   const onSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await post(`/withdraw/${address}/${toWei(amount)}`);
-      const txid = res.replace("txid:", "");
+      await post(`/withdraw/${address}/${toWei(amount)}`);
       setOpen(false);
     } catch {
       setError(t("withdrawalError"));

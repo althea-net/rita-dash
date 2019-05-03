@@ -8,7 +8,7 @@ import { Btn, Card, Left, Right } from "ui";
 import { toEth } from "utils";
 
 import AppContext from "store/App";
-import { get, init } from "store";
+import { get, useInit } from "store";
 
 import updown from "../images/up_down.png";
 import { BigNumber } from "bignumber.js";
@@ -20,7 +20,7 @@ export default () => {
   const [withdrawing, setWithdrawing] = useState(false);
   const [usage, setUsage] = useState([]);
 
-  init(async () => {
+  useInit(async () => {
     const res = await get("/usage/client");
     if (res instanceof Error) return;
     setUsage(res);

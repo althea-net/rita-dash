@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "./Pagination";
-import { get, init } from "store";
+import { get, useInit } from "store";
 import AppContext from "store/App";
 import { BigNumber } from "bignumber.js";
 import { toEth } from "utils";
@@ -60,7 +60,7 @@ const Billing = (daoAddress, ipAddress) => {
     return b;
   });
 
-  init(async () => {
+  useInit(async () => {
     setUsage(await get("/usage/client"));
   });
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import {
   Billing,
@@ -21,15 +21,21 @@ let routes = {
 };
 
 export default ({ page, setPage }) => {
-  const getPage = () => {
-    let page = window.location.hash.substr(1);
-    setPage(page);
-  };
+  const getPage = useCallback(
+    () => {
+      let page = window.location.hash.substr(1);
+      setPage(page);
+    },
+    [setPage]
+  );
 
-  useEffect(() => {
-    getPage();
-    window.addEventListener("hashchange", getPage, false);
-  }, []);
+  useEffect(
+    () => {
+      getPage();
+      window.addEventListener("hashchange", getPage, false);
+    },
+    [getPage]
+  );
 
   if (routes[page]) return routes[page];
   else return <Frontpage />;

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -15,7 +15,7 @@ import {
   Label,
   Progress
 } from "reactstrap";
-import { get, post } from "store";
+import { get, post, useInit } from "store";
 import useInterval from "utils/UseInterval";
 import { BigNumber } from "bignumber.js";
 import AppContext from "store/App";
@@ -52,10 +52,12 @@ const PriceForm = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
+  const init = () => {
     getPrice();
     getAutoPricing();
-  }, []);
+  };
+
+  useInit(init);
   useInterval(getPrice, 5000);
 
   const submit = async e => {

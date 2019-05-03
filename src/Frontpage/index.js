@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import AppContext from "store/App";
 import { Provider } from "store/Usage";
-import { get, init } from "store";
+import { get, useInit } from "store";
 
 import Finances from "./Finances";
 import NodeInformation from "./NodeInformation";
@@ -16,7 +16,7 @@ const Frontpage = () => {
     info: { ritaVersion, version }
   } = useContext(AppContext);
 
-  init(async () => {
+  useInit(async () => {
     const res = await get("/usage/client");
     if (res instanceof Error) return;
     setUsage(res);

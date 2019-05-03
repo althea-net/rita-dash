@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { get, actions, getState } from "store";
+import { get, actions, getState, useInit } from "store";
 import WifiSettingsForm from "./WifiSettingsForm";
 import { Alert, Card, CardBody, Form, Button, Progress } from "reactstrap";
 import { Error } from "utils";
@@ -12,7 +12,7 @@ const Wifi = () => {
   let [loading, setLoading] = useState(false);
   let [channels, setChannels] = useState({});
 
-  let getWifiSettings = async () => {
+  let init = async () => {
     try {
       let settings = await get("/wifi_settings");
 
@@ -36,10 +36,7 @@ const Wifi = () => {
     }
   };
 
-  useEffect(() => {
-    getWifiSettings();
-    return;
-  }, []);
+  useInit(init);
 
   if (!wifiSettings || !wifiSettings.length)
     if (loading && !wifiError)

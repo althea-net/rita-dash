@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Card, CardBody, Progress } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { Error } from "utils";
 import ExitListItem from "./ExitListItem";
 import ExitNodeSetup from "./ExitNodeSetup";
 import { Provider } from "store/Exits";
-import { get, post } from "store";
+import { get, post, useInit } from "store";
 import useInterval from "utils/UseInterval";
 
 const Exits = () => {
@@ -102,15 +102,11 @@ const Exits = () => {
     getExits();
   };
 
-  const init = async () => {
+  useInit(async () => {
     await getExits();
     setInitialized(true);
-  };
+  });
 
-  useEffect(() => {
-    init();
-    return;
-  }, []);
   useInterval(getExits, 5000);
 
   let selected = exits.find(exit => {

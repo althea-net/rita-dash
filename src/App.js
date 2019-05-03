@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Nav } from "reactstrap";
 import AltheaNav from "./Layout/Nav";
 import Topbar from "./Layout/Topbar";
 import { NoConnection } from "utils";
 import Router from "Router";
-import { get } from "store";
+import { get, useInit } from "store";
 import { Provider } from "store/App";
 import { BigNumber } from "bignumber.js";
 import useInterval from "utils/UseInterval";
@@ -59,6 +59,8 @@ export default () => {
     setLoading(false);
   };
 
+  useInit(init);
+
   const getDebt = async () => {
     try {
       const debts = await get("/debts");
@@ -92,12 +94,10 @@ export default () => {
     setSymbol(symbols[res]);
   };
 
-  let style;
+  const styleRef = useRef();
   useEffect(() => {
-    init();
-
     let h = document.querySelector(".navbar").offsetHeight;
-    style = { minHeight: `calc(100vh - ${h}px)` };
+    styleRef.current = { minHeight: `calc(100vh - ${h}px)` };
   }, []);
 
   useInterval(getDebt, 5000);
@@ -115,7 +115,7 @@ export default () => {
   return (
     <Provider value={state}>
       <Topbar />
-      <div className="d-flex" style={style}>
+      <div className="d-flex" style={styleRef.current}>
         <Nav id="sidebar" navbar>
           <AltheaNav page={page} />
         </Nav>

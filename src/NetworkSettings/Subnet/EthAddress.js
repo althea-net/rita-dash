@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Context, init } from "store";
+import { Context, useInit } from "store";
 import QrCode from "qrcode.react";
 import { Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +19,7 @@ const EthAddress = () => {
     }
   } = useContext(Context);
 
-  init(() => {
+  useInit(() => {
     actions.getInfo();
   });
 
@@ -39,7 +39,11 @@ const EthAddress = () => {
       <InputGroup>
         <Input readOnly value={address || ""} id="subnetAddr" />
         <InputGroupAddon addonType="append">
-          <InputGroupText style={{ cursor: "pointer" }} onClick={toggle} id="clickSubnetAddr" >
+          <InputGroupText
+            style={{ cursor: "pointer" }}
+            onClick={toggle}
+            id="clickSubnetAddr"
+          >
             <FontAwesomeIcon icon="qrcode" />
           </InputGroupText>
         </InputGroupAddon>

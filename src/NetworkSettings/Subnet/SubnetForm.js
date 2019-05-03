@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { get, post, init } from "store";
+import { get, post, useInit } from "store";
 import {
   Alert,
   Button,
@@ -38,7 +38,7 @@ const SubnetForm = () => {
     formattedIp = formattedIp.substr(0, formattedIp.length - 1) + 1;
   }
 
-  init(async () => {
+  useInit(async () => {
     const { meshIp } = await get("/mesh_ip");
     setIpAddress(meshIp);
 
