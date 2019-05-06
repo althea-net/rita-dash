@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Nav } from "reactstrap";
 import AltheaNav from "./Layout/Nav";
 import Topbar from "./Layout/Topbar";
 import { NoConnection } from "utils";
 import Router from "Router";
-import { get, useInit } from "store";
+import { get } from "store";
 import { Provider } from "store/App";
 import { BigNumber } from "bignumber.js";
 import useInterval from "utils/UseInterval";
@@ -38,35 +38,32 @@ export default () => {
   const [symbol, setSymbol] = useState();
   const [settings, setSettings] = useState(initialSettings);
 
-  const getDebt = useCallback(
-    async () => {
-      try {
-        const debts = await get("/debts");
+  const getDebt = async () => {
+    try {
+      const debts = await get("/debts");
 
-        const selectedExit = exits.find(e => e.isSelected);
+      const selectedExit = exits.find(e => e.isSelected);
 
-        if (selectedExit) {
-          let debt = debts.reduce((a, b) => {
-            return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
-              ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
-              : a;
-          }, BigNumber("0"));
+      if (selectedExit) {
+        let debt = debts.reduce((a, b) => {
+          return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
+            ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
+            : a;
+        }, BigNumber("0"));
 
-          setDebt(debt);
-        }
-      } catch {}
-    },
-    [exits]
-  );
+        setDebt(debt);
+      }
+    } catch {}
+  };
 
-  const getInfo = useCallback(async () => {
+  const getInfo = async () => {
     try {
       const info = await get("/info", true, 2000);
       setInfo(info);
     } catch {
       setInfo(initialInfo);
     }
-  }, []);
+  };
 
   const getBlockchain = async () => {
     const res = await get("/blockchain/get/");
@@ -74,40 +71,50 @@ export default () => {
     setSymbol(symbols[res]);
   };
 
-  const init = useCallback(
-    async () => {
-      setLoading(true);
-
-      try {
-        await getInfo();
-
-        let res = await get("/exits");
-        if (res instanceof Error) return;
-        setExits(res);
-        await getDebt();
-
-        await getBlockchain();
-
-        res = await get("/settings");
-        if (res instanceof Error) return;
-        setSettings(res);
-      } catch {}
-
-      setLoading(false);
-    },
-    [getDebt, getInfo]
-  );
-
-  useInit(init);
-
   const styleRef = useRef();
-  useEffect(() => {
-    let h = document.querySelector(".navbar").offsetHeight;
-    styleRef.current = { minHeight: `calc(100vh - ${h}px)` };
-  }, []);
 
   useInterval(getDebt, 5000);
   useInterval(getInfo, 2000);
+
+  useEffect(() => {
+    const init = async () => {
+      setLoading(true);
+
+      try {
+        let exits = await get("/exits");
+        if (exits instanceof Error) return;
+        setExits(exits);
+        try {
+          const debts = await get("/debts");
+
+          const selectedExit = exits.find(e => e.isSelected);
+
+          if (selectedExit) {
+            let debt = debts.reduce((a, b) => {
+              return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
+                ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
+                : a;
+            }, BigNumber("0"));
+
+            setDebt(debt);
+          }
+        } catch {}
+
+        await getBlockchain();
+
+        let settings = await get("/settings");
+        if (settings instanceof Error) return;
+        setSettings(settings);
+      } catch {}
+
+      setLoading(false);
+    };
+
+    init();
+
+    let h = document.querySelector(".navbar").offsetHeight;
+    styleRef.current = { minHeight: `calc(100vh - ${h}px)` };
+  }, []);
 
   const state = {
     blockchain,

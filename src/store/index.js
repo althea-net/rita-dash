@@ -168,16 +168,6 @@ export async function post(url, data, camel = true) {
   }
 }
 
-export function useInit(f) {
-  useEffect(
-    () => {
-      f();
-      return;
-    },
-    [f]
-  );
-}
-
 export function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 

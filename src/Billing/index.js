@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "./Pagination";
-import { get, useInit } from "store";
+import { get } from "store";
 import AppContext from "store/App";
 import { BigNumber } from "bignumber.js";
 import { toEth } from "utils";
@@ -60,9 +60,11 @@ const Billing = (daoAddress, ipAddress) => {
     return b;
   });
 
-  useInit(async () => {
-    setUsage(await get("/usage/client"));
-  });
+  useEffect(() => {
+    (async () => {
+      setUsage(await get("/usage/client"));
+    })();
+  }, []);
 
   const start = hour => {
     let date = new Date(hour * msPerHr);

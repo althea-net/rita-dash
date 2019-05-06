@@ -1,30 +1,23 @@
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Context, useInit } from "store";
 import QrCode from "qrcode.react";
 import { Input, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import AppContext from "store/App";
 
 const EthAddress = () => {
-  let [t] = useTranslation();
+  const [t] = useTranslation();
 
-  let [copied, setCopied] = useState(false);
-  let [show, setShow] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [show, setShow] = useState(false);
 
-  let {
-    actions,
-    state: {
-      info: { address }
-    }
-  } = useContext(Context);
+  const {
+    info: { address }
+  } = useContext(AppContext);
 
-  useInit(() => {
-    actions.getInfo();
-  });
-
-  let toggle = () => setShow(!show);
-  let copy = () => setCopied(true);
+  const toggle = () => setShow(!show);
+  const copy = () => setCopied(true);
 
   return (
     <>

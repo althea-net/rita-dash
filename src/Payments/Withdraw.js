@@ -44,7 +44,6 @@ export default ({ open, setOpen }) => {
   };
 
   const balanceEth = toEth(balance);
-  console.log(balanceEth);
   const fAmount = parseFloat(amount);
   const addressValid = !!(address && web3.utils.isAddress(address));
   const amountValid = !!(

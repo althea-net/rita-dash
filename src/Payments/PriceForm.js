@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -15,7 +15,7 @@ import {
   Label,
   Progress
 } from "reactstrap";
-import { get, post, useInit } from "store";
+import { get, post } from "store";
 import useInterval from "utils/UseInterval";
 import { BigNumber } from "bignumber.js";
 import AppContext from "store/App";
@@ -46,18 +46,29 @@ const PriceForm = () => {
     setLoading(false);
   };
 
-  const getAutoPricing = async () => {
-    setLoading(true);
-    setAutoPricing(await get("/auto_price/enabled"));
-    setLoading(false);
-  };
+  useEffect(() => {
+    const getPrice = async () => {
+      setLoading(true);
+      const priceWei = (await get("/local_fee", true, 5000)).localFee;
 
-  const init = () => {
+      const price = BigNumber(priceWei)
+        .div(weiPerEth)
+        .times(bytesPerGb)
+        .toString();
+
+      setPrice(price);
+
+      let autoPricing = await get("/auto_price/enabled");
+      setAutoPricing(autoPricing);
+
+      if (autoPricing) setNewPrice(price);
+
+      setLoading(false);
+    };
+
     getPrice();
-    getAutoPricing();
-  };
+  }, []);
 
-  useInit(init);
   useInterval(getPrice, 5000);
 
   const submit = async e => {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import Deposit from "../Payments/Deposit";
@@ -8,10 +8,11 @@ import { Btn, Card, Left, Right } from "ui";
 import { toEth } from "utils";
 
 import AppContext from "store/App";
-import { get, useInit } from "store";
+import { get } from "store";
 
 import updown from "../images/up_down.png";
 import { BigNumber } from "bignumber.js";
+const AbortController = window.AbortController;
 
 export default () => {
   const [t] = useTranslation();
@@ -20,18 +21,26 @@ export default () => {
   const [withdrawing, setWithdrawing] = useState(false);
   const [usage, setUsage] = useState([]);
 
-  useInit(async () => {
-    const res = await get("/usage/client");
-    if (res instanceof Error) return;
-    setUsage(res);
-  });
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    (async () => {
+      try {
+        const res = await get("/usage/client", true, 10000, signal);
+        if (res instanceof Error) return;
+        setUsage(res);
+      } catch (e) {}
+    })();
+
+    return () => controller.abort();
+  }, []);
 
   const {
     info: { balance, localFee },
     symbol
   } = useContext(AppContext);
 
-  console.log(usage);
   const totalUsage = usage.reduce((a, b) => {
     return a + b.up + b.down;
   }, 0);

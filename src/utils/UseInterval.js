@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+const AbortController = window.AbortController;
 
 export default function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -9,12 +10,19 @@ export default function useInterval(callback, delay) {
 
   useEffect(
     () => {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      savedCallback.current(signal);
       function tick() {
-        savedCallback.current();
+        savedCallback.current(signal);
       }
 
       let id = setInterval(tick, delay);
-      return () => clearInterval(id);
+      return () => {
+        clearInterval(id);
+        controller.abort();
+      };
     },
     [delay]
   );

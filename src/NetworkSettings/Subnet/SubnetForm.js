@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { get, post, useInit } from "store";
+import { get, post } from "store";
 import {
   Alert,
   Button,
@@ -38,14 +38,17 @@ const SubnetForm = () => {
     formattedIp = formattedIp.substr(0, formattedIp.length - 1) + 1;
   }
 
-  useInit(async () => {
-    const { meshIp } = await get("/mesh_ip");
-    setIpAddress(meshIp);
+  useEffect(() => {
+    (async () => {
+      const { meshIp } = await get("/mesh_ip");
+      setIpAddress(meshIp);
 
-    const daos = await get("/dao_list");
-    setDaos(daos);
-    if (daos.length) setDaoAddress(daos[0]);
-  });
+      const daos = await get("/dao_list");
+      setDaos(daos);
+      if (daos.length) setDaoAddress(daos[0]);
+    })();
+    return;
+  }, []);
 
   const handleIp = e => setIpAddress(e.target.value);
   const handleDao = e => setDaoAddress(e.target.value);
