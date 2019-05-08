@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 import { connect } from "store";
 
 import Account from "../Frontpage/Account";
+import DaoFee from "../AdvancedSettings/DaoFee";
 import PriceForm from "./PriceForm";
-import QualityForm from "./QualityForm";
 import PrivateKeys from "./PrivateKeys";
+import QualityForm from "./QualityForm";
 
 import { Error, Success, toEth } from "utils";
 
@@ -42,6 +43,7 @@ export default connect([
         <Account balance={balance} />
         <QualityForm />
         <PriceForm />
+        <DaoFee readonly={true} />
         <PrivateKeys balance={balance} symbol={symbol} />
       </div>
     );
