@@ -17,19 +17,29 @@ const Billing = (daoAddress, ipAddress) => {
   const [period, setPeriod] = useState("Weekly");
   const [usage, setUsage] = useState([]);
   const { symbol } = useContext(AppContext);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => setPage(1), [period]);
+
+  const limit = {
+    Hourly: 24,
+    Daily: 10,
+    Weekly: 4,
+    Monthly: 12
+  }[period];
 
   let data = {};
 
   usage.map(b => {
-    let date = new Date(b.index * msPerHr);
-    let start;
+    const date = new Date(b.index * msPerHr);
+    let i;
 
     switch (period) {
       case "Hourly":
-        start = b.index;
+        i = b.index;
         break;
       case "Daily":
-        start =
+        i =
           new Date(
             date.getFullYear(),
             date.getMonth(),
@@ -37,7 +47,7 @@ const Billing = (daoAddress, ipAddress) => {
           ).getTime() / msPerHr;
         break;
       case "Weekly":
-        start =
+        i =
           new Date(
             date.getFullYear(),
             date.getMonth(),
@@ -46,16 +56,16 @@ const Billing = (daoAddress, ipAddress) => {
         break;
       default:
       case "Monthly":
-        start =
+        i =
           new Date(date.getFullYear(), date.getMonth(), 1).getTime() / msPerHr;
         break;
     }
 
-    if (!data[start]) data[start] = { up: 0, down: 0, cost: 0 };
+    if (!data[i]) data[i] = { up: 0, down: 0, cost: 0 };
 
-    data[start].up += b.up;
-    data[start].down += b.down;
-    data[start].cost += b.price * (b.up + b.down);
+    data[i].up += b.up;
+    data[i].down += b.down;
+    data[i].cost += b.price * (b.up + b.down);
 
     return b;
   });
@@ -142,6 +152,7 @@ const Billing = (daoAddress, ipAddress) => {
             <tbody>
               {Object.keys(data)
                 .reverse()
+                .slice((page - 1) * limit, page * limit)
                 .map(d => (
                   <tr key={d}>
                     <td>
@@ -150,13 +161,13 @@ const Billing = (daoAddress, ipAddress) => {
                     <td>
                       {BigNumber(data[d].up)
                         .div(bytesPerGb)
-                        .toFixed(1)}{" "}
+                        .toFixed(3)}
                       GB
                     </td>
                     <td>
                       {BigNumber(data[d].down)
                         .div(bytesPerGb)
-                        .toFixed(1)}{" "}
+                        .toFixed(3)}
                       GB
                     </td>
                     <td>
@@ -167,7 +178,12 @@ const Billing = (daoAddress, ipAddress) => {
             </tbody>
           </Table>
 
-          <Pagination />
+          <Pagination
+            usage={Object.keys(data)}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+          />
         </CardBody>
       </Card>
     </div>
