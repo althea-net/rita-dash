@@ -106,6 +106,7 @@
   "noPeers": "No peers found",
   "noReboot": "Do not reboot your router at this time",
   "noRita": "Unable to contact router. Check cable or wifi connection.",
+  "noUsage": "No usage records are available",
   "noWifi": "No Wifi settings found, the device may not support Wifi",
   "nodeInfo": "Node Information",
   "onlyOne": "There can be only one {{mode}} interface",

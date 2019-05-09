@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Card, CardBody, Input, Table } from "reactstrap";
+import { Alert, Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "./Pagination";
 import { get } from "store";
 import AppContext from "store/App";
@@ -72,7 +72,10 @@ const Billing = (daoAddress, ipAddress) => {
 
   useEffect(() => {
     (async () => {
-      setUsage(await get("/usage/client"));
+      try {
+        let usage = await get("/usage/client");
+        if (!(usage instanceof Error)) setUsage(usage);
+      } catch {}
     })();
   }, []);
 
@@ -115,77 +118,81 @@ const Billing = (daoAddress, ipAddress) => {
   return (
     <div>
       <h1>{t("billing")}</h1>
-      <Card>
-        <CardBody>
-          <div className="d-flex">
-            <h2>{t("history")}</h2>
-            <div className="ml-auto d-flex">
-              <div
-                style={{ whiteSpace: "nowrap", fontSize: 16, color: "#666" }}
-                className="mt-2 mr-2"
-              >
-                {t("displayPeriod")}
+      {!usage.length ? (
+        <Alert color="info">{t("noUsage")}</Alert>
+      ) : (
+        <Card>
+          <CardBody>
+            <div className="d-flex">
+              <h2>{t("history")}</h2>
+              <div className="ml-auto d-flex">
+                <div
+                  style={{ whiteSpace: "nowrap", fontSize: 16, color: "#666" }}
+                  className="mt-2 mr-2"
+                >
+                  {t("displayPeriod")}
+                </div>
+                <Input
+                  type="select"
+                  style={{ color: "#666" }}
+                  value={period}
+                  onChange={e => setPeriod(e.target.value)}
+                >
+                  {periods.map(p => (
+                    <option key={p} value={p}>
+                      {p}
+                    </option>
+                  ))}
+                </Input>
               </div>
-              <Input
-                type="select"
-                style={{ color: "#666" }}
-                value={period}
-                onChange={e => setPeriod(e.target.value)}
-              >
-                {periods.map(p => (
-                  <option key={p} value={p}>
-                    {p}
-                  </option>
-                ))}
-              </Input>
             </div>
-          </div>
-          <Table className="table-striped">
-            <thead>
-              <tr>
-                <th>{t("period")}</th>
-                <th>{t("upload")}</th>
-                <th>{t("download")}</th>
-                <th>{t("cost")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.keys(data)
-                .reverse()
-                .slice((page - 1) * limit, page * limit)
-                .map(d => (
-                  <tr key={d}>
-                    <td>
-                      {start(d)} - {end(d)}
-                    </td>
-                    <td>
-                      {BigNumber(data[d].up)
-                        .div(bytesPerGb)
-                        .toFixed(3)}
-                      GB
-                    </td>
-                    <td>
-                      {BigNumber(data[d].down)
-                        .div(bytesPerGb)
-                        .toFixed(3)}
-                      GB
-                    </td>
-                    <td>
-                      {toEth(data[d].cost, 6)} {symbol}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table>
+            <Table className="table-striped">
+              <thead>
+                <tr>
+                  <th>{t("period")}</th>
+                  <th>{t("upload")}</th>
+                  <th>{t("download")}</th>
+                  <th>{t("cost")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(data)
+                  .reverse()
+                  .slice((page - 1) * limit, page * limit)
+                  .map(d => (
+                    <tr key={d}>
+                      <td>
+                        {start(d)} - {end(d)}
+                      </td>
+                      <td>
+                        {BigNumber(data[d].up)
+                          .div(bytesPerGb)
+                          .toFixed(3)}
+                        GB
+                      </td>
+                      <td>
+                        {BigNumber(data[d].down)
+                          .div(bytesPerGb)
+                          .toFixed(3)}
+                        GB
+                      </td>
+                      <td>
+                        {toEth(data[d].cost, 6)} {symbol}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </Table>
 
-          <Pagination
-            usage={Object.keys(data)}
-            limit={limit}
-            page={page}
-            setPage={setPage}
-          />
-        </CardBody>
-      </Card>
+            <Pagination
+              usage={Object.keys(data)}
+              limit={limit}
+              page={page}
+              setPage={setPage}
+            />
+          </CardBody>
+        </Card>
+      )}
     </div>
   );
 };
