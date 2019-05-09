@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import Blockchain from "./Blockchain";
+import DaoFee from "./DaoFee";
 import Notifications from "./Notifications";
 import Firmware from "./Firmware";
 
@@ -14,6 +15,7 @@ export default () => {
 
       <Notifications />
       <Blockchain />
+      <DaoFee />
       <Firmware />
     </div>
   );
