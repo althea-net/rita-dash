@@ -190,6 +190,7 @@
   "updateWarning": "If an update is found, it will be installed automatically in which case the router will reset and could take several minutes to come back online",
   "upToDate": "Your router is currently up to date!",
   "usageMetrics": "Usage Metrics",
+  "usageType": "Usage Type",
   "username": "Username",
   "verify": "Verify",
   "version": "You are running {{version}} with rita version {{ritaVersion}}",

@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
-export default styled(({ className, usage, limit, page, setPage }) => {
+export default styled(({ className, data, limit, page, setPage }) => {
   const pages = [];
 
-  for (let i = 1; i <= Math.floor(usage.length / limit); i++) {
+  for (let i = 1; i <= Math.floor(data.length / limit); i++) {
     let style = null;
     if (page === i) style = { fontWeight: "bold" };
     pages.push(
@@ -16,16 +16,16 @@ export default styled(({ className, usage, limit, page, setPage }) => {
 
   const start = Math.min(
     Math.max(0, page - 3),
-    Math.max(0, Math.floor(usage.length / limit) - 5)
+    Math.max(0, Math.floor(data.length / limit) - 5)
   );
 
-  const end = Math.min(start + 5, Math.floor(usage.length / limit));
+  const end = Math.min(start + 5, Math.floor(data.length / limit));
 
   return (
     <div className={className + " d-flex justify-content-center text-center"}>
       {page > 1 && <div onClick={() => setPage(page - 1)}>&laquo;</div>}
       {pages.length > 1 && pages.slice(start, end)}
-      {(page + 1) * limit < usage.length && (
+      {(page + 1) * limit < data.length && (
         <div onClick={() => setPage(page + 1)}>&raquo;</div>
       )}
     </div>
