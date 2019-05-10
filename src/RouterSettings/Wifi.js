@@ -6,40 +6,45 @@ import { Alert, Card, CardBody, Form, Button, Progress } from "reactstrap";
 import { Error } from "utils";
 
 const Wifi = () => {
-  let [t] = useTranslation();
-  let [wifiError, setWifiError] = useState(null);
-  let [wifiSettings, setWifiSettings] = useState(null);
-  let [loading, setLoading] = useState(false);
-  let [channels, setChannels] = useState({});
+  const [t] = useTranslation();
+  const [wifiError, setWifiError] = useState(null);
+  const [wifiSettings, setWifiSettings] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [channels, setChannels] = useState({});
 
-  let getWifiSettings = async () => {
-    try {
-      let settings = await get("/wifi_settings");
+  useEffect(
+    () => {
+      const init = async () => {
+        try {
+          let settings = await get("/wifi_settings");
 
-      await Promise.all(
-        settings.map(async setting => {
-          let radio = setting.device.sectionName;
-          channels[radio] = [];
-          try {
-            channels[radio] = await get(`/wifi_settings/get_channels/${radio}`);
-          } catch (e) {}
-          return channels[radio];
-        })
-      );
+          await Promise.all(
+            settings.map(async setting => {
+              let radio = setting.device.sectionName;
+              channels[radio] = [];
+              try {
+                channels[radio] = await get(
+                  `/wifi_settings/get_channels/${radio}`
+                );
+              } catch (e) {}
+              return channels[radio];
+            })
+          );
 
-      setChannels(channels);
-      setWifiSettings(settings);
-    } catch (e) {
-      setWifiError(t("wifiError"));
-      setLoading(false);
+          setChannels(channels);
+          setWifiSettings(settings);
+        } catch (e) {
+          setWifiError(t("wifiError"));
+          setLoading(false);
+          return;
+        }
+      };
+
+      init();
       return;
-    }
-  };
-
-  useEffect(() => {
-    getWifiSettings();
-    return;
-  }, []);
+    },
+    [channels, t]
+  );
 
   if (!wifiSettings || !wifiSettings.length)
     if (loading && !wifiError)

@@ -1,24 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Input } from "reactstrap";
-import { get, post, init, useDebounce } from "store";
+import { get, post, useDebounce } from "store";
 import "../styles/slider.css";
 
 export default () => {
   let [t] = useTranslation();
   let [factor, setFactor] = useState(0);
 
-  init(async () => {
-    let { metricFactor } = await get("/metric_factor");
-    setFactor(metricFactor);
-  });
+  useEffect(() => {
+    (async () => {
+      let { metricFactor } = await get("/metric_factor");
+      setFactor(metricFactor);
+    })();
+  }, []);
 
   let debouncedFactor = useDebounce(factor, 500);
   useEffect(
     () => {
       post(`/metric_factor/${factor}`);
     },
-    [debouncedFactor]
+    [debouncedFactor, factor]
   );
 
   return (

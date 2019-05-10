@@ -32,6 +32,7 @@ const Ports = () => {
         .reduce((a, b) => ((a[b] = res[b]), a), {})
     );
 
+    await actions.getInterfaces();
     setLoading(false);
   };
 

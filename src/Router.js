@@ -21,15 +21,18 @@ let routes = {
 };
 
 export default ({ page, setPage }) => {
-  const getPage = () => {
-    let page = window.location.hash.substr(1);
-    setPage(page);
-  };
+  useEffect(
+    () => {
+      const getPage = () => {
+        let page = window.location.hash.substr(1);
+        setPage(page);
+      };
 
-  useEffect(() => {
-    getPage();
-    window.addEventListener("hashchange", getPage, false);
-  }, []);
+      getPage();
+      window.addEventListener("hashchange", getPage, false);
+    },
+    [setPage]
+  );
 
   if (routes[page]) return routes[page];
   else return <Frontpage />;

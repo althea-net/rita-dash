@@ -1,14 +1,11 @@
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Label } from "reactstrap";
-
-import { Context } from "store";
+import Context from "./Context";
 
 export default ({ setEditing }) => {
   const [t] = useTranslation();
-  const {
-    state: { daoAddress, meshIp }
-  } = useContext(Context);
+  const { daoAddress, meshIp } = useContext(Context);
 
   return (
     <>

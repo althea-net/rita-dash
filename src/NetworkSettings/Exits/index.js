@@ -7,25 +7,31 @@ import ExitNodeSetup from "./ExitNodeSetup";
 import { Provider } from "store/Exits";
 import { get, post } from "store";
 import useInterval from "utils/UseInterval";
+const AbortController = window.AbortController;
 
 const Exits = () => {
   const [t] = useTranslation();
   const [selectingExit, setSelectingExit] = useState(false);
   const [exits, setExits] = useState([]);
   const [exitsError, setExitsError] = useState(null);
-  const [loadingExits, setLoadingExits] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [resetting, setResetting] = useState([]);
   const [initialized, setInitialized] = useState(false);
 
   const getExits = async signal => {
-    if (loadingExits) return;
-    setLoadingExits(true);
+    if (!signal) {
+      const controller = new AbortController();
+      signal = controller.signal;
+    }
+
+    if (loading) return;
+    setLoading(true);
 
     try {
-      const blockchain = await get("/blockchain/get/", true, 5000);
+      const blockchain = await get("/blockchain/get/", true, 5000, signal);
 
       let exits = [];
-      exits = await get("/exits", true, 5000);
+      exits = await get("/exits", true, 5000, signal);
 
       if (exits instanceof Error) setExitsError(t("exitsError"));
 
@@ -47,18 +53,11 @@ const Exits = () => {
           .sort(sort);
 
         setExits(exits);
-
-        exits
-          .filter(
-            e =>
-              e.exitSettings.state === "Pending" ||
-              e.exitSettings.state === "GotInfo"
-          )
-          .map(e => resetting.includes(e.nickname) && setResetting([]));
       }
 
-      setLoadingExits(false);
-    } catch (e) {}
+      setLoading(false);
+      setInitialized(true);
+    } catch {}
   };
 
   const resetExit = async exit => {
@@ -102,15 +101,19 @@ const Exits = () => {
     getExits();
   };
 
-  const init = async () => {
-    await getExits();
-    setInitialized(true);
-  };
+  useEffect(
+    () => {
+      exits
+        .filter(
+          e =>
+            e.exitSettings.state === "Pending" ||
+            e.exitSettings.state === "GotInfo"
+        )
+        .map(e => resetting.includes(e.nickname) && setResetting([]));
+    },
+    [exits, resetting]
+  );
 
-  useEffect(() => {
-    init();
-    return;
-  }, []);
   useInterval(getExits, 5000);
 
   let selected = exits.find(exit => {
@@ -124,8 +127,6 @@ const Exits = () => {
     setExits,
     exitsError,
     setExitsError,
-    loadingExits,
-    setLoadingExits,
     registerExit,
     resetExit,
     resetting,
@@ -140,7 +141,7 @@ const Exits = () => {
         <CardBody>
           <Error error={exitsError} />
           <h2>{t("exitNode")}</h2>
-          {!initialized && loadingExits ? (
+          {!initialized && loading ? (
             <Progress value={100} animated color="info" />
           ) : (
             <div>

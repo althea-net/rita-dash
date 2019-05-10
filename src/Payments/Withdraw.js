@@ -36,7 +36,7 @@ export default ({ open, setOpen }) => {
   const onSubmit = async e => {
     e.preventDefault();
     try {
-      post(`/withdraw/${address}/${toWei(amount)}`);
+      await post(`/withdraw/${address}/${toWei(amount)}`);
       setOpen(false);
     } catch {
       setError(t("withdrawalError"));
@@ -44,7 +44,6 @@ export default ({ open, setOpen }) => {
   };
 
   const balanceEth = toEth(balance);
-  console.log(balanceEth);
   const fAmount = parseFloat(amount);
   const addressValid = !!(address && web3.utils.isAddress(address));
   const amountValid = !!(

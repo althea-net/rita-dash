@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Nav } from "reactstrap";
 import AltheaNav from "./Layout/Nav";
 import Topbar from "./Layout/Topbar";
@@ -33,26 +33,10 @@ export default () => {
   const [debt, setDebt] = useState(0);
   const [exits, setExits] = useState([]);
   const [info, setInfo] = useState(initialInfo);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState();
   const [page, setPage] = useState("dashboard");
   const [symbol, setSymbol] = useState();
   const [settings, setSettings] = useState(initialSettings);
-
-  const init = async () => {
-    setLoading(true);
-
-    try {
-      await getInfo();
-
-      setExits(await get("/exits"));
-      await getDebt();
-
-      await getBlockchain();
-      setSettings(await get("/settings"));
-    } catch {}
-
-    setLoading(false);
-  };
 
   const getDebt = async () => {
     try {
@@ -87,16 +71,50 @@ export default () => {
     setSymbol(symbols[res]);
   };
 
-  let style;
-  useEffect(() => {
-    init();
-
-    let h = document.querySelector(".navbar").offsetHeight;
-    style = { minHeight: `calc(100vh - ${h}px)` };
-  }, []);
+  const styleRef = useRef();
 
   useInterval(getDebt, 5000);
   useInterval(getInfo, 2000);
+
+  useEffect(() => {
+    const init = async () => {
+      setLoading(true);
+
+      try {
+        let exits = await get("/exits");
+        if (exits instanceof Error) return;
+        setExits(exits);
+        try {
+          const debts = await get("/debts");
+
+          const selectedExit = exits.find(e => e.isSelected);
+
+          if (selectedExit) {
+            let debt = debts.reduce((a, b) => {
+              return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
+                ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
+                : a;
+            }, BigNumber("0"));
+
+            setDebt(debt);
+          }
+        } catch {}
+
+        await getBlockchain();
+
+        let settings = await get("/settings");
+        if (settings instanceof Error) return;
+        setSettings(settings);
+      } catch {}
+
+      setLoading(false);
+    };
+
+    init();
+
+    let h = document.querySelector(".navbar").offsetHeight;
+    styleRef.current = { minHeight: `calc(100vh - ${h}px)` };
+  }, []);
 
   const state = {
     blockchain,
@@ -110,7 +128,7 @@ export default () => {
   return (
     <Provider value={state}>
       <Topbar />
-      <div className="d-flex" style={style}>
+      <div className="d-flex" style={styleRef.current}>
         <Nav id="sidebar" navbar>
           <AltheaNav page={page} />
         </Nav>

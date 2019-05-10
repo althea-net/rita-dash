@@ -20,6 +20,8 @@ import useInterval from "utils/UseInterval";
 import { BigNumber } from "bignumber.js";
 import AppContext from "store/App";
 
+const AbortController = window.AbortController;
+
 const weiPerEth = BigNumber("1000000000000000000");
 const bytesPerGb = BigNumber("1000000000");
 
@@ -46,16 +48,32 @@ const PriceForm = () => {
     setLoading(false);
   };
 
-  const getAutoPricing = async () => {
-    setLoading(true);
-    setAutoPricing(await get("/auto_price/enabled"));
-    setLoading(false);
-  };
-
   useEffect(() => {
-    getPrice();
-    getAutoPricing();
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    (async () => {
+      setLoading(true);
+      const priceWei = (await get("/local_fee", true, 5000, signal)).localFee;
+
+      const price = BigNumber(priceWei)
+        .div(weiPerEth)
+        .times(bytesPerGb)
+        .toString();
+
+      setPrice(price);
+
+      let autoPricing = await get("/auto_price/enabled", true, 5000, signal);
+      setAutoPricing(autoPricing);
+
+      if (autoPricing) setNewPrice(price);
+
+      setLoading(false);
+    })();
+
+    return () => controller.abort();
   }, []);
+
   useInterval(getPrice, 5000);
 
   const submit = async e => {
@@ -93,16 +111,15 @@ const PriceForm = () => {
     <Card className="mb-4">
       <CardBody>
         <Form onSubmit={submit}>
+          <h3>{t("sellingBandwidth")}</h3>
+
+          <p>{t("setYourBandwidth")}</p>
+
+          {loading && <Progress animated color="info" value="100" />}
+          {success && <Alert color="success">{t("priceSaved")}</Alert>}
+
           <FormGroup id="form">
-            <h3>{t("sellingBandwidth")}</h3>
-
-            <p>{t("setYourBandwidth")}</p>
-
-            {loading && <Progress animated color="info" value="100" />}
-            {success && <Alert color="success">{t("priceSaved")}</Alert>}
-
             <Label for="price">{t("bandwidthPrice")}</Label>
-
             <div className="d-flex">
               <InputGroup className="mr-3" style={{ width: 350 }}>
                 <Input

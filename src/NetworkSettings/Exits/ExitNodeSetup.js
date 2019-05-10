@@ -15,13 +15,13 @@ import ExitsContext from "store/Exits";
 const isValidEmail = emailValidator.validate;
 
 const ExitNodeSetup = ({ open, setOpen }) => {
-  let [t] = useTranslation();
+  const [t] = useTranslation();
 
-  let [exit, setExit] = useState(null);
-  let [email, setEmail] = useState("");
-  let [phone, setPhone] = useState("");
-  let [valid, setValid] = useState(false);
-  let [registering, setRegistering] = useState(false);
+  const [exit, setExit] = useState(null);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [valid, setValid] = useState(false);
+  const [registering, setRegistering] = useState(false);
 
   let registered = false;
   let denied = false;
@@ -29,26 +29,22 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   let gotinfo = false;
   let verifMode;
 
-  let {
-    exits,
-    resetting,
-    resetExit,
-    registerExit,
-    selectExit
-  } = useContext(ExitsContext);
+  const { exits, resetting, resetExit, registerExit, selectExit } = useContext(
+    ExitsContext
+  );
 
   if (exit) {
-    exit = exits.find(e => e.nickname === exit.nickname);
-    if (exit) {
-      let { state } = exit.exitSettings;
+    let exitObj = exits.find(e => e.nickname === exit.nickname);
+    if (exitObj) {
+      let { state } = exitObj.exitSettings;
 
       registered = state === "Registered";
       denied = state === "Denied";
       pending = state === "Pending";
       gotinfo = state === "GotInfo";
 
-      if (exit.exitSettings.generalDetails) {
-        verifMode = exit.exitSettings.generalDetails.verifMode;
+      if (exitObj.exitSettings.generalDetails) {
+        verifMode = exitObj.exitSettings.generalDetails.verifMode;
       }
     }
   }
@@ -177,11 +173,11 @@ const ExitNodeSetup = ({ open, setOpen }) => {
                     switch (verifMode) {
                       case "Email":
                         return (
-                          <EmailForm email={email} handleEmail={handleEmail}/>
+                          <EmailForm email={email} handleEmail={handleEmail} />
                         );
                       case "Phone":
                         return (
-                          <PhoneForm phone={phone} handlePhone={handlePhone}/>
+                          <PhoneForm phone={phone} handlePhone={handlePhone} />
                         );
                       default:
                         return null;

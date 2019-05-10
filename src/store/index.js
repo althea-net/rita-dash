@@ -168,13 +168,6 @@ export async function post(url, data, camel = true) {
   }
 }
 
-export function init(f) {
-  useEffect(() => {
-    f();
-    return;
-  }, []);
-}
-
 export function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -188,7 +181,7 @@ export function useDebounce(value, delay) {
         clearTimeout(handler);
       };
     },
-    [value]
+    [delay, value]
   );
 
   return debouncedValue;
