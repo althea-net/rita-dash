@@ -36,9 +36,12 @@ const DaoFee = ({ readonly = false }) => {
     (async () => {
       setLoading(true);
       try {
-        let daoFee = (await get("/dao_fee", true, 5000, signal)).daoFee;
-        daoFee = toEth(BigNumber(daoFee).times(secondsPerMonth));
-        setDaoFee(daoFee.toString());
+        let res = await get("/dao_fee", true, 5000, signal);
+        if (!(res instanceof Error)) {
+          let { daoFee } = res;
+          daoFee = toEth(BigNumber(daoFee).times(secondsPerMonth));
+          setDaoFee(daoFee.toString());
+        }
       } catch {}
 
       setLoading(false);

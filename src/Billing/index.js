@@ -16,6 +16,7 @@ const Billing = (daoAddress, ipAddress) => {
   const [t] = useTranslation();
   const [period, setPeriod] = useState("Weekly");
   const [usage, setUsage] = useState([]);
+  const [payments, setPayments] = useState([]);
   const { symbol } = useContext(AppContext);
   const [page, setPage] = useState(1);
 
@@ -61,11 +62,16 @@ const Billing = (daoAddress, ipAddress) => {
         break;
     }
 
-    if (!data[i]) data[i] = { up: 0, down: 0, cost: 0 };
+    if (!data[i]) data[i] = { up: 0, down: 0, cost: 0, service: 0 };
 
     data[i].up += b.up;
     data[i].down += b.down;
     data[i].cost += b.price * (b.up + b.down);
+    let p = payments.find(p => p.index === b.index);
+    if (p)
+      data[i].service += p.payments
+        .filter(p => p.to.meshIp === "::1")
+        .reduce((a, b) => a + parseInt(b.amount), 0);
 
     return b;
   });
@@ -75,6 +81,11 @@ const Billing = (daoAddress, ipAddress) => {
       try {
         let usage = await get("/usage/client");
         if (!(usage instanceof Error)) setUsage(usage);
+      } catch {}
+
+      try {
+        let payments = await get("/usage/payments");
+        if (!(payments instanceof Error)) setPayments(payments);
       } catch {}
     })();
   }, []);
@@ -152,7 +163,8 @@ const Billing = (daoAddress, ipAddress) => {
                   <th>{t("period")}</th>
                   <th>{t("upload")}</th>
                   <th>{t("download")}</th>
-                  <th>{t("cost")}</th>
+                  <th>{t("bandwidthCost")}</th>
+                  <th>{t("serviceCost")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -178,6 +190,9 @@ const Billing = (daoAddress, ipAddress) => {
                       </td>
                       <td>
                         {toEth(data[d].cost, 6)} {symbol}
+                      </td>
+                      <td>
+                        {toEth(data[d].service, 6)} {symbol}
                       </td>
                     </tr>
                   ))}

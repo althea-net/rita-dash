@@ -1,4 +1,6 @@
 {
+  "bandwidthCost": "Bandwidth Cost",
+  "serviceCost": "Service Cost",
   "period": "Period",
   "usage": "Usage",
   "history": "History",
