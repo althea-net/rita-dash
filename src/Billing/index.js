@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Card, CardBody, Input, Table } from "reactstrap";
+import { Alert, Card, CardBody, Input, Label, Table } from "reactstrap";
 import Pagination from "./Pagination";
 import { get } from "store";
 import AppContext from "store/App";
@@ -9,7 +9,6 @@ import { toEth } from "utils";
 import { format } from "date-fns";
 
 const periods = ["Hourly", "Daily", "Weekly", "Monthly"];
-const types = ["Combined", "Client", "Relay"];
 const bytesPerGb = BigNumber("1000000000");
 const msPerHr = 3600000;
 
@@ -21,7 +20,6 @@ const Billing = (daoAddress, ipAddress) => {
   const [payments, setPayments] = useState([]);
   const { symbol } = useContext(AppContext);
   const [page, setPage] = useState(1);
-  const [type, setType] = useState("Combined");
 
   useEffect(() => setPage(1), [period]);
 
@@ -77,21 +75,11 @@ const Billing = (daoAddress, ipAddress) => {
         .filter(p => p.to.meshIp === "::1")
         .reduce((a, b) => a + parseInt(b.amount), 0);
 
-    let r = relay.find(r => r.index === index);
-
-    if (r && (type === "Relay" || type === "Combined")) {
-      data[i].up += r.up;
-      data[i].down += r.down;
-      data[i].cost += r.price * (r.up + r.down);
-    }
-
     let c = client.find(c => c.index === index);
 
-    if (type === "Client" || type === "Combined") {
-      data[i].up += c.up;
-      data[i].down += c.down;
-      data[i].cost += c.price * (c.up + c.down);
-    }
+    data[i].up += c.up;
+    data[i].down += c.down;
+    data[i].cost += c.price * (c.up + c.down);
 
     return c;
   });
@@ -168,31 +156,9 @@ const Billing = (daoAddress, ipAddress) => {
                     fontSize: 16,
                     color: "#666"
                   }}
-                  className="mt-2 mr-2"
+                  className="mt-2 mr-2 d-flex"
                 >
-                  {t("usageType")}
-                  <Input
-                    type="select"
-                    style={{ color: "#666" }}
-                    value={type}
-                    onChange={e => setType(e.target.value)}
-                  >
-                    {types.map(p => (
-                      <option key={p} value={p}>
-                        {p}
-                      </option>
-                    ))}
-                  </Input>
-                </div>
-                <div
-                  style={{
-                    whiteSpace: "nowrap",
-                    fontSize: 16,
-                    color: "#666"
-                  }}
-                  className="mt-2 mr-2"
-                >
-                  {t("displayPeriod")}
+                  <div className="my-auto mr-2">{t("displayPeriod")}</div>
                   <Input
                     type="select"
                     style={{ color: "#666" }}
