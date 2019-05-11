@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Card, CardBody, Input, Label, Table } from "reactstrap";
+import { Alert, Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "./Pagination";
 import { get } from "store";
 import AppContext from "store/App";
