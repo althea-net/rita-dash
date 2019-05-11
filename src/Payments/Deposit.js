@@ -9,7 +9,7 @@ import { toEth } from "utils";
 
 const qrStyle = { height: "auto", width: 300 };
 const iconStyle = { cursor: "pointer", marginLeft: 10 };
-const addressStyle = { wordBreak: "break-word" };
+const addressStyle = { fontSize: 16, wordBreak: "break-word" };
 
 export default ({ open, setOpen }) => {
   const [t] = useTranslation();
@@ -34,17 +34,22 @@ export default ({ open, setOpen }) => {
       </ModalHeader>
       <ModalBody>
         <Card className="mb-4">
-          <CardBody>
+          <CardBody className="d-flex flex-wrap">
             <h5 style={addressStyle} id="walletAddr">
               {address}
+              <CopyToClipboard
+                text={address}
+                onCopy={() => setCopied(true)}
+                id="copyWalletAddr"
+              >
+                <FontAwesomeIcon
+                  icon="copy"
+                  style={iconStyle}
+                  className="mr-2"
+                />
+              </CopyToClipboard>
+              {copied && <span>{t("copied")}</span>}
             </h5>
-            <CopyToClipboard 
-              text={address} 
-              onCopy={() => setCopied(true)}
-              id="copyWalletAddr">
-              <FontAwesomeIcon size="lg" icon="copy" style={iconStyle} />
-            </CopyToClipboard>
-            {copied && <p className="ml-2">{t("copied")}</p>}
           </CardBody>
         </Card>
         <div className="w-100 text-center mb-4">
