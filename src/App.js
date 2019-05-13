@@ -5,7 +5,7 @@ import Topbar from "./Layout/Topbar";
 import { NoConnection } from "utils";
 import Router from "Router";
 import { get } from "store";
-import { Provider } from "store/App";
+import { Provider, StateProvider } from "store/App";
 import { BigNumber } from "bignumber.js";
 import useInterval from "utils/UseInterval";
 
@@ -26,6 +26,17 @@ const symbols = {
   Ethereum: "ETH",
   Rinkeby: "tETH",
   Xdai: "USD"
+};
+
+const initialState = { balance: 0 };
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "setBalance":
+      return { ...state, balance: action.balance };
+    default:
+      return state;
+  }
 };
 
 export default () => {
@@ -126,17 +137,19 @@ export default () => {
   };
 
   return (
-    <Provider value={state}>
-      <Topbar />
-      <div className="d-flex" style={styleRef.current}>
-        <Nav id="sidebar" navbar>
-          <AltheaNav page={page} />
-        </Nav>
-        <NoConnection />
-        <div id="content">
-          {!loading && <Router page={page} setPage={setPage} />}
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <Provider value={state}>
+        <Topbar />
+        <div className="d-flex" style={styleRef.current}>
+          <Nav id="sidebar" navbar>
+            <AltheaNav page={page} />
+          </Nav>
+          <NoConnection />
+          <div id="content">
+            {!loading && <Router page={page} setPage={setPage} />}
+          </div>
         </div>
-      </div>
-    </Provider>
+      </Provider>
+    </StateProvider>
   );
 };

@@ -7,7 +7,7 @@ import Withdraw from "../Payments/Withdraw";
 import { Btn, Card, Left, Right } from "ui";
 import { toEth } from "utils";
 
-import AppContext from "store/App";
+import AppContext, { useStateValue } from "store/App";
 import { get } from "store";
 
 import updown from "../images/up_down.png";
@@ -37,9 +37,11 @@ export default () => {
   }, []);
 
   const {
-    info: { balance, localFee },
+    info: { localFee },
     symbol
   } = useContext(AppContext);
+
+  const [{ balance }] = useStateValue();
 
   const totalUsage = usage.reduce((a, b) => {
     return a + b.up + b.down;
