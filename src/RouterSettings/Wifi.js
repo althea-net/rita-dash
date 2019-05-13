@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { get, actions, getState } from "store";
+import { get, post, useStateValue } from "store";
 import WifiSettingsForm from "./WifiSettingsForm";
 import { Alert, Card, CardBody, Form, Button, Progress } from "reactstrap";
 import { Error } from "utils";
+import useInterval from "utils/UseInterval";
 
 const Wifi = () => {
   const [t] = useTranslation();
-  const [wifiError, setWifiError] = useState(null);
+  const [error, setError] = useState(null);
   const [wifiSettings, setWifiSettings] = useState(null);
   const [loading, setLoading] = useState(false);
   const [channels, setChannels] = useState({});
+
+  const [{ waiting }, dispatch] = useStateValue();
+
+  useInterval(() => {
+    dispatch({ type: "keepWaiting" });
+  }, waiting ? 1000 : null);
 
   useEffect(
     () => {
@@ -34,7 +41,7 @@ const Wifi = () => {
           setChannels(channels);
           setWifiSettings(settings);
         } catch (e) {
-          setWifiError(t("wifiError"));
+          setError(t("error"));
           setLoading(false);
           return;
         }
@@ -47,23 +54,33 @@ const Wifi = () => {
   );
 
   if (!wifiSettings || !wifiSettings.length)
-    if (loading && !wifiError)
+    if (loading && !error)
       return <Progress animated color="info" value={100} />;
     else return <Alert color="info">{t("noWifi")}</Alert>;
 
-  let submit = e => {
+  let submit = async e => {
     e.preventDefault();
 
-    actions.startWaiting();
+    dispatch({ type: "startWaiting" });
 
-    let i = setInterval(async () => {
-      actions.keepWaiting();
-      if (getState().waiting <= 0) {
-        clearInterval(i);
-      }
-    }, 1000);
+    try {
+      let data = [];
 
-    actions.saveWifiSettings(wifiSettings);
+      wifiSettings.map(setting => {
+        let radio = setting.device.sectionName;
+        let { ssid, key } = setting;
+        let channel = parseInt(setting.device.channel, 10);
+
+        data.push({ WifiChannel: { radio, channel } });
+        data.push({ WifiSSID: { radio, ssid } });
+        data.push({ WifiPass: { radio, pass: key } });
+
+        return setting;
+      });
+
+      await post("/wifi_settings", data);
+      dispatch({ type: "wifiChange" });
+    } catch {}
   };
 
   let valid = wifiSettings.reduce(
@@ -74,7 +91,7 @@ const Wifi = () => {
   return (
     <Card>
       <CardBody>
-        <Error error={wifiError} />
+        <Error error={error} />
         <Form onSubmit={submit}>
           {wifiSettings.map((_, i) => (
             <WifiSettingsForm

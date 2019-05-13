@@ -1,103 +1,103 @@
 import cckd from "camelcase-keys-deep";
-import { useEffect, useState } from "react";
-import { initStore } from "react-stateful";
-import {
-  DaoActions,
-  ExitActions,
-  GeneralActions,
-  NeighborActions,
-  RouterActions,
-  PaymentActions
-} from "./actions";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useReducer
+} from "react";
 
-const initialSettings = {
-  network: {
-    meshIp: null
-  },
-  payment: {
-    ethAddress: null
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "keepWaiting":
+      const waiting = state.waiting - 1;
+      const portChange = state.portChange && waiting <= 0;
+      return { ...state, portChange, waiting };
+    case "setBalance":
+      return { ...state, balance: action.balance };
+    case "setInterfaces":
+      return {
+        ...state,
+        interfaces: Object.keys(action.interfaces)
+          .filter(i => !i.startsWith("wlan"))
+          /*eslint no-sequences: 0*/
+          .reduce((a, b) => ((a[b] = action.interfaces[b]), a), {})
+      };
+    case "startPortChange":
+      return {
+        ...state,
+        portChange: true
+      };
+    case "startWaiting":
+      return {
+        ...state,
+        waiting: 120
+      };
+    case "wifiChange":
+      return {
+        ...state,
+        wifiChange: true
+      };
+    default:
+      return state;
   }
 };
 
-const store = {
-  initialState: {
-    autoPricing: false,
-    blockchain: null,
-    blockchainSuccess: false,
-    channels: null,
-    daoAddress: null,
-    daos: [],
-    daosError: null,
-    error: null,
-    exits: null,
-    exitsError: null,
-    factor: 0,
-    factorError: null,
-    initializing: true,
-    ipAddress: null,
-    loadingBlockchain: false,
-    loadingExits: null,
-    loadingInterfaces: null,
-    loadingIp: null,
-    loadingPrice: false,
-    loadingSettings: false,
-    loadingVersion: false,
-    loading: null,
-    info: { balance: 0, device: null, version: "" },
-    interfaces: null,
-    meshIp: null,
-    neighbors: null,
-    neighborsError: null,
-    page: "",
-    port: null,
-    portChange: false,
-    price: 0,
-    priceError: null,
-    resetting: [],
-    scanning: false,
-    settings: initialSettings,
-    symbol: null,
-    success: false,
-    t: () => {},
-    version: true,
-    versionError: null,
-    waiting: 0,
-    wifiChange: null,
-    wifiError: null,
-    wifiSettings: null,
-    withdrawalError: null,
-    withdrawalSuccess: false
-  },
-  actions: {
-    ...GeneralActions,
-    ...DaoActions,
-    ...ExitActions,
-    ...NeighborActions,
-    ...PaymentActions,
-    ...RouterActions,
-
-    changePage: (_, page) => ({
-      error: "",
-      initializing: true,
-      loading: false,
-      page: page
-    }),
-
-    init: async ({ setState, state }, t) => {
-      setState({ t });
+const initialState = {
+  autoPricing: false,
+  blockchain: null,
+  blockchainSuccess: false,
+  channels: null,
+  daoAddress: null,
+  daos: [],
+  daosError: null,
+  error: null,
+  exits: null,
+  exitsError: null,
+  factor: 0,
+  factorError: null,
+  initializing: true,
+  ipAddress: null,
+  loadingBlockchain: false,
+  loadingExits: null,
+  loadingInterfaces: null,
+  loadingIp: null,
+  loadingPrice: false,
+  loadingSettings: false,
+  loadingVersion: false,
+  loading: null,
+  info: { balance: 0, device: null, version: "" },
+  interfaces: null,
+  meshIp: null,
+  neighbors: null,
+  neighborsError: null,
+  page: "",
+  port: null,
+  portChange: false,
+  price: 0,
+  priceError: null,
+  resetting: [],
+  scanning: false,
+  settings: {
+    network: {
+      meshIp: null
+    },
+    payment: {
+      ethAddress: null
     }
-  }
+  },
+  symbol: null,
+  success: false,
+  t: () => {},
+  version: true,
+  versionError: null,
+  waiting: 0,
+  wifiChange: null,
+  wifiError: null,
+  wifiSettings: null,
+  withdrawalError: null,
+  withdrawalSuccess: false
 };
-
-export const {
-  Provider,
-  Consumer,
-  actions,
-  getState,
-  connect,
-  subscribe,
-  Context
-} = initStore(store);
 
 let { protocol, hostname } = window.location;
 
@@ -186,3 +186,11 @@ export function useDebounce(value, delay) {
 
   return debouncedValue;
 }
+
+export const StateContext = createContext();
+export const StateProvider = ({ children }) => (
+  <StateContext.Provider value={useReducer(reducer, initialState)}>
+    {children}
+  </StateContext.Provider>
+);
+export const useStateValue = () => useContext(StateContext);

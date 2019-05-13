@@ -7,8 +7,8 @@ import Withdraw from "../Payments/Withdraw";
 import { Btn, Card, Left, Right } from "ui";
 import { toEth } from "utils";
 
-import AppContext, { useStateValue } from "store/App";
-import { get } from "store";
+import AppContext from "store/App";
+import { get, useStateValue } from "store";
 
 import updown from "../images/up_down.png";
 import { BigNumber } from "bignumber.js";

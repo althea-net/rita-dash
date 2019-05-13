@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody } from "reactstrap";
-import { connect } from "store";
+import { useStateValue } from "store";
 
 import UpdateFirmware from "./UpdateFirmware";
 
-export default connect(["info"])(({ state: { info } }) => {
-  let [t] = useTranslation();
-  let [checking, setChecking] = useState(false);
-  let { version, ritaVersion } = info;
+const Firmware = () => {
+  const [t] = useTranslation();
+  const [checking, setChecking] = useState(false);
+  const [
+    {
+      info: { version, ritaVersion }
+    }
+  ] = useStateValue();
 
   return (
     <Card className="mb-4">
@@ -29,4 +33,6 @@ export default connect(["info"])(({ state: { info } }) => {
       </CardBody>
     </Card>
   );
-});
+};
+
+export default Firmware;

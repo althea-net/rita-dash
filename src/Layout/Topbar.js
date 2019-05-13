@@ -5,7 +5,7 @@ import AltheaNav from "./Nav";
 import LanguageSelector from "./LanguageSelector";
 import LowBalance from "utils/LowBalance";
 import { get } from "store";
-import { useStateValue } from "store/App";
+import { useStateValue } from "store";
 
 const logoStyles = { width: 50, height: 50, marginLeft: 10, marginRight: 20 };
 

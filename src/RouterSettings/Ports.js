@@ -1,48 +1,50 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Progress } from "reactstrap";
-import { actions, get, getState } from "store";
+import { get, useStateValue } from "store";
 import AppContext from "store/App";
 
 import { Device } from "./PortStyles.js";
 import PortColumns from "./PortColumns";
 import { Confirm } from "utils";
+import useInterval from "utils/UseInterval";
 
 const Ports = () => {
   const [t] = useTranslation();
   const [open, setOpen] = useState(false);
   const [confirmIface, setConfirmIface] = useState("");
   const [mode, setMode] = useState("");
-  const [interfaces, setInterfaces] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [{ interfaces, waiting }, dispatch] = useStateValue();
+
+  useInterval(() => {
+    dispatch({ type: "keepWaiting" });
+  }, waiting ? 1000 : null);
 
   const {
     info: { device }
   } = useContext(AppContext);
 
-  const getInterfaces = async () => {
-    setLoading(true);
+  useEffect(
+    () => {
+      const getInterfaces = async () => {
+        setLoading(true);
 
-    let res = await get("/interfaces", false);
+        try {
+          let interfaces = await get("/interfaces", false);
+          dispatch({ type: "setInterfaces", interfaces });
+        } catch (e) {
+          console.log(e);
+        }
 
-    /*eslint no-sequences: 0*/
-    setInterfaces(
-      Object.keys(res)
-        .filter(i => !i.startsWith("wlan"))
-        .reduce((a, b) => ((a[b] = res[b]), a), {})
-    );
+        setLoading(false);
+      };
 
-    await actions.getInterfaces();
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getInterfaces();
-    let timer = setInterval(actions.getInterfaces, 10000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+      getInterfaces();
+    },
+    [dispatch]
+  );
 
   let setInterfaceMode = (iface, mode) => {
     setConfirmIface(iface);
@@ -50,24 +52,15 @@ const Ports = () => {
     setOpen(true);
   };
 
-  if (loading) {
+  if (loading || !interfaces) {
     return <Progress animated color="info" value={100} />;
   }
 
   let confirm = () => {
     setOpen(false);
-
-    actions.startPortChange();
-    actions.startWaiting();
-
-    let i = setInterval(async () => {
-      actions.keepWaiting();
-      if (getState().waiting <= 0) {
-        clearInterval(i);
-      }
-    }, 1000);
-
-    actions.setInterface(confirmIface, mode);
+    dispatch({ type: "startPortChange" });
+    dispatch({ type: "startWaiting" });
+    dispatch({ type: "setInterface", confirmIface, mode });
   };
 
   let cancel = () => setOpen(false);

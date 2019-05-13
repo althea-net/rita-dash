@@ -3,14 +3,14 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./styles/althea.scss";
 import "./icons";
-import { Provider } from "store";
+import { StateProvider } from "store";
 
 import "./i18n";
 
 ReactDOM.render(
-  <Provider>
+  <StateProvider>
     <App />
-  </Provider>,
+  </StateProvider>,
   document.getElementById("root")
 );
 

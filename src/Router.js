@@ -4,7 +4,6 @@ import {
   Billing,
   Frontpage,
   AdvancedSettings,
-  Neighbors,
   RouterSettings,
   NetworkSettings,
   Payments
@@ -12,7 +11,6 @@ import {
 
 let routes = {
   dashboard: <Frontpage />,
-  neighbors: <Neighbors />,
   "router-settings": <RouterSettings />,
   "network-settings": <NetworkSettings />,
   billing: <Billing />,
