@@ -12,11 +12,12 @@ const Wifi = () => {
   const [wifiSettings, setWifiSettings] = useState(null);
   const [loading, setLoading] = useState(false);
   const [channels, setChannels] = useState({});
+  const [wifiWaiting, setWifiWaiting] = useState(false);
 
   const [{ waiting }, dispatch] = useStateValue();
 
   useInterval(() => {
-    dispatch({ type: "keepWaiting" });
+    if (wifiWaiting) dispatch({ type: "keepWaiting" });
   }, waiting ? 1000 : null);
 
   useEffect(
@@ -61,6 +62,7 @@ const Wifi = () => {
   let submit = async e => {
     e.preventDefault();
 
+    setWifiWaiting(true);
     dispatch({ type: "startWaiting" });
 
     try {

@@ -15,11 +15,12 @@ const Ports = () => {
   const [confirmIface, setConfirmIface] = useState("");
   const [mode, setMode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [portsWaiting, setPortsWaiting] = useState(false);
 
   const [{ interfaces, waiting }, dispatch] = useStateValue();
 
   useInterval(() => {
-    dispatch({ type: "keepWaiting" });
+    if (portsWaiting) dispatch({ type: "keepWaiting" });
   }, waiting ? 1000 : null);
 
   const {
@@ -58,6 +59,7 @@ const Ports = () => {
 
   let confirm = () => {
     setOpen(false);
+    setPortsWaiting(true);
     dispatch({ type: "startPortChange" });
     dispatch({ type: "startWaiting" });
     dispatch({ type: "setInterface", confirmIface, mode });
