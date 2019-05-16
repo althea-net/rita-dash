@@ -38,17 +38,17 @@ export default () => {
 
   const thisMonthUsage = BigNumber(thisMonthData.usage)
     .div(bytesPerGb)
-    .toFixed(1);
+    .toFixed(3);
 
   const thisMonthCost = BigNumber(toEth(thisMonthData.cost).toString()).toFixed(
-    2
+    3
   );
 
   const lastMonthUsage = BigNumber(lastMonthData.usage)
     .div(bytesPerGb)
-    .toFixed(1);
+    .toFixed(3);
 
-  const lastMonthCost = BigNumber(toEth(lastMonthData.cost)).toFixed(2);
+  const lastMonthCost = BigNumber(toEth(lastMonthData.cost)).toFixed(3);
 
   const format = n => (BigNumber(n).gt(0) ? n : "---");
 

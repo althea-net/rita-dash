@@ -97,7 +97,7 @@ const Billing = (daoAddress, ipAddress) => {
       } catch {}
 
       try {
-        let payments = await get("/client/payments");
+        let payments = await get("/usage/payments");
         if (!(payments instanceof Error)) setPayments(payments);
       } catch {}
     })();
@@ -143,7 +143,7 @@ const Billing = (daoAddress, ipAddress) => {
     <div>
       <h1>{t("billing")}</h1>
       {!client.length ? (
-        <Alert color="info">{t("noclient")}</Alert>
+        <Alert color="info">{t("noUsage")}</Alert>
       ) : (
         <Card>
           <CardBody>

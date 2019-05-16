@@ -64,6 +64,11 @@ export default () => {
     .div(weeksPerMonth)
     .toFixed(0);
 
+  const usageCopy =
+    isNaN(perMonthUsage) || usage.length < 24
+      ? t("insufficientUsage")
+      : t("averageUsage", { perMonthUsage, weeksOfService });
+
   return (
     <Card>
       <Deposit open={depositing} setOpen={setDepositing} />
@@ -90,11 +95,7 @@ export default () => {
         <div className="pr-2">
           <img src={updown} alt="Upload/Download" />
         </div>
-        <p>
-          Based on your average usage of {perMonthUsage} GB per month, your
-          balance will provide you with an estimated{" "}
-          <strong>{weeksOfService} weeks</strong> of service.
-        </p>
+        <p dangerouslySetInnerHTML={{ __html: usageCopy }} />
       </Right>
     </Card>
   );
