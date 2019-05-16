@@ -8,39 +8,26 @@ import React, {
 } from "react";
 
 const reducer = (state, action) => {
-  switch (action.type) {
-    case "keepWaiting":
-      const waiting = state.waiting - 1;
-      const portChange = state.portChange && waiting <= 0;
-      return { ...state, portChange, waiting };
-    case "setBalance":
-      return { ...state, balance: action.balance };
-    case "setInterfaces":
-      return {
-        ...state,
-        interfaces: Object.keys(action.interfaces)
-          .filter(i => !i.startsWith("wlan"))
-          /*eslint no-sequences: 0*/
-          .reduce((a, b) => ((a[b] = action.interfaces[b]), a), {})
-      };
-    case "startPortChange":
-      return {
-        ...state,
-        portChange: true
-      };
-    case "startWaiting":
-      return {
-        ...state,
-        waiting: 120
-      };
-    case "wifiChange":
-      return {
-        ...state,
-        wifiChange: true
-      };
-    default:
-      return state;
-  }
+  const { type, ...data } = action;
+  const actions = {
+    keepWaiting: () => ({
+      portChange: state.portChange && state.waiting <= 1,
+      waiting: state.waiting - 1
+    }),
+    setBalance: balance => ({ balance }),
+    setInterfaces: interfaces => ({
+      interfaces: Object.keys(interfaces)
+        .filter(i => !i.startsWith("wlan"))
+        /*eslint no-sequences: 0*/
+        .reduce((a, b) => ((a[b] = interfaces[b]), a), {})
+    }),
+    startPortChange: () => ({ portChange: true }),
+    startWaiting: () => ({ waiting: 120 }),
+    wifiChange: () => ({ wifiChange: true })
+  };
+
+  if (actions[type]) return { ...state, ...actions[type]({ ...data }) };
+  else return state;
 };
 
 const initialState = {
