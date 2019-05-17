@@ -27,6 +27,7 @@ const state = {
   resetting: [],
   ritaVersion: null,
   symbol: null,
+  txid: null,
   version: null,
   waiting: 0,
   wifiChange: null,

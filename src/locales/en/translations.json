@@ -1,4 +1,5 @@
 {
+
   "verificationError": "There was a problem submitting the code, please contact the exit administrator",
   "registrationError": "There was a problem during registration, please contact the exit administrator",
   "insufficientUsage": "Waiting for a day's worth of data before estimating your average monthly usage or how many weeks of service your balance will cover.",
@@ -206,7 +207,7 @@
   "wireguardPublicKey": "WireGuard Public Key",
   "withdraw": "Withdraw",
   "withdrawalError": "An error occurred, your withdrawal could not be completed",
-  "withdrawalSuccess": "Withdrawal completed with txid: {{txid}}",
+  "withdrawalSuccess": "Withdrawal submitted successfully with transaction id <a href='{{link}}'>{{txid}}</a>. The transaction is in flight and your balance will be updated once it confirms, typically within a few minutes.",
   "yes": "Yes",
   "yourConnection": "Your connection is looking great!",
   "yourOrganizer": "Your organizer who helps maintain your local mesh network will provide you with your IP address and the Ethereum Address for the Subnet Organization. These fields can be manually populated or they can be populated by scanning a QR code."

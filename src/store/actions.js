@@ -59,7 +59,8 @@ export default (state, action) => {
     }),
     startPortChange: () => ({ portChange: true }),
     startWaiting: () => ({ waiting: 120 }),
-    wifiChange: () => ({ wifiChange: true })
+    wifiChange: () => ({ wifiChange: true }),
+    withdrawSuccess: ({ txid }) => ({ txid })
   };
 
   if (actions[type]) return { ...state, ...actions[type]({ ...data }) };

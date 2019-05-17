@@ -23,4 +23,22 @@ const toWei = n => {
     .toString();
 };
 
-export { Error, Flags, NoConnection, Success, Confirm, toEth, toWei };
+const txLink = (blockchain, txid) => {
+  let link;
+  switch (blockchain) {
+    case "Rinkeby":
+      link = `https://rinkeby.etherscan.io/tx/${txid}`;
+      break;
+    case "Xdai":
+      link = `https://blockscout.com/poa/dai/tx/${txid}`;
+      break;
+    case "Ethereum":
+    default:
+      link = `https://etherscan.io/tx/${txid}`;
+      break;
+  }
+
+  return link;
+};
+
+export { Error, Flags, NoConnection, Success, Confirm, toEth, toWei, txLink };
