@@ -4,11 +4,11 @@ import { useStore } from "store";
 
 const LowBalance = () => {
   const [t] = useTranslation();
-  const [{ debt, closeThreshold, lowBalance }] = useStore();
+  const [{ balance, debt, closeThreshold, lowBalance }] = useStore();
 
   if (!lowBalance) return null;
 
-  if (-debt < closeThreshold)
+  if (-debt < closeThreshold || parseInt(balance) === 0)
     return <div className="low-balance">{t("accountThrottled")}</div>;
   else return <div className="low-balance">{t("accountWarning")}</div>;
 };

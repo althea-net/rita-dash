@@ -63,6 +63,8 @@ export default () => {
       ? t("insufficientUsage")
       : t("averageUsage", { perMonthUsage, weeksOfService });
 
+  const decimals = symbol === "USD" ? 2 : 4;
+
   return (
     <Card>
       <Deposit open={depositing} setOpen={setDepositing} />
@@ -73,7 +75,7 @@ export default () => {
             <h4 className="mr-1">{t("currentBalance")}</h4>
             <h4 id="balance">
               {symbol === "USD" && "$"}
-              {toEth(balance)} {symbol}
+              {toEth(balance, decimals)} {symbol}
             </h4>
           </div>
           <div className="d-flex justify-content-center">
