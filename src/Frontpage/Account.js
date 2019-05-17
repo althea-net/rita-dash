@@ -71,13 +71,10 @@ export default () => {
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
       <Left>
         <div style={{ paddingLeft: 20 }}>
-          <div className="d-flex justify-content-between">
-            <h4 className="mr-1">{t("currentBalance")}</h4>
-            <h4 id="balance">
-              {symbol === "USD" && "$"}
-              {toEth(balance, decimals)} {symbol}
-            </h4>
-          </div>
+          <h4 id="balance" className="mx-auto text-center w-100">
+            {t("currentBalance")} {symbol === "USD" && "$"}
+            {toEth(balance, decimals)} {symbol}
+          </h4>
           <div className="d-flex justify-content-center">
             <Btn id="deposit" onClick={() => setDepositing(true)}>
               {t("topUp")}
