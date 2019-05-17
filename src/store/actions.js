@@ -32,6 +32,7 @@ export default (state, action) => {
         balance,
         closeThreshold,
         device,
+        localFee,
         lowBalance,
         ritaVersion,
         version
@@ -41,6 +42,7 @@ export default (state, action) => {
       balance,
       closeThreshold,
       device,
+      localFee,
       lowBalance,
       ritaVersion,
       version,

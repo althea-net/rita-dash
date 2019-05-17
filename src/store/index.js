@@ -20,6 +20,7 @@ const state = {
   exits: [],
   factor: 0,
   interfaces: null,
+  localFee: null,
   lowBalance: false,
   meshIp: null,
   port: null,
