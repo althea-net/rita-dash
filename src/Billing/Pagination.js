@@ -21,13 +21,23 @@ export default styled(({ className, data, limit, page, setPage }) => {
 
   const end = Math.min(start + 5, Math.floor(data.length / limit));
 
+  if (pages.length < 1) return null;
+
   return (
     <div className={className + " d-flex justify-content-center text-center"}>
-      {page > 1 && <div onClick={() => setPage(page - 1)}>&laquo;</div>}
+      <div
+        onClick={() => setPage(page - 1)}
+        className={page <= 1 ? "disabled" : null}
+      >
+        &laquo;
+      </div>
       {pages.length > 1 && pages.slice(start, end)}
-      {(page + 1) * limit < data.length && (
-        <div onClick={() => setPage(page + 1)}>&raquo;</div>
-      )}
+      <div
+        onClick={() => setPage(page + 1)}
+        className={(page + 1) * limit >= data.length ? "disabled" : null}
+      >
+        &raquo;
+      </div>
     </div>
   );
 })`
@@ -40,6 +50,11 @@ export default styled(({ className, data, limit, page, setPage }) => {
     font-size: 14px;
     color: blue;
     cursor: pointer;
+
+    &.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
 
     &:first-child {
       border-radius: 3px;
