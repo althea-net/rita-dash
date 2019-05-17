@@ -1,4 +1,6 @@
 {
+  "verificationError": "There was a problem submitting the code, please contact the exit administrator",
+  "registrationError": "There was a problem during registration, please contact the exit administrator",
   "insufficientUsage": "Waiting for a day's worth of data before estimating your average monthly usage or how many weeks of service your balance will cover.",
   "usage": "Usage",
   "history": "History",

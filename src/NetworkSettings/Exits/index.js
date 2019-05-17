@@ -13,7 +13,7 @@ const Exits = () => {
   const [t] = useTranslation();
   const [selectingExit, setSelectingExit] = useState(false);
   const [exits, setExits] = useState([]);
-  const [exitsError, setExitsError] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [resetting, setResetting] = useState([]);
   const [initialized, setInitialized] = useState(false);
@@ -33,7 +33,7 @@ const Exits = () => {
       let exits = [];
       exits = await get("/exits", true, 5000, signal);
 
-      if (exits instanceof Error) setExitsError(t("exitsError"));
+      if (exits instanceof Error) setError(t("error"));
 
       const sort = (a, b) => {
         a.nickname.localeCompare(b.nickname, undefined, {
@@ -77,18 +77,22 @@ const Exits = () => {
   };
 
   const registerExit = async (nickname, email, phone) => {
-    await post(`/settings`, {
-      exit_client: {
-        reg_details: {
-          email,
-          phone
+    try {
+      await post(`/settings`, {
+        exit_client: {
+          reg_details: {
+            email,
+            phone
+          }
         }
-      }
-    });
+      });
 
-    await post(`/exits/${nickname}/register`);
-    if (!(email || phone)) await post(`/exits/${nickname}/select`);
-    getExits();
+      await post(`/exits/${nickname}/register`);
+      if (!(email || phone)) await post(`/exits/${nickname}/select`);
+      getExits();
+    } catch {
+      setError(t("registrationError"));
+    }
   };
 
   const verifyExit = async (nickname, code) => {
@@ -96,7 +100,7 @@ const Exits = () => {
       await post(`/exits/${nickname}/verify/${code}`);
       await post(`/exits/${nickname}/select`);
     } catch (e) {
-      setExitsError("There was a problem submitting the code");
+      setError(t("verificationError"));
     }
     getExits();
   };
@@ -125,8 +129,8 @@ const Exits = () => {
     exits,
     getExits,
     setExits,
-    exitsError,
-    setExitsError,
+    error,
+    setError,
     registerExit,
     resetExit,
     resetting,
@@ -139,7 +143,7 @@ const Exits = () => {
     <Provider value={store}>
       <Card className="mb-2">
         <CardBody>
-          <Error error={exitsError} />
+          <Error error={error} />
           <h2>{t("exitNode")}</h2>
           {!initialized && loading ? (
             <Progress value={100} animated color="info" />
