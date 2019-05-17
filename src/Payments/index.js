@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useStateValue } from "store";
+import { useStore } from "store";
 
 import Account from "../Frontpage/Account";
 import DaoFee from "../AdvancedSettings/DaoFee";
@@ -8,31 +8,23 @@ import PriceForm from "./PriceForm";
 import PrivateKeys from "./PrivateKeys";
 import QualityForm from "./QualityForm";
 
-import { Error, Success, toEth } from "utils";
+import { Success } from "utils";
 
 const Payments = () => {
   const [t] = useTranslation();
+  const [{ withdrawalSuccess }] = useStore();
 
-  const [
-    { factorError, priceError, withdrawalSuccess, info, settings, symbol }
-  ] = useStateValue();
-
-  const balance = toEth(info.balance);
-
-  if (!(info && settings)) return null;
   return (
     <div>
       <h1 id="paymentsPage">{t("payments")}</h1>
 
-      <Error error={factorError} />
-      <Error error={priceError} />
       <Success message={withdrawalSuccess} />
 
-      <Account balance={balance} />
+      <Account />
       <QualityForm />
       <PriceForm />
       <DaoFee readonly={true} />
-      <PrivateKeys balance={balance} symbol={symbol} />
+      <PrivateKeys />
     </div>
   );
 };

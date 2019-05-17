@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, CardBody } from "reactstrap";
-import { useStateValue } from "store";
+import { useStore } from "store";
 
 import UpdateFirmware from "./UpdateFirmware";
 
 const Firmware = () => {
   const [t] = useTranslation();
   const [checking, setChecking] = useState(false);
-  const [
-    {
-      info: { version, ritaVersion }
-    }
-  ] = useStateValue();
+  const [{ version, ritaVersion }] = useStore();
 
   return (
     <Card className="mb-4">

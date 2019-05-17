@@ -7,83 +7,30 @@ import React, {
   useReducer
 } from "react";
 
-const reducer = (state, action) => {
-  const { type, ...data } = action;
-  const actions = {
-    keepWaiting: () => ({
-      portChange: state.portChange && state.waiting <= 1,
-      waiting: state.waiting - 1
-    }),
-    setBalance: balance => ({ balance }),
-    setInterfaces: interfaces => ({
-      interfaces: Object.keys(interfaces)
-        .filter(i => !i.startsWith("wlan"))
-        /*eslint no-sequences: 0*/
-        .reduce((a, b) => ((a[b] = interfaces[b]), a), {})
-    }),
-    startPortChange: () => ({ portChange: true }),
-    startWaiting: () => ({ waiting: 120 }),
-    wifiChange: () => ({ wifiChange: true })
-  };
+import actions from "./actions";
 
-  if (actions[type]) return { ...state, ...actions[type]({ ...data }) };
-  else return state;
-};
-
-const initialState = {
+const state = {
+  address: null,
   autoPricing: false,
+  balance: null,
   blockchain: null,
-  blockchainSuccess: false,
-  channels: null,
+  closeThreshold: null,
   daoAddress: null,
-  daos: [],
-  daosError: null,
-  error: null,
-  exits: null,
-  exitsError: null,
+  device: null,
+  exits: [],
   factor: 0,
-  factorError: null,
-  initializing: true,
-  ipAddress: null,
-  loadingBlockchain: false,
-  loadingExits: null,
-  loadingInterfaces: null,
-  loadingIp: null,
-  loadingPrice: false,
-  loadingSettings: false,
-  loadingVersion: false,
-  loading: null,
-  info: { balance: 0, device: null, version: "" },
   interfaces: null,
+  lowBalance: false,
   meshIp: null,
-  neighbors: null,
-  neighborsError: null,
-  page: "",
   port: null,
   portChange: false,
-  price: 0,
-  priceError: null,
   resetting: [],
-  scanning: false,
-  settings: {
-    network: {
-      meshIp: null
-    },
-    payment: {
-      ethAddress: null
-    }
-  },
+  ritaVersion: null,
   symbol: null,
-  success: false,
-  t: () => {},
-  version: true,
-  versionError: null,
+  version: null,
   waiting: 0,
   wifiChange: null,
-  wifiError: null,
-  wifiSettings: null,
-  withdrawalError: null,
-  withdrawalSuccess: false
+  wifiSettings: null
 };
 
 let { protocol, hostname } = window.location;
@@ -176,8 +123,8 @@ export function useDebounce(value, delay) {
 
 export const StateContext = createContext();
 export const StateProvider = ({ children }) => (
-  <StateContext.Provider value={useReducer(reducer, initialState)}>
+  <StateContext.Provider value={useReducer(actions, state)}>
     {children}
   </StateContext.Provider>
 );
-export const useStateValue = () => useContext(StateContext);
+export const useStore = () => useContext(StateContext);

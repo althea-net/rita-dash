@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { get, post, useStateValue } from "store";
+import { get, post, useStore } from "store";
 import WifiSettingsForm from "./WifiSettingsForm";
 import { Alert, Card, CardBody, Form, Button, Progress } from "reactstrap";
 import { Error } from "utils";
-import useInterval from "utils/UseInterval";
+import useInterval from "hooks/useInterval";
 
 const Wifi = () => {
   const [t] = useTranslation();
@@ -14,7 +14,7 @@ const Wifi = () => {
   const [channels, setChannels] = useState({});
   const [wifiWaiting, setWifiWaiting] = useState(false);
 
-  const [{ waiting }, dispatch] = useStateValue();
+  const [{ waiting }, dispatch] = useStore();
 
   useInterval(() => {
     if (wifiWaiting) dispatch({ type: "keepWaiting" });

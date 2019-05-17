@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Card, Heading, Left, Right } from "ui";
 import { useTranslation } from "react-i18next";
 
-import AppContext from "store/App";
+import { useStore } from "store";
 import UsageContext from "store/Usage";
 
 import { toEth } from "utils";
@@ -17,7 +17,7 @@ const bytesPerGb = BigNumber("1000000000");
 
 export default () => {
   const [t] = useTranslation();
-  const { symbol } = useContext(AppContext);
+  const [{ symbol }] = useStore();
   const { usage } = useContext(UsageContext);
 
   const initialUsage = { usage: 0, cost: 0 };

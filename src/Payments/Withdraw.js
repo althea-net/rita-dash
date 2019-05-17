@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -16,8 +16,7 @@ import {
 } from "reactstrap";
 import { Error, toEth, toWei } from "utils";
 import Web3 from "web3";
-import AppContext from "store/App";
-import { post } from "store";
+import { post, useStore } from "store";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 
@@ -28,10 +27,7 @@ export default ({ open, setOpen }) => {
   const [amount, setAmount] = useState("");
   const [error, setError] = useState();
 
-  const {
-    info: { balance },
-    symbol
-  } = useContext(AppContext);
+  const [{ balance, symbol }] = useStore();
 
   const onSubmit = async e => {
     e.preventDefault();

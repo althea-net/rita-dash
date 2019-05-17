@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Modal, ModalHeader, ModalBody } from "reactstrap";
 import QR from "qrcode.react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AppContext from "store/App";
+import { useStore } from "store";
 import { toEth } from "utils";
 
 const qrStyle = { height: "auto", width: 300 };
@@ -15,11 +15,7 @@ export default ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [copied, setCopied] = useState(false);
 
-  const {
-    debt,
-    info: { address, lowBalance },
-    symbol
-  } = useContext(AppContext);
+  const [{ address, debt, lowBalance, symbol }] = useStore();
 
   const debtEth = toEth(debt) * 2;
 

@@ -1,31 +1,26 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Progress } from "reactstrap";
-import { get, useStateValue } from "store";
-import AppContext from "store/App";
+import { get, post, useStore } from "store";
 
 import { Device } from "./PortStyles.js";
 import PortColumns from "./PortColumns";
 import { Confirm } from "utils";
-import useInterval from "utils/UseInterval";
+import useInterval from "hooks/useInterval";
 
 const Ports = () => {
   const [t] = useTranslation();
   const [open, setOpen] = useState(false);
-  const [confirmIface, setConfirmIface] = useState("");
+  const [selected, setSelected] = useState("");
   const [mode, setMode] = useState("");
   const [loading, setLoading] = useState(false);
   const [portsWaiting, setPortsWaiting] = useState(false);
 
-  const [{ interfaces, waiting }, dispatch] = useStateValue();
+  const [{ device, interfaces, waiting }, dispatch] = useStore();
 
   useInterval(() => {
     if (portsWaiting) dispatch({ type: "keepWaiting" });
   }, waiting ? 1000 : null);
-
-  const {
-    info: { device }
-  } = useContext(AppContext);
 
   useEffect(
     () => {
@@ -34,7 +29,7 @@ const Ports = () => {
 
         try {
           let interfaces = await get("/interfaces", false);
-          dispatch({ type: "setInterfaces", interfaces });
+          dispatch({ type: "interfaces", interfaces });
         } catch (e) {
           console.log(e);
         }
@@ -48,7 +43,7 @@ const Ports = () => {
   );
 
   let setInterfaceMode = (iface, mode) => {
-    setConfirmIface(iface);
+    setSelected(iface);
     setMode(mode);
     setOpen(true);
   };
@@ -57,12 +52,18 @@ const Ports = () => {
     return <Progress animated color="info" value={100} />;
   }
 
-  let confirm = () => {
+  let confirm = async () => {
     setOpen(false);
     setPortsWaiting(true);
     dispatch({ type: "startPortChange" });
     dispatch({ type: "startWaiting" });
-    dispatch({ type: "setInterface", confirmIface, mode });
+
+    interfaces[selected] = mode;
+    dispatch({ type: "interfaces", interfaces });
+
+    try {
+      await post("/interfaces", { interface: selected, mode });
+    } catch {}
   };
 
   let cancel = () => setOpen(false);

@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import AppContext from "store/App";
 import { Provider } from "store/Usage";
-import { get } from "store";
+import { get, useStore } from "store";
 
 import Finances from "./Finances";
 import NodeInformation from "./NodeInformation";
@@ -14,9 +13,7 @@ const Frontpage = () => {
   const [t] = useTranslation();
   const [usage, setUsage] = useState([]);
 
-  const {
-    info: { ritaVersion, version }
-  } = useContext(AppContext);
+  const [{ ritaVersion, version }] = useStore();
 
   useEffect(() => {
     const controller = new AbortController();

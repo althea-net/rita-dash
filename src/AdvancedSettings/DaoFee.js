@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -14,8 +14,7 @@ import {
   Label,
   Progress
 } from "reactstrap";
-import { get, post } from "store";
-import AppContext from "store/App";
+import { get, post, useStore } from "store";
 import { toEth, toWei } from "utils";
 import { BigNumber } from "bignumber.js";
 
@@ -27,7 +26,7 @@ const DaoFee = ({ readonly = false }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [daoFee, setDaoFee] = useState();
-  const { symbol } = useContext(AppContext);
+  const [{ symbol }] = useStore();
 
   useEffect(() => {
     const controller = new AbortController();

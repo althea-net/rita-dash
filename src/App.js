@@ -1,132 +1,77 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Nav } from "reactstrap";
 import AltheaNav from "./Layout/Nav";
 import Topbar from "./Layout/Topbar";
 import { NoConnection } from "utils";
 import Router from "Router";
-import { get } from "store";
-import { Provider } from "store/App";
-import { BigNumber } from "bignumber.js";
-import useInterval from "utils/UseInterval";
-
-const initialInfo = {
-  balance: null
-};
-
-const initialSettings = {
-  network: {
-    meshIp: null
-  },
-  payment: {
-    ethAddress: null
-  }
-};
-
-const symbols = {
-  Ethereum: "ETH",
-  Rinkeby: "tETH",
-  Xdai: "USD"
-};
+import { get, useStore } from "store";
+import useInterval from "hooks/useInterval";
 
 export default () => {
-  const [blockchain, setBlockchain] = useState();
-  const [debt, setDebt] = useState(0);
-  const [exits, setExits] = useState([]);
-  const [info, setInfo] = useState(initialInfo);
   const [loading, setLoading] = useState();
   const [page, setPage] = useState("dashboard");
-  const [symbol, setSymbol] = useState();
-  const [settings, setSettings] = useState(initialSettings);
+  let [, dispatch] = useStore();
 
-  const getDebt = async () => {
-    try {
-      const debts = await get("/debts");
+  const getDebt = useCallback(
+    async () => {
+      try {
+        const debts = await get("/debts");
+        dispatch({ type: "debt", debts });
+      } catch {}
+    },
+    [dispatch]
+  );
 
-      const selectedExit = exits.find(e => e.isSelected);
-
-      if (selectedExit) {
-        let debt = debts.reduce((a, b) => {
-          return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
-            ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
-            : a;
-        }, BigNumber("0"));
-
-        setDebt(debt);
+  const getInfo = useCallback(
+    async () => {
+      try {
+        const info = await get("/info", true, 2000);
+        dispatch({ type: "info", info });
+      } catch {
+        dispatch({ type: "info", info: { version: null } });
       }
-    } catch {}
-  };
-
-  const getInfo = async () => {
-    try {
-      const info = await get("/info", true, 2000);
-      setInfo(info);
-    } catch {
-      setInfo(initialInfo);
-    }
-  };
-
-  const getBlockchain = async () => {
-    const res = await get("/blockchain/get/");
-    setBlockchain(res);
-    setSymbol(symbols[res]);
-  };
+    },
+    [dispatch]
+  );
 
   const styleRef = useRef();
 
   useInterval(getDebt, 5000);
   useInterval(getInfo, 2000);
 
-  useEffect(() => {
-    const init = async () => {
-      setLoading(true);
+  useEffect(
+    () => {
+      const init = async () => {
+        setLoading(true);
+        getInfo();
 
-      try {
-        let exits = await get("/exits");
-        if (exits instanceof Error) return;
-        setExits(exits);
         try {
-          const debts = await get("/debts");
+          const exits = await get("/exits");
+          if (exits instanceof Error) return;
+          dispatch({ type: "exits", exits });
 
-          const selectedExit = exits.find(e => e.isSelected);
+          await getDebt();
+          const blockchain = await get("/blockchain/get/");
+          dispatch({ type: "blockchain", blockchain });
 
-          if (selectedExit) {
-            let debt = debts.reduce((a, b) => {
-              return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
-                ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
-                : a;
-            }, BigNumber("0"));
-
-            setDebt(debt);
-          }
+          const { meshIp } = await get("/mesh_ip");
+          if (meshIp instanceof Error) return;
+          dispatch({ type: "meshIp", meshIp });
         } catch {}
 
-        await getBlockchain();
+        setLoading(false);
+      };
 
-        let settings = await get("/settings");
-        if (settings instanceof Error) return;
-        setSettings(settings);
-      } catch {}
+      init();
 
-      setLoading(false);
-    };
-
-    init();
-
-    let h = document.querySelector(".navbar").offsetHeight;
-    styleRef.current = { minHeight: `calc(100vh - ${h}px)` };
-  }, []);
-
-  const state = {
-    blockchain,
-    getBlockchain,
-    debt,
-    info,
-    settings,
-    symbol
-  };
+      const h = document.querySelector(".navbar").offsetHeight;
+      styleRef.current = { minHeight: `calc(100vh - ${h}px)` };
+    },
+    [dispatch, getDebt, getInfo]
+  );
 
   return (
-    <Provider value={state}>
+    <>
       <Topbar />
       <div className="d-flex" style={styleRef.current}>
         <Nav id="sidebar" navbar>
@@ -137,6 +82,6 @@ export default () => {
           {!loading && <Router page={page} setPage={setPage} />}
         </div>
       </div>
-    </Provider>
+    </>
   );
 };

@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "./Pagination";
-import { get } from "store";
-import AppContext from "store/App";
+import { get, useStore } from "store";
 import { BigNumber } from "bignumber.js";
 import { toEth } from "utils";
 import { format } from "date-fns";
@@ -18,7 +17,7 @@ const Billing = (daoAddress, ipAddress) => {
   const [client, setClient] = useState([]);
   const [relay, setRelay] = useState([]);
   const [payments, setPayments] = useState([]);
-  const { symbol } = useContext(AppContext);
+  const [{ symbol }] = useStore();
   const [page, setPage] = useState(1);
 
   useEffect(() => setPage(1), [period]);

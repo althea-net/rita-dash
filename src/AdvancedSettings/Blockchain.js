@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -9,20 +9,19 @@ import {
   FormGroup,
   Input
 } from "reactstrap";
-import AppContext from "store/App";
-import { post } from "store";
+import { useStore, post } from "store";
 
 const Blockchain = () => {
   const [t] = useTranslation();
   const [success, setSuccess] = useState(false);
 
-  const { blockchain, getBlockchain } = useContext(AppContext);
+  const [{ blockchain }, dispatch] = useStore();
   const [newBlockchain, setBlockchain] = useState(blockchain);
 
   let submit = async e => {
     e.preventDefault();
     await post(`/blockchain/set/${newBlockchain}`);
-    getBlockchain();
+    dispatch({ type: "blockchain", blockchain: newBlockchain });
     setSuccess(true);
   };
 

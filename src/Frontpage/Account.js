@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import Deposit from "../Payments/Deposit";
@@ -7,8 +7,7 @@ import Withdraw from "../Payments/Withdraw";
 import { Btn, Card, Left, Right } from "ui";
 import { toEth } from "utils";
 
-import AppContext from "store/App";
-import { get, useStateValue } from "store";
+import { get, useStore } from "store";
 
 import updown from "../images/up_down.png";
 import { BigNumber } from "bignumber.js";
@@ -36,12 +35,7 @@ export default () => {
     return () => controller.abort();
   }, []);
 
-  const {
-    info: { localFee },
-    symbol
-  } = useContext(AppContext);
-
-  const [{ balance }] = useStateValue();
+  const [{ balance, localFee, symbol }] = useStore();
 
   const totalUsage = usage.reduce((a, b) => {
     return a + b.up + b.down;

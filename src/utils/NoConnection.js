@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Alert,
   Card,
@@ -9,23 +9,21 @@ import {
   Progress
 } from "reactstrap";
 import { useTranslation } from "react-i18next";
-import AppContext from "store/App";
-import { useStateValue } from "store";
+import { useStore } from "store";
 
 const NoConnection = () => {
   const [t] = useTranslation();
-  const { info } = useContext(AppContext);
-  const [{ portChange, waiting, wifiChange }] = useStateValue();
+  const [{ portChange, waiting, wifiChange, version }] = useStore();
 
   return (
     <div>
-      <Modal isOpen={!info.version || waiting > 0} centered>
+      <Modal isOpen={!version || waiting > 0} centered>
         <ModalHeader>{t("noConnection")}</ModalHeader>
         <ModalBody>
           <Card>
             <CardBody>
               {portChange &&
-                (!info.version || waiting > 60 ? (
+                (!version || waiting > 60 ? (
                   <Alert color="warning">{t("noReboot")}</Alert>
                 ) : (
                   <Alert color="info">{t("safeToReboot")}</Alert>

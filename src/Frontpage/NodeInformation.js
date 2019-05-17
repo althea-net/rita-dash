@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import QR from "qrcode.react";
@@ -12,21 +12,14 @@ import {
   InputGroupText,
   Label
 } from "reactstrap";
-import AppContext from "store/App";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useStore } from "store";
 
 const NodeInformation = () => {
   const [t] = useTranslation();
   const [qr, setQR] = useState("");
   const [copied, setCopied] = useState("");
-
-  const { info, settings } = useContext(AppContext);
-  if (!settings.network) return null;
-
-  const { address } = info;
-  const {
-    network: { meshIp, wgPublicKey }
-  } = settings;
+  const [{ address, meshIp }] = useStore();
 
   const toggleQR = v => {
     if (qr === v) return setQR("");
@@ -99,32 +92,6 @@ const NodeInformation = () => {
             </InputGroupAddon>
           </InputGroup>
           {copied === "address" && <p>{t("copied")}</p>}
-          <Label>
-            <b>{t("wireguardPublicKey")}</b>
-          </Label>
-          <InputGroup>
-            <Input id="wgPubKey" readOnly value={wgPublicKey || ""} />
-            <InputGroupAddon addonType="append">
-              <InputGroupText
-                style={{ cursor: "pointer" }}
-                onClick={() => toggleQR(wgPublicKey)}
-                id="clickWgPubKey"
-              >
-                <FontAwesomeIcon icon="qrcode" />
-              </InputGroupText>
-            </InputGroupAddon>
-            <InputGroupAddon addonType="append">
-              <CopyToClipboard
-                text={wgPublicKey}
-                onCopy={() => setCopied("wg")}
-              >
-                <InputGroupText style={{ cursor: "pointer" }}>
-                  <FontAwesomeIcon icon="copy" />
-                </InputGroupText>
-              </CopyToClipboard>
-            </InputGroupAddon>
-          </InputGroup>
-          {copied === "wg" && <p>{t("copied")}</p>}
         </CardBody>
       </Card>
     </>

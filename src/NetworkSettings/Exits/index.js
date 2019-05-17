@@ -6,7 +6,7 @@ import ExitListItem from "./ExitListItem";
 import ExitNodeSetup from "./ExitNodeSetup";
 import { Provider } from "store/Exits";
 import { get, post } from "store";
-import useInterval from "utils/UseInterval";
+import useInterval from "hooks/useInterval";
 const AbortController = window.AbortController;
 
 const Exits = () => {

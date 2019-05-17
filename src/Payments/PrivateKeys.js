@@ -11,21 +11,24 @@ import {
   Label,
   Progress
 } from "reactstrap";
-import { post } from "store";
+import { post, useStore } from "store";
+import { toEth } from "utils";
 
 import Export from "./Export";
 
-export default ({ balance, symbol }) => {
-  let [t] = useTranslation();
-  let [privateKey, setPrivateKey] = useState("");
-  let [exporting, setExporting] = useState(false);
-  let [saving, setSaving] = useState(false);
-  let [success, setSuccess] = useState(false);
-  let [error, setError] = useState(false);
-  let valid = parseInt(privateKey, 16) > 0;
+const PrivateKeys = () => {
+  const [t] = useTranslation();
+  const [privateKey, setPrivateKey] = useState("");
+  const [exporting, setExporting] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const valid = parseInt(privateKey, 16) > 0;
 
-  let save = async () => {
-    let eth_private_key = privateKey;
+  const [{ balance, symbol }] = useStore();
+
+  const save = async () => {
+    const eth_private_key = privateKey;
     setError(false);
     setSuccess(false);
     setSaving(true);
@@ -41,7 +44,7 @@ export default ({ balance, symbol }) => {
         <Export open={exporting} setOpen={setExporting} />
         <Form onSubmit={save}>
           <h3>{t("privateKeys")}</h3>
-          <p>{t("importKey", { balance, symbol })}</p>
+          <p>{t("importKey", { balance: toEth(balance), symbol })}</p>
 
           {success && <Alert color="success">{t("privateKeyImported")}</Alert>}
           {error && <Alert color="danger">{error}</Alert>}
@@ -83,3 +86,5 @@ export default ({ balance, symbol }) => {
     </Card>
   );
 };
+
+export default PrivateKeys;

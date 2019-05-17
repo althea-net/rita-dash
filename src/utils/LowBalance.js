@@ -1,13 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import AppContext from "store/App";
+import { useStore } from "store";
 
 const LowBalance = () => {
   const [t] = useTranslation();
-  const {
-    debt,
-    info: { closeThreshold, lowBalance }
-  } = useContext(AppContext);
+  const [{ debt, closeThreshold, lowBalance }] = useStore();
 
   if (!lowBalance) return null;
 

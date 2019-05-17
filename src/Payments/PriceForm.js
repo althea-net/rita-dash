@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -16,9 +16,9 @@ import {
   Progress
 } from "reactstrap";
 import { get, post } from "store";
-import useInterval from "utils/UseInterval";
+import useInterval from "hooks/useInterval";
 import { BigNumber } from "bignumber.js";
-import AppContext from "store/App";
+import { useStore } from "store";
 
 const AbortController = window.AbortController;
 
@@ -32,7 +32,7 @@ const PriceForm = () => {
   const [newPrice, setNewPrice] = useState(price);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const { symbol } = useContext(AppContext);
+  const { symbol } = useStore();
 
   const getPrice = async () => {
     const priceWei = (await get("/local_fee", true, 5000)).localFee;
