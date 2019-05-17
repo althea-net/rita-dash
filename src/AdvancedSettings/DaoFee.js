@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -20,8 +20,6 @@ import { BigNumber } from "bignumber.js";
 
 const AbortController = window.AbortController;
 const secondsPerMonth = 60 * 60 * 24 * 30;
-const controller = new AbortController();
-const signal = controller.signal;
 
 const DaoFee = ({ readonly = false }) => {
   const [t] = useTranslation();
@@ -30,10 +28,11 @@ const DaoFee = ({ readonly = false }) => {
   const [daoFee, setDaoFee] = useState();
   const [{ symbol }] = useStore();
 
-  const getDaoFee = async () => {
+  const getDaoFee = useCallback(async signal => {
     setLoading(true);
     try {
       let res = await get("/dao_fee", true, 5000, signal);
+      console.log(res);
       if (!(res instanceof Error)) {
         let { daoFee } = res;
         daoFee = toEth(BigNumber(daoFee).times(secondsPerMonth));
@@ -42,7 +41,7 @@ const DaoFee = ({ readonly = false }) => {
     } catch {}
 
     setLoading(false);
-  };
+  }, []);
 
   const postDaoFee = async daoFee => {
     let daoFeeWei = BigNumber(toWei(daoFee))
@@ -54,10 +53,15 @@ const DaoFee = ({ readonly = false }) => {
     } catch {}
   };
 
-  useEffect(() => {
-    getDaoFee();
-    return () => controller.abort();
-  }, []);
+  useEffect(
+    () => {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      getDaoFee(signal);
+      return () => controller.abort();
+    },
+    [getDaoFee]
+  );
 
   const submit = e => {
     e.preventDefault();
