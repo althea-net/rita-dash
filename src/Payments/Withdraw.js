@@ -24,8 +24,8 @@ const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 export default ({ open, setOpen }) => {
   const [t] = useTranslation();
 
-  const [address, setAddress] = useState();
-  const [amount, setAmount] = useState();
+  const [address, setAddress] = useState("");
+  const [amount, setAmount] = useState("");
   const [error, setError] = useState();
   const [txid, setTxid] = useState();
 
