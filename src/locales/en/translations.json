@@ -1,4 +1,5 @@
 {
+  "defaultFee": "Default Fee",
   "averageUsage": "Based on your average usage of {{perMonthUsage}} GB per month, your balance will provide you with an estimated <strong>{{weeksOfService}} weeks</strong> of service.",
   "bandwidthCost": "Bandwidth Cost",
   "serviceCost": "Service Cost",
@@ -44,6 +45,7 @@
   "daoFee": "Subnet DAO Fee",
   "daoError": "Unable to retrieve Subnet DAO address",
   "daoSuccess": "Subnet DAO Address Updated Successfully",
+  "daoFeeSaved": "Subnet DAO Fee Updated Successfully",
   "dashboard": "Dashboard",
   "debtsError": "Problem retrieving debts",
   "debugReachable": "reachable: {{reachable}}",

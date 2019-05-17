@@ -41,4 +41,18 @@ const txLink = (blockchain, txid) => {
   return link;
 };
 
-export { Error, Flags, NoConnection, Success, Confirm, toEth, toWei, txLink };
+const sleep = milliseconds => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+};
+
+export {
+  Error,
+  Flags,
+  NoConnection,
+  Success,
+  Confirm,
+  toEth,
+  toWei,
+  txLink,
+  sleep
+};
