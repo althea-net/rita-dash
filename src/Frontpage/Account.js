@@ -72,6 +72,7 @@ export default () => {
           <div className="d-flex justify-content-between">
             <h4 className="mr-1">{t("currentBalance")}</h4>
             <h4 id="balance">
+              {symbol === "USD" && "$"}
               {toEth(balance)} {symbol}
             </h4>
           </div>
