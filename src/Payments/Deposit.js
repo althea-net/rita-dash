@@ -52,7 +52,7 @@ export default ({ open, setOpen }) => {
           <QR style={qrStyle} value={address} />
         </div>
         {lowBalance &&
-          recommendedDeposit &&
+          debtEth > 0 &&
           t("recommendedDeposit", { recommendedDeposit })}
       </ModalBody>
     </Modal>
