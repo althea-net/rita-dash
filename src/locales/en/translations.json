@@ -125,6 +125,7 @@
   "payments": "Payments",
   "period": "Period",
   "phoneNumber": "Phone Number",
+  "placeholderEmail": "placeholder@domain.com",
   "ports": "Ports",
   "preferHigh": "Prefer high quality",
   "preferLow": "Prefer low price",

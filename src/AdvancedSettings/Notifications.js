@@ -100,7 +100,7 @@ export default ({ balance, symbol }) => {
                 id="email"
                 value={email}
                 onChange={handleEmail}
-                placeholder="placeholder@domain.com"
+                placeholder={t("placeholderEmail")}
                 invalid={!validEmail}
                 style={{ width: 300 }}
               />
