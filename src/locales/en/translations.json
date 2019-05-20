@@ -1,4 +1,7 @@
 {
+  "greatConnection": "Gran conexion",
+  "connectionProblem": "Problema de conexión",
+  "monthToDate": "Month To Date",
   "successfullyRegistered": "Registration was successful!",
   "defaultFee": "Default Fee",
   "averageUsage": "Based on your average usage of {{perMonthUsage}} GB per month, your balance will provide you with an estimated <strong>{{weeksOfService}} weeks</strong> of service.",

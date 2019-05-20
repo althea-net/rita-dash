@@ -62,13 +62,13 @@ export default () => {
       <Card>
         <Left>
           <div className="d-flex flex-wrap justify-content-between w-100">
-            <h5 style={{ color: "gray" }}>Month to Date</h5>
+            <h5 style={{ color: "gray" }}>{t("monthToDate")}</h5>
             <div className="d-flex w-100 justify-content-around">
               <div>
                 <div>
                   <h4>{format(thisMonthUsage)} GB</h4>
                 </div>
-                <div style={{ color: "gray" }}>Usage</div>
+                <div style={{ color: "gray" }}>{t("usage")}</div>
               </div>
               <div>
                 <div>
@@ -97,7 +97,7 @@ export default () => {
                     {format(lastMonthCost)} {symbol}
                   </h4>
                 </div>
-                <div style={{ color: "gray" }}>Cost</div>
+                <div style={{ color: "gray" }}>{t("cost")}</div>
               </div>
             </div>
           </div>

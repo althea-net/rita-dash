@@ -1,4 +1,5 @@
 {
+  "monthToDate": "Mes hasta la fecha",
   "successfullyRegistered": "¡El registro fue exitoso!",
   "defaultFee": "Tarifa predeterminada",
   "averageUsage": "En base a su uso promedio de {{perMonthUsage}} GB por mes, su saldo le proporcionará un <strong> {{weeksOfService}} semanas </strong> de servicio estimado.",
@@ -8,7 +9,7 @@
   "inquiryError": "Hubo un problema al enviar el código, comuníquese con el administrador de salida",
   "registrationError": "Hubo un problema durante el registro, póngase en contacto con el administrador de salida",
   "insufficientUsage": "Esperar el valor de los datos de un día antes de estimar su consumo mensual promedio o cuántas semanas de servicio cubrirá su saldo.",
-  "usage": "Usage",
+  "usage": "Uso",
   "history": "Historia",
   "upload": "Subir",
   "download": "Descargar",
