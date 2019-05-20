@@ -107,7 +107,7 @@ const DaoFee = ({ readonly = false }) => {
                         color: "#888"
                       }}
                     >
-                      {symbol} / month
+                      {symbol} / {t("month")}
                     </InputGroupText>
                   </InputGroupAddon>
                 </InputGroup>

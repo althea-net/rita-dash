@@ -1,4 +1,7 @@
 {
+  "month": "mes",
+  "monthlyCost": "Costo mensual",
+  "daoFee": "Cuota DAO de subred",
   "monthToDate": "Mes hasta la fecha",
   "successfullyRegistered": "¡El registro fue exitoso!",
   "defaultFee": "Tarifa predeterminada",
