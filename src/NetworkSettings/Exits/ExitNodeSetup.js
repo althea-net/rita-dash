@@ -190,6 +190,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
                     nickname={exit.nickname}
                     registered={registered}
                     targetLength={verifMode === "Email" ? 6 : 4}
+                    setOpen={setOpen}
                   />
                 )}
             </ModalBody>

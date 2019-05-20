@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 import key from "images/key.png";
 import { Form, FormGroup, Input, Progress } from "reactstrap";
 import ExitsContext from "store/Exits";
+import bigGreenCheck from "images/big_green_check.png";
 
-export default ({ nickname, registered, targetLength }) => {
+export default ({ nickname, registered, targetLength, setOpen }) => {
   let [t] = useTranslation();
   let [code, setCode] = useState("");
   let [waiting, setWaiting] = useState(false);
@@ -34,7 +35,12 @@ export default ({ nickname, registered, targetLength }) => {
     }
   };
 
-  return (
+  return registered ? (
+    <div className="w-100 text-center mx-auto">
+      <img src={bigGreenCheck} alt="Checkmark" className="mb-2" />
+      <p>{t("successfullyRegistered")}</p>
+    </div>
+  ) : (
     <div>
       <h5>{t("confirmationCode")}</h5>
       <div className="d-flex p-4">
@@ -48,9 +54,7 @@ export default ({ nickname, registered, targetLength }) => {
           <p>{t("enterCode")}</p>
           <Form>
             <FormGroup>
-              {registered ? (
-                <div>{t("success")}</div>
-              ) : waiting && code.length === targetLength ? (
+              {waiting && code.length === targetLength ? (
                 <Progress animated color="info" value="100" />
               ) : (
                 <>
