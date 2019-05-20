@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { ListGroupItem } from "reactstrap";
 import usa from "images/usa.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +24,7 @@ const Flag = styled.img`
 `;
 
 export default ({ exit, click }) => {
+  const [t] = useTranslation();
   if (!exit.exitSettings) return null;
   let {
     exitSettings: { description, state },
@@ -53,12 +55,16 @@ export default ({ exit, click }) => {
         {pseudostate === "Problem" ? (
           <div className="ml-2">
             <FontAwesomeIcon color="red" icon="exclamation-triangle" />
-            <span style={{ marginLeft: 5, color: "red" }}>{t("connectionProblem")}</span>
+            <span style={{ marginLeft: 5, color: "red" }}>
+              {t("connectionProblem")}
+            </span>
           </div>
         ) : (
           <div className="ml-2">
             <FontAwesomeIcon color="#27D38D" icon="check-circle" />
-            <span style={{ marginLeft: 5, color: "#27d38d" }}>{t("greatConnection")}</span>
+            <span style={{ marginLeft: 5, color: "#27d38d" }}>
+              {t("greatConnection")}
+            </span>
           </div>
         )}
       </div>
