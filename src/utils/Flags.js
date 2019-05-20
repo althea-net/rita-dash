@@ -2,6 +2,7 @@ import React from "react";
 import International from "images/flags/international.png";
 import CA from "images/flags/CA.png";
 import CO from "images/flags/CO.png";
+import MX from "images/flags/MX.png";
 import US from "images/flags/US.png";
 
 export default {
@@ -158,7 +159,7 @@ export default {
   MU: () => <img src={International} alt="International" />,
   MV: () => <img src={International} alt="International" />,
   MW: () => <img src={International} alt="International" />,
-  MX: () => <img src={International} alt="International" />,
+  MX: () => <img src={MX} alt="Mexico" />,
   MY: () => <img src={International} alt="International" />,
   MZ: () => <img src={International} alt="International" />,
   NA: () => <img src={International} alt="International" />,
