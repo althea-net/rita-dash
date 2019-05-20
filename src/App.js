@@ -55,8 +55,12 @@ export default () => {
           dispatch({ type: "blockchain", blockchain });
 
           const { meshIp } = await get("/mesh_ip");
-          if (meshIp instanceof Error) return;
           dispatch({ type: "meshIp", meshIp });
+
+          const {
+            network: { wgPublicKey }
+          } = await get("/settings");
+          dispatch({ type: "wgPublicKey", wgPublicKey });
         } catch {}
 
         setLoading(false);

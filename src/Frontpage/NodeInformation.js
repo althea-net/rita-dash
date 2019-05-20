@@ -19,7 +19,7 @@ const NodeInformation = () => {
   const [t] = useTranslation();
   const [qr, setQR] = useState("");
   const [copied, setCopied] = useState("");
-  const [{ address, meshIp }] = useStore();
+  const [{ address, meshIp, wgPublicKey }] = useStore();
 
   const toggleQR = v => {
     if (qr === v) return setQR("");
@@ -92,6 +92,32 @@ const NodeInformation = () => {
             </InputGroupAddon>
           </InputGroup>
           {copied === "address" && <p>{t("copied")}</p>}
+          <Label>
+            <b>{t("wireguardPublicKey")}</b>
+          </Label>
+          <InputGroup>
+            <Input id="wgPubKey" readOnly value={wgPublicKey || ""} />
+            <InputGroupAddon addonType="append">
+              <InputGroupText
+                style={{ cursor: "pointer" }}
+                onClick={() => toggleQR(wgPublicKey)}
+                id="clickWgPubKey"
+              >
+                <FontAwesomeIcon icon="qrcode" />
+              </InputGroupText>
+            </InputGroupAddon>
+            <InputGroupAddon addonType="append">
+              <CopyToClipboard
+                text={wgPublicKey}
+                onCopy={() => setCopied("wg")}
+              >
+                <InputGroupText style={{ cursor: "pointer" }}>
+                  <FontAwesomeIcon icon="copy" />
+                </InputGroupText>
+              </CopyToClipboard>
+            </InputGroupAddon>
+          </InputGroup>
+          {copied === "wg" && <p>{t("copied")}</p>}
         </CardBody>
       </Card>
     </>

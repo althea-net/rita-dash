@@ -31,6 +31,7 @@ const state = {
   txid: null,
   version: null,
   waiting: 0,
+  wgPublicKey: null,
   wifiChange: null,
   wifiSettings: null
 };
