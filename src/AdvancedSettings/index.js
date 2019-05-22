@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Button, Card, CardBody } from "reactstrap";
 
 import Blockchain from "./Blockchain";
 import DaoFee from "./DaoFee";
@@ -17,6 +18,13 @@ export default () => {
       <Blockchain />
       <DaoFee />
       <Firmware />
+      <Card className="mb-4">
+        <CardBody>
+          <h3>{t("debuggingData")}</h3>
+          <p>{t("snapshot")}</p>
+          <Button href="#endpoints">{t("viewResults")}</Button>
+        </CardBody>
+      </Card>
     </div>
   );
 };
