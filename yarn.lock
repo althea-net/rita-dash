@@ -3487,8 +3487,8 @@ cordova-plugin-add-swift-support@^1.7.2:
   integrity sha512-4syQ0srjXvlH07sAxQlwMAAqIRTI28IWLYI44RFAKFRdYoIyopjQDqUWdieBK2ELvxgffkn6Rr0r0hMdRyGz/w==
 
 "cordova-plugin-qrscanner@git+https://github.com/asoltys/cordova-plugin-qrscanner.git":
-  version "2.6.0"
-  resolved "git+https://github.com/asoltys/cordova-plugin-qrscanner.git#4776016dd76b13c28ba733d90d13efb8e4d0b12f"
+  version "3.0.1"
+  resolved "git+https://github.com/asoltys/cordova-plugin-qrscanner.git#1ae8ab4a0dc52f10b90fdd7afbf35d8eb661b6a3"
   dependencies:
     qrcode-reader "^1.0.4"
     webrtc-adapter "^3.1.4"
