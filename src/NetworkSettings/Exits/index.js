@@ -17,6 +17,7 @@ const Exits = () => {
   const [loading, setLoading] = useState(false);
   const [resetting, setResetting] = useState([]);
   const [initialized, setInitialized] = useState(false);
+  const [registering, setRegistering] = useState(false);
 
   const getExits = async signal => {
     if (!signal) {
@@ -91,6 +92,7 @@ const Exits = () => {
       if (!(email || phone)) await post(`/exits/${nickname}/select`);
       getExits();
     } catch {
+      setRegistering(false);
       setError(t("registrationError"));
     }
   };
@@ -100,6 +102,7 @@ const Exits = () => {
       await post(`/exits/${nickname}/verify/${code}`);
       await post(`/exits/${nickname}/select`);
     } catch (e) {
+      setRegistering(false);
       setError(t("verificationError"));
     }
     getExits();
@@ -131,6 +134,8 @@ const Exits = () => {
     setExits,
     error,
     setError,
+    registering,
+    setRegistering,
     registerExit,
     resetExit,
     resetting,

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import emailValidator from "email-validator";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import { Error } from "utils";
 
 import ExitList from "./ExitList";
 import EmailForm from "./EmailForm";
@@ -21,7 +22,6 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [valid, setValid] = useState(false);
-  const [registering, setRegistering] = useState(false);
 
   let registered = false;
   let denied = false;
@@ -29,9 +29,16 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   let gotinfo = false;
   let verifMode;
 
-  const { exits, resetting, resetExit, registerExit, selectExit } = useContext(
-    ExitsContext
-  );
+  const {
+    error,
+    exits,
+    registering,
+    setRegistering,
+    resetting,
+    resetExit,
+    registerExit,
+    selectExit
+  } = useContext(ExitsContext);
 
   if (exit) {
     let exitObj = exits.find(e => e.nickname === exit.nickname);
@@ -159,6 +166,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
               setRegistering={setRegistering}
             />
             <ModalBody>
+              <Error error={error} />
               {!exit && (
                 <div>
                   <p>{t("selectNode")}</p>
