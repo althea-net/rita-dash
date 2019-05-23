@@ -1,4 +1,9 @@
 {
+  "expandAll": "Expand All",
+  "collapseAll": "Collapse All",
+  "viewResults": "View Results",
+  "debuggingData": "Router Debugging Data",
+  "snapshot": "Get a snapshot of the data returned by the router's API endpoints",
   "2ghz": "2.4 GHz Wireless Network",
   "5ghz": "5 GHz Wireless Network",
   "accountThrottled": "Your account is empty. You are currently using the free service tier which is very slow.",
@@ -29,6 +34,7 @@
   "connect": "Connect",
   "connectionProblem": "Connection Problem",
   "copied": "Copied!",
+  "copyToClipboard": "Copy To Clipboard",
   "cost": "Cost",
   "currentBalance": "Account Balance",
   "currentDebt": "Current debt",

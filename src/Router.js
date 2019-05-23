@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 
 import {
   Billing,
+  Endpoints,
   Frontpage,
   AdvancedSettings,
   RouterSettings,
@@ -15,7 +16,8 @@ let routes = {
   "network-settings": <NetworkSettings />,
   billing: <Billing />,
   payments: <Payments />,
-  advanced: <AdvancedSettings />
+  advanced: <AdvancedSettings />,
+  endpoints: <Endpoints />
 };
 
 export default ({ page, setPage, setOpen }) => {

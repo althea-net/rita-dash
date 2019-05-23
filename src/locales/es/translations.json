@@ -1,4 +1,9 @@
 {
+  "expandAll": "Expandir todo",
+  "collapseAll": "Desplegar todo",
+  "viewResults": "Ver resultados",
+  "debuggingData": "Datos de depuración del enrutador",
+  "snapshot": "Obtenga una instantánea de los datos devueltos por los puntos finales de la API del enrutador",
   "2ghz": "Red inalambrica de 2.4 Ghz",
   "5ghz": "Red inalambrica de 5 Ghz",
   "accountThrottled": "Su cuenta está vacía. Actualmente está utilizando el nivel de servicio gratuito, que es muy lento.",
@@ -29,6 +34,7 @@
   "connect": "Conectar",
   "connectionProblem": "Problema de conexión",
   "copied": "Copiado",
+  "copyToClipboard": "Copiar al portapapeles",
   "cost": "Costo",
   "currentBalance": "Saldo actual:",
   "currentDebt": "Deuda actual",

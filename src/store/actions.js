@@ -9,6 +9,7 @@ const symbols = {
 export default (state, action) => {
   const { type, ...data } = action;
   const actions = {
+    api: ({ path, res }) => ({ results: { ...state.results, [path]: res } }),
     debt: ({ debts }) => {
       const selectedExit = state.exits.find(e => e.isSelected);
 
