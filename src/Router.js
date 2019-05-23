@@ -18,18 +18,21 @@ let routes = {
   advanced: <AdvancedSettings />
 };
 
-export default ({ page, setPage }) => {
+export default ({ page, setPage, setOpen }) => {
   useEffect(
     () => {
       const getPage = () => {
         let page = window.location.hash.substr(1);
         setPage(page);
+        setOpen(false);
+        window.document.body.scrollTop = 0;
+        window.document.documentElement.scrollTop = 0;
       };
 
       getPage();
       window.addEventListener("hashchange", getPage, false);
     },
-    [setPage]
+    [setOpen, setPage]
   );
 
   if (routes[page]) return routes[page];

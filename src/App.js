@@ -10,6 +10,7 @@ import useInterval from "hooks/useInterval";
 export default () => {
   const [loading, setLoading] = useState();
   const [page, setPage] = useState("dashboard");
+  const [open, setOpen] = useState(false);
   let [, dispatch] = useStore();
 
   const getDebt = useCallback(
@@ -76,14 +77,14 @@ export default () => {
 
   return (
     <>
-      <Topbar />
+      <Topbar {...{ open, setOpen }} />
       <div className="d-flex" style={styleRef.current}>
         <Nav id="sidebar" navbar>
-          <AltheaNav page={page} />
+          <AltheaNav {...{ page, setOpen }} />
         </Nav>
         <NoConnection />
         <div id="content">
-          {!loading && <Router page={page} setPage={setPage} />}
+          {!loading && <Router {...{ page, setPage, setOpen }} />}
         </div>
       </div>
     </>

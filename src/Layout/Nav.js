@@ -4,7 +4,7 @@ import { NavItem, NavLink } from "reactstrap";
 
 const padded = { paddingLeft: 5, paddingRight: 5 };
 
-const AltheaNav = ({ page }) => {
+const AltheaNav = ({ page, setOpen }) => {
   let [t] = useTranslation();
 
   let pages = {
@@ -26,7 +26,11 @@ const AltheaNav = ({ page }) => {
   return navItems.map((page, i) => {
     return (
       <NavItem style={padded} className={page.active} key={i}>
-        <NavLink href={"#" + page.path} id={page.path}>
+        <NavLink
+          href={"#" + page.path}
+          id={page.path}
+          onClick={() => setOpen(false)}
+        >
           {page.title}
         </NavLink>
       </NavItem>

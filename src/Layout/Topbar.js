@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
 import logo from "images/althea.png";
 import AltheaNav from "./Nav";
@@ -7,8 +7,7 @@ import LowBalance from "utils/LowBalance";
 
 const logoStyles = { width: 50, height: 50, marginLeft: 10, marginRight: 20 };
 
-const Topbar = () => {
-  let [open, setOpen] = useState(false);
+const Topbar = ({ open, setOpen }) => {
   let toggle = () => setOpen(!open);
 
   return (
@@ -28,11 +27,17 @@ const Topbar = () => {
         </div>
         <NavbarToggler className="ml-auto" onClick={toggle} />
       </div>
-      <div className="d-flex">
-        <Collapse isOpen={open}>
+      <div className="d-flex w-100">
+        <Collapse isOpen={open} timeout={0} className="w-100">
           <Nav navbar className="d-lg-none">
-            <LanguageSelector />
-            <AltheaNav />
+            <div className="d-flex">
+              <div>
+                <AltheaNav setOpen={setOpen} />
+              </div>
+              <div className="ml-auto mt-auto mb-2 mr-0">
+                <LanguageSelector />
+              </div>
+            </div>
           </Nav>
         </Collapse>
       </div>
