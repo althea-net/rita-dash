@@ -4,6 +4,7 @@ import App from "./App";
 import "./styles/althea.scss";
 import "./icons";
 import { StateProvider } from "store";
+import "abortcontroller-polyfill";
 
 import "./i18n";
 
