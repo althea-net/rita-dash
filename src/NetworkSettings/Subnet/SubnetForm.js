@@ -91,6 +91,8 @@ const SubnetForm = () => {
     setLoading(false);
   };
 
+  const toggleScanning = () => setScanning(!scanning);
+
   if (loading) return <Progress value={100} animated color="info" />;
 
   return (
@@ -137,14 +139,14 @@ const SubnetForm = () => {
       </FormGroup>
       <div className="d-flex">
         <Button
-          onClick={() => setScanning(true)}
+          onClick={toggleScanning}
           className="mr-2"
           outline
           color="primary"
           style={{ width: 180 }}
           id="subnetQR"
         >
-          {t("scanQR")}
+          {scanning ? t("stopScanning") : t("scanQR")}
         </Button>
         <Button
           type="submit"
