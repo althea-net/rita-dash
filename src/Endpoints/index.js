@@ -33,15 +33,22 @@ const Endpoint = memo(({ collapsed, path }) => {
   const fetch = useCallback(
     async () => {
       setLoading(true);
+
+      let res;
+
       try {
-        let res = await get(path);
+        res = await get(path);
         if (!(res instanceof Error)) {
           if (res.network) res.network.wgPrivateKey = "<redacted>";
           if (res.payment) res.payment.ethPrivateKey = "<redacted>";
-          dispatch({ type: "api", path, res });
-          setResult(res);
         }
-      } catch {}
+      } catch (e) {
+        res = e.message;
+      }
+
+      setResult(res);
+      dispatch({ type: "api", path, res });
+
       setLoading(false);
     },
     [dispatch, path]
