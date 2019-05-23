@@ -1,8 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Progress } from "reactstrap";
 import { get } from "store";
-import ReactJson from "react-json-view";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { useStore } from "store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const endpoints = [
   "/info",
@@ -13,32 +15,36 @@ const endpoints = [
   "/wifi_settings",
   "/dao_list",
   "/interfaces",
-  "/eth_private_key",
   "/mesh_ip",
   "/local_fee",
   "/metric_factor",
   "/auto_price/enabled",
-  "/blockchain/get",
-  "/nickname/get",
+  "/blockchain/get/",
   "/usage/client",
   "/usage/relay",
   "/usage/payments"
 ];
 
-const Endpoint = ({ collapsed, path }) => {
+const Endpoint = memo(({ collapsed, path }) => {
   const [result, setResult] = useState();
   const [loading, setLoading] = useState();
+  const [, dispatch] = useStore();
 
   const fetch = useCallback(
     async () => {
       setLoading(true);
       try {
-        const res = await get(path);
-        if (!(res instanceof Error)) setResult(res);
+        let res = await get(path);
+        if (!(res instanceof Error)) {
+          if (res.network) res.network.wgPrivateKey = "<redacted>";
+          if (res.payment) res.payment.ethPrivateKey = "<redacted>";
+          dispatch({ type: "api", path, res });
+          setResult(res);
+        }
       } catch {}
       setLoading(false);
     },
-    [path]
+    [dispatch, path]
   );
 
   useEffect(
@@ -54,20 +60,24 @@ const Endpoint = ({ collapsed, path }) => {
       {loading ? (
         <Progress animated color="info" value="100" />
       ) : (
-        <ReactJson src={result} collapsed={collapsed} name={null} />
+        collapsed || <pre>{JSON.stringify(result, null, 2)}</pre>
       )}
     </div>
   );
-};
+});
 
 const APIDump = () => {
   const [t] = useTranslation();
   const [collapsed, setCollapsed] = useState();
+  const [{ results }] = useStore();
+  const [copied, setCopied] = useState(false);
 
   const toggleCollapse = e => {
     e.preventDefault();
     setCollapsed(!collapsed);
   };
+
+  const data = JSON.stringify(results, null, 2);
 
   return (
     <div>
@@ -75,12 +85,21 @@ const APIDump = () => {
       <Card className="my-4">
         <CardBody>
           <div className="float-right">
+            <CopyToClipboard text={data} onCopy={() => setCopied(true)}>
+              <a href="#endpoints" onClick={e => e.preventDefault()}>
+                <span>
+                  <FontAwesomeIcon icon="copy" className="mr-2" />
+                  {copied ? t("copied") : t("copyToClipboard")}
+                </span>
+              </a>
+            </CopyToClipboard>
+            <span> | </span>
             <a href="#endpoints" onClick={toggleCollapse}>
               {collapsed ? t("expandAll") : t("collapseAll")}
             </a>
           </div>
           {endpoints.map(path => (
-            <Endpoint collapsed={collapsed} path={path} />
+            <Endpoint {...{ collapsed, key: path, path }} />
           ))}
         </CardBody>
       </Card>
