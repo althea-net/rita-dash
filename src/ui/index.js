@@ -33,9 +33,9 @@ export const Card = ({ children }) => (
 );
 
 export const Heading = ({ title, link, linkText }) => (
-  <div className="w-100 d-flex justify-content-between">
+  <div className="w-100 d-flex flex-wrap justify-content-between">
     <h2>{title}</h2>
-    <div style={{ color: "#3DADF5" }} className="my-auto">
+    <div style={{ color: "#3DADF5" }} className="my-auto ml-auto text-right">
       <a href={link} id="paymentSettingsALT">
         {linkText}
         <FontAwesomeIcon
