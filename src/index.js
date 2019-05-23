@@ -1,10 +1,11 @@
+import "abortcontroller-polyfill";
+
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import "./styles/althea.scss";
 import "./icons";
 import { StateProvider } from "store";
-import "abortcontroller-polyfill";
 
 import "./i18n";
 
