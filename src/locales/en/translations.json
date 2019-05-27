@@ -1,4 +1,8 @@
 {
+  "nickname": "Nickname",
+  "routerNickname": "Router Nickname",
+  "otherRouters": "Other routers and your network organizers can see this nickname.",
+  "nicknameUpdated": "Nickname updated successfully",
   "expandAll": "Expand All",
   "collapseAll": "Collapse All",
   "viewResults": "View Results",

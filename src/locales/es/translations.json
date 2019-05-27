@@ -1,4 +1,8 @@
 {
+  "nickname": "Apodo",
+  "routerNickname": "Router Apodo",
+  "otherRouters": "Otros enrutadores y los organizadores de su red pueden ver este apodo.",
+  "nicknameUpdated": "Apodo actualizado correctamente",
   "expandAll": "Expandir todo",
   "collapseAll": "Desplegar todo",
   "viewResults": "Ver resultados",
