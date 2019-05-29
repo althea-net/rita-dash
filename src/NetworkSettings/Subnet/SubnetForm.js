@@ -23,7 +23,6 @@ const SubnetForm = () => {
 
   const [ipAddress, setIpAddress] = useState("");
   const [daoAddress, setDaoAddress] = useState("");
-  const [daos, setDaos] = useState([]);
   const [scanning, setScanning] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -42,9 +41,7 @@ const SubnetForm = () => {
     (async () => {
       const { meshIp } = await get("/mesh_ip");
       setIpAddress(meshIp);
-
       const daos = await get("/dao_list");
-      setDaos(daos);
       if (daos.length) setDaoAddress(daos[0]);
     })();
     return;
@@ -79,6 +76,7 @@ const SubnetForm = () => {
     setLoading(true);
 
     try {
+      const daos = await get("/dao_list");
       await Promise.all(
         daos.map(address => post(`/dao_list/remove/${address}`))
       );
