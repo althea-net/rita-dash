@@ -1,0 +1,66 @@
+[
+  {
+    "nickname": "Test Exit",
+    "ip": "fd00::1337:1e0f",
+    "route_metric_to_exit": 553,
+    "total_payments": "0",
+    "debt": "0",
+    "link_cost": 0,
+    "price_to_exit": 0
+  },
+  {
+    "nickname": "Ohyeah",
+    "ip": "fd00::2337:1e0f",
+    "route_metric_to_exit": 953,
+    "total_payments": "0",
+    "debt": "0",
+    "link_cost": 0,
+    "price_to_exit": 0
+  },
+  {
+    "nickname": "Whodo",
+    "enforcing": true,
+    "ip": "fd00::2337:e8f",
+    "route_metric_to_exit": 29000,
+    "total_payments": "0",
+    "debt": "0",
+    "link_cost": 0,
+    "price_to_exit": 0
+  },
+  {
+    "nickname": "Borked",
+    "ip": "fd00::2337:e7f",
+    "route_metric_to_exit": 55034,
+    "total_payments": "0",
+    "debt": "0",
+    "link_cost": 0,
+    "price_to_exit": 0
+  },
+  {
+    "nickname": "No Nickname",
+    "ip": "fd00::1337:e2f",
+    "route_metric_to_exit": 65535,
+    "total_payments": "0",
+    "debt": "0",
+    "link_cost": 0,
+    "price_to_exit": 0
+  },
+  {
+    "nickname": "No Nickname",
+    "ip": "fd00::1337:1e0f",
+    "route_metric_to_exit": 353,
+    "total_payments": "0",
+    "debt": "0",
+    "link_cost": 0,
+    "price_to_exit": 0
+  },
+  {
+    "nickname": "No Nickname",
+    "ip": "fd00::1337:e4f",
+    "route_metric_to_exit": 65535,
+    "total_payments": "0",
+    "debt": "0",
+    "link_cost": 0,
+    "price_to_exit": 0
+  }
+]

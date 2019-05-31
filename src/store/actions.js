@@ -10,6 +10,10 @@ export default (state, action) => {
   const { type, ...data } = action;
   const actions = {
     api: ({ path, res }) => ({ results: { ...state.results, [path]: res } }),
+    blockchain: ({ blockchain }) => ({
+      blockchain,
+      symbol: symbols[blockchain]
+    }),
     debt: ({ debts }) => {
       const selectedExit = state.exits.find(e => e.isSelected);
 
@@ -23,10 +27,7 @@ export default (state, action) => {
         };
       }
     },
-    blockchain: ({ blockchain }) => ({
-      blockchain,
-      symbol: symbols[blockchain]
-    }),
+    exits: ({ exits }) => ({ exits }),
     info: ({
       info: {
         address,
