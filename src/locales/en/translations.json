@@ -1,4 +1,11 @@
 {
+  "stopEnforcing": "Stop Enforcing",
+  "enforcingIs": "Enforcing is when your router is throttling the connection of a neighbor because they have not paid you. Use the \"Stop enforcing\" button to give them a break.",
+  "whatIsEnforcing": "What is enforcing?",
+  "enforcing" :"Enforcing",
+  "connectionQuality": "Connection Quality",
+  "nickname": "Nickname",
+  "relaySettings": "Relay Settings",
   "expandAll": "Expand All",
   "collapseAll": "Collapse All",
   "viewResults": "View Results",

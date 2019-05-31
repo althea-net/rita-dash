@@ -12,7 +12,8 @@ const AltheaNav = ({ page, setOpen }) => {
     router_settings: t("wifiAndPorts"),
     network_settings: t("networkConnection"),
     payments: t("paymentSettings"),
-    advanced: t("advancedSettings")
+    advanced: t("advancedSettings"),
+    relay_settings: t("relaySettings")
   };
 
   let navItems = Object.keys(pages).map((p, i) => {

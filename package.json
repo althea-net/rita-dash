@@ -82,7 +82,7 @@
     "react-sigma": "^1.2.30",
     "react-stateful": "https://github.com/asoltys/react-stateful",
     "react-testing-library": "^5.9.0",
-    "reactstrap": "^7.0.2",
+    "reactstrap": "^8.0.0",
     "source-map-explorer": "^1.8.0",
     "styled-components": "^3.4.9",
     "typescript": "^3.4.5",

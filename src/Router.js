@@ -7,7 +7,8 @@ import {
   AdvancedSettings,
   RouterSettings,
   NetworkSettings,
-  Payments
+  Payments,
+  RelaySettings
 } from "./pages";
 
 let routes = {
@@ -17,7 +18,8 @@ let routes = {
   billing: <Billing />,
   payments: <Payments />,
   advanced: <AdvancedSettings />,
-  endpoints: <Endpoints />
+  endpoints: <Endpoints />,
+  "relay-settings": <RelaySettings />
 };
 
 export default ({ page, setPage, setOpen }) => {

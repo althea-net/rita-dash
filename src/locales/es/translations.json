@@ -1,4 +1,9 @@
 {
+  "stopEnforcing": "Dejar de hacer cumplir",
+  "enforcing" :"Haciendo cumplir",
+  "connectionQuality": "Calidad de conexión",
+  "nickname": "Apodo",
+  "relaySettings": "Ajustes de relé",
   "expandAll": "Expandir todo",
   "collapseAll": "Desplegar todo",
   "viewResults": "Ver resultados",

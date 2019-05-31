@@ -7,6 +7,7 @@ import {
   faAngleRight,
   faCheckCircle,
   faExclamationTriangle,
+  faQuestionCircle,
   faQrcode,
   faRoute,
   faSignal,
@@ -21,6 +22,7 @@ library.add(faMinusCircle);
 library.add(faExclamationTriangle);
 library.add(faAngleRight);
 library.add(faCheckCircle);
+library.add(faQuestionCircle);
 library.add(faRoute);
 library.add(faQrcode);
 library.add(faSignal);
