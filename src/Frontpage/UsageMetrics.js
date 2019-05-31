@@ -83,13 +83,13 @@ export default () => {
         </Left>
         <Right>
           <div className="d-flex flex-wrap justify-content-between w-100">
-            <h5 style={{ color: "gray" }}>Last Month</h5>
+            <h5 style={{ color: "gray" }}>{t("lastMonth")}</h5>
             <div className="d-flex w-100 justify-content-around">
               <div>
                 <div>
                   <h4>{format(lastMonthUsage)} GB</h4>
                 </div>
-                <div style={{ color: "gray" }}>Usage</div>
+                <div style={{ color: "gray" }}>{t("usage")}</div>
               </div>
               <div>
                 <div>

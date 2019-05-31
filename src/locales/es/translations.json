@@ -1,5 +1,8 @@
 {
-  "stopEnforcing": "Dejar de hacer cumplir",
+  "lastMonth": "El mes pasado",
+  "stopEnforcing": "Dejar de imponer",
+  "enforcingIs": "Imponer es cuando su enrutador está limitando la conexión de un vecino porque no le han pagado. Use el botón \"Dejar de imponer\" para darles un descanso.",
+  "whatIsEnforcing": "¿Qué es lo que impone?",
   "enforcing" :"Haciendo cumplir",
   "connectionQuality": "Calidad de conexión",
   "nickname": "Apodo",
