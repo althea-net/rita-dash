@@ -7,26 +7,37 @@ import { BigNumber } from "bignumber.js";
 import { toEth } from "utils";
 import { format } from "date-fns";
 
-const periods = ["Hourly", "Daily", "Weekly", "Monthly"];
+import en from "date-fns/locale/en";
+import es from "date-fns/locale/es";
+import fr from "date-fns/locale/fr";
+
 const bytesPerGb = BigNumber("1000000000");
 const msPerHr = 3600000;
 
 const Billing = (daoAddress, ipAddress) => {
-  const [t] = useTranslation();
-  const [period, setPeriod] = useState("Weekly");
+  const [t, i18n] = useTranslation();
+  const locale = { en, es, fr }[i18n.language];
+
+  const [period, setPeriod] = useState("w");
   const [client, setClient] = useState([]);
   const [relay, setRelay] = useState([]);
   const [payments, setPayments] = useState([]);
   const [{ symbol }] = useStore();
   const [page, setPage] = useState(1);
+  const periods = {
+    h: t("hourly"),
+    d: t("daily"),
+    w: t("weekly"),
+    m: t("monthly")
+  };
 
   useEffect(() => setPage(1), [period]);
 
   const limit = {
-    Hourly: 24,
-    Daily: 10,
-    Weekly: 4,
-    Monthly: 12
+    h: 24,
+    d: 10,
+    w: 4,
+    m: 12
   }[period];
 
   let data = {};
@@ -40,10 +51,10 @@ const Billing = (daoAddress, ipAddress) => {
     let i;
 
     switch (period) {
-      case "Hourly":
+      case "h":
         i = index;
         break;
-      case "Daily":
+      case "d":
         i =
           new Date(
             date.getFullYear(),
@@ -51,7 +62,7 @@ const Billing = (daoAddress, ipAddress) => {
             date.getDate()
           ).getTime() / msPerHr;
         break;
-      case "Weekly":
+      case "w":
         i =
           new Date(
             date.getFullYear(),
@@ -60,7 +71,7 @@ const Billing = (daoAddress, ipAddress) => {
           ).getTime() / msPerHr;
         break;
       default:
-      case "Monthly":
+      case "m":
         i =
           new Date(date.getFullYear(), date.getMonth(), 1).getTime() / msPerHr;
         break;
@@ -106,15 +117,15 @@ const Billing = (daoAddress, ipAddress) => {
     let date = new Date(hour * msPerHr);
 
     switch (period) {
-      case "Monthly":
-        return format(date, "MMM");
-      case "Daily":
-        return format(date, "MMM DD");
-      case "Weekly":
-        return format(date, "MMM DD");
-      case "Hourly":
+      case "m":
+        return format(date, "MMM", { locale });
+      case "d":
+        return format(date, "MMM DD", { locale });
+      case "w":
+        return format(date, "MMM DD", { locale });
+      case "h":
       default:
-        return format(date, "MMM DD, HH:SS");
+        return format(date, "MMM DD, HH:SS", { locale });
     }
   };
 
@@ -122,19 +133,19 @@ const Billing = (daoAddress, ipAddress) => {
     let date = new Date(hour * msPerHr);
 
     switch (period) {
-      case "Monthly":
+      case "m":
         date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-        return format(date, "MMM YYYY");
-      case "Daily":
+        return format(date, "MMM YYYY", { locale });
+      case "d":
         date = new Date((parseInt(hour) + 24) * msPerHr);
-        return format(date, "DD, YYYY");
-      case "Weekly":
+        return format(date, "DD, YYYY", { locale });
+      case "w":
         date = new Date((parseInt(hour) + 7 * 24) * msPerHr);
-        return format(date, "MMM DD, YYYY");
-      case "Hourly":
+        return format(date, "MMM DD, YYYY", { locale });
+      case "h":
       default:
         date = new Date((parseInt(hour) + 1) * msPerHr);
-        return format(date, "HH:SS");
+        return format(date, "HH:SS", { locale });
     }
   };
 
@@ -164,9 +175,9 @@ const Billing = (daoAddress, ipAddress) => {
                     value={period}
                     onChange={e => setPeriod(e.target.value)}
                   >
-                    {periods.map(p => (
+                    {Object.keys(periods).map(p => (
                       <option key={p} value={p}>
-                        {p}
+                        {periods[p]}
                       </option>
                     ))}
                   </Input>
