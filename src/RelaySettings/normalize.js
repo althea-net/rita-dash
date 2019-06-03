@@ -7,7 +7,11 @@ function normalize(current, smallest, greatest) {
 }
 
 function logNormalize(current, smallest, greatest) {
-  console.log(current, smallest, greatest);
+  smallest = 0;
+  greatest = MAXINT;
+
+  return MAXINT - current;
+
   if (current === Infinity || current === -Infinity) {
     return current;
   }

@@ -4,10 +4,6 @@ import { Alert, Badge, Button, Progress, Table } from "reactstrap";
 import { get, useStore } from "store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EnforcementModal from "./EnforcementModal";
-import normalizeNeighbors from "./normalize";
-
-// import cckd from "camelcase-keys-deep";
-// import neighborData from "./neighbors.json"; // dummy data
 
 const AbortController = window.AbortController;
 
@@ -26,20 +22,29 @@ const RelaySettings = () => {
       (async () => {
         setLoading(true);
         try {
+          let debts = await get("/debts", true, 10000, signal);
           let neighbors = await get("/neighbors", true, 10000, signal);
-          if (neighbors instanceof Error) return;
+          if (debts instanceof Error || neighbors instanceof Error) return;
 
-          // neighbors = cckd(neighborData); // dummy data
-          neighbors = neighbors.filter(n => {
-            return !exits.find(
-              e =>
-                e.exitSettings &&
-                e.exitSettings.id.meshIp === n.ip.replace(/"/g, "")
-            );
-          });
-          console.log(neighbors);
+          neighbors = neighbors
+            .filter(n => {
+              return !exits.find(
+                e =>
+                  e.exitSettings &&
+                  e.exitSettings.id.meshIp === n.ip.replace(/"/g, "")
+              );
+            })
+            .map(n => {
+              n.enforcing =
+                debts.find(
+                  d =>
+                    d.identity.meshIp === n.ip &&
+                    d.paymentDetails.action === "SuspendTunnel"
+                ) !== undefined;
+              return n;
+            });
 
-          setNeighbors(normalizeNeighbors(neighbors));
+          setNeighbors(neighbors);
         } catch (e) {}
         setLoading(false);
       })();
@@ -87,7 +92,7 @@ const RelaySettings = () => {
                 <tr key={i}>
                   <td style={{ verticalAlign: "middle" }}>{n.nickname}</td>
                   <td style={{ verticalAlign: "middle" }}>
-                    {((1 - n.normalizedRouteMetricToExit) * 100).toFixed(0)}%
+                    {n.routeMetricToExit}
                   </td>
                   {n.enforcing ? (
                     <>

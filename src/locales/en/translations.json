@@ -9,7 +9,7 @@
   "enforcingIs": "Enforcing is when your router is throttling the connection of a neighbor because they have not paid you. Use the \"Stop Enforcing\" button to give them a break.",
   "whatIsEnforcing": "What is enforcing?",
   "enforcing" :"Enforcing",
-  "connectionQuality": "Connection Quality",
+  "connectionQuality": "Connection Quality (Lower is better)",
   "nickname": "Nickname",
   "relaySettings": "Relay Settings",
   "expandAll": "Expand All",
