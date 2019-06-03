@@ -32,7 +32,6 @@ const DaoFee = ({ readonly = false }) => {
     setLoading(true);
     try {
       let res = await get("/dao_fee", true, 5000, signal);
-      console.log(res);
       if (!(res instanceof Error)) {
         let { daoFee } = res;
         daoFee = toEth(BigNumber(daoFee).times(secondsPerMonth));

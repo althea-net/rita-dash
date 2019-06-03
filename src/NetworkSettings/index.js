@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import Exits from "./Exits";
+import Nickname from "./Nickname";
 import Subnet from "./Subnet";
 
 export default () => {
@@ -10,6 +11,7 @@ export default () => {
   return (
     <div>
       <h1 id="networkPage">{t("networkConnection")}</h1>
+      <Nickname />
       <Exits />
       <Subnet />
     </div>

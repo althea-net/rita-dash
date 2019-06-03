@@ -15,7 +15,7 @@ const Body = () => {
   return (
     <Card className="mb-4">
       <CardBody>
-        <h2>{t("subnet")}</h2>
+        <h3>{t("subnet")}</h3>
         {!editing && daoAddress && meshIp ? (
           <SubnetInfo setEditing={setEditing} />
         ) : (
