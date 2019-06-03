@@ -17,7 +17,7 @@ export default (state, action) => {
     debt: ({ debts }) => {
       const selectedExit = state.exits.find(e => e.isSelected);
 
-      if (selectedExit) {
+      if (selectedExit && debts.length) {
         return {
           debt: debts.reduce((a, b) => {
             return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
@@ -26,6 +26,8 @@ export default (state, action) => {
           }, BigNumber("0"))
         };
       }
+
+      return state;
     },
     exits: ({ exits }) => ({ exits }),
     info: ({
