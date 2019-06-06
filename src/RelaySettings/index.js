@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Badge, Button, Progress, Table } from "reactstrap";
-import { get, useStore } from "store";
+import { get, post, useStore } from "store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EnforcementModal from "./EnforcementModal";
 
@@ -9,59 +9,55 @@ const AbortController = window.AbortController;
 
 const RelaySettings = () => {
   const [t] = useTranslation();
-  const [neighbors, setNeighbors] = useState();
   const [loading, setLoading] = useState();
   const [open, setOpen] = useState(false);
-  const [{ exits }] = useStore();
+  const [{ neighbors }, dispatch] = useStore();
+
+  const getNeighbors = useCallback(
+    async signal => {
+      setLoading(true);
+      try {
+        let debts = await get("/debts", true, 10000, signal);
+        let neighbors = await get("/neighbors", true, 10000, signal);
+        if (debts instanceof Error || neighbors instanceof Error) return;
+        dispatch({ type: "debts", debts });
+        dispatch({ type: "neighbors", neighbors });
+      } catch (e) {}
+      setLoading(false);
+    },
+    [dispatch]
+  );
 
   useEffect(
     () => {
       const controller = new AbortController();
       const signal = controller.signal;
 
-      (async () => {
-        setLoading(true);
-        try {
-          let debts = await get("/debts", true, 10000, signal);
-          let neighbors = await get("/neighbors", true, 10000, signal);
-          if (debts instanceof Error || neighbors instanceof Error) return;
-
-          neighbors = neighbors
-            .filter(n => {
-              return !exits.find(
-                e =>
-                  e.exitSettings &&
-                  e.exitSettings.id.meshIp === n.ip.replace(/"/g, "")
-              );
-            })
-            .map(n => {
-              n.enforcing =
-                debts.find(
-                  d =>
-                    d.identity.meshIp === n.ip &&
-                    d.paymentDetails.action === "SuspendTunnel"
-                ) !== undefined;
-              return n;
-            });
-
-          setNeighbors(neighbors);
-        } catch (e) {}
-        setLoading(false);
-      })();
+      getNeighbors(signal);
 
       return () => controller.abort();
     },
-    [exits]
+    [getNeighbors]
   );
 
-  if (loading) return <Progress animated color="info" value="100" />;
-
   const toggle = () => setOpen(!open);
+
+  const resetDebts = async n => {
+    await post("/debts/reset", {
+      mesh_ip: n.debt.identity.meshIp,
+      eth_address: n.debt.identity.ethAddress,
+      wg_public_key: n.debt.identity.wgPublicKey
+    });
+
+    setInterval(getNeighbors, 5000);
+  };
 
   return (
     <>
       <h1 id="frontPage">{t("neighbors")}</h1>
-      {!neighbors || !neighbors.length ? (
+      {loading ? (
+        <Progress animated color="info" value="100" />
+      ) : !neighbors || !neighbors.length ? (
         <Alert color="info">{t("noNeighbors")}</Alert>
       ) : (
         <div className="table-responsive">
@@ -94,7 +90,7 @@ const RelaySettings = () => {
                   <td style={{ verticalAlign: "middle" }}>
                     {n.routeMetricToExit}
                   </td>
-                  {n.enforcing ? (
+                  {n.debt.paymentDetails.action === "SuspendTunnel" ? (
                     <>
                       <td style={{ verticalAlign: "middle" }}>
                         <Badge color="danger" className="mb-1">
@@ -106,6 +102,7 @@ const RelaySettings = () => {
                           size="sm"
                           outline
                           style={{ whiteSpace: "nowrap" }}
+                          onClick={() => resetDebts(n)}
                         >
                           {t("stopEnforcing")}
                         </Button>

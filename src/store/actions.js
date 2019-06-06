@@ -23,7 +23,8 @@ export default (state, action) => {
             return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
               ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
               : a;
-          }, BigNumber("0"))
+          }, BigNumber("0")),
+          debts
         };
       }
 
@@ -63,6 +64,24 @@ export default (state, action) => {
         /*eslint no-sequences: 0*/
         .reduce((a, b) => ((a[b] = interfaces[b]), a), {})
     }),
+    neighbors: ({ neighbors }) => {
+      return {
+        neighbors: neighbors
+          .filter(n => {
+            return !state.exits.find(
+              e =>
+                e.exitSettings &&
+                e.exitSettings.id.meshIp === n.ip.replace(/"/g, "")
+            );
+          })
+          .map(n => {
+            n.debt = state.debts.find(
+              d => d.identity.meshIp === n.ip.replace(/"/g, "")
+            );
+            return n;
+          })
+      };
+    },
     startPortChange: () => ({ portChange: true }),
     startWaiting: () => ({ waiting: 120 }),
     wgPublicKey: ({ wgPublicKey }) => ({ wgPublicKey }),
