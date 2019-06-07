@@ -29,7 +29,7 @@ const Exits = () => {
     setLoading(true);
 
     try {
-      const blockchain = await get("/blockchain/get/", true, 5000, signal);
+      const blockchain = await get("/blockchain/get", true, 5000, signal);
 
       let exits = [];
       exits = await get("/exits", true, 5000, signal);

@@ -8,9 +8,11 @@ import React, {
 } from "react";
 
 import actions from "./actions";
+import { sha3_512 } from "js-sha3";
 
 const state = {
   address: null,
+  authenticated: false,
   autoPricing: false,
   balance: null,
   blockchain: null,
@@ -52,6 +54,19 @@ const base =
 
 const AbortController = window.AbortController;
 
+export async function login(password) {
+  let url = "/info";
+  let salt = "RitaSalt";
+  let Authorization = "Basic " + btoa("rita:" + sha3_512(password + salt));
+
+  let res = await fetch(base + url, { headers: { Authorization } });
+  let json = await res.json();
+
+  window.sessionStorage.setItem("Authorization", Authorization);
+
+  return json;
+}
+
 export async function get(url, camel = true, timeout = 10000, signal) {
   const controller = new AbortController();
   signal = signal || controller.signal;
@@ -59,8 +74,11 @@ export async function get(url, camel = true, timeout = 10000, signal) {
   let timer = setTimeout(() => controller.abort(), timeout);
   let res;
 
+  let Authorization = window.sessionStorage.getItem("Authorization");
+  let headers = { Authorization };
+
   try {
-    res = await fetch(base + url, { signal });
+    res = await fetch(base + url, { headers, signal });
   } catch (e) {
     if (e.name === "AbortError") throw e;
     return e;
@@ -84,13 +102,17 @@ export async function get(url, camel = true, timeout = 10000, signal) {
 }
 
 export async function post(url, data, camel = true) {
+  let Authorization = window.sessionStorage.getItem("Authorization");
+  let headers = {
+    Accept: "application/json",
+    Authorization,
+    "Content-Type": "application/json"
+  };
+
   const res = await fetch(base + url, {
     method: "POST",
     body: JSON.stringify(data),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    }
+    headers
   });
 
   if (!res.ok) throw new Error(res.status);

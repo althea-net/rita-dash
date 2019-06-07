@@ -29,6 +29,7 @@ export default (state, action) => {
 
       return state;
     },
+    authenticated: ({ authenticated }) => ({ authenticated }),
     exits: ({ exits }) => ({ exits }),
     info: ({
       info: {
