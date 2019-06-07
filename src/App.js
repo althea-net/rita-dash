@@ -37,7 +37,7 @@ export default () => {
 
   const styleRef = useRef();
 
-  useInterval(getDebt, 5000);
+  useInterval(getDebt, 10000);
   useInterval(getInfo, 2000);
 
   useEffect(
