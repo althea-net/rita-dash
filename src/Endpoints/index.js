@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Progress } from "reactstrap";
 import { get } from "store";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useStore } from "store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const endpoints = [
@@ -25,91 +24,65 @@ const endpoints = [
   "/usage/payments"
 ];
 
-const Endpoint = memo(({ collapsed, path }) => {
-  const [result, setResult] = useState();
-  const [loading, setLoading] = useState();
-  const [, dispatch] = useStore();
+const APIDump = () => {
+  const [t] = useTranslation();
+  const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState({});
 
-  const fetch = useCallback(
-    async () => {
-      setLoading(true);
-
-      let res;
-
-      try {
-        res = await get(path);
-        if (!(res instanceof Error)) {
-          if (res.network) res.network.wgPrivateKey = "<redacted>";
-          if (res.payment) res.payment.ethPrivateKey = "<redacted>";
-        }
-      } catch (e) {
-        res = e.message;
-      }
-
-      setResult(res);
-      dispatch({ type: "api", path, res });
-
-      setLoading(false);
-    },
-    [dispatch, path]
-  );
+  const data = JSON.stringify(results, null, 2);
 
   useEffect(
     () => {
-      fetch();
+      (async () => {
+        setLoading(true);
+
+        await Promise.all(
+          endpoints.map(async path => {
+            let res;
+            try {
+              res = await get(path);
+              if (!(res instanceof Error)) {
+                if (res.network) res.network.wgPrivateKey = "<redacted>";
+                if (res.payment) res.payment.ethPrivateKey = "<redacted>";
+              }
+            } catch (e) {
+              res = e.message;
+            }
+
+            results[path] = res;
+          })
+        );
+
+        setResults(results);
+        setLoading(false);
+      })();
     },
-    [fetch]
+    [results]
   );
-
-  return (
-    <div className="mb-2">
-      <b>{path}:</b>
-      {loading ? (
-        <Progress animated color="info" value="100" />
-      ) : (
-        collapsed || <pre>{JSON.stringify(result, null, 2)}</pre>
-      )}
-    </div>
-  );
-});
-
-const APIDump = () => {
-  const [t] = useTranslation();
-  const [collapsed, setCollapsed] = useState();
-  const [{ results }] = useStore();
-  const [copied, setCopied] = useState(false);
-
-  const toggleCollapse = e => {
-    e.preventDefault();
-    setCollapsed(!collapsed);
-  };
-
-  const data = JSON.stringify(results, null, 2);
 
   return (
     <div>
       <h1>{t("debuggingData")}</h1>
-      <Card className="my-4">
-        <CardBody>
-          <div className="float-right">
-            <CopyToClipboard text={data} onCopy={() => setCopied(true)}>
-              <a href="#endpoints" onClick={e => e.preventDefault()}>
-                <span>
-                  <FontAwesomeIcon icon="copy" className="mr-2" />
-                  {copied ? t("copied") : t("copyToClipboard")}
-                </span>
-              </a>
-            </CopyToClipboard>
-            <span> | </span>
-            <a href="#endpoints" onClick={toggleCollapse}>
-              {collapsed ? t("expandAll") : t("collapseAll")}
-            </a>
-          </div>
-          {endpoints.map(path => (
-            <Endpoint {...{ collapsed, key: path, path }} />
-          ))}
-        </CardBody>
-      </Card>
+      {loading ? (
+        <Progress animated color="info" value="100" />
+      ) : (
+        <Card className="my-4">
+          <CardBody>
+            <div className="float-right">
+              <CopyToClipboard text={data} onCopy={() => setCopied(true)}>
+                <a href="#endpoints" onClick={e => e.preventDefault()}>
+                  <span>
+                    <FontAwesomeIcon icon="copy" className="mr-2" />
+                    {copied ? t("copied") : t("copyToClipboard")}
+                  </span>
+                </a>
+              </CopyToClipboard>
+            </div>
+            <pre>{data}</pre>
+          </CardBody>
+        </Card>
+      )}
     </div>
   );
 };

@@ -28,7 +28,6 @@ const state = {
   port: null,
   portChange: false,
   resetting: [],
-  results: [],
   ritaVersion: null,
   symbol: null,
   txid: null,

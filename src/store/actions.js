@@ -9,7 +9,6 @@ const symbols = {
 export default (state, action) => {
   const { type, ...data } = action;
   const actions = {
-    api: ({ path, res }) => ({ results: { ...state.results, [path]: res } }),
     blockchain: ({ blockchain }) => ({
       blockchain,
       symbol: symbols[blockchain]
