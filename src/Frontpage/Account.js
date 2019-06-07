@@ -18,24 +18,25 @@ export default () => {
 
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
-  const [usage, setUsage] = useState([]);
+  const [{ balance, localFee, usage, symbol }, dispatch] = useStore();
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
+  useEffect(
+    () => {
+      const controller = new AbortController();
+      const signal = controller.signal;
 
-    (async () => {
-      try {
-        const res = await get("/usage/client", true, 10000, signal);
-        if (res instanceof Error) return;
-        setUsage(res);
-      } catch (e) {}
-    })();
+      (async () => {
+        try {
+          const usage = await get("/usage/client", true, 10000, signal);
+          if (usage instanceof Error) return;
+          dispatch({ type: "usage", usage });
+        } catch (e) {}
+      })();
 
-    return () => controller.abort();
-  }, []);
-
-  const [{ balance, localFee, symbol }] = useStore();
+      return () => controller.abort();
+    },
+    [dispatch]
+  );
 
   const totalUsage = usage.reduce((a, b) => {
     return a + b.up + b.down;

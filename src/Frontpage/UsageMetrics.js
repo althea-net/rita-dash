@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Card, Heading, Left, Right } from "ui";
 import { useTranslation } from "react-i18next";
 
 import { useStore } from "store";
-import UsageContext from "store/Usage";
 
 import { toEth } from "utils";
 import { BigNumber } from "bignumber.js";
@@ -17,8 +16,7 @@ const bytesPerGb = BigNumber("1000000000");
 
 export default () => {
   const [t] = useTranslation();
-  const [{ symbol }] = useStore();
-  const { usage } = useContext(UsageContext);
+  const [{ usage, symbol }] = useStore();
 
   const initialUsage = { usage: 0, cost: 0 };
   const sumUsage = (a, b) => {

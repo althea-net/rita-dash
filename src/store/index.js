@@ -31,6 +31,7 @@ const state = {
   ritaVersion: null,
   symbol: null,
   txid: null,
+  usage: [],
   version: null,
   waiting: 0,
   wgPublicKey: null,

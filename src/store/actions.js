@@ -83,6 +83,7 @@ export default (state, action) => {
     },
     startPortChange: () => ({ portChange: true }),
     startWaiting: () => ({ waiting: 120 }),
+    usage: ({ usage }) => ({ usage }),
     wgPublicKey: ({ wgPublicKey }) => ({ wgPublicKey }),
     wifiChange: () => ({ wifiChange: true }),
     withdrawSuccess: ({ txid }) => ({ txid })
