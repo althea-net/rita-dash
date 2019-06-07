@@ -10,7 +10,7 @@ import Init from "./Init";
 const App = () => {
   const [page, setPage] = useState("dashboard");
   const [open, setOpen] = useState(false);
-  const [{ authenticated }] = useStore();
+  const [{ authenticated }, dispatch] = useStore();
 
   const styleRef = useRef();
 
@@ -18,6 +18,14 @@ const App = () => {
     const h = document.querySelector(".navbar").offsetHeight;
     styleRef.current = { minHeight: `calc(100vh - ${h}px)` };
   }, []);
+
+  useEffect(
+    () => {
+      const authenticated = !!window.sessionStorage.getItem("Authorization");
+      dispatch({ type: "authenticated", authenticated });
+    },
+    [dispatch]
+  );
 
   return (
     <>

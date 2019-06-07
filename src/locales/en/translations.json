@@ -1,5 +1,5 @@
 {
-  "loginError": "Password failed",
+  "loginError": "Password entry failed",
   "login": "Router Password Required",
   "passwordMismatch": "Passwords don't match",
   "passwordError": "Problem saving password",
