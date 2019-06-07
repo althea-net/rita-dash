@@ -12,8 +12,8 @@ import {
 
 export default ({ balance, symbol }) => {
   const [t] = useTranslation();
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [passConfirm, setConfirm] = useState("");
   const submit = () => {};
 
   return (
@@ -25,16 +25,6 @@ export default ({ balance, symbol }) => {
 
           <div className="d-flex">
             <FormGroup className="mb-0">
-              <Label for="username">{t("username")}</Label>
-              <Input
-                id="username"
-                className="mr-3"
-                onChange={e => setUsername(e.target.value)}
-                value={username}
-                style={{ width: 250 }}
-              />
-            </FormGroup>
-            <FormGroup className="mb-0">
               <Label for="password">{t("password")}</Label>
               <Input
                 id="password"
@@ -42,6 +32,16 @@ export default ({ balance, symbol }) => {
                 className="mr-3"
                 onChange={e => setPassword(e.target.value)}
                 value={password}
+                style={{ width: 250 }}
+              />
+            </FormGroup>
+            <FormGroup className="mb-0">
+              <Label for="passConfirm">{t("passConfirm")}</Label>
+              <Input
+                id="passConfirm"
+                className="mr-3"
+                onChange={e => setConfirm(e.target.value)}
+                value={passConfirm}
                 style={{ width: 250 }}
               />
             </FormGroup>
