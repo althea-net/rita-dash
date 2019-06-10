@@ -112,7 +112,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
             </h4>
             <h4 className="ml-2">{t("exitNodeSetup")}</h4>
           </div>
-          {pending && (
+          {((gotinfo && registering) || pending) && (
             <Button
               color="primary"
               className="ml-auto mr-2"
