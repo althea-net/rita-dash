@@ -124,23 +124,24 @@ const ExitNodeSetup = ({ open, setOpen }) => {
             </Button>
           )}
 
-          {!(
-            registered ||
-            denied ||
-            pending ||
-            resetting.length ||
-            registering
-          ) && (
-            <Button
-              color="primary"
-              onClick={next}
-              style={{ width: 150 }}
-              disabled={!valid}
-              id="setupModalNextButton"
-            >
-              {t("next")}
-            </Button>
-          )}
+          {exit &&
+            !(
+              registered ||
+              denied ||
+              pending ||
+              resetting.length ||
+              registering
+            ) && (
+              <Button
+                color="primary"
+                onClick={next}
+                style={{ width: 150 }}
+                disabled={!valid}
+                id="setupModalNextButton"
+              >
+                {t("next")}
+              </Button>
+            )}
           {(registered || denied) && (
             <Button
               color="primary"
