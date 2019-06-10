@@ -6,6 +6,7 @@ import Blockchain from "./Blockchain";
 import DaoFee from "./DaoFee";
 import Notifications from "./Notifications";
 import Firmware from "./Firmware";
+import RouterCredentials from "./RouterCredentials";
 
 export default () => {
   let [t] = useTranslation();
@@ -14,6 +15,7 @@ export default () => {
     <div>
       <h1 id="advancedPage">{t("advancedSettings")}</h1>
 
+      <RouterCredentials />
       <Notifications />
       <Blockchain />
       <DaoFee />

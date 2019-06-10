@@ -18,7 +18,7 @@ const endpoints = [
   "/local_fee",
   "/metric_factor",
   "/auto_price/enabled",
-  "/blockchain/get/",
+  "/blockchain/get",
   "/usage/client",
   "/usage/relay",
   "/usage/payments"

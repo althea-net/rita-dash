@@ -1,4 +1,10 @@
 {
+  "loginError": "Password entry failed",
+  "login": "Router Password Required",
+  "passwordMismatch": "Passwords don't match",
+  "passwordError": "Problem saving password",
+  "passwordSuccess": "Password was set successfully",
+  "passConfirm": "Confirm password",
   "noNeighbors": "No neighbors were found",
   "hourly": "Hourly",
   "daily":  "Daily",

@@ -1,4 +1,10 @@
 {
+  "loginError": "La entrada de contraseña falló",
+  "login": "Se requiere contraseña de enrutador",
+  "passwordMismatch": "Las contraseñas no coinciden",
+  "passwordError": "Problema al guardar la contraseña",
+  "passwordSuccess": "La contraseña se estableció correctamente",
+  "passConfirm": "Confirmar contraseña",
   "noNeighbors": "No se encontraron vecinos",
   "hourly": "Cada hora",
   "daily":  "Diario",

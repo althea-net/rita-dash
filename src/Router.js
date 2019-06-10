@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useStore } from "store";
+import Login from "./Login";
 
 import {
   Billing,
@@ -22,7 +24,9 @@ let routes = {
   "relay-settings": <RelaySettings />
 };
 
-export default ({ page, setPage, setOpen }) => {
+const Router = ({ page, setPage, setOpen }) => {
+  const [{ authenticated }] = useStore();
+
   useEffect(
     () => {
       const getPage = () => {
@@ -39,6 +43,9 @@ export default ({ page, setPage, setOpen }) => {
     [setOpen, setPage]
   );
 
+  if (!authenticated) return <Login />;
   if (routes[page]) return routes[page];
   else return <Frontpage />;
 };
+
+export default Router;

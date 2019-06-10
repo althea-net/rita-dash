@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { login, post } from "store";
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -12,28 +14,39 @@ import {
 
 export default ({ balance, symbol }) => {
   const [t] = useTranslation();
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const submit = () => {};
+  const [passConfirm, setConfirm] = useState("");
+  const [error, setError] = useState();
+  const [success, setSuccess] = useState(false);
+
+  const submit = async e => {
+    e.preventDefault();
+    setError();
+
+    if (password !== passConfirm) {
+      return setError(t("passwordMismatch"));
+    }
+
+    try {
+      await post("/router/password", { password });
+      login(password);
+      setSuccess(true);
+    } catch (e) {
+      setError(t("passwordError"));
+    }
+  };
 
   return (
     <Card className="mb-4">
       <CardBody>
-        <Form onSubmit={() => submit()}>
+        <Form onSubmit={submit}>
           <h3>{t("routerCredentials")}</h3>
           <p>{t("theseCredentials")}</p>
 
+          {error && <Alert color="danger">{error}</Alert>}
+          {success && <Alert color="success">{t("passwordSuccess")}</Alert>}
+
           <div className="d-flex">
-            <FormGroup className="mb-0">
-              <Label for="username">{t("username")}</Label>
-              <Input
-                id="username"
-                className="mr-3"
-                onChange={e => setUsername(e.target.value)}
-                value={username}
-                style={{ width: 250 }}
-              />
-            </FormGroup>
             <FormGroup className="mb-0">
               <Label for="password">{t("password")}</Label>
               <Input
@@ -45,8 +58,19 @@ export default ({ balance, symbol }) => {
                 style={{ width: 250 }}
               />
             </FormGroup>
+            <FormGroup className="mb-0">
+              <Label for="passConfirm">{t("passConfirm")}</Label>
+              <Input
+                id="passConfirm"
+                type="password"
+                className="mr-3"
+                onChange={e => setConfirm(e.target.value)}
+                value={passConfirm}
+                style={{ width: 250 }}
+              />
+            </FormGroup>
             <div className="mt-auto">
-              <Button color="primary" style={{ width: 100 }} disabled>
+              <Button color="primary" style={{ width: 100 }}>
                 {t("save")}
               </Button>
             </div>

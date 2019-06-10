@@ -13,7 +13,11 @@ import { useStore } from "store";
 
 const NoConnection = () => {
   const [t] = useTranslation();
-  const [{ portChange, waiting, wifiChange, version }] = useStore();
+  const [
+    { authenticated, portChange, waiting, wifiChange, version }
+  ] = useStore();
+
+  if (!authenticated) return null;
 
   return (
     <div>
