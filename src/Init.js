@@ -17,7 +17,7 @@ const Init = () => {
   const getInfo = useCallback(
     async () => {
       try {
-        const info = await get("/info", true, 2000);
+        const info = await get("/info", true, 5000);
         dispatch({ type: "info", info });
       } catch {
         dispatch({ type: "info", info: { version: null } });
@@ -27,7 +27,7 @@ const Init = () => {
   );
 
   useInterval(getDebt, 10000);
-  useInterval(getInfo, 2000);
+  useInterval(getInfo, 5000);
 
   useEffect(
     () => {
