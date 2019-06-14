@@ -22,6 +22,7 @@ export default ({ balance, symbol }) => {
   const submit = async e => {
     e.preventDefault();
     setError();
+    setSuccess();
 
     if (password !== passConfirm) {
       return setError(t("passwordMismatch"));
