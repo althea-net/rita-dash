@@ -191,7 +191,7 @@
   "sendTo": "Send To",
   "serverError": "Problem connecting to rita server",
   "serviceCost": "Service Cost",
-  "setYourBandwidth": "Set the price for your bandwidth.",
+  "setYourBandwidth": "Set the price that your neighbors pay to send data over your device. Be cautious when changing this.",
   "settingsError": "Problem retrieving settings",
   "settingsSaved": "Settings Saved Successfully",
   "setupExitNode": "Setup Exit Node",

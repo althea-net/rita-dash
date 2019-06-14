@@ -191,7 +191,7 @@
   "sendTo": "Enviar a",
   "serverError": "Problema al conectarse al servidor de rita",
   "serviceCost": "Costo del servicio",
-  "setYourBandwidth": "Elija su precio de conectividad",
+  "setYourBandwidth": "Establezca el precio que pagan sus vecinos para enviar datos a través de su dispositivo. Tenga cuidado al cambiar esto.",
   "settingsError": "Configuración de recuperación de problemas",
   "settingsSaved": "Configuración guardada con éxito",
   "setupExitNode": "Configurar nodo de salida",
