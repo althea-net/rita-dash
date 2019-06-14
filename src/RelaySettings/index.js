@@ -102,7 +102,8 @@ const RelaySettings = () => {
                   <td style={{ verticalAlign: "middle" }}>
                     {n.routeMetricToExit}
                   </td>
-                  {n.debt.paymentDetails.action === "SuspendTunnel" &&
+                  {n.debt &&
+                  n.debt.paymentDetails.action === "SuspendTunnel" &&
                   !stopping[n.debt.identity.wgPublicKey] ? (
                     <>
                       <td style={{ verticalAlign: "middle" }}>

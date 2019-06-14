@@ -12,7 +12,7 @@
   "monthly": "Mensual",
   "lastMonth": "El mes pasado",
   "stopEnforcing": "Dejar de imponer",
-  "enforcingIs": "Imponer es cuando su enrutador está limitando la conexión de un vecino porque no le han pagado. Use el botón \"Dejar de imponer\" para darles un descanso.",
+  "enforcingIs": "Hacer cumplir es cuando su enrutador está limitando la conexión de un vecino porque no le han pagado. Esto podría ocurrir porque no tienen suficiente dinero en su dispositivo o porque se ha producido un error en el sistema. Use el botón \"Dejar de aplicar\" para darles un descanso.",
   "whatIsEnforcing": "¿Qué es lo que impone?",
   "enforcing" :"Haciendo cumplir",
   "connectionQuality": "Calidad de conexión (Más bajo es mejor)",
