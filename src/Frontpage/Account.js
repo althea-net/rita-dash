@@ -60,7 +60,7 @@ export default () => {
     .toFixed(0);
 
   const usageCopy =
-    isNaN(perMonthUsage) || isNaN(weeksOfService) || usage.length < 24
+    isNaN(perMonthUsage) || isNaN(weeksOfService) || usage.length < 720
       ? t("insufficientUsage")
       : t("averageUsage", { perMonthUsage, weeksOfService });
 
