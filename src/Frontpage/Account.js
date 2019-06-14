@@ -62,7 +62,9 @@ export default () => {
   const usageCopy =
     isNaN(perMonthUsage) || isNaN(weeksOfService) || usage.length < 720
       ? t("insufficientUsage")
-      : t("averageUsage", { perMonthUsage, weeksOfService });
+      : weeksOfService < 1
+        ? t("lessThanAWeek", { perMonthUsage })
+        : t("averageUsage", { perMonthUsage, weeksOfService });
 
   const decimals = symbol === "USD" ? 2 : 4;
 

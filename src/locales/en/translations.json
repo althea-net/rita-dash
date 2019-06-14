@@ -1,4 +1,5 @@
 {
+  "lessThanAWeek": "Based on your average usage of {{perMonthUsage}} GB per month, your balance will provide you with less than a week of service.",
   "loginError": "Password entry failed",
   "login": "Router Password Required",
   "passwordMismatch": "Passwords don't match",
@@ -112,7 +113,7 @@
   "import": "Import",
   "importKey": "Import a private key to replace the current wallet attached to your router. Before doing so, we recommend exporting your current key as it has a balance of {{balance}} {{symbol}}.",
   "infoError": "Problem retrieving balance and version info",
-  "insufficientUsage": "Waiting for a day's worth of data before estimating your average monthly usage or how many weeks of service your balance will cover.",
+  "insufficientUsage": "Waiting for a month's worth of data before estimating your average monthly usage or how many weeks of service your balance will cover.",
   "ipAddress": "IP Address",
   "ipWillBeAssigned": "The router will be assigned the first non-zero address in the range: {{ipAddress}}",
   "linkToExit": "Link to exit",

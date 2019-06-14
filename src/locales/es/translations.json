@@ -1,4 +1,5 @@
 {
+  "lessThanAWeek": "Según su uso promedio de {{perMonthUsage}} GB por mes, su saldo le proporcionará menos de una semana de servicio.",
   "loginError": "La entrada de contraseña falló",
   "login": "Se requiere contraseña de enrutador",
   "passwordMismatch": "Las contraseñas no coinciden",
@@ -112,7 +113,7 @@
   "import": "Importar",
   "importKey": "Importar la llave privada para reemplazar la cartera digital relacionada con su router. Antes de hacer esto, le recomendamos que exporte su llave actual por que tiene un balance de {{balance}} {{symbol}}.",
   "infoError": "Problema al recuperar el saldo y la información de la versión",
-  "insufficientUsage": "Esperar el valor de los datos de un día antes de estimar su consumo mensual promedio o cuántas semanas de servicio cubrirá su saldo.",
+  "insufficientUsage": "Esperar el valor de los datos de un mes antes de estimar su consumo mensual promedio o cuántas semanas de servicio cubrirá su saldo.",
   "ipAddress": "Dirección IP",
   "ipWillBeAssigned": "Al router se le va asignar la primera dirección que no sea cero en el rango de: {{ipAddress}}",
   "linkToExit": "Enlaces hacia la salida",
