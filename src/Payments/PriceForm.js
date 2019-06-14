@@ -32,7 +32,7 @@ const PriceForm = () => {
   const [newPrice, setNewPrice] = useState(price);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const { symbol } = useStore();
+  const [{ symbol }] = useStore();
 
   const getPrice = async () => {
     const priceWei = (await get("/local_fee", true, 5000)).localFee;
