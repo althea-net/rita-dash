@@ -18,6 +18,8 @@ const Blockchain = () => {
   const [{ blockchain }, dispatch] = useStore();
   const [newBlockchain, setBlockchain] = useState(blockchain);
 
+  if (!blockchain) return null;
+
   let submit = async e => {
     e.preventDefault();
     await post(`/blockchain/set/${newBlockchain}`);

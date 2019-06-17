@@ -7,7 +7,7 @@ const LowBalance = () => {
   const [t] = useTranslation();
   const [{ balance, debt, closeThreshold, lowBalance }] = useStore();
 
-  if (!lowBalance) return null;
+  if (!lowBalance || !debt || !debt.negative) return null;
 
   if (
     debt.negative().isLessThan(BigNumber(closeThreshold)) ||
