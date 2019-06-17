@@ -3,7 +3,7 @@ import { get, useStore } from "store";
 import useInterval from "hooks/useInterval";
 
 const Init = () => {
-  const [, dispatch] = useStore();
+  const [{ authenticated }, dispatch] = useStore();
   const getDebt = useCallback(
     async () => {
       try {
@@ -18,8 +18,12 @@ const Init = () => {
     async () => {
       try {
         const info = await get("/info", true, 5000);
+        const authenticated = !(
+          info instanceof Error && parseInt(info.message) === 403
+        );
+        dispatch({ type: "authenticated", authenticated });
         dispatch({ type: "info", info });
-      } catch {
+      } catch (e) {
         dispatch({ type: "info", info: { version: null } });
       }
     },
@@ -55,7 +59,7 @@ const Init = () => {
 
       init();
     },
-    [dispatch, getDebt, getInfo]
+    [authenticated, dispatch, getDebt, getInfo]
   );
 
   return <></>;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { login, useStore } from "store";
+import { get, login, useStore } from "store";
 import {
   Alert,
   Button,
@@ -30,6 +30,8 @@ const Login = () => {
 
     try {
       await login(password);
+      const info = await get("/info", true, 5000);
+      dispatch({ type: "info", info });
       return dispatch({ type: "authenticated", authenticated: true });
     } catch (e) {
       setError(true);

@@ -18,7 +18,7 @@ const Blockchain = () => {
   const [{ blockchain }, dispatch] = useStore();
   const [newBlockchain, setBlockchain] = useState(blockchain);
 
-  if (!blockchain) return null;
+  if (!blockchain || !newBlockchain) return null;
 
   let submit = async e => {
     e.preventDefault();
