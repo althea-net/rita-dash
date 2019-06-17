@@ -2,6 +2,11 @@ $primary: #3DADF5;
 $btn-border-radius: 0;
 @import "~bootstrap/scss/bootstrap";
 @import "./react-phonenumber";
+@import "./font";
+
+body {
+  font-family: Akkurat;
+} 
 
 label {
   margin-top: 15px;
