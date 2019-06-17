@@ -5,6 +5,7 @@ $btn-border-radius: 0;
 @import "./font";
 
 body {
+  color: #002B36;
   font-family: Akkurat;
 } 
 
@@ -113,6 +114,13 @@ a.nav-link {
     margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #002B36 !important;
+  margin-left: 35px;
+} 
 
 .navbar-btn {
     box-shadow: none;

@@ -16,7 +16,7 @@ const Topbar = ({ open, setOpen }) => {
     >
       <div className="d-flex w-100">
         <NavbarBrand id="althea-home" href="#" className="d-flex my-auto">
-          <b style={{ fontSize: 24, marginLeft: 35 }}>Althea</b>
+          Althea
         </NavbarBrand>
         <div className="ml-auto d-none d-lg-block mr-4 my-auto">
           <LanguageSelector />
