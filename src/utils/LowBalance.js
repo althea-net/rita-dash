@@ -7,10 +7,10 @@ const LowBalance = () => {
   const [t] = useTranslation();
   const [{ balance, debt, closeThreshold, lowBalance }] = useStore();
 
-  if (!lowBalance || !debt || !debt.negative) return null;
+  if (!lowBalance || !debt) return null;
 
   if (
-    debt.negative().isLessThan(BigNumber(closeThreshold)) ||
+    debt.negated().isLessThan(BigNumber(closeThreshold)) ||
     parseInt(balance) === 0
   )
     return <div className="low-balance">{t("accountThrottled")}</div>;

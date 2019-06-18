@@ -9,6 +9,7 @@ import React, {
 
 import actions from "./actions";
 import { sha3_512 } from "js-sha3";
+import { BigNumber } from "bignumber.js";
 
 const state = {
   address: null,
@@ -18,6 +19,7 @@ const state = {
   blockchain: null,
   closeThreshold: null,
   daoAddress: null,
+  debt: new BigNumber("0"),
   debts: [],
   device: null,
   exits: [],
