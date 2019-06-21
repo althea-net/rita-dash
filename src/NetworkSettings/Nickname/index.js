@@ -26,7 +26,7 @@ const Nickname = () => {
       setLoading(true);
 
       try {
-        let nickname = await get("/nickname/get/");
+        let nickname = await get("/nickname/get");
         if (!(nickname instanceof Error)) setNickname(nickname);
       } catch {}
 
@@ -38,7 +38,7 @@ const Nickname = () => {
     e.preventDefault();
 
     try {
-      await post("/nickname/set/", { nickname: nickname });
+      await post("/nickname/set", { nickname: nickname });
       setSuccess(true);
     } catch {}
   };
