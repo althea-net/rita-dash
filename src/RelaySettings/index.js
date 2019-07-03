@@ -99,9 +99,7 @@ const RelaySettings = () => {
               {neighbors.map((n, i) => (
                 <tr key={i}>
                   <td style={{ verticalAlign: "middle" }}>{n.nickname}</td>
-                  <td style={{ verticalAlign: "middle" }}>
-                    {n.routeMetricToExit}
-                  </td>
+                  <td style={{ verticalAlign: "middle" }}>{n.routeMetric}</td>
                   {n.debt &&
                   n.debt.paymentDetails.action === "SuspendTunnel" &&
                   !stopping[n.debt.identity.wgPublicKey] ? (
