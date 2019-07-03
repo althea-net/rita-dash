@@ -13,7 +13,7 @@ import { BigNumber } from "bignumber.js";
 
 const state = {
   address: null,
-  authenticated: false,
+  authenticated: true,
   autoPricing: false,
   balance: null,
   blockchain: null,
