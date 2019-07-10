@@ -9,14 +9,15 @@ import {
   ModalHeader
 } from "reactstrap";
 
-export default ({ open, cancel, confirm }) => {
-  let [t] = useTranslation();
+const Confirm = ({ open, cancel, confirm, message }) => {
+  const [t] = useTranslation();
+  if (!message) message = t("thisAction");
 
   return (
     <Modal isOpen={open} centered toggle={cancel}>
       <ModalHeader>{t("Are you sure?")}</ModalHeader>
       <ModalBody>
-        <Alert color="warning">{t("thisAction")}</Alert>
+        <Alert color="warning">{message}</Alert>
         <p>{t("proceed")}</p>
       </ModalBody>
       <ModalFooter>
@@ -30,3 +31,5 @@ export default ({ open, cancel, confirm }) => {
     </Modal>
   );
 };
+
+export default Confirm;

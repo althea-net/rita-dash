@@ -1,4 +1,6 @@
 {
+  "routerWillReboot": "The router will reboot in {{seconds}} seconds",
+  "privateKeyImportWarning": "After importing your new private key, you will be required to wait for 30 minutes before your router reboots itself and then you'll be required to re-register with your exit server.",
   "lessThanAWeek": "Based on your average usage of {{perMonthUsage}} GB per month, your balance will provide you with less than a week of service.",
   "loginError": "Password entry failed",
   "login": "Router Password Required",
@@ -111,7 +113,7 @@
   "highestAcceptable": "Highest acceptable price",
   "history": "History",
   "import": "Import",
-  "importKey": "Import a private key to replace the current wallet attached to your router. Before doing so, we recommend exporting your current key as it has a balance of {{balance}} {{symbol}}.",
+  "importKey": "Import a private key to replace the current wallet attached to your router. Before doing so, we recommend exporting your current key which has a balance of {{balance}} {{symbol}}.",
   "infoError": "Problem retrieving balance and version info",
   "insufficientUsage": "Waiting for a month's worth of data before estimating your average monthly usage or how many weeks of service your balance will cover.",
   "ipAddress": "IP Address",

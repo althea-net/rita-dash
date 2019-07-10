@@ -10,15 +10,21 @@ export default () => {
 
   useEffect(() => {
     (async () => {
-      let { metricFactor } = await get("/metric_factor");
-      setFactor(metricFactor);
+      try {
+        let { metricFactor } = await get("/metric_factor");
+        setFactor(metricFactor);
+      } catch {}
     })();
   }, []);
 
   let debouncedFactor = useDebounce(factor, 500);
   useEffect(
     () => {
-      post(`/metric_factor/${factor}`);
+      try {
+        post(`/metric_factor/${factor}`);
+      } catch (e) {
+        console.log("caught metric factor", e);
+      }
     },
     [debouncedFactor, factor]
   );

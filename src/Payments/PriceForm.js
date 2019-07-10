@@ -35,15 +35,17 @@ const PriceForm = () => {
   const [{ symbol }] = useStore();
 
   const getPrice = async () => {
-    const priceWei = (await get("/local_fee", true, 5000)).localFee;
+    try {
+      const priceWei = (await get("/local_fee", true, 5000)).localFee;
 
-    const price = BigNumber(priceWei)
-      .div(weiPerEth)
-      .times(bytesPerGb)
-      .toString();
+      const price = BigNumber(priceWei)
+        .div(weiPerEth)
+        .times(bytesPerGb)
+        .toString();
 
-    setPrice(price);
-    if (autoPricing) setNewPrice(price);
+      setPrice(price);
+      if (autoPricing) setNewPrice(price);
+    } catch {}
 
     setLoading(false);
   };

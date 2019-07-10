@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  Alert,
   Button,
   Card,
   CardBody,
@@ -12,7 +11,8 @@ import {
   Progress
 } from "reactstrap";
 import { post, useStore } from "store";
-import { toEth } from "utils";
+import { Confirm, toEth } from "utils";
+import useInterval from "hooks/useInterval";
 
 import Export from "./Export";
 
@@ -20,34 +20,50 @@ const PrivateKeys = () => {
   const [t] = useTranslation();
   const [privateKey, setPrivateKey] = useState("");
   const [exporting, setExporting] = useState(false);
+  const [confirming, setConfirming] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
   const valid = parseInt(privateKey, 16) > 0;
 
-  const [{ balance, symbol }] = useStore();
+  const [{ balance, symbol, waiting }, dispatch] = useStore();
 
-  const save = async () => {
+  useInterval(() => {
+    if (saving) dispatch({ type: "keepWaiting" });
+  }, waiting ? 1000 : null);
+
+  const save = async e => {
+    e.preventDefault();
+
     const eth_private_key = privateKey;
-    setError(false);
-    setSuccess(false);
+    setConfirming(false);
     setSaving(true);
-    post("/eth_private_key", { eth_private_key })
-      .then(() => setSuccess(true))
-      .catch(err => setError(t("privateKeyError")))
-      .finally(() => setSaving(false));
+
+    dispatch({ type: "startKeyChange" });
+    dispatch({ type: "startWaiting", waiting: 100 });
+
+    post("/eth_private_key", { eth_private_key });
+    window.setTimeout(() => {
+      post("/router/reboot");
+    }, 100000);
+  };
+
+  const confirm = e => {
+    e.preventDefault();
+    setConfirming(true);
   };
 
   return (
     <Card className="mb-4">
       <CardBody>
+        <Confirm
+          open={confirming}
+          cancel={() => setConfirming(false)}
+          confirm={save}
+          message={t("privateKeyImportWarning")}
+        />
         <Export open={exporting} setOpen={setExporting} />
-        <Form onSubmit={save}>
+        <Form onSubmit={confirm}>
           <h3>{t("privateKeys")}</h3>
           <p>{t("importKey", { balance: toEth(balance), symbol })}</p>
-
-          {success && <Alert color="success">{t("privateKeyImported")}</Alert>}
-          {error && <Alert color="danger">{error}</Alert>}
           <h4>{t("import")}</h4>
           <FormGroup>
             <Label for="price">{t("privateKeyString")}</Label>

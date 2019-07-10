@@ -51,10 +51,11 @@ export default (state, action) => {
       lowBalance,
       ritaVersion,
       version,
-      waiting: state.portChange ? state.waiting : 0
+      waiting: state.portChange || state.keyChange ? state.waiting : 0
     }),
     meshIp: ({ meshIp }) => ({ meshIp }),
     keepWaiting: () => ({
+      keyChange: state.keyChange && state.waiting >= 1,
       portChange: state.portChange && state.waiting >= 1,
       waiting: state.waiting - 1
     }),
@@ -82,8 +83,9 @@ export default (state, action) => {
           })
       };
     },
+    startKeyChange: () => ({ keyChange: true }),
     startPortChange: () => ({ portChange: true }),
-    startWaiting: () => ({ waiting: 120 }),
+    startWaiting: ({ waiting }) => ({ waiting }),
     usage: ({ usage }) => ({ usage }),
     wgPublicKey: ({ wgPublicKey }) => ({ wgPublicKey }),
     wifiChange: () => ({ wifiChange: true }),

@@ -56,7 +56,7 @@ const Ports = () => {
     setOpen(false);
     setPortsWaiting(true);
     dispatch({ type: "startPortChange" });
-    dispatch({ type: "startWaiting" });
+    dispatch({ type: "startWaiting", waiting: 120 });
 
     interfaces[selected] = mode;
     dispatch({ type: "interfaces", interfaces });

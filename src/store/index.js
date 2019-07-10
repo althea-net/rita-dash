@@ -25,6 +25,7 @@ const state = {
   exits: [],
   factor: 0,
   interfaces: null,
+  keyChange: false,
   localFee: null,
   lowBalance: false,
   meshIp: null,
@@ -117,13 +118,13 @@ export async function post(url, data, camel = true) {
     headers
   });
 
-  if (!res.ok) throw new Error(res.status);
+  if (!res.ok) return new Error(res.status);
 
   let clone = res.clone();
   try {
     let json = await res.json();
     if (json && json.error) {
-      throw new Error(json.error);
+      return new Error(json.error);
     }
     if (camel) json = cckd(json);
     return json;

@@ -1,4 +1,6 @@
 {
+  "routerWillReboot": "El enrutador se reiniciará en {{seconds}} segundos.",
+  "privateKeyImportWarning": "Después de importar su nueva clave privada, se le pedirá que espere 30 minutos antes de que su enrutador se reinicie, y luego deberá volver a registrarse con su servidor de salida.",
   "lessThanAWeek": "Según su uso promedio de {{perMonthUsage}} GB por mes, su saldo le proporcionará menos de una semana de servicio.",
   "loginError": "La entrada de contraseña falló",
   "login": "Se requiere contraseña de enrutador",

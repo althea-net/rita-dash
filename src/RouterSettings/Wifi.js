@@ -63,7 +63,7 @@ const Wifi = () => {
     e.preventDefault();
 
     setWifiWaiting(true);
-    dispatch({ type: "startWaiting" });
+    dispatch({ type: "startWaiting", waiting: 120 });
 
     try {
       let data = [];
