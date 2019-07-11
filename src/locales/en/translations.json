@@ -1,6 +1,6 @@
 {
-  "routerWillReboot": "The router will reboot in {{seconds}} seconds",
-  "privateKeyImportWarning": "After importing your new private key, you will be required to wait for 30 minutes before your router reboots itself and then you'll be required to re-register with your exit server.",
+  "keyChange": "The connection to the router is being reset as your new private key is being imported. Please wait for the router to come back online.",
+  "privateKeyImportWarning": "After importing your new private key, the router connection will be reset and you'll be required to re-register with your exit server.",
   "lessThanAWeek": "Based on your average usage of {{perMonthUsage}} GB per month, your balance will provide you with less than a week of service.",
   "loginError": "Password entry failed",
   "login": "Router Password Required",

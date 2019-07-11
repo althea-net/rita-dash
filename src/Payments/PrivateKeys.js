@@ -7,8 +7,7 @@ import {
   Form,
   FormGroup,
   Input,
-  Label,
-  Progress
+  Label
 } from "reactstrap";
 import { post, useStore } from "store";
 import { Confirm, toEth } from "utils";
@@ -38,12 +37,9 @@ const PrivateKeys = () => {
     setSaving(true);
 
     dispatch({ type: "startKeyChange" });
-    dispatch({ type: "startWaiting", waiting: 100 });
+    dispatch({ type: "startWaiting", waiting: 120 });
 
     post("/eth_private_key", { eth_private_key });
-    window.setTimeout(() => {
-      post("/router/reboot");
-    }, 100000);
   };
 
   const confirm = e => {
@@ -67,26 +63,18 @@ const PrivateKeys = () => {
           <h4>{t("import")}</h4>
           <FormGroup>
             <Label for="price">{t("privateKeyString")}</Label>
-            {saving ? (
-              <Progress animated color="info" value="100" className="mb-2" />
-            ) : (
-              <div className="d-flex">
-                <Input
-                  className="mr-3"
-                  id="privateKey"
-                  onChange={e => setPrivateKey(e.target.value)}
-                  value={privateKey}
-                  style={{ width: 350 }}
-                />
-                <Button
-                  color="primary"
-                  style={{ width: 100 }}
-                  disabled={!valid}
-                >
-                  {t("import")}
-                </Button>
-              </div>
-            )}
+            <div className="d-flex">
+              <Input
+                className="mr-3"
+                id="privateKey"
+                onChange={e => setPrivateKey(e.target.value)}
+                value={privateKey}
+                style={{ width: 350 }}
+              />
+              <Button color="primary" style={{ width: 100 }} disabled={!valid}>
+                {t("import")}
+              </Button>
+            </div>
           </FormGroup>
         </Form>
         <h4>{t("export")}</h4>

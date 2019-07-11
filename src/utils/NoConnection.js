@@ -25,24 +25,21 @@ const NoConnection = () => {
         <ModalHeader>{t("noConnection")}</ModalHeader>
         <ModalBody>
           <Card>
-            {keyChange ? (
-              <CardBody>{t("routerWillReboot", { seconds: waiting })}</CardBody>
-            ) : (
-              <CardBody>
-                {portChange &&
-                  (!version || waiting > 60 ? (
-                    <Alert color="warning">{t("noReboot")}</Alert>
-                  ) : (
-                    <Alert color="info">{t("safeToReboot")}</Alert>
-                  ))}
-                {wifiChange &&
-                  waiting < 115 && (
-                    <Alert color="danger">{t("wifiChange")}</Alert>
-                  )}
-                {waiting > 0 ? t("waiting", { seconds: waiting }) : t("noRita")}
-                <Progress value={100} animated color="danger" />
-              </CardBody>
-            )}
+            <CardBody>
+              {portChange &&
+                (!version || waiting > 60 ? (
+                  <Alert color="warning">{t("noReboot")}</Alert>
+                ) : (
+                  <Alert color="info">{t("safeToReboot")}</Alert>
+                ))}
+              {keyChange && <Alert color="danger">{t("keyChange")}</Alert>}
+              {wifiChange &&
+                waiting < 115 && (
+                  <Alert color="danger">{t("wifiChange")}</Alert>
+                )}
+              {waiting > 0 ? t("waiting", { seconds: waiting }) : t("noRita")}
+              <Progress value={100} animated color="danger" />
+            </CardBody>
           </Card>
         </ModalBody>
       </Modal>
