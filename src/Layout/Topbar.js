@@ -2,7 +2,7 @@ import React from "react";
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
 import AltheaNav from "./Nav";
 import LanguageSelector from "./LanguageSelector";
-import LowBalance from "utils/LowBalance";
+import SystemWarning from "utils/SystemWarning";
 
 const Topbar = ({ open, setOpen }) => {
   let toggle = () => setOpen(!open);
@@ -37,7 +37,7 @@ const Topbar = ({ open, setOpen }) => {
           </Nav>
         </Collapse>
       </div>
-      <LowBalance />
+      <SystemWarning />
     </Navbar>
   );
 };

@@ -22,6 +22,7 @@ const state = {
   debt: new BigNumber("0"),
   debts: [],
   device: null,
+  exitIp: null,
   exits: [],
   factor: 0,
   interfaces: null,

@@ -3,10 +3,12 @@ import { useTranslation } from "react-i18next";
 import { Button } from "reactstrap";
 import ExitsContext from "store/Exits";
 import usa from "images/usa.svg";
+import { useStore } from "store";
 
-export default ({ exit, setExit, setRegistering }) => {
-  let [t] = useTranslation();
-  let { resetExit } = useContext(ExitsContext);
+export default ({ exit, setRegistering }) => {
+  const [t] = useTranslation();
+  const { resetExit } = useContext(ExitsContext);
+  const [, dispatch] = useStore();
 
   if (!exit) return null;
 
@@ -23,7 +25,7 @@ export default ({ exit, setExit, setRegistering }) => {
     exit.exitSettings.state = "GotInfo";
     setRegistering(false);
     resetExit(exit);
-    setExit(null);
+    dispatch({ type: "exit", exit: null });
   };
 
   return (

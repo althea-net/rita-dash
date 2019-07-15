@@ -30,7 +30,22 @@ export default (state, action) => {
       return state;
     },
     authenticated: ({ authenticated }) => ({ authenticated }),
-    exits: ({ exits }) => ({ exits }),
+    exits: ({ exits }) => {
+      let { resetting } = state;
+      const resetOccurred =
+        exits.length &&
+        state.resetting &&
+        exits
+          .filter(
+            e =>
+              e.exitSettings.state === "Pending" ||
+              e.exitSettings.state === "GotInfo"
+          )
+          .map(e => resetting.includes(e.nickname)).length;
+
+      if (resetOccurred) resetting = [];
+      return { exits, resetting };
+    },
     info: ({
       info: {
         address,
@@ -51,14 +66,17 @@ export default (state, action) => {
       lowBalance,
       ritaVersion,
       version,
-      waiting: state.portChange ? state.waiting : 0
+      waiting:
+        (state.keyChange && state.waiting > 110) || state.portChange
+          ? state.waiting
+          : 0
     }),
     meshIp: ({ meshIp }) => ({ meshIp }),
     keepWaiting: () => ({
       keyChange: state.keyChange && state.waiting >= 1,
       portChange: state.portChange && state.waiting >= 1,
       wifiChange: state.wifiChange && state.waiting >= 1,
-      waiting: state.waiting - 1
+      waiting: Math.max(state.waiting - 1, 0)
     }),
     interfaces: ({ interfaces }) => ({
       interfaces: Object.keys(interfaces)
@@ -84,6 +102,10 @@ export default (state, action) => {
           })
       };
     },
+    exitIp: ({ exitIp }) => ({ exitIp }),
+    reset: ({ nickname }) => ({
+      resetting: [...state.resetting, nickname]
+    }),
     startKeyChange: () => ({ keyChange: true }),
     startPortChange: () => ({ portChange: true }),
     startWaiting: ({ waiting }) => ({ waiting }),

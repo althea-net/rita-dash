@@ -2,9 +2,32 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, ListGroup } from "reactstrap";
 import ExitListItem from "./ExitListItem";
+import { useStore } from "store";
 
-const ExitList = ({ exits, selectExit }) => {
+const ExitList = ({ setOpen, select }) => {
   const [t] = useTranslation();
+  let [{ blockchain, exits }] = useStore();
+
+  const sort = (a, b) => {
+    a.nickname.localeCompare(b.nickname, undefined, {
+      sensitivity: "base"
+    });
+  };
+
+  exits = exits
+    .filter(exit => {
+      const {
+        exitSettings: { state }
+      } = exit;
+      return (
+        (state !== "New" &&
+          state !== "Disabled" &&
+          (exit.exitSettings.generalDetails &&
+            exit.exitSettings.generalDetails.exitCurrency === blockchain)) ||
+        state === "Denied"
+      );
+    })
+    .sort(sort);
 
   return (
     <div>
@@ -14,7 +37,7 @@ const ExitList = ({ exits, selectExit }) => {
             <ExitListItem
               exit={exit}
               key={exit.nickname}
-              click={() => selectExit(exit)}
+              click={() => select(exit)}
             />
           ))}
         </ListGroup>

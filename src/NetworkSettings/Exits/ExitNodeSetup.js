@@ -12,16 +12,19 @@ import PhoneForm from "./PhoneForm";
 import CodeForm from "./CodeForm";
 import SelectedExit from "./SelectedExit";
 import ExitsContext from "store/Exits";
+import { useStore } from "store";
 
 const isValidEmail = emailValidator.validate;
 
 const ExitNodeSetup = ({ open, setOpen }) => {
   const [t] = useTranslation();
 
-  const [exit, setExit] = useState(null);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [valid, setValid] = useState(false);
+
+  const [{ exitIp, exits, resetting }, dispatch] = useStore();
+  const exit = exits.find(e => e.exitSettings.id.meshIp === exitIp);
 
   let registered = false;
   let denied = false;
@@ -31,10 +34,8 @@ const ExitNodeSetup = ({ open, setOpen }) => {
 
   const {
     error,
-    exits,
     registering,
     setRegistering,
-    resetting,
     resetExit,
     registerExit,
     selectExit
@@ -56,15 +57,16 @@ const ExitNodeSetup = ({ open, setOpen }) => {
     }
   }
 
-  let available = exits.filter(exit => {
-    let { state } = exit.exitSettings;
-    return state !== "Disabled" && state !== "New";
-  });
+  const select = exit => {
+    let {
+      nickname,
+      exitSettings: {
+        id: { meshIp },
+        state
+      }
+    } = exit;
 
-  let onSelectExit = exit => {
-    let { nickname } = exit;
-
-    if (exit.exitSettings.state === "Registered") {
+    if (state === "Registered") {
       selectExit(nickname);
       setOpen(false);
     }
@@ -73,31 +75,31 @@ const ExitNodeSetup = ({ open, setOpen }) => {
       registerExit(nickname, email, phone);
     }
 
-    setExit(exit);
+    dispatch({ type: "exitIp", exitIp: meshIp });
   };
 
-  let handleEmail = e => {
-    let { value } = e.target;
+  const handleEmail = e => {
+    const { value } = e.target;
     setEmail(value);
     setValid(isValidEmail(value));
   };
 
-  let handlePhone = value => {
+  const handlePhone = value => {
     setPhone(value);
     setValid(isValidPhoneNumber(value));
   };
 
-  let next = () => {
+  const next = () => {
     setRegistering(true);
     registerExit(exit.nickname, email, phone);
   };
 
-  let reset = () => {
+  const reset = () => {
     setRegistering(false);
     resetExit(exit);
   };
 
-  let finish = () => {
+  const finish = () => {
     setRegistering(false);
     setOpen(false);
   };
@@ -161,17 +163,13 @@ const ExitNodeSetup = ({ open, setOpen }) => {
           </ModalBody>
         ) : (
           <>
-            <SelectedExit
-              exit={exit}
-              setExit={setExit}
-              setRegistering={setRegistering}
-            />
+            <SelectedExit exit={exit} setRegistering={setRegistering} />
             <ModalBody>
               <Error error={error} />
               {!exit && (
                 <div>
                   <p>{t("selectNode")}</p>
-                  <ExitList exits={available} selectExit={onSelectExit} />
+                  <ExitList select={select} />
                 </div>
               )}
               {gotinfo &&

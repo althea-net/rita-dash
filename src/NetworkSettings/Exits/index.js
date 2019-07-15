@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Card, CardBody, Progress } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { Error } from "utils";
 import ExitListItem from "./ExitListItem";
 import ExitNodeSetup from "./ExitNodeSetup";
 import { Provider } from "store/Exits";
-import { get, post } from "store";
+import { get, post, useStore } from "store";
 import useInterval from "hooks/useInterval";
 const AbortController = window.AbortController;
 
 const Exits = () => {
   const [t] = useTranslation();
   const [selectingExit, setSelectingExit] = useState(false);
-  const [exits, setExits] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [resetting, setResetting] = useState([]);
   const [initialized, setInitialized] = useState(false);
   const [registering, setRegistering] = useState(false);
+
+  const [{ exits, resetting }, dispatch] = useStore();
 
   const getExits = async signal => {
     if (!signal) {
@@ -30,31 +30,10 @@ const Exits = () => {
 
     try {
       const blockchain = await get("/blockchain/get", true, 5000, signal);
+      dispatch({ type: "blockchain", blockchain });
 
-      let exits = [];
-      exits = await get("/exits", true, 5000, signal);
-
-      if (exits instanceof Error) setError(t("error"));
-
-      const sort = (a, b) => {
-        a.nickname.localeCompare(b.nickname, undefined, {
-          sensitivity: "base"
-        });
-      };
-
-      if (exits.length) {
-        exits = exits
-          .filter(exit => {
-            return (
-              (exit.exitSettings.generalDetails &&
-                exit.exitSettings.generalDetails.exitCurrency === blockchain) ||
-              exit.exitSettings.state === "Denied"
-            );
-          })
-          .sort(sort);
-
-        setExits(exits);
-      }
+      let exits = await get("/exits", true, 5000, signal);
+      if (exits.length) dispatch({ type: "exits", exits, resetting });
 
       setLoading(false);
       setInitialized(true);
@@ -62,12 +41,8 @@ const Exits = () => {
   };
 
   const resetExit = async exit => {
-    let { exitSettings, nickname } = exit;
-    let r = resetting;
-    if (exitSettings.state === "Pending" || exitSettings.state === "Denied") {
-      r.push(exit.nickname);
-      setResetting(r);
-    }
+    const { nickname } = exit;
+    dispatch({ type: "reset", nickname, resetting });
     await post(`/exits/${nickname}/reset`);
     getExits();
   };
@@ -108,39 +83,26 @@ const Exits = () => {
     getExits();
   };
 
-  useEffect(
-    () => {
-      exits
-        .filter(
-          e =>
-            e.exitSettings.state === "Pending" ||
-            e.exitSettings.state === "GotInfo"
-        )
-        .map(e => resetting.includes(e.nickname) && setResetting([]));
-    },
-    [exits, resetting]
-  );
-
   useInterval(getExits, 5000);
 
-  let selected = exits.find(exit => {
-    let { state } = exit.exitSettings;
-    return exit.isSelected && state === "Registered";
-  });
+  let selected = null;
+  if (exits && exits.length) {
+    selected = exits.find(exit => {
+      let { state } = exit.exitSettings;
+      return exit.isSelected && state === "Registered";
+    });
+  }
 
   const store = {
     exits,
     getExits,
-    setExits,
     error,
     setError,
     registering,
     setRegistering,
     registerExit,
     resetExit,
-    resetting,
     selectExit,
-    setResetting,
     verifyExit
   };
 

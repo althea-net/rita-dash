@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import QR from "qrcode.react";
@@ -13,13 +13,30 @@ import {
   Label
 } from "reactstrap";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useStore } from "store";
+import { get, useStore } from "store";
 
 const NodeInformation = () => {
   const [t] = useTranslation();
   const [qr, setQR] = useState("");
   const [copied, setCopied] = useState("");
-  const [{ address, meshIp, wgPublicKey }] = useStore();
+  const [{ address, meshIp, wgPublicKey }, dispatch] = useStore();
+
+  useEffect(
+    () => {
+      const init = async () => {
+        const { meshIp } = await get("/mesh_ip");
+        dispatch({ type: "meshIp", meshIp });
+
+        const {
+          network: { wgPublicKey }
+        } = await get("/settings");
+        dispatch({ type: "wgPublicKey", wgPublicKey });
+      };
+
+      init();
+    },
+    [dispatch]
+  );
 
   const toggleQR = v => {
     if (qr === v) return setQR("");

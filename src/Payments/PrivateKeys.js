@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
+  Alert,
   Button,
   Card,
   CardBody,
@@ -21,13 +22,14 @@ const PrivateKeys = () => {
   const [exporting, setExporting] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState(false);
   const valid = parseInt(privateKey, 16) > 0;
 
   const [{ balance, symbol, waiting }, dispatch] = useStore();
 
   useInterval(() => {
     if (saving) dispatch({ type: "keepWaiting" });
-  }, waiting ? 1000 : null);
+  }, waiting > 0 ? 1000 : null);
 
   const save = async e => {
     e.preventDefault();
@@ -36,10 +38,13 @@ const PrivateKeys = () => {
     setConfirming(false);
     setSaving(true);
 
+    dispatch({ type: "meshIp", meshIp: null });
+    dispatch({ type: "wgPublicKey", wgPublicKey: null });
     dispatch({ type: "startKeyChange" });
     dispatch({ type: "startWaiting", waiting: 120 });
 
     post("/eth_private_key", { eth_private_key });
+    setSuccess(true);
   };
 
   const confirm = e => {
@@ -61,6 +66,8 @@ const PrivateKeys = () => {
           <h3>{t("privateKeys")}</h3>
           <p>{t("importKey", { balance: toEth(balance), symbol })}</p>
           <h4>{t("import")}</h4>
+          {!waiting &&
+            success && <Alert color="success">{t("privateKeyImported")}</Alert>}
           <FormGroup>
             <Label for="price">{t("privateKeyString")}</Label>
             <div className="d-flex">

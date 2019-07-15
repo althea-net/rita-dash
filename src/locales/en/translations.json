@@ -1,4 +1,5 @@
 {
+  "exitWarning": "You need to register with an exit node on the Network Connection page",
   "keyChange": "The connection to the router is being reset as your new private key is being imported. Please wait for the router to come back online.",
   "privateKeyImportWarning": "After importing your new private key, the router connection will be reset and you'll be required to re-register with your exit server.",
   "lessThanAWeek": "Based on your average usage of {{perMonthUsage}} GB per month, your balance will provide you with less than a week of service.",

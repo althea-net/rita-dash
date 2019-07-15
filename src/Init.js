@@ -46,14 +46,6 @@ const Init = () => {
           await getDebt();
           const blockchain = await get("/blockchain/get");
           dispatch({ type: "blockchain", blockchain });
-
-          const { meshIp } = await get("/mesh_ip");
-          dispatch({ type: "meshIp", meshIp });
-
-          const {
-            network: { wgPublicKey }
-          } = await get("/settings");
-          dispatch({ type: "wgPublicKey", wgPublicKey });
         } catch {}
       };
 
