@@ -1,4 +1,11 @@
 {
+  "updateFirmware": "Actualizaciones de firmware",
+  "releaseFeedSaved": "La alimentación de liberación se estableció correctamente",
+  "releaseFeed": "Feed de lanzamiento",
+  "generalAvailability": "Disponibilidad general (estable)",
+  "releaseCandidate": "Candidato de lanzamiento (inestable)",
+  "preRelease": "Prelanzamiento (vanguardia)",
+  "problemSubmittingForm": "Hubo un problema enviando el formulario",
   "exitWarning": "No tiene un servidor de salida seleccionado o no está registrado correctamente, visite la página de Conexión de red.",
   "keyChange": "La conexión al enrutador se restablece a medida que se importa su nueva clave privada. Espere a que el enrutador vuelva a estar en línea.",
   "privateKeyImportWarning": "Después de importar su nueva clave privada, la conexión del enrutador se restablecerá y se le solicitará que vuelva a registrarse con su servidor de salida.",

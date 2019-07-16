@@ -33,7 +33,7 @@ export default ({ open, setOpen }) => {
   return (
     <Modal isOpen={open} centered toggle={toggle} onClosed={closed} size="sm">
       <div className="modal-header d-flex justify-content-between">
-        <h4 className="m-0">{t("Firmware Updates")}</h4>
+        <h4 className="m-0">{t("firmwareUpdates")}</h4>
         <h2
           style={{ marginTop: -5, cursor: "pointer" }}
           onClick={() => setOpen(false)}

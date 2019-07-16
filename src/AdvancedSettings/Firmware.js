@@ -4,6 +4,7 @@ import { Button, Card, CardBody } from "reactstrap";
 import { useStore } from "store";
 
 import UpdateFirmware from "./UpdateFirmware";
+import ReleaseFeed from "./ReleaseFeed";
 
 const Firmware = () => {
   const [t] = useTranslation();
@@ -16,6 +17,7 @@ const Firmware = () => {
         <h3>{t("firmware")}</h3>
         <p>{t("version", { version, ritaVersion })}</p>
 
+        <ReleaseFeed />
         <UpdateFirmware open={checking} setOpen={setChecking} />
 
         <Button
