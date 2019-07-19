@@ -17,8 +17,7 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-add-swift-support": {},
-      "cordova-plugin-whitelist": {},
-      "cordova-plugin-qrscanner": {}
+      "cordova-plugin-whitelist": {}
     },
     "platforms": [
       "android",
@@ -46,7 +45,6 @@
     "cordova-android": "^7.1.1",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-add-swift-support": "^1.7.2",
-    "cordova-plugin-qrscanner": "git+https://github.com/asoltys/cordova-plugin-qrscanner.git",
     "cordova-plugin-whitelist": "1",
     "core-util-is": "^1.0.2",
     "cross-env": "^5.2.0",
@@ -78,7 +76,6 @@
     "react-dom": "^16.8.1",
     "react-i18next": "^10.0.0",
     "react-phone-number-input": "^2.3.11",
-    "react-qr-reader": "^2.1.1",
     "react-scripts": "^3.0.0",
     "react-sigma": "^1.2.30",
     "react-stateful": "https://github.com/asoltys/react-stateful",

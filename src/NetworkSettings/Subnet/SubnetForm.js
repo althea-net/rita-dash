@@ -11,7 +11,6 @@ import {
   Progress
 } from "reactstrap";
 import { Address6 } from "ip-address";
-import QrReader from "react-qr-reader";
 import Web3 from "web3";
 import { Error, Success } from "utils";
 
@@ -23,7 +22,6 @@ const SubnetForm = () => {
 
   const [ipAddress, setIpAddress] = useState("");
   const [daoAddress, setDaoAddress] = useState("");
-  const [scanning, setScanning] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
@@ -50,23 +48,6 @@ const SubnetForm = () => {
   const handleIp = e => setIpAddress(e.target.value);
   const handleDao = e => setDaoAddress(e.target.value);
 
-  const handleScan = result => {
-    if (!result) return;
-
-    const address = result.replace("ethereum:", "");
-    if (isAddress(address)) {
-      setDaoAddress(address);
-    }
-
-    try {
-      const { daoAddress, ipAddress } = JSON.parse(result);
-      setDaoAddress(daoAddress);
-      setIpAddress(ipAddress);
-    } catch {}
-
-    setScanning(false);
-  };
-
   const ipValid = ip.isValid();
   const daoValid = !!(daoAddress && isAddress(daoAddress));
   const valid = ipValid && daoValid;
@@ -89,8 +70,6 @@ const SubnetForm = () => {
     setLoading(false);
   };
 
-  const toggleScanning = () => setScanning(!scanning);
-
   if (loading) return <Progress value={100} animated color="info" />;
 
   return (
@@ -98,14 +77,6 @@ const SubnetForm = () => {
       <Error message={error} />
       <Success message={success} />
 
-      {scanning && (
-        <QrReader
-          onScan={handleScan}
-          onError={console.log}
-          style={{ maxWidth: 300 }}
-          className="mx-auto mb-4"
-        />
-      )}
       <FormGroup>
         {ipNeedsFormatting && (
           <Alert color="info">
@@ -136,16 +107,6 @@ const SubnetForm = () => {
         <FormFeedback invalid="true">{t("enterEthAddress")}</FormFeedback>
       </FormGroup>
       <div className="d-flex">
-        <Button
-          onClick={toggleScanning}
-          className="mr-2"
-          outline
-          color="primary"
-          style={{ width: 180 }}
-          id="subnetQR"
-        >
-          {scanning ? t("stopScanning") : t("scanQR")}
-        </Button>
         <Button
           type="submit"
           color="primary"
