@@ -17,7 +17,7 @@ const Exits = () => {
   const [initialized, setInitialized] = useState(false);
   const [registering, setRegistering] = useState(false);
 
-  const [{ exits, resetting }, dispatch] = useStore();
+  const [{ blockchain, exits, resetting }, dispatch] = useStore();
 
   const getExits = async signal => {
     if (!signal) {
@@ -89,7 +89,12 @@ const Exits = () => {
   if (exits && exits.length) {
     selected = exits.find(exit => {
       let { state } = exit.exitSettings;
-      return exit.isSelected && state === "Registered";
+      return (
+        exit.generalDetails &&
+        exit.generalDetails.exitCurrency === blockchain &&
+        exit.isSelected &&
+        state === "Registered"
+      );
     });
   }
 
