@@ -47,8 +47,8 @@ export default ({ balance, symbol }) => {
           {error && <Alert color="danger">{error}</Alert>}
           {success && <Alert color="success">{t("passwordSuccess")}</Alert>}
 
-          <div className="d-flex">
-            <FormGroup className="mb-0">
+          <div className="d-flex flex-wrap">
+            <FormGroup>
               <Label for="password">{t("password")}</Label>
               <Input
                 id="password"
@@ -59,7 +59,7 @@ export default ({ balance, symbol }) => {
                 style={{ width: 250 }}
               />
             </FormGroup>
-            <FormGroup className="mb-0">
+            <FormGroup>
               <Label for="passConfirm">{t("passConfirm")}</Label>
               <Input
                 id="passConfirm"
@@ -70,7 +70,7 @@ export default ({ balance, symbol }) => {
                 style={{ width: 250 }}
               />
             </FormGroup>
-            <div className="mt-auto">
+            <div className="mt-auto mb-3">
               <Button color="primary" style={{ width: 100 }}>
                 {t("save")}
               </Button>
