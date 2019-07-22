@@ -24,13 +24,17 @@ const NodeInformation = () => {
   useEffect(
     () => {
       const init = async () => {
-        const { meshIp } = await get("/mesh_ip");
-        dispatch({ type: "meshIp", meshIp });
+        try {
+          const { meshIp } = await get("/mesh_ip");
+          dispatch({ type: "meshIp", meshIp });
 
-        const {
-          network: { wgPublicKey }
-        } = await get("/settings");
-        dispatch({ type: "wgPublicKey", wgPublicKey });
+          const {
+            network: { wgPublicKey }
+          } = await get("/settings");
+          dispatch({ type: "wgPublicKey", wgPublicKey });
+        } catch (e) {
+          console.log(e);
+        }
       };
 
       init();
