@@ -87,15 +87,18 @@ const DaoFee = ({ readonly = false }) => {
           ) : (
             <FormGroup>
               <Label for="price">{t("monthlyCost")}</Label>
-              <div className="d-flex">
-                <InputGroup className="mr-3" style={{ width: 350 }}>
+              <div className="d-flex flex-wrap">
+                <InputGroup
+                  className="mr-3 mb-2"
+                  style={{ flexWrap: "nowrap", width: 350 }}
+                >
                   <Input
                     label={t("daoFee")}
                     name="daoFee"
                     id="daoFee"
                     onChange={e => setDaoFee(e.target.value)}
                     value={daoFee}
-                    style={{ borderRight: "none" }}
+                    style={{ borderRight: "none", minWidth: 80 }}
                     readOnly={readonly}
                   />
                   <InputGroupAddon addonType="append">
@@ -120,6 +123,7 @@ const DaoFee = ({ readonly = false }) => {
                       color="secondary"
                       className="ml-1"
                       onClick={defaultFee}
+                      style={{ whiteSpace: "nowrap" }}
                     >
                       {t("defaultFee")}
                     </Button>
