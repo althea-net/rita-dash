@@ -9,7 +9,7 @@ import {
   FormGroup,
   Input
 } from "reactstrap";
-import { useStore, post } from "store";
+import { get, post, useStore } from "store";
 
 const Blockchain = () => {
   const [t] = useTranslation();
@@ -22,8 +22,15 @@ const Blockchain = () => {
 
   let submit = async e => {
     e.preventDefault();
-    await post(`/blockchain/set/${newBlockchain}`);
-    dispatch({ type: "blockchain", blockchain: newBlockchain });
+    try {
+      await post(`/blockchain/set/${newBlockchain}`);
+      dispatch({ type: "blockchain", blockchain: newBlockchain });
+
+      const info = await get("/info", true, 5000);
+      dispatch({ type: "info", info });
+    } catch (e) {
+      console.log(e);
+    }
     setSuccess(true);
   };
 
