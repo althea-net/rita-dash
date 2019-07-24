@@ -1,4 +1,13 @@
 {
+  "dismiss": "Dismiss",
+  "backupWallet": "Backup your wallet so you don't lose your funds",
+  "setupExit": "Setup your exit node",
+  "addFunding": "Add funding to your wallet",
+  "setWifiPass": "Update your wi-fi password",
+  "setDashPass": "Set your dashboard password",
+  "setNickname": "Set your router nickname",
+  "gettingStarted": "Getting Started",
+  "completeSteps": "We recommend completing each of these steps before you start using your router.",
   "updateFirmware": "Update Firmware",
   "releaseFeedSaved": "Release feed set successfully",
   "releaseFeed": "Release Feed",

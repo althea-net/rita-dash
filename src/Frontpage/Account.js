@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import Deposit from "../Payments/Deposit";
-import Withdraw from "../Payments/Withdraw";
-
 import { Btn, Card, Left, Right } from "ui";
 import { toEth } from "utils";
 
 import { get, useStore } from "store";
-
-import updown from "../images/up_down.png";
 import { BigNumber } from "bignumber.js";
+
+import exclamation from "images/exclamation.svg";
+import updown from "../images/up_down.png";
+
+import Deposit from "../Payments/Deposit";
+import Withdraw from "../Payments/Withdraw";
+
 const AbortController = window.AbortController;
 
 export default () => {
@@ -89,6 +91,16 @@ export default () => {
         </div>
       </Left>
       <Right>
+        <div className="d-flex w-100 justify-content-around">
+          <img
+            src={exclamation}
+            alt="Exclamation Mark Symbol"
+            style={{ marginRight: 10 }}
+          />
+          <div className="my-auto" style={{ color: "gray" }}>
+            {t("yourConnection")}
+          </div>
+        </div>
         <div className="pr-2">
           <img src={updown} alt="Upload/Download" />
         </div>
