@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import useInterval from "hooks/useInterval";
 import {
   Alert,
   Button,
@@ -10,9 +11,8 @@ import {
   Input,
   Label
 } from "reactstrap";
-import { post, useStore } from "store";
+import { get, post, useStore } from "store";
 import { Confirm, toEth } from "utils";
-import useInterval from "hooks/useInterval";
 
 import Export from "./Export";
 
@@ -21,30 +21,38 @@ const PrivateKeys = () => {
   const [privateKey, setPrivateKey] = useState("");
   const [exporting, setExporting] = useState(false);
   const [confirming, setConfirming] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [warning, setWarning] = useState(false);
+  const [oldKey, setOldKey] = useState();
+
   const valid = parseInt(privateKey, 16) > 0;
 
-  const [{ balance, symbol, waiting }, dispatch] = useStore();
+  const [{ balance, symbol, wgPublicKey }, dispatch] = useStore();
 
-  useInterval(() => {
-    if (saving) dispatch({ type: "keepWaiting" });
-  }, waiting > 0 ? 1000 : null);
+  useInterval(async () => {
+    try {
+      const wgPublicKey = await get("/wg_public_key");
+      if (!(wgPublicKey instanceof Error))
+        dispatch({ type: "wgPublicKey", wgPublicKey });
+    } catch (e) {
+      console.log(e);
+    }
+  }, 5000);
+
+  useEffect(
+    () =>
+      (async () => {
+        const wgPublicKey = await get("/wg_public_key");
+        if (!(wgPublicKey instanceof Error)) setOldKey(wgPublicKey);
+      })(),
+    []
+  );
 
   const save = async e => {
     e.preventDefault();
-
-    const eth_private_key = privateKey;
     setConfirming(false);
-    setSaving(true);
 
-    dispatch({ type: "meshIp", meshIp: null });
-    dispatch({ type: "wgPublicKey", wgPublicKey: null });
-    dispatch({ type: "startKeyChange" });
-    dispatch({ type: "startWaiting", waiting: 120 });
-
-    post("/eth_private_key", { eth_private_key });
-    setSuccess(true);
+    post("/eth_private_key", { eth_private_key: privateKey });
+    setWarning(true);
   };
 
   const confirm = e => {
@@ -66,8 +74,13 @@ const PrivateKeys = () => {
           <h3>{t("privateKeys")}</h3>
           <p>{t("importKey", { balance: toEth(balance), symbol })}</p>
           <h4>{t("import")}</h4>
-          {!waiting &&
-            success && <Alert color="success">{t("privateKeyImported")}</Alert>}
+          {oldKey === wgPublicKey ? (
+            warning && (
+              <Alert color="warning">{t("privateKeyImportInitiated")}</Alert>
+            )
+          ) : (
+            <Alert color="success">{t("privateKeySuccess")}</Alert>
+          )}
           <FormGroup>
             <Label for="price">{t("privateKeyString")}</Label>
             <div className="d-flex">
