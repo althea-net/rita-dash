@@ -51,7 +51,7 @@ const Finances = () => {
       />
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
-      <div className="d-flex flex-column justify-content-between pr-lg-4 col-md-6">
+      <div className="d-flex justify-content-between pr-lg-4 mx-auto">
         <div style={{ paddingLeft: 20 }}>
           <h4 id="balance" className="mx-auto text-center w-100">
             {t("currentBalance")} {symbol === "USD" && "$"}
@@ -67,23 +67,27 @@ const Finances = () => {
           </div>
         </div>
       </div>
-      <Right>
-        {dismissed || (
-          <div className="d-flex w-100 justify-content-around">
-            <img
-              src={exclamation}
-              alt="Exclamation Mark Symbol"
-              style={{ marginRight: 10 }}
-            />
-            <div className="my-auto" style={{ color: "gray" }}>
-              {t("backupYourWallet")}
+      {dismissed || (
+        <Right>
+          <div className="d-flex flex-column">
+            <div className="d-flex w-100 justify-content-around">
+              <img
+                src={exclamation}
+                alt="Exclamation Mark Symbol"
+                style={{ marginRight: 10 }}
+              />
+              <div className="my-auto" style={{ color: "gray" }}>
+                {t("backupYourWallet")}
+              </div>
             </div>
-            <a href="#dismiss" onClick={dismiss}>
-              {t("dismissWarning")}
-            </a>
+            <div className="ml-auto">
+              <a href="#dismiss" onClick={dismiss}>
+                {t("dismissWarning")}
+              </a>
+            </div>
           </div>
-        )}
-      </Right>
+        </Right>
+      )}
       <UsageMetrics />
     </Card>
   );
