@@ -28,9 +28,7 @@ const NodeInformation = () => {
           const { meshIp } = await get("/mesh_ip");
           dispatch({ type: "meshIp", meshIp });
 
-          const {
-            network: { wgPublicKey }
-          } = await get("/settings");
+          const wgPublicKey = await get("/wg_public_key");
           dispatch({ type: "wgPublicKey", wgPublicKey });
         } catch (e) {
           console.log(e);
