@@ -1,8 +1,7 @@
 export { default as AdvancedSettings } from "AdvancedSettings";
-export { default as Billing } from "Billing";
+export { default as Finances } from "Finances";
 export { default as Frontpage } from "Frontpage";
-export { default as NetworkSettings } from "NetworkSettings";
-export { default as Payments } from "Payments";
+export { default as Settings } from "Settings";
 export { default as RouterSettings } from "RouterSettings";
 export { default as Endpoints } from "Endpoints";
-export { default as RelaySettings } from "RelaySettings";
+export { default as SellingBandwidth } from "SellingBandwidth";

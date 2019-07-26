@@ -3,25 +3,23 @@ import { useStore } from "store";
 import Login from "./Login";
 
 import {
-  Billing,
-  Endpoints,
   Frontpage,
-  AdvancedSettings,
   RouterSettings,
-  NetworkSettings,
-  Payments,
-  RelaySettings
+  Finances,
+  SellingBandwidth,
+  Settings,
+  AdvancedSettings,
+  Endpoints
 } from "./pages";
 
 let routes = {
   dashboard: <Frontpage />,
   "router-settings": <RouterSettings />,
-  "network-settings": <NetworkSettings />,
-  billing: <Billing />,
-  payments: <Payments />,
+  finances: <Finances />,
+  "selling-bandwidth": <SellingBandwidth />,
   advanced: <AdvancedSettings />,
-  endpoints: <Endpoints />,
-  "relay-settings": <RelaySettings />
+  settings: <Settings />,
+  endpoints: <Endpoints />
 };
 
 const Router = ({ page, setPage, setOpen }) => {

@@ -4,8 +4,6 @@ import { useStore } from "store";
 
 import Finances from "./Finances";
 import GettingStarted from "./GettingStarted";
-import NodeInformation from "./NodeInformation";
-import UsageMetrics from "./UsageMetrics";
 
 const Frontpage = () => {
   const [t] = useTranslation();
@@ -17,8 +15,6 @@ const Frontpage = () => {
       <p id="version">{t("version", { version, ritaVersion })}</p>
       <GettingStarted />
       <Finances />
-      <UsageMetrics />
-      <NodeInformation />
     </>
   );
 };

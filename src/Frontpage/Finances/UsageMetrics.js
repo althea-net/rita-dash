@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Heading, Left, Right } from "ui";
+import { Heading, Left, Right } from "ui";
 import { useTranslation } from "react-i18next";
 
 import { useStore } from "store";
@@ -14,7 +14,7 @@ const startOfLastMonth =
   new Date(today.getFullYear(), today.getMonth() - 1, 1).getTime() / 3600000;
 const bytesPerGb = BigNumber("1000000000");
 
-export default () => {
+const UsageMetrics = () => {
   const [t] = useTranslation();
   const [{ usage, symbol }] = useStore();
 
@@ -51,56 +51,54 @@ export default () => {
   const format = n => (BigNumber(n).gt(0) ? n : "---");
 
   return (
-    <div style={{ marginBottom: 40 }}>
-      <Heading
-        title={t("usageMetrics")}
-        link="#billing"
-        linkText={t("reviewBilling")}
-      />
-      <Card>
-        <Left>
-          <div className="d-flex flex-wrap justify-content-between w-100">
-            <h5 style={{ color: "gray" }}>{t("monthToDate")}</h5>
-            <div className="d-flex w-100 justify-content-around">
+    <div
+      className="ml-2 row mt-4 pt-4"
+      style={{ borderTop: "1px solid #dadada" }}
+    >
+      <div className="d-flex flex-column justify-content-between pr-lg-4 col-md-6">
+        <div className="d-flex flex-wrap justify-content-between w-100">
+          <h5 style={{ color: "gray" }}>{t("monthToDate")}</h5>
+          <div className="d-flex w-100 justify-content-around">
+            <div>
               <div>
-                <div>
-                  <h4>{format(thisMonthUsage)} GB</h4>
-                </div>
-                <div style={{ color: "gray" }}>{t("usage")}</div>
+                <h4>{format(thisMonthUsage)} GB</h4>
               </div>
+              <div style={{ color: "gray" }}>{t("usage")}</div>
+            </div>
+            <div>
               <div>
-                <div>
-                  <h4>
-                    {format(thisMonthCost)} {symbol}
-                  </h4>
-                </div>
-                <div style={{ color: "gray" }}>Cost</div>
+                <h4>
+                  {format(thisMonthCost)} {symbol}
+                </h4>
               </div>
+              <div style={{ color: "gray" }}>Cost</div>
             </div>
           </div>
-        </Left>
-        <Right>
-          <div className="d-flex flex-wrap justify-content-between w-100">
-            <h5 style={{ color: "gray" }}>{t("lastMonth")}</h5>
-            <div className="d-flex w-100 justify-content-around">
+        </div>
+      </div>
+      <Right>
+        <div className="d-flex flex-wrap justify-content-between w-100">
+          <h5 style={{ color: "gray" }}>{t("lastMonth")}</h5>
+          <div className="d-flex w-100 justify-content-around">
+            <div>
               <div>
-                <div>
-                  <h4>{format(lastMonthUsage)} GB</h4>
-                </div>
-                <div style={{ color: "gray" }}>{t("usage")}</div>
+                <h4>{format(lastMonthUsage)} GB</h4>
               </div>
+              <div style={{ color: "gray" }}>{t("usage")}</div>
+            </div>
+            <div>
               <div>
-                <div>
-                  <h4>
-                    {format(lastMonthCost)} {symbol}
-                  </h4>
-                </div>
-                <div style={{ color: "gray" }}>{t("cost")}</div>
+                <h4>
+                  {format(lastMonthCost)} {symbol}
+                </h4>
               </div>
+              <div style={{ color: "gray" }}>{t("cost")}</div>
             </div>
           </div>
-        </Right>
-      </Card>
+        </div>
+      </Right>
     </div>
   );
 };
+
+export default UsageMetrics;
