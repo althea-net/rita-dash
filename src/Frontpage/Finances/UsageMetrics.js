@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Left, Right } from "ui";
+import { Right } from "ui";
 import { useTranslation } from "react-i18next";
 
 import { useStore } from "store";

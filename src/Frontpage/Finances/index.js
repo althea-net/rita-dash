@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Btn, Card, Heading, Left, Right } from "ui";
+import { Btn, Card, Heading, Right } from "ui";
 import { toEth } from "utils";
 import { get, useStore } from "store";
 
