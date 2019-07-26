@@ -47,9 +47,9 @@ const NodeInformation = () => {
 
   return (
     <>
-      <h2>{t("nodeInfo")}</h2>
-      <Card>
+      <Card className="mb-4">
         <CardBody>
+          <h2>{t("nodeInfo")}</h2>
           {qr && (
             <div className="text-center">
               <QR

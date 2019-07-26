@@ -12,7 +12,7 @@ import {
   Label
 } from "reactstrap";
 
-export default ({ balance, symbol }) => {
+const DashboardPassword = ({ balance, symbol }) => {
   const [t] = useTranslation();
   const [password, setPassword] = useState("");
   const [passConfirm, setConfirm] = useState("");
@@ -81,3 +81,5 @@ export default ({ balance, symbol }) => {
     </Card>
   );
 };
+
+export default DashboardPassword;

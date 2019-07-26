@@ -113,7 +113,7 @@ const Exits = () => {
 
   return (
     <Provider value={store}>
-      <Card className="mb-2">
+      <Card className="mb-4">
         <CardBody>
           {selectingExit || <Error error={error} />}
           <h3>{t("exitNode")}</h3>
