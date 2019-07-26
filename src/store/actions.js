@@ -66,14 +66,10 @@ export default (state, action) => {
       lowBalance,
       ritaVersion,
       version,
-      waiting:
-        (state.keyChange && state.waiting > 110) || state.portChange
-          ? state.waiting
-          : 0
+      waiting: state.portChange ? state.waiting : 0
     }),
     meshIp: ({ meshIp }) => ({ meshIp }),
     keepWaiting: () => ({
-      keyChange: state.keyChange && state.waiting >= 1,
       portChange: state.portChange && state.waiting >= 1,
       wifiChange: state.wifiChange && state.waiting >= 1,
       waiting: Math.max(state.waiting - 1, 0)
@@ -106,7 +102,6 @@ export default (state, action) => {
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname]
     }),
-    startKeyChange: () => ({ keyChange: true }),
     startPortChange: () => ({ portChange: true }),
     startWaiting: ({ waiting }) => ({ waiting }),
     usage: ({ usage }) => ({ usage }),

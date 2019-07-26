@@ -26,7 +26,6 @@ const state = {
   exits: [],
   factor: 0,
   interfaces: null,
-  keyChange: false,
   localFee: null,
   lowBalance: false,
   meshIp: null,
