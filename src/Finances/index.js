@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Btn, Card, Heading, Left, Right } from "ui";
+import { Btn, Card, Left, Right } from "ui";
 
 import padlock from "../images/padlock.svg";
 
-import Account from "./Account";
 import Deposit from "../Deposit";
 import Withdraw from "../Withdraw";
+
+import Account from "./Account";
+import PurchasingBandwidth from "./PurchasingBandwidth";
 
 const Finances = () => {
   const [t] = useTranslation();
@@ -38,6 +40,7 @@ const Finances = () => {
           </div>
         </Right>
       </Card>
+      <PurchasingBandwidth />
     </>
   );
 };

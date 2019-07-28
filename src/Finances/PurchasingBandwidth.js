@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Btn, Card, Left, Right } from "ui";
-import { toEth } from "utils";
+import { Card, Left, Right } from "ui";
 
 import { get, useStore } from "store";
 import { BigNumber } from "bignumber.js";
 
-import exclamation from "images/exclamation.svg";
 import updown from "../images/up_down.png";
 
-import Deposit from "../Payments/Deposit";
-import Withdraw from "../Payments/Withdraw";
+import Deposit from "../Deposit";
+import Withdraw from "../Withdraw";
+
+import QualityForm from "./QualityForm";
 
 const AbortController = window.AbortController;
 
@@ -20,8 +20,7 @@ const PurchasingBandwidth = () => {
 
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
-  const [{ balance, localFee, usage, symbol }, dispatch] = useStore();
-  const [dismissed, setDismissed] = useState(false);
+  const [{ balance, localFee, usage }, dispatch] = useStore();
 
   useEffect(
     () => {
@@ -69,33 +68,19 @@ const PurchasingBandwidth = () => {
         ? t("lessThanAWeek", { perMonthUsage })
         : t("averageUsage", { perMonthUsage, weeksOfService });
 
-  const decimals = symbol === "USD" ? 2 : 4;
-
   return (
     <Card>
-      <Heading
-        title={t("finances")}
-        link="#finances"
-        linkText={t("reviewFinances")}
-      />
+      <h3 className="w-100">{t("purchasingBandwidth")}</h3>
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
       <Left>
         <QualityForm />
       </Left>
       <Right>
-        {dismissed || (
-          <div className="d-flex w-100 justify-content-around">
-            <img
-              src={exclamation}
-              alt="Exclamation Mark Symbol"
-              style={{ marginRight: 10 }}
-            />
-            <div className="my-auto" style={{ color: "gray" }}>
-              {t("backupYourWallet")}
-            </div>
-          </div>
-        )}
+        <div className="pr-2">
+          <img src={updown} alt="Upload/Download" />
+        </div>
+        <p dangerouslySetInnerHTML={{ __html: usageCopy }} />
       </Right>
     </Card>
   );

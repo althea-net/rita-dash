@@ -1,4 +1,5 @@
 {
+  "purchasingBandwidth": "Purchasing Bandwidth",
   "backupOrReplace": "Backup or replace wallet",
   "routerHasWallet": "Your router has a cryptocurrency wallet that sends and receives payments. It's important to back it up so you don't lose money.",
   "dismissWarning": "Dismiss Warning",
@@ -156,7 +157,7 @@
   "monthlyUse": "% of average monthly use",
   "neighbors": "Neighbors",
   "neighborsError": "Problem retrieving neighbors",
-  "neighbours": "Assuming you have more than one \"neighbor node\", these settings control which neighbor your router connects with.",
+  "neighbours": "Control which neighbor your router connects with, making a tradeoff between price and connection quality.",
   "networkConnection": "Network Connection",
   "networkPassword": "Network Password",
   "networkSettings": "Network Settings",

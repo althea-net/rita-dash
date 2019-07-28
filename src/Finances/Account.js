@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Btn, Card, Heading } from "ui";
+import { Btn } from "ui";
 import { toEth } from "utils";
 
 import { get, useStore } from "store";
-
-import exclamation from "images/exclamation.svg";
 
 import Deposit from "../Deposit";
 import Withdraw from "../Withdraw";
@@ -19,12 +17,6 @@ const Finances = () => {
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [{ balance, symbol }, dispatch] = useStore();
-  const [dismissed, setDismissed] = useState(false);
-
-  const dismiss = e => {
-    e.preventDefault();
-    setDismissed(true);
-  };
 
   useEffect(
     () => {
