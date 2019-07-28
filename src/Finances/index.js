@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Card, Heading, Left, Right } from "ui";
+import { Btn, Card, Heading, Left, Right } from "ui";
 
 import padlock from "../images/padlock.svg";
 
@@ -16,26 +16,29 @@ const Finances = () => {
   const [withdrawing, setWithdrawing] = useState(false);
 
   return (
-    <Card>
-      <Heading
-        title={t("finances")}
-        link="#finances"
-        linkText={t("reviewFinances")}
-      />
-      <Deposit open={depositing} setOpen={setDepositing} />
-      <Withdraw open={withdrawing} setOpen={setWithdrawing} />
-      <Left>
-        <Account />
-      </Left>
-      <Right>
-        <div className="d-flex w-100 justify-content-around">
-          <img src={padlock} alt="Padlock Symbol" style={{ marginRight: 10 }} />
-          <div className="my-auto" style={{ color: "gray" }}>
-            {t("backupYourWallet")}
+    <>
+      <h2>{t("finances")}</h2>
+      <Card>
+        <Deposit open={depositing} setOpen={setDepositing} />
+        <Withdraw open={withdrawing} setOpen={setWithdrawing} />
+        <Left>
+          <Account />
+        </Left>
+        <Right>
+          <div className="d-flex flex-column">
+            <div className="d-flex w-100 justify-content-around">
+              <img src={padlock} alt="Padlock Symbol" style={{ padding: 15 }} />
+              <div className="my-auto" style={{ color: "gray" }}>
+                {t("routerHasWallet")}
+                <Btn onClick={() => setDepositing(true)} className="w-100 mt-2">
+                  {t("backupOrReplace")}
+                </Btn>
+              </div>
+            </div>
           </div>
-        </div>
-      </Right>
-    </Card>
+        </Right>
+      </Card>
+    </>
   );
 };
 

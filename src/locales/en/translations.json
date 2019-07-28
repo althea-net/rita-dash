@@ -1,4 +1,6 @@
 {
+  "backupOrReplace": "Backup or replace wallet",
+  "routerHasWallet": "Your router has a cryptocurrency wallet that sends and receives payments. It's important to back it up so you don't lose money.",
   "dismissWarning": "Dismiss Warning",
   "settings": "Settings",
   "advanced": "Advanced",

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Btn, Card, Heading, Left, Right } from "ui";
+import { Btn, Card, Heading } from "ui";
 import { toEth } from "utils";
 
 import { get, useStore } from "store";
@@ -47,48 +47,27 @@ const Finances = () => {
   const decimals = symbol === "USD" ? 2 : 4;
 
   return (
-    <Card>
-      <Heading
-        title={t("finances")}
-        link="#finances"
-        linkText={t("reviewFinances")}
-      />
+    <>
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
-      <Left>
-        <div style={{ paddingLeft: 20 }}>
-          <h4 id="balance" className="mx-auto text-center w-100">
-            {t("currentBalance")} {symbol === "USD" && "$"}
-            {toEth(balance, decimals)} {symbol}
-          </h4>
-          <div className="d-flex justify-content-center">
-            <Btn id="deposit" onClick={() => setDepositing(true)}>
-              {t("topUp")}
-            </Btn>
-            <Btn id="withdraw" onClick={() => setWithdrawing(true)}>
-              {t("withdraw")}
-            </Btn>
-          </div>
+      <div style={{ paddingLeft: 20 }} className="text-center">
+        <h5 style={{ color: "gray", fontSize: 18 }} className="mb-3">
+          {t("currentBalance")}
+        </h5>
+        <h4 id="balance" className="w-100 mb-3">
+          {symbol === "USD" && "$"}
+          {toEth(balance, decimals)} {symbol}
+        </h4>
+        <div className="d-flex justify-content-center">
+          <Btn id="deposit" onClick={() => setDepositing(true)}>
+            {t("topUp")}
+          </Btn>
+          <Btn id="withdraw" onClick={() => setWithdrawing(true)}>
+            {t("withdraw")}
+          </Btn>
         </div>
-      </Left>
-      <Right>
-        {dismissed || (
-          <div className="d-flex w-100 justify-content-around">
-            <img
-              src={exclamation}
-              alt="Exclamation Mark Symbol"
-              style={{ marginRight: 10 }}
-            />
-            <div className="my-auto" style={{ color: "gray" }}>
-              {t("backupYourWallet")}
-            </div>
-            <a href="#dismiss" onClick={dismiss}>
-              {t("dismissWarning")}
-            </a>
-          </div>
-        )}
-      </Right>
-    </Card>
+      </div>
+    </>
   );
 };
 
