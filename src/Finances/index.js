@@ -9,6 +9,7 @@ import Deposit from "../Deposit";
 import Withdraw from "../Withdraw";
 
 import Account from "./Account";
+import Billing from "./Billing";
 import PurchasingBandwidth from "./PurchasingBandwidth";
 
 const Finances = () => {
@@ -41,6 +42,7 @@ const Finances = () => {
         </Right>
       </Card>
       <PurchasingBandwidth />
+      <Billing />
     </>
   );
 };

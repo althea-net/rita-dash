@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Card, CardBody, Input, Table } from "reactstrap";
-import Pagination from "./Pagination";
+import Pagination from "../Pagination";
 import { get, useStore } from "store";
 import { BigNumber } from "bignumber.js";
 import { toEth } from "utils";
@@ -151,14 +151,13 @@ const Billing = (daoAddress, ipAddress) => {
 
   return (
     <div>
-      <h1>{t("billing")}</h1>
       {!client.length ? (
         <Alert color="info">{t("noUsage")}</Alert>
       ) : (
         <Card>
           <CardBody>
             <div className="d-flex flex-wrap">
-              <h2>{t("history")}</h2>
+              <h3>{t("billingHistory")}</h3>
               <div className="ml-auto d-flex mb-4">
                 <div
                   style={{
