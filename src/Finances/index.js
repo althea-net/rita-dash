@@ -7,6 +7,7 @@ import padlock from "../images/padlock.svg";
 
 import Deposit from "../Deposit";
 import Withdraw from "../Withdraw";
+import WalletManagement from "../WalletManagement";
 
 import Account from "./Account";
 import Billing from "./Billing";
@@ -16,6 +17,7 @@ const Finances = () => {
   const [t] = useTranslation();
 
   const [depositing, setDepositing] = useState(false);
+  const [managing, setManaging] = useState(true);
   const [withdrawing, setWithdrawing] = useState(false);
 
   return (
@@ -24,6 +26,7 @@ const Finances = () => {
       <Card>
         <Deposit open={depositing} setOpen={setDepositing} />
         <Withdraw open={withdrawing} setOpen={setWithdrawing} />
+        <WalletManagement open={managing} setOpen={setManaging} />
         <Left>
           <Account />
         </Left>
@@ -33,7 +36,7 @@ const Finances = () => {
               <img src={padlock} alt="Padlock Symbol" style={{ padding: 15 }} />
               <div className="my-auto" style={{ color: "gray" }}>
                 {t("routerHasWallet")}
-                <Btn onClick={() => setDepositing(true)} className="w-100 mt-2">
+                <Btn onClick={() => setManaging(true)} className="w-100 mt-2">
                   {t("backupOrReplace")}
                 </Btn>
               </div>
