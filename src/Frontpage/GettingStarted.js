@@ -9,13 +9,13 @@ const List = ({ steps }) => {
   return (
     <ul>
       {steps.map(step => (
-        <li style={{ listStyle: "none" }} className="d-flex">
+        <li style={{ listStyle: "none" }} className="d-flex" key={step.name}>
           <CustomInput
             type="checkbox"
             id={step.name}
             name={step.name}
             checked={step.completed}
-            readonly
+            readOnly
           />
           <Label
             for={step.name}
