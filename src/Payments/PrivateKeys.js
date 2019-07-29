@@ -38,14 +38,13 @@ const PrivateKeys = () => {
     }
   }, 5000);
 
-  useEffect(
-    () =>
-      (async () => {
-        const wgPublicKey = await get("/wg_public_key");
-        if (!(wgPublicKey instanceof Error)) setOldKey(wgPublicKey);
-      })(),
-    []
-  );
+  useEffect(() => {
+    (async () => {
+      const wgPublicKey = await get("/wg_public_key");
+      if (!(wgPublicKey instanceof Error)) setOldKey(wgPublicKey);
+    })();
+    return;
+  }, []);
 
   const save = async e => {
     e.preventDefault();
