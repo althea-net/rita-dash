@@ -5,21 +5,50 @@ import {
   FormGroup,
   Label,
   Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   Modal,
   ModalHeader,
   ModalBody
 } from "reactstrap";
+import { get } from "store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import padlock from "../images/padlock.svg";
 import refresh from "../images/refresh.svg";
 
 export default ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [privateKey, setPrivateKey] = useState("");
-  const showKey = () => {};
-  const valid = parseInt(privateKey, 16) > 0;
+  const [newPrivateKey, setNewPrivateKey] = useState("");
+  const [showing, setShowing] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copy = () => setCopied(true);
+
+  let init = async () => {
+    let { ethPrivateKey } = await get("/eth_private_key");
+    setPrivateKey(ethPrivateKey);
+  };
+
+  const hideKey = () => {
+    setCopied(false);
+    setShowing(false);
+  };
+  const showKey = () => setShowing(true);
+
+  const valid = parseInt(newPrivateKey, 16) > 0;
 
   return (
-    <Modal isOpen={open} size="lg" centered toggle={() => setOpen(!open)}>
+    <Modal
+      isOpen={open}
+      size="lg"
+      centered
+      toggle={() => setOpen(!open)}
+      onOpened={init}
+    >
       <ModalHeader>{t("walletManagement")}</ModalHeader>
       <ModalBody>
         <p>{t("altheaUses")}</p>
@@ -30,9 +59,38 @@ export default ({ open, setOpen }) => {
           </div>
           <div>
             <p>{t("backupYourAccount")}</p>
-            <Button color="primary" onClick={showKey}>
-              {t("showPrivateKey")}
-            </Button>
+            {showing ? (
+              <div className="d-flex">
+                <InputGroup className="mr-2">
+                  <Input
+                    type="textarea"
+                    readOnly
+                    id="currentKey"
+                    name="privateKey"
+                    onChange={e => setNewPrivateKey(e.target.value)}
+                    value={privateKey}
+                  />
+                  <CopyToClipboard text={privateKey} onCopy={copy}>
+                    <InputGroupAddon addonType="append">
+                      <InputGroupText
+                        style={{ cursor: "pointer" }}
+                        id="copySubnetAddr"
+                      >
+                        <FontAwesomeIcon icon="copy" />
+                      </InputGroupText>
+                    </InputGroupAddon>
+                  </CopyToClipboard>
+                </InputGroup>
+                <Button color="primary" onClick={hideKey}>
+                  {t("hide")}
+                </Button>
+              </div>
+            ) : (
+              <Button color="primary" onClick={showKey}>
+                {t("showPrivateKey")}
+              </Button>
+            )}
+            {copied && <p>{t("copied")}</p>}
           </div>
         </div>
         <h6>{t("replaceAccount")}</h6>
@@ -50,7 +108,7 @@ export default ({ open, setOpen }) => {
                   id="privateKey"
                   name="privateKey"
                   onChange={e => setPrivateKey(e.target.value)}
-                  value={privateKey}
+                  value={newPrivateKey}
                   style={{ width: 350 }}
                 />
                 <Button
