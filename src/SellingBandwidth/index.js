@@ -7,9 +7,7 @@ import { BigNumber } from "bignumber.js";
 import { toEth } from "utils";
 import { format } from "date-fns";
 
-import en from "date-fns/locale/en";
-import es from "date-fns/locale/es";
-import fr from "date-fns/locale/fr";
+import { enUS as en, es, fr } from "date-fns/locale";
 
 const bytesPerGb = BigNumber("1000000000");
 const msPerHr = 3600000;

@@ -8,9 +8,7 @@ import { toEth } from "utils";
 import { format } from "date-fns";
 import ExportCSV from "./ExportCSV";
 
-import en from "date-fns/locale/en";
-import es from "date-fns/locale/es";
-import fr from "date-fns/locale/fr";
+import { enUS as en, es, fr } from "date-fns/locale";
 
 const bytesPerGb = BigNumber("1000000000");
 const msPerHr = 3600000;
@@ -22,7 +20,6 @@ const Billing = (daoAddress, ipAddress) => {
   const [period, setPeriod] = useState("w");
   const [client, setClient] = useState([]);
   const [exporting, setExporting] = useState(true);
-  const [relay, setRelay] = useState([]);
   const [payments, setPayments] = useState([]);
   const [page, setPage] = useState(1);
 
@@ -46,9 +43,7 @@ const Billing = (daoAddress, ipAddress) => {
 
   let data = {};
 
-  let indices = client
-    .map(h => h.index)
-    .filter(x => relay.map(h => h.index).includes(x));
+  let indices = client.map(h => h.index);
 
   indices.map(index => {
     const date = new Date(index * msPerHr);
@@ -106,11 +101,6 @@ const Billing = (daoAddress, ipAddress) => {
       } catch {}
 
       try {
-        let relay = await get("/usage/relay");
-        if (!(relay instanceof Error)) setRelay(relay);
-      } catch {}
-
-      try {
         let payments = await get("/usage/payments");
         if (!(payments instanceof Error)) setPayments(payments);
       } catch {}
@@ -124,12 +114,12 @@ const Billing = (daoAddress, ipAddress) => {
       case "m":
         return format(date, "MMM", { locale });
       case "d":
-        return format(date, "MMM DD", { locale });
+        return format(date, "MMM dd", { locale });
       case "w":
-        return format(date, "MMM DD", { locale });
+        return format(date, "MMM dd", { locale });
       case "h":
       default:
-        return format(date, "MMM DD, HH:SS", { locale });
+        return format(date, "MMM dd, HH:SS", { locale });
     }
   };
 
@@ -139,13 +129,13 @@ const Billing = (daoAddress, ipAddress) => {
     switch (period) {
       case "m":
         date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-        return format(date, "MMM YYYY", { locale });
+        return format(date, "MMM yyyy", { locale });
       case "d":
         date = new Date((parseInt(hour) + 24) * msPerHr);
-        return format(date, "DD, YYYY", { locale });
+        return format(date, "dd, yyyy", { locale });
       case "w":
         date = new Date((parseInt(hour) + 7 * 24) * msPerHr);
-        return format(date, "MMM DD, YYYY", { locale });
+        return format(date, "MMM dd, yyyy", { locale });
       case "h":
       default:
         date = new Date((parseInt(hour) + 1) * msPerHr);
