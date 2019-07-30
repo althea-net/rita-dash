@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -15,14 +15,25 @@ import "react-widgets/dist/css/react-widgets.css";
 import { enUS as en, es, fr } from "date-fns/locale";
 
 dateFnsLocalizer({ formats: defaultFormats, locales: { en, es, fr } });
+const msPerHr = 3600000;
 
-export default ({ open, setOpen }) => {
+export default ({ open, setOpen, usage }) => {
   const [t] = useTranslation();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [exportAll, setExportAll] = useState(false);
 
   const toggleAll = () => setExportAll(!exportAll);
+
+  useEffect(
+    () => {
+      if (exportAll) {
+        setStartDate(new Date(Math.min(...usage.map(h => h.index)) * msPerHr));
+        setEndDate(new Date(Math.max(...usage.map(h => h.index)) * msPerHr));
+      }
+    },
+    [exportAll, usage]
+  );
 
   return (
     <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>

@@ -18,7 +18,7 @@ const Billing = (daoAddress, ipAddress) => {
   const locale = { en, es, fr }[i18n.language];
 
   const [period, setPeriod] = useState("w");
-  const [client, setClient] = useState([]);
+  const [usage, setUsage] = useState([]);
   const [exporting, setExporting] = useState(true);
   const [payments, setPayments] = useState([]);
   const [page, setPage] = useState(1);
@@ -43,7 +43,7 @@ const Billing = (daoAddress, ipAddress) => {
 
   let data = {};
 
-  let indices = client.map(h => h.index);
+  let indices = usage.map(h => h.index);
 
   indices.map(index => {
     const date = new Date(index * msPerHr);
@@ -84,7 +84,7 @@ const Billing = (daoAddress, ipAddress) => {
         .filter(p => p.to.meshIp === "::1")
         .reduce((a, b) => a + parseInt(b.amount), 0);
 
-    let c = client.find(c => c.index === index);
+    let c = usage.find(c => c.index === index);
 
     data[i].up += c.up;
     data[i].down += c.down;
@@ -96,8 +96,8 @@ const Billing = (daoAddress, ipAddress) => {
   useEffect(() => {
     (async () => {
       try {
-        let client = await get("/usage/client");
-        if (!(client instanceof Error)) setClient(client);
+        let usage = await get("/usage/client");
+        if (!(usage instanceof Error)) setUsage(usage);
       } catch {}
 
       try {
@@ -145,9 +145,9 @@ const Billing = (daoAddress, ipAddress) => {
 
   return (
     <div>
-      <ExportCSV open={exporting} setOpen={setExporting} />
+      <ExportCSV open={exporting} setOpen={setExporting} usage={usage} />
 
-      {!client.length ? (
+      {!usage.length ? (
         <Alert color="info">{t("noUsage")}</Alert>
       ) : (
         <Card>
