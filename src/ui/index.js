@@ -23,7 +23,7 @@ export const Left = styled.div.attrs({
 `;
 
 export const Right = styled.div.attrs({
-  className: "pl-4 col-md-6 d-flex"
+  className: "pl-4 col-md-6 d-flex my-auto"
 })``;
 
 export const Card = ({ children }) => (
