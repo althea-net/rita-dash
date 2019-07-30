@@ -55,7 +55,7 @@ export default ({ open, setOpen }) => {
   return (
     <div>
       <Modal isOpen={open} toggle={() => setOpen(!open)}>
-        <ModalHeader>
+        <ModalHeader toggle={() => setOpen(!open)}>
           {t("withdraw")} {symbol}
         </ModalHeader>
         <ModalBody>
