@@ -1,4 +1,8 @@
 {
+  "exportAllData": "Export all data",
+  "startDate": "Start Date",
+  "endDate": "End Date",
+  "exportToCsv": "Export to CSV",
   "hide": "Hide",
   "padlockSymbol": "Padlock Symbol",
   "refreshSymbol": "Refresh Symbol",

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Card, CardBody, Input, Table } from "reactstrap";
+import { Alert, Button, Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "../Pagination";
 import { get, useStore } from "store";
 import { BigNumber } from "bignumber.js";
 import { toEth } from "utils";
 import { format } from "date-fns";
+import ExportCSV from "./ExportCSV";
 
 import en from "date-fns/locale/en";
 import es from "date-fns/locale/es";
@@ -20,10 +21,13 @@ const Billing = (daoAddress, ipAddress) => {
 
   const [period, setPeriod] = useState("w");
   const [client, setClient] = useState([]);
+  const [exporting, setExporting] = useState(true);
   const [relay, setRelay] = useState([]);
   const [payments, setPayments] = useState([]);
-  const [{ symbol }] = useStore();
   const [page, setPage] = useState(1);
+
+  const [{ symbol }] = useStore();
+
   const periods = {
     h: t("hourly"),
     d: t("daily"),
@@ -151,6 +155,8 @@ const Billing = (daoAddress, ipAddress) => {
 
   return (
     <div>
+      <ExportCSV open={exporting} setOpen={setExporting} />
+
       {!client.length ? (
         <Alert color="info">{t("noUsage")}</Alert>
       ) : (
@@ -227,12 +233,21 @@ const Billing = (daoAddress, ipAddress) => {
               </Table>
             </div>
 
-            <Pagination
-              data={Object.keys(data)}
-              limit={limit}
-              page={page}
-              setPage={setPage}
-            />
+            <div className="d-flex w-100 justify-content-between">
+              <div />
+              <Pagination
+                data={Object.keys(data)}
+                limit={limit}
+                page={page}
+                setPage={setPage}
+              />
+
+              <div className="text-right">
+                <Button onClick={() => setExporting(true)}>
+                  {t("exportToCsv")}
+                </Button>
+              </div>
+            </div>
           </CardBody>
         </Card>
       )}
