@@ -43,10 +43,15 @@ export default ({ open, setOpen }) => {
     <>
       <h6>{t("backupAccount")}</h6>
       <div className="d-flex mb-4 mt-3">
-        <div className="col-3 text-center my-auto">
-          <img src={padlock} alt={t("padlockSymbol")} height={110} />
+        <div className="col-4 col-md-3 text-center my-auto">
+          <img
+            src={padlock}
+            alt={t("padlockSymbol")}
+            className="img-fluid"
+            style={{ maxWidth: 80 }}
+          />
         </div>
-        <div>
+        <div className="col-8 col-md-9">
           <p>{t("backupYourAccount")}</p>
           {showing ? (
             <div className="d-flex">

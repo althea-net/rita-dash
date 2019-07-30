@@ -17,7 +17,7 @@ const Finances = () => {
   const [t] = useTranslation();
 
   const [depositing, setDepositing] = useState(false);
-  const [managing, setManaging] = useState(true);
+  const [managing, setManaging] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
 
   return (
@@ -33,7 +33,9 @@ const Finances = () => {
         <Right>
           <div className="d-flex flex-column">
             <div className="d-flex w-100 justify-content-around">
-              <img src={padlock} alt="Padlock Symbol" style={{ padding: 15 }} />
+              <div className="pr-2 col-4 my-auto">
+                <img src={padlock} alt="Padlock Symbol" style={{ width: 60 }} />
+              </div>
               <div className="my-auto" style={{ color: "gray" }}>
                 {t("routerHasWallet")}
                 <Btn onClick={() => setManaging(true)} className="w-100 mt-2">

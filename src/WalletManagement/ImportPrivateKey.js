@@ -52,10 +52,15 @@ const PrivateKey = () => {
     <>
       <h6>{t("replaceAccount")}</h6>
       <div className="d-flex mt-2">
-        <div className="col-3 text-center my-auto">
-          <img src={refresh} alt={t("refreshSymbol")} />
+        <div className="col-4 col-md-3 text-center my-auto">
+          <img
+            src={refresh}
+            alt={t("refreshSymbol")}
+            className="img-fluid"
+            style={{ maxWidth: 80 }}
+          />
         </div>
-        <div>
+        <div className="col-8 col-md-9">
           {confirming ? (
             <>
               {oldKey === wgPublicKey ? (
@@ -87,9 +92,9 @@ const PrivateKey = () => {
 
               <FormGroup>
                 <Label for="privateKey">{t("newPrivateKey")}</Label>
-                <div className="d-flex">
+                <div className="d-flex flex-wrap">
                   <Input
-                    className="mr-3"
+                    className="mr-3 mb-2"
                     id="privateKey"
                     name="privateKey"
                     onChange={e => setPrivateKey(e.target.value)}

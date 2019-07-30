@@ -70,17 +70,21 @@ const PurchasingBandwidth = () => {
 
   return (
     <Card>
-      <h3 className="w-100">{t("purchasingBandwidth")}</h3>
+      <div className="col-12">
+        <h3>{t("purchasingBandwidth")}</h3>
+      </div>
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
       <Left>
         <QualityForm />
       </Left>
       <Right>
-        <div className="pr-2">
-          <img src={updown} alt="Upload/Download" />
+        <div className="col-4 pr-2">
+          <img src={updown} alt="Upload/Download" style={{ width: 80 }} />
         </div>
-        <p dangerouslySetInnerHTML={{ __html: usageCopy }} />
+        <div>
+          <p dangerouslySetInnerHTML={{ __html: usageCopy }} />
+        </div>
       </Right>
     </Card>
   );
