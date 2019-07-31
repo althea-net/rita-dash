@@ -143,9 +143,24 @@ const Billing = (daoAddress, ipAddress) => {
     }
   };
 
+  const rows = Object.keys(data)
+    .reverse()
+    .slice((page - 1) * limit, page * limit)
+    .map(d => ({
+      index: d.index,
+      period: `${start(d)} - ${end(d)}`,
+      usage:
+        BigNumber(data[d].up + data[d].down)
+          .div(bytesPerGb)
+          .toFixed(3) + "GB",
+      bandwidthCost: `${toEth(data[d].cost, 3)} ${symbol}`,
+      serviceCost: `${toEth(data[d].service, 3)} ${symbol}`,
+      totalCost: `${toEth(data[d].service + data[d].cost, 3)} ${symbol}`
+    }));
+
   return (
     <div>
-      <ExportCSV open={exporting} setOpen={setExporting} usage={usage} />
+      <ExportCSV open={exporting} setOpen={setExporting} rows={rows} />
 
       {!usage.length ? (
         <Alert color="info">{t("noUsage")}</Alert>
@@ -184,41 +199,22 @@ const Billing = (daoAddress, ipAddress) => {
                 <thead>
                   <tr>
                     <th>{t("period")}</th>
-                    <th>{t("upload")}</th>
-                    <th>{t("download")}</th>
+                    <th>{t("usage")}</th>
                     <th>{t("bandwidthCost")}</th>
                     <th>{t("serviceCost")}</th>
+                    <th>{t("totalCost")}</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.keys(data)
-                    .reverse()
-                    .slice((page - 1) * limit, page * limit)
-                    .map(d => (
-                      <tr key={d}>
-                        <td>
-                          {start(d)} - {end(d)}
-                        </td>
-                        <td>
-                          {BigNumber(data[d].up)
-                            .div(bytesPerGb)
-                            .toFixed(3)}
-                          GB
-                        </td>
-                        <td>
-                          {BigNumber(data[d].down)
-                            .div(bytesPerGb)
-                            .toFixed(3)}
-                          GB
-                        </td>
-                        <td>
-                          {toEth(data[d].cost, 6)} {symbol}
-                        </td>
-                        <td>
-                          {toEth(data[d].service, 6)} {symbol}
-                        </td>
-                      </tr>
-                    ))}
+                  {rows.map(r => (
+                    <tr key={r.period}>
+                      <td>{r.period}</td>
+                      <td>{r.usage}</td>
+                      <td>{r.bandwidthCost}</td>
+                      <td>{r.serviceCost}</td>
+                      <td>{r.totalCost}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </div>

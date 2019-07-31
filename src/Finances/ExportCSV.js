@@ -17,7 +17,7 @@ import { enUS as en, es, fr } from "date-fns/locale";
 dateFnsLocalizer({ formats: defaultFormats, locales: { en, es, fr } });
 const msPerHr = 3600000;
 
-export default ({ open, setOpen, usage }) => {
+const ExportCSV = ({ open, setOpen, rows }) => {
   const [t] = useTranslation();
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
@@ -28,12 +28,40 @@ export default ({ open, setOpen, usage }) => {
   useEffect(
     () => {
       if (exportAll) {
-        setStartDate(new Date(Math.min(...usage.map(h => h.index)) * msPerHr));
-        setEndDate(new Date(Math.max(...usage.map(h => h.index)) * msPerHr));
+        const indices = rows.map(r => r.index);
+        setStartDate(new Date(Math.min(...indices) * msPerHr));
+        setEndDate(new Date(Math.max(...indices) * msPerHr));
       }
     },
-    [exportAll, usage]
+    [exportAll, rows]
   );
+
+  if (!rows.length) return null;
+  const keys = Object.keys(rows[0]).filter(k => k !== "index");
+
+  const csv =
+    keys.map(k => `"${t(k)}"`).join(",") +
+    "\n" +
+    rows.map(r => keys.map(k => `"${r[k]}"`).join(",")).join("\n");
+
+  const save = () => {
+    const filename = "usage.csv";
+    let blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    if (navigator.msSaveBlob) {
+      navigator.msSaveBlob(blob, filename);
+    } else {
+      let link = document.createElement("a");
+      if (link.download !== undefined) {
+        let url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", filename);
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  };
 
   return (
     <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>
@@ -76,7 +104,7 @@ export default ({ open, setOpen, usage }) => {
           <Button color="primary" outline className="w-50 mr-2">
             {t("cancel")}
           </Button>
-          <Button color="primary" className="w-50">
+          <Button color="primary" className="w-50" onClick={save}>
             {t("export")}
           </Button>
         </div>
@@ -84,3 +112,5 @@ export default ({ open, setOpen, usage }) => {
     </Modal>
   );
 };
+
+export default ExportCSV;
