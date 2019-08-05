@@ -52,7 +52,7 @@
     "date-fns": "2.0.0-alpha.13",
     "debounce": "^1.2.0",
     "email-validator": "^2.0.4",
-    "eslint": "^6.1.0",
+    "eslint": "5",
     "eslint-plugin-flowtype": "^3.7.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
@@ -89,6 +89,5 @@
     "typescript": "^3.4.5",
     "unstated": "^2.1.1",
     "web3": "^1.0.0-beta.35"
-  },
-  "devDependencies": {}
+  }
 }
