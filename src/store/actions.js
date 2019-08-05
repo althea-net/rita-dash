@@ -30,6 +30,7 @@ export default (state, action) => {
       return state;
     },
     authenticated: ({ authenticated }) => ({ authenticated }),
+    backupCreated: ({ backupCreated }) => ({ backupCreated }),
     exits: ({ exits }) => {
       let { resetting } = state;
       const resetOccurred =

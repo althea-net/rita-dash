@@ -16,6 +16,7 @@ const state = {
   authenticated: true,
   autoPricing: false,
   balance: null,
+  backupCreated: false,
   blockchain: null,
   closeThreshold: null,
   daoAddress: null,

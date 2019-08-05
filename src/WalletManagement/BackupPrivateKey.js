@@ -13,7 +13,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import padlock from "../images/padlock.svg";
 
-export default ({ open, setOpen }) => {
+const BackupPrivateKey = () => {
   const [t] = useTranslation();
   const [privateKey, setPrivateKey] = useState("");
   const [showing, setShowing] = useState(false);
@@ -52,7 +52,7 @@ export default ({ open, setOpen }) => {
           />
         </div>
         <div className="col-8 col-md-9">
-          <p>{t("backupYourAccount")}</p>
+          <p>{t("backupText")}</p>
           {showing ? (
             <div className="d-flex">
               <InputGroup className="mr-2">
@@ -89,3 +89,5 @@ export default ({ open, setOpen }) => {
     </>
   );
 };
+
+export default BackupPrivateKey;

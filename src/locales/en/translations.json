@@ -1,4 +1,7 @@
 {
+  "yourPrivateKey": "Your private key",
+  "doneBackingUp": "I'm done backing up",
+  "backupYourAccount": "Backup your account",
   "totalCost": "Total Cost",
   "exportAllData": "Export all data",
   "startDate": "Start Date",
@@ -10,7 +13,8 @@
   "walletManagement": "Wallet Management",
   "altheaUses": "Althea uses cryptocurrency wallets to send and receive payments. Your router comes with a wallet and it's important to back it up so you don't lose money.",
   "backupAccount": "Backup Account",
-  "backupYourAccount": "Backup your account by saving your private key in a secure location. Your private key is similar to a password to access your Althea funding and should never be shared with anyone. You will need this if you ever need to recover your current account.",
+  "backupTextShort": "Backup your account by saving your private key in a secure location. Your private key is similar to a password to access your Althea funding and should never be shared with anyone.",
+  "backupText": "Backup your account by saving your private key in a secure location. Your private key is similar to a password to access your Althea funding and should never be shared with anyone. You will need this if you ever need to recover your current account.",
   "showPrivateKey": "Show me my private key",
   "replaceAccount": "Replace Account",
   "ifYouWant": "If you want to change the wallet that is used with Althea, you can import a new wallet by supplying a new private key. If your current wallet has a balance, you should backup your current private key before replacing.",

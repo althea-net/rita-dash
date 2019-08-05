@@ -5,7 +5,7 @@ import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { get, post, useStore } from "store";
 import refresh from "../images/refresh.svg";
 
-const PrivateKey = () => {
+const ImportPrivateKey = () => {
   const [t] = useTranslation();
   const [privateKey, setPrivateKey] = useState("");
   const [confirming, setConfirming] = useState(false);
@@ -118,4 +118,4 @@ const PrivateKey = () => {
   );
 };
 
-export default PrivateKey;
+export default ImportPrivateKey;

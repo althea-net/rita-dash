@@ -14,7 +14,7 @@ const Finances = () => {
   let [t] = useTranslation();
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
-  const [{ balance, symbol }, dispatch] = useStore();
+  const [{ balance, backupCreated, symbol }, dispatch] = useStore();
   const [dismissed, setDismissed] = useState(false);
 
   const dismiss = e => {
@@ -67,27 +67,28 @@ const Finances = () => {
           </div>
         </div>
       </div>
-      {dismissed || (
-        <Right>
-          <div className="d-flex flex-column">
-            <div className="d-flex w-100 justify-content-around">
-              <img
-                src={exclamation}
-                alt="Exclamation Mark Symbol"
-                style={{ marginRight: 10 }}
-              />
-              <div className="my-auto" style={{ color: "gray" }}>
-                {t("backupYourWallet")}
+      {backupCreated ||
+        dismissed || (
+          <Right>
+            <div className="d-flex flex-column">
+              <div className="d-flex w-100 justify-content-around">
+                <img
+                  src={exclamation}
+                  alt="Exclamation Mark Symbol"
+                  style={{ marginRight: 10 }}
+                />
+                <div className="my-auto" style={{ color: "gray" }}>
+                  {t("backupYourWallet")}
+                </div>
+              </div>
+              <div className="ml-auto">
+                <a href="#dismiss" onClick={dismiss}>
+                  {t("dismissWarning")}
+                </a>
               </div>
             </div>
-            <div className="ml-auto">
-              <a href="#dismiss" onClick={dismiss}>
-                {t("dismissWarning")}
-              </a>
-            </div>
-          </div>
-        </Right>
-      )}
+          </Right>
+        )}
       <UsageMetrics />
     </Card>
   );

@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CustomInput, Label } from "reactstrap";
 import { Card } from "../ui";
+import Backup from "../Backup";
+import { get, useStore } from "store";
 
 const List = ({ steps }) => {
   const [t] = useTranslation();
@@ -16,6 +18,7 @@ const List = ({ steps }) => {
             name={step.name}
             checked={step.completed}
             readOnly
+            onClick={step.onClick}
           />
           <Label
             for={step.name}
@@ -34,15 +37,12 @@ const List = ({ steps }) => {
 
 export default () => {
   const [t] = useTranslation();
+  const [backingUp, setBackingUp] = useState(true);
   const [dismissed, setDismissed] = useState(false);
-  const steps = [
-    { name: "backupWallet", completed: false },
-    { name: "setupExit", completed: false },
-    { name: "addFunding", completed: false },
-    { name: "setWifiPass", completed: false },
-    { name: "setDashPass", completed: false },
-    { name: "setNickname", completed: false }
-  ];
+
+  const [{ backupCreated }, dispatch] = useStore();
+
+  const backup = () => setBackingUp(true);
 
   const dismiss = e => {
     e.preventDefault();
@@ -51,8 +51,36 @@ export default () => {
 
   if (dismissed) return null;
 
+  const steps = [
+    { name: "backupWallet", completed: backupCreated, onClick: backup },
+    { name: "setupExit", completed: false },
+    { name: "addFunding", completed: false },
+    { name: "setWifiPass", completed: false },
+    { name: "setDashPass", completed: false },
+    { name: "setNickname", completed: false }
+  ];
+
+  useEffect(
+    () => {
+      (async () => {
+        try {
+          let { backupCreated } = await get("/backup_created");
+          if (!(backupCreated instanceof Error)) {
+            backupCreated = backupCreated === "true";
+            dispatch({ type: "backupCreated", backupCreated });
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      })();
+      return;
+    },
+    [dispatch]
+  );
+
   return (
     <Card>
+      <Backup open={backingUp} setOpen={setBackingUp} />
       <div className="w-100 d-flex flex-wrap justify-content-between">
         <h2>{t("gettingStarted")}</h2>
         <div
