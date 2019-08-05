@@ -1,58 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { get, post, useStore } from "store";
+import { post, useStore } from "store";
 import WifiSettingsForm from "./WifiSettingsForm";
 import { Alert, Card, CardBody, Form, Button, Progress } from "reactstrap";
 import { Error } from "utils";
+import useWifiSettings from "hooks/useWifiSettings";
 import useInterval from "hooks/useInterval";
 
 const Wifi = () => {
   const [t] = useTranslation();
-  const [error, setError] = useState(null);
-  const [wifiSettings, setWifiSettings] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [channels, setChannels] = useState({});
   const [wifiWaiting, setWifiWaiting] = useState(false);
 
-  const [{ waiting }, dispatch] = useStore();
+  const [{ wifiSettings, waiting }, dispatch] = useStore();
+  const [error, loading] = useWifiSettings();
 
   useInterval(() => {
     if (wifiWaiting) dispatch({ type: "keepWaiting" });
   }, waiting ? 1000 : null);
-
-  useEffect(
-    () => {
-      const init = async () => {
-        try {
-          let settings = await get("/wifi_settings");
-
-          await Promise.all(
-            settings.map(async setting => {
-              let radio = setting.device.sectionName;
-              channels[radio] = [];
-              try {
-                channels[radio] = await get(
-                  `/wifi_settings/get_channels/${radio}`
-                );
-              } catch (e) {}
-              return channels[radio];
-            })
-          );
-
-          setChannels(channels);
-          setWifiSettings(settings);
-        } catch (e) {
-          setError(t("error"));
-          setLoading(false);
-          return;
-        }
-      };
-
-      init();
-      return;
-    },
-    [channels, t]
-  );
 
   if (!wifiSettings || !wifiSettings.length)
     if (loading && !error)
@@ -96,13 +60,7 @@ const Wifi = () => {
         <Error error={error} />
         <Form onSubmit={submit}>
           {wifiSettings.map((_, i) => (
-            <WifiSettingsForm
-              channels={channels}
-              key={i}
-              index={i}
-              wifiSettings={wifiSettings}
-              setWifiSettings={setWifiSettings}
-            />
+            <WifiSettingsForm key={i} index={i} />
           ))}
 
           <Button color="primary" disabled={!valid}>

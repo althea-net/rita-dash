@@ -21,7 +21,7 @@ import bigGreenCheck from "images/big_green_check.png";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 
-export default ({ open, setOpen }) => {
+const Withdraw = ({ open, setOpen }) => {
   const [t] = useTranslation();
 
   const [address, setAddress] = useState("");
@@ -163,3 +163,5 @@ export default ({ open, setOpen }) => {
     </div>
   );
 };
+
+export default Withdraw;

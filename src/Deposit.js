@@ -11,7 +11,7 @@ const qrStyle = { height: "auto", width: 300 };
 const iconStyle = { cursor: "pointer", marginLeft: 10 };
 const addressStyle = { fontSize: 16, wordBreak: "break-word" };
 
-export default ({ open, setOpen }) => {
+const Deposit = ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [copied, setCopied] = useState(false);
 
@@ -58,3 +58,5 @@ export default ({ open, setOpen }) => {
     </Modal>
   );
 };
+
+export default Deposit;

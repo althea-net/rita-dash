@@ -1,39 +1,39 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { FormGroup, Input, Label } from "reactstrap";
+import { useStore } from "store";
 
-const WifiSettingsForm = ({
-  index,
-  wifiSettings,
-  setWifiSettings,
-  channels
-}) => {
-  let [t] = useTranslation();
+const WifiSettingsForm = ({ index }) => {
+  const [t] = useTranslation();
+  const [{ channels, wifiSettings }, dispatch] = useStore();
 
-  let settings = wifiSettings[index];
+  const settings = wifiSettings[index];
 
-  let radioType = settings.device.radioType;
-  let radio = settings.device.sectionName;
+  const radioType = settings.device.radioType;
+  const radio = settings.device.sectionName;
 
-  let ssidValid = settings.ssid.length >= 8;
-  let keyValid = settings.key.length >= 8;
+  const ssidValid = settings.ssid.length >= 8;
+  const keyValid = settings.key.length >= 8;
 
-  let saveSettings = () => {
+  const saveSettings = () => {
     wifiSettings[index] = settings;
-    setWifiSettings(JSON.parse(JSON.stringify(wifiSettings)));
+    dispatch({
+      type: "wifiSettings",
+      wifiSettings: JSON.parse(JSON.stringify(wifiSettings))
+    });
   };
 
-  let setSSID = e => {
+  const setSSID = e => {
     settings.ssid = e.target.value;
     saveSettings();
   };
 
-  let setKey = e => {
+  const setKey = e => {
     settings.key = e.target.value;
     saveSettings();
   };
 
-  let setChannel = e => {
+  const setChannel = e => {
     settings.device.channel = e.target.value;
     saveSettings();
   };

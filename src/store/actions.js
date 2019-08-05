@@ -13,6 +13,7 @@ export default (state, action) => {
       blockchain,
       symbol: symbols[blockchain]
     }),
+    channels: ({ channels }) => ({ channels }),
     debt: ({ debts }) => {
       const selectedExit = state.exits.find(e => e.isSelected);
 
@@ -116,6 +117,7 @@ export default (state, action) => {
     usage: ({ usage }) => ({ usage }),
     wgPublicKey: ({ wgPublicKey }) => ({ wgPublicKey }),
     wifiChange: () => ({ wifiChange: true }),
+    wifiSettings: ({ wifiSettings }) => ({ wifiSettings }),
     withdrawSuccess: ({ txid }) => ({ txid })
   };
 

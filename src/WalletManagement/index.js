@@ -5,7 +5,7 @@ import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import BackupPrivateKey from "./BackupPrivateKey";
 import ImportPrivateKey from "./ImportPrivateKey";
 
-export default ({ open, setOpen }) => {
+const WalletManagement = ({ open, setOpen }) => {
   const [t] = useTranslation();
 
   return (
@@ -21,3 +21,5 @@ export default ({ open, setOpen }) => {
     </Modal>
   );
 };
+
+export default WalletManagement;

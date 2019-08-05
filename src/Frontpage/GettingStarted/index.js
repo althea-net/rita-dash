@@ -1,41 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CustomInput, Label } from "reactstrap";
-import { Card } from "../ui";
-import Backup from "../Backup";
-import Deposit from "../Deposit";
+import { Progress } from "reactstrap";
+import { Card } from "../../ui";
+import Backup from "../../Backup";
+import Deposit from "../../Deposit";
 import { get, useStore } from "store";
+import List from "./List";
+import useWifiSettings from "hooks/useWifiSettings";
 
-const List = ({ steps }) => {
-  const [t] = useTranslation();
-
-  return (
-    <ul>
-      {steps.map(step => (
-        <li style={{ listStyle: "none" }} className="d-flex" key={step.name}>
-          <CustomInput
-            type="checkbox"
-            id={step.name}
-            name={step.name}
-            checked={step.completed}
-            readOnly
-            onClick={step.onClick}
-          />
-          <Label
-            for={step.name}
-            style={{
-              color: "#6C757D",
-              cursor: "pointer",
-              textDecoration: "underline"
-            }}
-          >
-            {t(step.name)}
-          </Label>
-        </li>
-      ))}
-    </ul>
-  );
-};
+const AbortController = window.AbortController;
 
 export default () => {
   const [t] = useTranslation();
@@ -43,16 +16,26 @@ export default () => {
   const [dismissed, setDismissed] = useState(false);
   const [depositing, setDepositing] = useState(false);
 
-  const [{ balance, backupCreated, exitSelected }, dispatch] = useStore();
+  const [
+    { balance, backupCreated, exitSelected, wifiSettings },
+    dispatch
+  ] = useStore();
 
   const backup = () => setBackingUp(true);
   const selectExit = () => (window.location.href = "#settings");
   const deposit = () => setDepositing(true);
+  const setWifiPass = () => (window.location.href = "#router-settings");
+
+  const [loadingWifiSettings] = useWifiSettings();
 
   const dismiss = e => {
     e.preventDefault();
     setDismissed(true);
   };
+
+  const isWifiPasswordSet = !!(
+    wifiSettings && wifiSettings.findIndex(s => s.key === "ChangeMe") < 0
+  );
 
   if (dismissed) return null;
 
@@ -60,28 +43,38 @@ export default () => {
     { name: "backupWallet", completed: backupCreated, onClick: backup },
     { name: "setupExit", completed: exitSelected, onClick: selectExit },
     { name: "addFunding", completed: balance > 0, onClick: deposit },
-    { name: "setWifiPass", completed: false },
-    { name: "setDashPass", completed: false },
-    { name: "setNickname", completed: false }
+    { name: "setWifiPass", completed: isWifiPasswordSet, onClick: setWifiPass },
+    { name: "setDashPass", completed: false, onClick: backup },
+    { name: "setNickname", completed: false, onClick: backup }
   ];
 
   useEffect(
     () => {
+      const controller = new AbortController();
+      const signal = controller.signal;
       (async () => {
         try {
-          let { backupCreated } = await get("/backup_created");
+          let { backupCreated } = await get(
+            "/backup_created",
+            true,
+            5000,
+            signal
+          );
           if (!(backupCreated instanceof Error)) {
             backupCreated = backupCreated === "true";
             dispatch({ type: "backupCreated", backupCreated });
           }
-        } catch (e) {
-          console.log(e);
-        }
+        } catch {}
       })();
-      return;
+      return () => {
+        controller.abort();
+      };
     },
     [dispatch]
   );
+
+  if (loadingWifiSettings)
+    return <Progress animated color="info" value="100" />;
 
   return (
     <Card>
