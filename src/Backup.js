@@ -14,6 +14,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import padlock from "./images/padlock.svg";
 
+const AbortController = window.AbortController;
+
 export default ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [privateKey, setPrivateKey] = useState("");
@@ -26,15 +28,23 @@ export default ({ open, setOpen }) => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     (async () => {
       try {
-        const { ethPrivateKey } = await get("/eth_private_key");
+        const { ethPrivateKey } = await get(
+          "/eth_private_key",
+          true,
+          5000,
+          signal
+        );
         if (!(ethPrivateKey instanceof Error)) setPrivateKey(ethPrivateKey);
       } catch (e) {
+        if (e.message && e.message.includes("aborted")) return;
         console.log(e);
       }
     })();
-    return;
+    return () => controller.abort();
   }, []);
 
   const done = () => {

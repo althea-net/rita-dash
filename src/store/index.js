@@ -32,6 +32,7 @@ const state = {
   localFee: null,
   lowBalance: false,
   meshIp: null,
+  nickname: null,
   neighbors: [],
   port: null,
   portChange: false,

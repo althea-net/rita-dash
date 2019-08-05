@@ -108,6 +108,7 @@ export default (state, action) => {
           })
       };
     },
+    nickname: ({ nickname }) => ({ nickname }),
     exitIp: ({ exitIp }) => ({ exitIp }),
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname]

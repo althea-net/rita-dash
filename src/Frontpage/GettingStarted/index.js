@@ -6,6 +6,7 @@ import Backup from "../../Backup";
 import Deposit from "../../Deposit";
 import { get, useStore } from "store";
 import List from "./List";
+import useNickname from "hooks/useNickname";
 import useWifiSettings from "hooks/useWifiSettings";
 
 const AbortController = window.AbortController;
@@ -17,15 +18,16 @@ export default () => {
   const [depositing, setDepositing] = useState(false);
 
   const [
-    { balance, backupCreated, exitSelected, wifiSettings },
+    { balance, backupCreated, exitSelected, nickname, wifiSettings },
     dispatch
   ] = useStore();
 
-  const backup = () => setBackingUp(true);
-  const selectExit = () => (window.location.href = "#settings");
-  const deposit = () => setDepositing(true);
-  const setWifiPass = () => (window.location.href = "#router-settings");
+  const goBackup = () => setBackingUp(true);
+  const goSettings = () => (window.location.href = "#settings");
+  const goDeposit = () => setDepositing(true);
+  const goWifi = () => (window.location.href = "#router-settings");
 
+  const [loadingNickname] = useNickname();
   const [loadingWifiSettings] = useWifiSettings();
 
   const dismiss = e => {
@@ -37,15 +39,20 @@ export default () => {
     wifiSettings && wifiSettings.findIndex(s => s.key === "ChangeMe") < 0
   );
 
-  if (dismissed) return null;
+  const isRouterPasswordSet =
+    window.sessionStorage.getItem("Authorization") !== null;
 
   const steps = [
-    { name: "backupWallet", completed: backupCreated, onClick: backup },
-    { name: "setupExit", completed: exitSelected, onClick: selectExit },
-    { name: "addFunding", completed: balance > 0, onClick: deposit },
-    { name: "setWifiPass", completed: isWifiPasswordSet, onClick: setWifiPass },
-    { name: "setDashPass", completed: false, onClick: backup },
-    { name: "setNickname", completed: false, onClick: backup }
+    { name: "backupWallet", completed: backupCreated, onClick: goBackup },
+    { name: "setupExit", completed: exitSelected, onClick: goSettings },
+    { name: "addFunding", completed: balance > 0, onClick: goDeposit },
+    { name: "setWifiPass", completed: isWifiPasswordSet, onClick: goWifi },
+    { name: "setNickname", completed: nickname !== null, onClick: goSettings },
+    {
+      name: "setDashPass",
+      completed: isRouterPasswordSet,
+      onClick: goSettings
+    }
   ];
 
   useEffect(
@@ -73,8 +80,10 @@ export default () => {
     [dispatch]
   );
 
-  if (loadingWifiSettings)
+  if (loadingNickname || loadingWifiSettings)
     return <Progress animated color="info" value="100" />;
+
+  if (dismissed) return null;
 
   return (
     <Card>

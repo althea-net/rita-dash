@@ -29,6 +29,7 @@ const useWifiSettings = () => {
                   signal
                 );
               } catch (e) {
+                if (e.message && e.message.includes("aborted")) return;
                 setError(true);
               }
               return channels[radio];
@@ -37,7 +38,8 @@ const useWifiSettings = () => {
 
           dispatch({ type: "channels", channels });
           dispatch({ type: "wifiSettings", wifiSettings });
-        } catch {
+        } catch (e) {
+          if (e.message && e.message.includes("aborted")) return;
           setError(true);
         }
 

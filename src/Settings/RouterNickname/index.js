@@ -12,33 +12,30 @@ import {
   Label
 } from "reactstrap";
 import { useTranslation } from "react-i18next";
-import { get, post } from "store";
+import { post, useStore } from "store";
+import useNickname from "hooks/useNickname";
 
 const Nickname = () => {
   const [t] = useTranslation();
 
-  const [nickname, setNickname] = useState();
-  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [{ nickname }, dispatch] = useStore();
+  const [newNickname, setNewNickname] = useState(nickname || "");
+  const [loading] = useNickname();
 
-  useEffect(() => {
-    (async () => {
-      setLoading(true);
-
-      try {
-        let nickname = await get("/nickname/get");
-        if (!(nickname instanceof Error)) setNickname(nickname);
-      } catch {}
-
-      setLoading(false);
-    })();
-  }, []);
+  useEffect(
+    () => {
+      setNewNickname(nickname);
+    },
+    [nickname]
+  );
 
   const submit = async e => {
     e.preventDefault();
 
     try {
-      await post("/nickname/set", { nickname: nickname });
+      await post("/nickname/set", { nickname: newNickname });
+      dispatch({ type: "nickname", nickname: newNickname });
       setSuccess(true);
     } catch {}
   };
@@ -63,8 +60,8 @@ const Nickname = () => {
                     label={t("nickname")}
                     name="nickname"
                     id="nickname"
-                    onChange={e => setNickname(e.target.value)}
-                    value={nickname}
+                    onChange={e => setNewNickname(e.target.value)}
+                    value={newNickname}
                     style={{ borderRight: "none" }}
                   />
                 </InputGroup>
