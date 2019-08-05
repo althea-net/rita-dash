@@ -45,7 +45,15 @@ export default (state, action) => {
           .map(e => resetting.includes(e.nickname)).length;
 
       if (resetOccurred) resetting = [];
-      return { exits, resetting };
+
+      const exitSelected =
+        exits.length &&
+        exits.find(exit => {
+          let { state } = exit.exitSettings;
+          return exit.isSelected && state === "Registered";
+        });
+
+      return { exits, exitSelected, resetting };
     },
     info: ({
       info: {

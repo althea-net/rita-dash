@@ -44,7 +44,7 @@
   "releaseCandidate": "Release Candidate (unstable)",
   "preRelease": "Pre-Release (cutting edge)",
   "problemSubmittingForm": "There was a problem submitting the form",
-  "exitWarning": "You need to register with an exit node on the Network Connection page",
+  "exitWarning": "You need to register with an exit node on the Settings page",
   "keyChange": "The connection to the router is being reset as your new private key is being imported. Please wait for the router to come back online.",
   "privateKeyImportWarning": "After importing your private key, your router will be rebooted and will be assigned a new Wireguard VPN key and IP address. You'll need to re-register with any exit servers you wish to use. If you are connected via Wifi, you may need to reconnect once the router comes back online in case your device roams to another network.",
   "lessThanAWeek": "Based on your average usage of {{perMonthUsage}} GB per month, your balance will provide you with less than a week of service.",

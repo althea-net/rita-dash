@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { CustomInput, Label } from "reactstrap";
 import { Card } from "../ui";
 import Backup from "../Backup";
+import Deposit from "../Deposit";
 import { get, useStore } from "store";
 
 const List = ({ steps }) => {
@@ -24,6 +25,7 @@ const List = ({ steps }) => {
             for={step.name}
             style={{
               color: "#6C757D",
+              cursor: "pointer",
               textDecoration: "underline"
             }}
           >
@@ -37,12 +39,15 @@ const List = ({ steps }) => {
 
 export default () => {
   const [t] = useTranslation();
-  const [backingUp, setBackingUp] = useState(true);
+  const [backingUp, setBackingUp] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const [depositing, setDepositing] = useState(false);
 
-  const [{ backupCreated }, dispatch] = useStore();
+  const [{ balance, backupCreated, exitSelected }, dispatch] = useStore();
 
   const backup = () => setBackingUp(true);
+  const selectExit = () => (window.location.href = "#settings");
+  const deposit = () => setDepositing(true);
 
   const dismiss = e => {
     e.preventDefault();
@@ -53,8 +58,8 @@ export default () => {
 
   const steps = [
     { name: "backupWallet", completed: backupCreated, onClick: backup },
-    { name: "setupExit", completed: false },
-    { name: "addFunding", completed: false },
+    { name: "setupExit", completed: exitSelected, onClick: selectExit },
+    { name: "addFunding", completed: balance > 0, onClick: deposit },
     { name: "setWifiPass", completed: false },
     { name: "setDashPass", completed: false },
     { name: "setNickname", completed: false }
@@ -81,6 +86,7 @@ export default () => {
   return (
     <Card>
       <Backup open={backingUp} setOpen={setBackingUp} />
+      <Deposit open={depositing} setOpen={setDepositing} />
       <div className="w-100 d-flex flex-wrap justify-content-between">
         <h2>{t("gettingStarted")}</h2>
         <div
