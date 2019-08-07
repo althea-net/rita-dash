@@ -81,7 +81,7 @@ const Ports = () => {
         <CardBody>
           <h4 style={{ marginTop: 20 }}>{t("ports")}</h4>
 
-          <p style={{ color: "gray", fontSize: 14 }}>{t("reassignPorts")}</p>
+          <p style={{ color: "gray" }}>{t("reassignPorts")}</p>
 
           <div className="d-flex flex-wrap justify-content-center">
             <Device device={device} />

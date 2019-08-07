@@ -25,8 +25,11 @@ const Warning = () => {
             alt="Exclamation Mark Symbol"
             style={{ marginRight: 10 }}
           />
-          <div className="my-auto" style={{ color: "gray" }}>
-            {t("backupYourWallet")}
+          <div className="my-auto" style={{ color: "#777", fontSize: 18 }} 
+                dangerouslySetInnerHTML={{
+                  __html: t("backupYourWallet")
+                }}
+          >
           </div>
         </div>
         <div className="ml-auto mt-auto">

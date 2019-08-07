@@ -34,7 +34,7 @@ const Finances = () => {
     [dispatch]
   );
 
-  const decimals = symbol === "USD" ? 2 : 4;
+  const decimals = symbol === "USD" ? 2 : 3;
 
   return (
     <Card>
@@ -46,30 +46,29 @@ const Finances = () => {
 
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
-      <div className="d-flex" style={{ marginTop: -30 }}>
+      <div className="d-flex flex-wrap" style={{ marginTop: -10 }}>
         <div
-          className="d-flex justify-content-between pr-lg-4 mx-auto mb-3 h-100"
+          className="pr-lg-4 mx-auto mb-3 col-12 col-md-6"
           style={{ marginTop: 30 }}
         >
-          <div style={{ paddingLeft: 20 }}>
-            <h5
-              id="balance"
-              className="mx-auto text-center w-100"
-              style={{ color: "#999" }}
-            >
-              {t("currentBalance")} {symbol === "USD" && "$"}
-            </h5>
-            <h3 className="text-center">
-              {toEth(balance, decimals)}{" "}
-              <span style={{ fontSize: 20 }}>{symbol}</span>
-            </h3>
-            <div className="d-flex justify-content-center mt-auto">
-              <Button
-                color="primary"
-                id="deposit"
-                onClick={() => setDepositing(true)}
-                style={{ minWidth: 130 }}
-                className="mr-3"
+          <h5
+            id="balance"
+            className="mx-auto text-center w-100 mb-3"
+            style={{ color: "#777", fontSize: 18 }}
+          >
+            {t("currentBalance")} 
+          </h5>
+          <h2 className="text-center mb-3">
+            {symbol === "USD" && "$"}{toEth(balance, decimals)}{" "}
+            <span style={{ fontSize: 20 }}>{symbol}</span>
+          </h2>
+          <div className="d-flex justify-content-center mt-auto">
+            <Button
+              color="primary"
+              id="deposit"
+              onClick={() => setDepositing(true)}
+style={{ minWidth: 130 }}
+className="mr-3"
               >
                 {t("topUp")}
               </Button>
@@ -77,12 +76,11 @@ const Finances = () => {
                 color="primary"
                 id="withdraw"
                 onClick={() => setWithdrawing(true)}
-                style={{ minWidth: 130 }}
+style={{ minWidth: 130 }}
               >
                 {t("withdraw")}
               </Button>
             </div>
-          </div>
         </div>
         <Warning />
       </div>

@@ -18,13 +18,16 @@ export const PortNumber = styled.div`
 `;
 
 export const PortToggle = styled(Button)`
-  width: 90px;
+  width: 100%;
   background: ${props => (props.selected ? "#0BB36D" : "white")} !important;
   color: ${props => (props.selected ? "white" : "gray")} !important;
   border: 1px solid #aaa;
   border-color: ${props => (props.selected ? "#0BB36D" : "#aaa")} !important;
-  border-radius: 0;
+  border-radius: 0 !important;
   margin-top: 6px;
+  font-weight: normal !important;
+  font-size: 20px !important;
+  padding: 0.5rem 0.7rem !important;
 `;
 
 export const RouterImage = styled.img`
@@ -34,11 +37,15 @@ export const RouterImage = styled.img`
 
 const StyledCard = styled(Card)`
   border-radius: 0px !important;
+  box-shadow: none !important;
+  border: 1px solid #eee !important;
+  margin-left: -1px;
+  margin-bottom: 10px;
 `;
 
 export const PortColumn = props => (
-  <StyledCard className="col-4 p-0">
-    <CardBody className="text-center mx-auto px-1">{props.children}</CardBody>
+  <StyledCard className="col-12 col-sm-6 col-md-4 p-0">
+    <CardBody className="text-center w-100 px-1">{props.children}</CardBody>
   </StyledCard>
 );
 

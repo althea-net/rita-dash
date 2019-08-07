@@ -3,6 +3,7 @@ $btn-border-radius: 4px;
 $btn-font-weight: bold;
 $input-btn-padding-y: 0.7rem;
 $input-btn-padding-x: 1.5rem;
+$font-size-base: 1.1rem;
 
 @import "~bootstrap/scss/bootstrap";
 @import "./react-phonenumber";
@@ -153,7 +154,7 @@ a.nav-link {
 }
 
 #content, .modal-content {
-  font-size: 14px;
+  font-size: 16px;
   p {
     color: gray;
   } 

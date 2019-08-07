@@ -27,7 +27,7 @@
   "settings": "Settings",
   "advanced": "Advanced",
   "reviewFinances": "Review Finances",
-  "backupYourWallet": "Be sure to backup your Althea wallet so you don't lose funds",
+  "backupYourWallet": "Be sure to <u><b>backup</b></u> your Althea wallet so you don't lose funds",
   "dismiss": "Dismiss",
   "backupWallet": "Backup your wallet so you don't lose your funds",
   "setupExit": "Setup your exit node",
