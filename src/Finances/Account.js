@@ -42,7 +42,7 @@ const Finances = () => {
     <>
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
-      <div style={{ paddingLeft: 20 }} className="text-center">
+      <div style={{ paddingLeft: 20 }} className="text-center my-auto">
         <h5 style={{ color: "gray", fontSize: 18 }} className="mb-3">
           {t("currentBalance")}
         </h5>
@@ -51,10 +51,19 @@ const Finances = () => {
           {toEth(balance, decimals)} {symbol}
         </h4>
         <div className="d-flex justify-content-center">
-          <Button color="primary" id="deposit" onClick={() => setDepositing(true)}>
+          <Button
+            color="primary"
+            id="deposit"
+            className="mr-3"
+            onClick={() => setDepositing(true)}
+          >
             {t("topUp")}
           </Button>
-          <Button id="withdraw" onClick={() => setWithdrawing(true)}>
+          <Button
+            color="primary"
+            id="withdraw"
+            onClick={() => setWithdrawing(true)}
+          >
             {t("withdraw")}
           </Button>
         </div>

@@ -6,7 +6,7 @@ import { Card, Left, Right } from "ui";
 import { get, useStore } from "store";
 import { BigNumber } from "bignumber.js";
 
-import updown from "../images/up_down.png";
+import updown from "../images/updown.svg";
 
 import Deposit from "../Deposit";
 import Withdraw from "../Withdraw";
@@ -79,7 +79,7 @@ const PurchasingBandwidth = () => {
         <QualityForm />
       </Left>
       <Right>
-        <div className="col-4 pr-2">
+        <div className="pr-2 mr-3 pt-2">
           <img src={updown} alt="Upload/Download" style={{ width: 80 }} />
         </div>
         <div>

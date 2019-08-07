@@ -4,6 +4,8 @@ $btn-font-weight: bold;
 $input-btn-padding-y: 0.7rem;
 $input-btn-padding-x: 1.5rem;
 $font-size-base: 1.1rem;
+$spacer: 1.5rem;
+$headings-margin-bottom:      ($spacer / 1);
 
 @import "~bootstrap/scss/bootstrap";
 @import "./react-phonenumber";
@@ -165,7 +167,7 @@ a.nav-link {
   width: 100%;
   transition: all 0.3s;
   text-align: left;
-  max-width: 900px;
+  max-width: 1000px;
 } 
 
 #content.active {

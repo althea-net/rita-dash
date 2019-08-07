@@ -43,10 +43,10 @@ export default () => {
             onChange={e => setFactor(e.target.value)}
           />
           <div className="d-flex justify-content-between">
-            <p style={{ maxWidth: 100 }}>
+            <p style={{ maxWidth: 100, fontSize: 14 }}>
               <b>{t("preferLow")}</b>
             </p>
-            <p style={{ maxWidth: 100, textAlign: "right" }}>
+            <p style={{ maxWidth: 100, textAlign: "right", fontSize: 14 }}>
               <b>{t("preferHigh")}</b>
             </p>
           </div>

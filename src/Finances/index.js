@@ -34,12 +34,16 @@ const Finances = () => {
         <Right>
           <div className="d-flex flex-column">
             <div className="d-flex w-100 justify-content-around">
-              <div className="pr-2 col-4 my-auto">
+              <div className="pr-2 mr-3 my-auto">
                 <img src={padlock} alt="Padlock Symbol" style={{ width: 60 }} />
               </div>
               <div className="my-auto" style={{ color: "gray" }}>
                 {t("routerHasWallet")}
-                <Button onClick={() => setManaging(true)} className="w-100 mt-2">
+                <Button
+                  color="primary"
+                  onClick={() => setManaging(true)}
+                  className="w-100 mt-2"
+                >
                   {t("backupOrReplace")}
                 </Button>
               </div>
