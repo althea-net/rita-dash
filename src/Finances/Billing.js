@@ -162,81 +162,86 @@ const Billing = (daoAddress, ipAddress) => {
     <div>
       <ExportCSV open={exporting} setOpen={setExporting} rows={rows} />
 
-      {!usage.length ? (
-        <Alert color="info">{t("noUsage")}</Alert>
-      ) : (
-        <Card>
-          <CardBody>
-            <div className="d-flex flex-wrap">
+      <Card>
+        <CardBody>
+          {!usage.length ? (
+            <>
               <h3>{t("billingHistory")}</h3>
-              <div className="ml-auto d-flex mb-4">
-                <div
-                  style={{
-                    whiteSpace: "nowrap",
-                    fontSize: 16,
-                    color: "#666"
-                  }}
-                  className="mt-2 mr-2 d-flex"
-                >
-                  <div className="my-auto mr-2">{t("displayPeriod")}</div>
-                  <Input
-                    type="select"
-                    style={{ color: "#666" }}
-                    value={period}
-                    onChange={e => setPeriod(e.target.value)}
+              <Alert color="info">{t("noUsage")}</Alert>
+            </>
+          ) : (
+            <>
+              <div className="d-flex flex-wrap">
+                <h3>{t("billingHistory")}</h3>
+                <div className="ml-auto d-flex mb-4">
+                  <div
+                    style={{
+                      whiteSpace: "nowrap",
+                      fontSize: 16,
+                      color: "#666"
+                    }}
+                    className="mt-2 mr-2 d-flex"
                   >
-                    {Object.keys(periods).map(p => (
-                      <option key={p} value={p}>
-                        {periods[p]}
-                      </option>
-                    ))}
-                  </Input>
+                    <div className="my-auto mr-2">{t("displayPeriod")}</div>
+                    <Input
+                      type="select"
+                      style={{ color: "#666" }}
+                      value={period}
+                      onChange={e => setPeriod(e.target.value)}
+                    >
+                      {Object.keys(periods).map(p => (
+                        <option key={p} value={p}>
+                          {periods[p]}
+                        </option>
+                      ))}
+                    </Input>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="table-responsive">
-              <Table className="table-striped">
-                <thead>
-                  <tr>
-                    <th>{t("period")}</th>
-                    <th>{t("usage")}</th>
-                    <th>{t("bandwidthCost")}</th>
-                    <th>{t("serviceCost")}</th>
-                    <th>{t("totalCost")}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map(r => (
-                    <tr key={r.period}>
-                      <td>{r.period}</td>
-                      <td>{r.usage}</td>
-                      <td>{r.bandwidthCost}</td>
-                      <td>{r.serviceCost}</td>
-                      <td>{r.totalCost}</td>
+              <div className="table-responsive">
+                <Table className="table-striped">
+                  <thead>
+                    <tr>
+                      <th>{t("period")}</th>
+                      <th>{t("usage")}</th>
+                      <th>{t("bandwidthCost")}</th>
+                      <th>{t("serviceCost")}</th>
+                      <th>{t("totalCost")}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </div>
-
-            <div className="d-flex w-100 justify-content-between">
-              <div />
-              <Pagination
-                data={Object.keys(data)}
-                limit={limit}
-                page={page}
-                setPage={setPage}
-              />
-
-              <div className="text-right">
-                <Button onClick={() => setExporting(true)}>
-                  {t("exportToCsv")}
-                </Button>
+                  </thead>
+                  <tbody>
+                    {rows.map(r => (
+                      <tr key={r.period}>
+                        <td>{r.period}</td>
+                        <td>{r.usage}</td>
+                        <td>{r.bandwidthCost}</td>
+                        <td>{r.serviceCost}</td>
+                        <td>{r.totalCost}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
               </div>
-            </div>
-          </CardBody>
-        </Card>
-      )}
+
+              <div className="d-flex w-100 justify-content-between">
+                <div />
+                <Pagination
+                  data={Object.keys(data)}
+                  limit={limit}
+                  page={page}
+                  setPage={setPage}
+                />
+
+                <div className="text-right">
+                  <Button onClick={() => setExporting(true)}>
+                    {t("exportToCsv")}
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </CardBody>
+      </Card>
     </div>
   );
 };
