@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Btn, Card, Heading, Right } from "ui";
+import { Card, Heading } from "ui";
+import { Button } from "reactstrap";
 import { toEth } from "utils";
 import { get, useStore } from "store";
-
-import exclamation from "images/exclamation.svg";
 
 import Deposit from "../../Deposit";
 import Withdraw from "../../Withdraw";
 import UsageMetrics from "./UsageMetrics";
+import Warning from "./Warning";
 
 const Finances = () => {
-  let [t] = useTranslation();
+  const [t] = useTranslation();
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
-  const [{ balance, backupCreated, symbol }, dispatch] = useStore();
-  const [dismissed, setDismissed] = useState(false);
-
-  const dismiss = e => {
-    e.preventDefault();
-    setDismissed(true);
-  };
+  const [{ balance, symbol }, dispatch] = useStore();
 
   useEffect(
     () => {
@@ -49,46 +43,49 @@ const Finances = () => {
         link="#finances"
         linkText={t("reviewFinances")}
       />
+
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
-      <div className="d-flex justify-content-between pr-lg-4 mx-auto">
-        <div style={{ paddingLeft: 20 }}>
-          <h4 id="balance" className="mx-auto text-center w-100">
-            {t("currentBalance")} {symbol === "USD" && "$"}
-            {toEth(balance, decimals)} {symbol}
-          </h4>
-          <div className="d-flex justify-content-center">
-            <Btn id="deposit" onClick={() => setDepositing(true)}>
-              {t("topUp")}
-            </Btn>
-            <Btn id="withdraw" onClick={() => setWithdrawing(true)}>
-              {t("withdraw")}
-            </Btn>
+      <div className="d-flex" style={{ marginTop: -30 }}>
+        <div
+          className="d-flex justify-content-between pr-lg-4 mx-auto mb-3 h-100"
+          style={{ marginTop: 30 }}
+        >
+          <div style={{ paddingLeft: 20 }}>
+            <h5
+              id="balance"
+              className="mx-auto text-center w-100"
+              style={{ color: "#999" }}
+            >
+              {t("currentBalance")} {symbol === "USD" && "$"}
+            </h5>
+            <h3 className="text-center">
+              {toEth(balance, decimals)}{" "}
+              <span style={{ fontSize: 20 }}>{symbol}</span>
+            </h3>
+            <div className="d-flex justify-content-center mt-auto">
+              <Button
+                color="primary"
+                id="deposit"
+                onClick={() => setDepositing(true)}
+                style={{ minWidth: 130 }}
+                className="mr-3"
+              >
+                {t("topUp")}
+              </Button>
+              <Button
+                color="primary"
+                id="withdraw"
+                onClick={() => setWithdrawing(true)}
+                style={{ minWidth: 130 }}
+              >
+                {t("withdraw")}
+              </Button>
+            </div>
           </div>
         </div>
+        <Warning />
       </div>
-      {backupCreated ||
-        dismissed || (
-          <Right>
-            <div className="d-flex flex-column">
-              <div className="d-flex w-100 justify-content-around">
-                <img
-                  src={exclamation}
-                  alt="Exclamation Mark Symbol"
-                  style={{ marginRight: 10 }}
-                />
-                <div className="my-auto" style={{ color: "gray" }}>
-                  {t("backupYourWallet")}
-                </div>
-              </div>
-              <div className="ml-auto">
-                <a href="#dismiss" onClick={dismiss}>
-                  {t("dismissWarning")}
-                </a>
-              </div>
-            </div>
-          </Right>
-        )}
       <UsageMetrics />
     </Card>
   );
