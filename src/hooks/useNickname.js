@@ -18,7 +18,9 @@ const useNickname = () => {
           let nickname = await get("/nickname/get", true, 5000, signal);
           if (!(nickname instanceof Error))
             dispatch({ type: "nickname", nickname });
-        } catch {}
+        } catch {
+          return;
+        }
 
         setLoading(false);
       })();
