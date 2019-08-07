@@ -147,7 +147,7 @@ const Billing = (daoAddress, ipAddress) => {
     .reverse()
     .slice((page - 1) * limit, page * limit)
     .map(d => ({
-      index: d.index,
+      index: d,
       period: `${start(d)} - ${end(d)}`,
       usage:
         BigNumber(data[d].up + data[d].down)
