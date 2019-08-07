@@ -102,7 +102,7 @@ export default () => {
       </div>
 
       <p>{t("completeSteps")}</p>
-      <div className="d-flex">
+      <div className="d-flex flex-wrap flex-lg-nowrap">
         <List steps={steps.slice(0, 3)} />
         <List steps={steps.slice(3, 6)} />
       </div>

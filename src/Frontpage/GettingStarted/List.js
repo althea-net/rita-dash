@@ -6,7 +6,7 @@ const List = ({ steps }) => {
   const [t] = useTranslation();
 
   return (
-    <ul>
+    <ul className="mb-0">
       {steps.map(step => (
         <li style={{ listStyle: "none" }} className="d-flex" key={step.name}>
           <CustomInput
