@@ -1,5 +1,6 @@
 $primary: #3DADF5;
 $btn-border-radius: 0;
+
 @import "~bootstrap/scss/bootstrap";
 @import "./react-phonenumber";
 @import "./font";
@@ -94,7 +95,7 @@ label {
 
 .nav-link {
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 } 
 
 a.nav-link {
@@ -136,14 +137,14 @@ a.nav-link {
 }
 
 #sidebar {
-  font-size: 1rem;
-  width: 300px;
+  font-size: 1.2rem;
+  width: 280px;
   background: #F8F9FA;
   color: #000;
   transition: all 0.3s;
-  border-right: 1px solid #ddd;
-  padding-top: 30px;
-  padding-left: 40px;
+  border-right: 1px solid #f0f0f0;
+  padding-top: 10px;
+  padding-left: 50px;
 }
 
 #content, .modal-content {
@@ -154,8 +155,7 @@ a.nav-link {
 }
 
 #content {
-  padding: 15px;
-  padding-top: 30px;
+  padding: 30px;
   width: 100%;
   transition: all 0.3s;
   text-align: left;
@@ -173,7 +173,18 @@ a.nav-link {
 
     #content {
       margin-left: 0;
+      padding: 10px;
     } 
+
+.nav-link {
+  margin-top: 5px;
+  margin-bottom: 0;
+  margin-left: 30px;
+} 
+
+.card {
+  padding: 0 !important;
+} 
 }
 
 .text-break {
@@ -197,13 +208,13 @@ a.nav-link {
 
 .system-warning {
   color: white;
-  font-weight: bold;
+  font-size: 18px;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
   width: calc(100% + 20px);
   margin: 10px -10px -20px -10px;
-  background: #B63232;
+  background: #de5f4a;
 } 
 
 .input-group.is-invalid {
@@ -216,4 +227,11 @@ a.nav-link {
   -webkit-transition: none;
   transition: none;
   display: none;
+}
+
+.card {
+  border: 0;
+  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.15);
+  padding: 10px 20px;
+  border-radius: 8px;
 }

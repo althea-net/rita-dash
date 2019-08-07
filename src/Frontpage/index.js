@@ -11,7 +11,7 @@ const Frontpage = () => {
 
   return (
     <>
-      <h1 id="frontPage">{t("welcome")}</h1>
+      <h2 id="frontPage">{t("welcome")}</h2>
       <p id="version">{t("version", { version, ritaVersion })}</p>
       <GettingStarted />
       <Finances />
