@@ -78,7 +78,7 @@ const DaoFee = ({ readonly = false }) => {
     <Card className="mb-4">
       <CardBody>
         <Form onSubmit={submit}>
-          <h3>{t("daoFee")}</h3>
+          <h4>{t("daoFee")}</h4>
 
           {success && <Alert color="success">{t("daoFeeSaved")}</Alert>}
 

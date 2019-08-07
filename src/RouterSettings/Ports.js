@@ -79,7 +79,7 @@ const Ports = () => {
 
       <Card>
         <CardBody>
-          <h2 style={{ marginTop: 20 }}>{t("ports")}</h2>
+          <h4 style={{ marginTop: 20 }}>{t("ports")}</h4>
 
           <p style={{ color: "gray", fontSize: 14 }}>{t("reassignPorts")}</p>
 

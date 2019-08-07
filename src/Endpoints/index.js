@@ -63,7 +63,7 @@ const APIDump = () => {
 
   return (
     <div>
-      <h1>{t("debuggingData")}</h1>
+      <h4>{t("debuggingData")}</h4>
       {loading ? (
         <Progress animated color="info" value="100" />
       ) : (

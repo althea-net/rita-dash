@@ -4,17 +4,6 @@ import { Button, Card as Boot, CardBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import media from "media";
 
-export const Btn = styled(Button).attrs({
-  color: "primary"
-})`
-  font-weight: bold;
-  width: 150px;
-
-  &:first-child {
-    margin-right: 10px;
-  }
-`;
-
 export const Left = styled.div.attrs({
   className: "d-flex flex-column justify-content-between pr-lg-4 col-md-6"
 })`

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Button } from "reactstrap";
 
-import { Btn } from "ui";
 import { toEth } from "utils";
 
 import { get, useStore } from "store";
@@ -51,12 +51,12 @@ const Finances = () => {
           {toEth(balance, decimals)} {symbol}
         </h4>
         <div className="d-flex justify-content-center">
-          <Btn id="deposit" onClick={() => setDepositing(true)}>
+          <Button color="primary" id="deposit" onClick={() => setDepositing(true)}>
             {t("topUp")}
-          </Btn>
-          <Btn id="withdraw" onClick={() => setWithdrawing(true)}>
+          </Button>
+          <Button id="withdraw" onClick={() => setWithdrawing(true)}>
             {t("withdraw")}
-          </Btn>
+          </Button>
         </div>
       </div>
     </>

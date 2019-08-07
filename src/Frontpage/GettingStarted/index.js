@@ -90,7 +90,7 @@ export default () => {
       <Backup open={backingUp} setOpen={setBackingUp} />
       <Deposit open={depositing} setOpen={setDepositing} />
       <div className="w-100 d-flex flex-wrap justify-content-between">
-        <h3>{t("gettingStarted")}</h3>
+        <h4>{t("gettingStarted")}</h4>
         <div
     style={{ color: "#3DADF5", fontSize: 16 }}
           className="mb-1 ml-auto text-right"

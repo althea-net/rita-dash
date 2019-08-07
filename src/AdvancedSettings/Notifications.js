@@ -78,7 +78,7 @@ export default ({ balance, symbol }) => {
   return (
     <Card className="mb-4">
       <CardBody>
-        <h3>{t("lowBalanceNotifications")}</h3>
+        <h4>{t("lowBalanceNotifications")}</h4>
         <p>{t("whenEmail")}</p>
 
         {success && <Success message={success} />}

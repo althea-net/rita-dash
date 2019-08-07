@@ -13,7 +13,7 @@ export default () => {
 
   return (
     <div>
-      <h1 id="networkPage">{t("networkConnection")}</h1>
+      <h2 id="networkPage">{t("settings")}</h2>
       <RouterNickname />
       <DashboardPassword />
       <Exits />

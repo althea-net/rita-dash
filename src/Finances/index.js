@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Btn, Card, Left, Right } from "ui";
+import { Card, Left, Right } from "ui";
+import { Button } from "reactstrap";
 
 import padlock from "../images/padlock.svg";
 
@@ -38,9 +39,9 @@ const Finances = () => {
               </div>
               <div className="my-auto" style={{ color: "gray" }}>
                 {t("routerHasWallet")}
-                <Btn onClick={() => setManaging(true)} className="w-100 mt-2">
+                <Button onClick={() => setManaging(true)} className="w-100 mt-2">
                   {t("backupOrReplace")}
-                </Btn>
+                </Button>
               </div>
             </div>
           </div>

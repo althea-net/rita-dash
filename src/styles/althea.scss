@@ -1,5 +1,8 @@
 $primary: #3DADF5;
-$btn-border-radius: 0;
+$btn-border-radius: 4px;
+$btn-font-weight: bold;
+$input-btn-padding-y: 0.7rem;
+$input-btn-padding-x: 1.5rem;
 
 @import "~bootstrap/scss/bootstrap";
 @import "./react-phonenumber";
@@ -143,7 +146,7 @@ a.nav-link {
   color: #000;
   transition: all 0.3s;
   border-right: 1px solid #f0f0f0;
-  padding-top: 10px;
+  padding-top: 40px;
   padding-left: 50px;
 }
 
@@ -183,7 +186,7 @@ a.nav-link {
   } 
 
   .card {
-    padding: 0 !important;
+    padding: 0px 30px !important;
   } 
 }
 
@@ -234,4 +237,12 @@ a.nav-link {
   box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.15);
   padding: 10px 20px;
   border-radius: 8px;
+}
+
+.btn {
+  font-size: 16px;
+}
+
+input { 
+  max-width: 100%;
 }
