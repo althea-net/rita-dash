@@ -66,7 +66,7 @@ const RelaySettings = () => {
 
   return (
     <>
-      <h1 id="frontPage">{t("neighbors")}</h1>
+      <h2 id="frontPage">{t("neighbors")}</h2>
       {loading && !initialized ? (
         <Progress animated color="info" value="100" />
       ) : !neighbors || !neighbors.length ? (

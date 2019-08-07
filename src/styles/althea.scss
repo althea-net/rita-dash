@@ -163,28 +163,28 @@ a.nav-link {
 } 
 
 #content.active {
-    width: 100%;
+  width: 100%;
 }
 
 @media (max-width: 991px) {
-    #sidebar {
-       display: none; 
-    }
+  #sidebar {
+     display: none; 
+  }
 
-    #content {
-      margin-left: 0;
-      padding: 10px;
-    } 
+  #content {
+    margin-left: 0;
+    padding: 30px 10px;
+  } 
 
-.nav-link {
-  margin-top: 5px;
-  margin-bottom: 0;
-  margin-left: 30px;
-} 
+  .nav-link {
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-left: 30px;
+  } 
 
-.card {
-  padding: 0 !important;
-} 
+  .card {
+    padding: 0 !important;
+  } 
 }
 
 .text-break {

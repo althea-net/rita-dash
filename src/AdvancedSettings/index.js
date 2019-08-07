@@ -11,7 +11,7 @@ export default () => {
 
   return (
     <div>
-      <h1 id="advancedPage">{t("advancedSettings")}</h1>
+      <h2 id="advancedPage">{t("advancedSettings")}</h2>
 
       <Notifications />
       <Blockchain />

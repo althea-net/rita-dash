@@ -16,7 +16,7 @@ const Payments = () => {
 
   return (
     <div>
-      <h1 id="paymentsPage">{t("payments")}</h1>
+      <h2 id="paymentsPage">{t("payments")}</h2>
 
       <Success message={withdrawalSuccess} />
 

@@ -149,7 +149,7 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
 
   return (
     <div>
-      <h1>{t("billing")}</h1>
+      <h2>{t("billing")}</h2>
       {!client.length ? (
         <Alert color="info">{t("noUsage")}</Alert>
       ) : (
