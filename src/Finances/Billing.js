@@ -19,7 +19,7 @@ const Billing = (daoAddress, ipAddress) => {
 
   const [period, setPeriod] = useState("w");
   const [usage, setUsage] = useState([]);
-  const [exporting, setExporting] = useState(true);
+  const [exporting, setExporting] = useState(false);
   const [payments, setPayments] = useState([]);
   const [page, setPage] = useState(1);
 
