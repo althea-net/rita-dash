@@ -1,4 +1,8 @@
 {
+  "needHelp": "Need help?",
+  "currentlyConnected": "You are currently connected",
+  "noConnectionDetected": "No connection detected",
+  "connectionTrouble": "Your connection is having trouble",
   "yourPrivateKey": "Your private key",
   "doneBackingUp": "I'm done backing up",
   "backupYourAccount": "Backup your account",

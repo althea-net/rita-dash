@@ -26,7 +26,7 @@ const state = {
   device: null,
   exitIp: null,
   exits: [],
-  exitSelected: false,
+  selectedExit: null,
   factor: 0,
   interfaces: null,
   localFee: null,

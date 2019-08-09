@@ -47,14 +47,19 @@ export default (state, action) => {
 
       if (resetOccurred) resetting = [];
 
-      const exitSelected =
-        exits.length &&
-        exits.find(exit => {
-          let { state } = exit.exitSettings;
-          return exit.isSelected && state === "Registered";
-        });
+      const selectedExit = exits.find(exit => {
+        let { state } = exit.exitSettings;
+        return exit.isSelected && state === "Registered";
+      });
 
-      return { exits, exitSelected, resetting };
+      let connectionStatus = "noConnection";
+      if (selectedExit) {
+        connectionStatus = selectedExit.isTunnelWorking
+          ? "connected"
+          : "connectionTrouble";
+      }
+
+      return { connectionStatus, exits, selectedExit, resetting };
     },
     info: ({
       info: {

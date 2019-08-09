@@ -18,7 +18,7 @@ export default () => {
   const [depositing, setDepositing] = useState(false);
 
   const [
-    { balance, backupCreated, exitSelected, nickname, wifiSettings },
+    { balance, backupCreated, selectedExit, nickname, wifiSettings },
     dispatch
   ] = useStore();
 
@@ -44,7 +44,11 @@ export default () => {
 
   const steps = [
     { name: "backupWallet", completed: backupCreated, onClick: goBackup },
-    { name: "setupExit", completed: exitSelected, onClick: goSettings },
+    {
+      name: "setupExit",
+      completed: selectedExit !== null,
+      onClick: goSettings
+    },
     { name: "addFunding", completed: balance > 0, onClick: goDeposit },
     { name: "setWifiPass", completed: isWifiPasswordSet, onClick: goWifi },
     { name: "setNickname", completed: nickname !== null, onClick: goSettings },
@@ -92,7 +96,7 @@ export default () => {
       <div className="w-100 d-flex flex-wrap justify-content-between">
         <h4>{t("gettingStarted")}</h4>
         <div
-    style={{ color: "#3DADF5", fontSize: 16 }}
+          style={{ color: "#3DADF5", fontSize: 16 }}
           className="mb-1 ml-auto text-right"
         >
           <a href="#dismiss" onClick={dismiss}>
