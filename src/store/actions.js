@@ -13,6 +13,7 @@ export default (state, action) => {
       blockchain,
       symbol: symbols[blockchain]
     }),
+    channels: ({ channels }) => ({ channels }),
     debt: ({ debts }) => {
       const selectedExit = state.exits.find(e => e.isSelected);
 
@@ -30,6 +31,7 @@ export default (state, action) => {
       return state;
     },
     authenticated: ({ authenticated }) => ({ authenticated }),
+    backupCreated: ({ backupCreated }) => ({ backupCreated }),
     exits: ({ exits }) => {
       let { resetting } = state;
       const resetOccurred =
@@ -44,7 +46,20 @@ export default (state, action) => {
           .map(e => resetting.includes(e.nickname)).length;
 
       if (resetOccurred) resetting = [];
-      return { exits, resetting };
+
+      const selectedExit = exits.find(exit => {
+        let { state } = exit.exitSettings;
+        return exit.isSelected && state === "Registered";
+      });
+
+      let connectionStatus = "noConnection";
+      if (selectedExit) {
+        connectionStatus = selectedExit.isTunnelWorking
+          ? "connected"
+          : "connectionTrouble";
+      }
+
+      return { connectionStatus, exits, selectedExit, resetting };
     },
     info: ({
       info: {
@@ -98,6 +113,7 @@ export default (state, action) => {
           })
       };
     },
+    nickname: ({ nickname }) => ({ nickname }),
     exitIp: ({ exitIp }) => ({ exitIp }),
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname]
@@ -107,6 +123,7 @@ export default (state, action) => {
     usage: ({ usage }) => ({ usage }),
     wgPublicKey: ({ wgPublicKey }) => ({ wgPublicKey }),
     wifiChange: () => ({ wifiChange: true }),
+    wifiSettings: ({ wifiSettings }) => ({ wifiSettings }),
     withdrawSuccess: ({ txid }) => ({ txid })
   };
 

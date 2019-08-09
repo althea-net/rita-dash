@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Group 14</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Router---July-2019-Revision-(YM)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard" transform="translate(-869.000000, -728.000000)">
+            <g id="Group-14" transform="translate(869.000000, 728.000000)">
+                <path d="M67.5231694,80 L12.4768306,80 C8.15316251,80 4.13780553,77.7609894 1.86385834,74.0829195 C-0.409479419,70.4054589 -0.616645181,65.812898 1.31608822,61.9453498 L28.8368203,6.90163585 C30.9493002,2.6721905 35.2717498,0 40,0 C44.7282504,0 49.0506998,2.6721905 51.1631797,6.90163585 L78.6839119,61.9453498 C80.616645,65.812898 80.4094796,70.4054589 78.1361416,74.0829195 C75.8628037,77.7609894 71.8468375,80 67.5231694,80 Z" id="Path" fill="#FF7761" fill-rule="nonzero"></path>
+                <g id="Group" transform="translate(36.000000, 18.666667)" fill="#FFFFFF" fill-rule="nonzero">
+                    <path d="M4,0 C6.20898425,0 8,1.15136727 8,2.57142857 L8,33.4285714 C8,34.8486327 6.20898425,36 4,36 C1.7910155,36 0,34.8486327 0,33.4285714 L0,2.57142857 C0,1.15136727 1.7910155,0 4,0 Z" id="Path"></path>
+                </g>
+                <circle id="Oval" fill="#FFFFFF" cx="40" cy="65.3333333" r="4"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,6 +1,7 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBan,
+  faCalendar,
   faCopy,
   faGlobeAmericas,
   faMinusCircle,
@@ -16,6 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faBan);
+library.add(faCalendar);
 library.add(faCopy);
 library.add(faGlobeAmericas);
 library.add(faMinusCircle);

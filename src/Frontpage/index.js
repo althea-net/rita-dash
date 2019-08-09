@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useStore } from "store";
 
 import Finances from "./Finances";
-import NodeInformation from "./NodeInformation";
-import UsageMetrics from "./UsageMetrics";
+import GettingStarted from "./GettingStarted";
+import ConnectionStatus from "./ConnectionStatus";
 
 const Frontpage = () => {
   const [t] = useTranslation();
@@ -12,11 +12,13 @@ const Frontpage = () => {
 
   return (
     <>
-      <h1 id="frontPage">{t("welcome")}</h1>
+      <div className="d-flex">
+        <h2 id="frontPage">{t("welcome")}</h2>
+        <ConnectionStatus />
+      </div>
       <p id="version">{t("version", { version, ritaVersion })}</p>
+      <GettingStarted />
       <Finances />
-      <UsageMetrics />
-      <NodeInformation />
     </>
   );
 };

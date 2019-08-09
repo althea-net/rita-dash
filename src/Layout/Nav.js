@@ -9,17 +9,16 @@ const AltheaNav = ({ page, setOpen }) => {
 
   let pages = {
     dashboard: t("dashboard"),
-    router_settings: t("wifiAndPorts"),
-    network_settings: t("networkConnection"),
-    payments: t("paymentSettings"),
-    advanced: t("advancedSettings"),
-    relay_settings: t("relaySettings")
+    "router-settings": t("wifiAndPorts"),
+    finances: t("finances"),
+    "selling-bandwidth": t("sellingBandwidth"),
+    settings: t("settings"),
+    advanced: t("advanced")
   };
 
-  let navItems = Object.keys(pages).map((p, i) => {
-    let path = p.replace("_", "-");
+  let navItems = Object.keys(pages).map((path, i) => {
     let active = path === page ? "active" : null;
-    let title = pages[p];
+    let title = pages[path];
 
     return { path, active, title };
   });

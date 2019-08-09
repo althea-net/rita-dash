@@ -21,7 +21,7 @@ const NoConnection = () => {
 
   return (
     <div>
-      <Modal isOpen={!version || waiting > 0} centered>
+      <Modal isOpen={!version || waiting > 0} centered zIndex={9999}>
         <ModalHeader>{t("noConnection")}</ModalHeader>
         <ModalBody>
           <Card>

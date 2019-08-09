@@ -1,5 +1,12 @@
 $primary: #3DADF5;
-$btn-border-radius: 0;
+$btn-border-radius: 4px;
+$btn-font-weight: bold;
+$input-btn-padding-y: 0.7rem;
+$input-btn-padding-x: 1.5rem;
+$font-size-base: 1.1rem;
+$spacer: 1.5rem;
+$headings-margin-bottom:      ($spacer / 1);
+
 @import "~bootstrap/scss/bootstrap";
 @import "./react-phonenumber";
 @import "./font";
@@ -53,7 +60,9 @@ label {
 
 .dropdown-toggle::after {
   right: 0;
-  margin-right: 10px;
+  margin-left: 20px;
+  margin-bottom: -2px;
+  color: #999;
 }
 
 #camcontrols {
@@ -94,7 +103,7 @@ label {
 
 .nav-link {
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 } 
 
 a.nav-link {
@@ -136,44 +145,54 @@ a.nav-link {
 }
 
 #sidebar {
-  font-size: 1rem;
-  width: 300px;
+  font-size: 1.2rem;
+  width: 280px;
   background: #F8F9FA;
   color: #000;
   transition: all 0.3s;
-  border-right: 1px solid #ddd;
-  padding-top: 30px;
-  padding-left: 40px;
+  border-right: 1px solid #f0f0f0;
+  padding-top: 40px;
+  padding-left: 50px;
 }
 
 #content, .modal-content {
-  font-size: 14px;
+  font-size: 16px;
   p {
     color: gray;
   } 
 }
 
 #content {
-  padding: 15px;
-  padding-top: 30px;
+  padding: 30px;
   width: 100%;
   transition: all 0.3s;
   text-align: left;
-  max-width: 800px;
+  max-width: 1000px;
 } 
 
 #content.active {
-    width: 100%;
+  width: 100%;
 }
 
 @media (max-width: 991px) {
-    #sidebar {
-       display: none; 
-    }
+  #sidebar {
+     display: none; 
+  }
 
-    #content {
-      margin-left: 0;
-    } 
+  #content {
+    margin-left: 0;
+    padding: 30px 10px;
+  } 
+
+  .nav-link {
+    margin-top: 5px;
+    margin-bottom: 0;
+    margin-left: 30px;
+  } 
+
+  .card {
+    padding: 0px 30px !important;
+  } 
 }
 
 .text-break {
@@ -184,6 +203,10 @@ a.nav-link {
   word-break: break-word;
 }
 
+.modal-header .close {
+  opacity: 1;
+} 
+
 .modal-close {
   cursor: pointer;
   font-size: 34px;
@@ -193,13 +216,13 @@ a.nav-link {
 
 .system-warning {
   color: white;
-  font-weight: bold;
+  font-size: 18px;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
   width: calc(100% + 20px);
   margin: 10px -10px -20px -10px;
-  background: #B63232;
+  background: #de5f4a;
 } 
 
 .input-group.is-invalid {
@@ -212,4 +235,19 @@ a.nav-link {
   -webkit-transition: none;
   transition: none;
   display: none;
+}
+
+.card {
+  border: 0;
+  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.15);
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.btn {
+  font-size: 16px;
+}
+
+input { 
+  max-width: 100%;
 }

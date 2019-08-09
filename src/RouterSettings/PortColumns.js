@@ -25,17 +25,19 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
             <img src={portImage} alt={iface} width="60px" />
             <PortNumber id={"port_" + i}>{i + 1}</PortNumber>
 
-            <div className="d-flex flex-column mt-3">
+            <div className="d-flex w-100 flex-column mt-3">
               {modes.map((mode, i) => {
-                let disabled =
+                let selected = mode === interfaces[iface]
+                let disabled = !selected &&
                   mode !== "Mesh" && Object.values(interfaces).includes(mode);
                 return (
                   <PortToggle
                     id={mode + "_" + column}
                     key={i}
-                    selected={mode === interfaces[iface]}
-                    onClick={() => setInterfaceMode(iface, mode)}
+                    selected={selected}
+                    onClick={() => selected || setInterfaceMode(iface, mode)}
                     disabled={disabled}
+                    readonly={selected}
                   >
                     {mode}
                   </PortToggle>

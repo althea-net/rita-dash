@@ -16,8 +16,9 @@ const languages = {
 const toggleStyles = {
   background: "#E5E5E5",
   border: "none",
-  color: "#969DA0",
-  paddingRight: 30
+  color: "#666",
+  paddingRight: 30,
+  fontWeight: "normal"
 };
 
 export default () => {

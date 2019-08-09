@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Router---July-2019-Revision-(YM)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Connection-Status-Alts" transform="translate(-142.000000, -74.000000)" fill-rule="nonzero">
+            <g id="Group" transform="translate(142.000000, 74.000000)">
+                <circle id="Oval" fill="#15C246" cx="15" cy="15" r="15"></circle>
+                <g id="_ionicons_svg_md-checkmark" transform="translate(4.772727, 6.818182)" fill="#FFFFFF">
+                    <polygon id="Shape" points="6.73176669 12.8831694 1.76136364 7.8153736 0 9.52498132 6.73176669 16.3636364 21.1363636 1.70955168 19.375 0"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
