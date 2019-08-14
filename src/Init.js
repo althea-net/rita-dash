@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { get, useStore } from "store";
 import useInterval from "hooks/useInterval";
 
@@ -63,7 +63,7 @@ const Init = () => {
         } catch {}
       })();
 
-      return controller.abort;
+      return () => controller.abort();
     },
     [authenticated, dispatch, getDebt, getInfo]
   );
