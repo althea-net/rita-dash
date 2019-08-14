@@ -44,13 +44,18 @@ const Login = () => {
       <ModalBody>
         {error && <Alert color="danger">{t("loginError")}</Alert>}
         <div className="d-flex">
-          <img src={key} alt={t("key")} className="mr-2" />
-          <Form onSubmit={submit} className="my-auto w-100">
+          <img
+            src={key}
+            alt={t("key")}
+            className="mr-3"
+            style={{ height: 80 }}
+          />
+          <Form onSubmit={submit} className="mt-lg-2 w-100">
             {loading ? (
               <Progress animated color="info" value="100" />
             ) : (
-              <div className="d-flex">
-                <FormGroup className="mb-0">
+              <div className="d-flex flex-wrap">
+                <FormGroup className="flex-grow-1">
                   <Input
                     autoFocus
                     id="password"
@@ -59,11 +64,14 @@ const Login = () => {
                     placeholder={t("adminPassword")}
                     onChange={e => setPassword(e.target.value)}
                     value={password}
-                    style={{ width: 300 }}
                   />
                 </FormGroup>
-                <div className="mt-auto ml-auto">
-                  <Button color="primary" style={{ width: 200 }}>
+                <div>
+                  <Button
+                    color="primary"
+                    style={{ width: 200 }}
+                    className="ml-lg-2"
+                  >
                     {t("submit")}
                   </Button>
                 </div>
