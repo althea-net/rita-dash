@@ -17,7 +17,7 @@ const Warning = () => {
 
   return (
     <div
-      className="d-flex flex-column mx-auto my-auto w-50"
+      className="d-flex flex-column mx-auto my-auto pb-2"
       style={{ marginTop: 30 }}
     >
       <div className="d-flex w-100 justify-content-around">

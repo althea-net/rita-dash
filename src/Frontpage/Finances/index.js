@@ -51,7 +51,7 @@ const Finances = () => {
         style={{ marginTop: -10 }}
       >
         <div
-          className="pr-lg-4 mx-auto mb-3 w-50 flex-grow"
+          className="pr-lg-4 mx-auto mb-3 flex-grow col-md-6"
           style={{ marginTop: 30 }}
         >
           <h5
