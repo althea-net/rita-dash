@@ -103,7 +103,7 @@ const ImportPrivateKey = () => {
                   />
                   <Button
                     color="primary"
-                    style={{ width: 100 }}
+                    style={{ height: 50 }}
                     disabled={!valid}
                   >
                     {t("import")}

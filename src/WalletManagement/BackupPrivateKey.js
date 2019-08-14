@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Button,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText
-} from "reactstrap";
+import { Button, Tooltip } from "reactstrap";
 import { get } from "store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -54,27 +48,34 @@ const BackupPrivateKey = () => {
         <div className="col-8 col-md-9">
           <p>{t("backupText")}</p>
           {showing ? (
-            <div className="d-flex">
-              <InputGroup className="mr-2">
-                <Input
-                  type="textarea"
-                  readOnly
-                  id="currentKey"
-                  name="privateKey"
-                  value={privateKey}
-                />
-                <CopyToClipboard text={privateKey} onCopy={copy}>
-                  <InputGroupAddon addonType="append">
-                    <InputGroupText
+            <div class="d-flex flex-wrap">
+              <div
+                className="mb-2 col-9 mr-2"
+                style={{
+                  border: "1px solid #ddd",
+                  borderRadius: 5,
+                  background: "#eee",
+                  wordWrap: "break-word"
+                }}
+              >
+                <div className="d-flex py-2 px-0">
+                  <div className="col-11">{privateKey}</div>
+
+                  <Tooltip placement="top" isOpen={copied} target="copy">
+                    {t("copied")}
+                  </Tooltip>
+                  <CopyToClipboard text={privateKey} onCopy={copy}>
+                    <FontAwesomeIcon
+                      id="copy"
+                      icon="copy"
+                      color="#999"
+                      className="mr-2"
                       style={{ cursor: "pointer" }}
-                      id="copySubnetAddr"
-                    >
-                      <FontAwesomeIcon icon="copy" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                </CopyToClipboard>
-              </InputGroup>
-              <Button color="primary" onClick={hideKey}>
+                    />
+                  </CopyToClipboard>
+                </div>
+              </div>
+              <Button color="primary" onClick={hideKey} style={{ height: 50 }}>
                 {t("hide")}
               </Button>
             </div>
@@ -83,7 +84,6 @@ const BackupPrivateKey = () => {
               {t("showPrivateKey")}
             </Button>
           )}
-          {copied && <p>{t("copied")}</p>}
         </div>
       </div>
     </>
