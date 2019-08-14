@@ -9,6 +9,7 @@ import Deposit from "../../Deposit";
 import Withdraw from "../../Withdraw";
 import UsageMetrics from "./UsageMetrics";
 import Warning from "./Warning";
+import FundingStatus from "../../FundingStatus";
 
 const Finances = () => {
   const [t] = useTranslation();
@@ -85,6 +86,8 @@ const Finances = () => {
               {t("withdraw")}
             </Button>
           </div>
+
+          <FundingStatus />
         </div>
         <Warning />
       </div>

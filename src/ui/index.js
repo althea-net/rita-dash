@@ -38,9 +38,15 @@ export const Dismiss = ({ title, link, linkText }) => (
 );
 
 export const Heading = ({ title, link, linkText }) => (
-  <div className="w-100 d-flex flex-wrap justify-content-between" style={{ zIndex: 99 }}>
+  <div
+    className="w-100 d-flex flex-wrap justify-content-between"
+    style={{ zIndex: 99 }}
+  >
     <h4>{title}</h4>
-    <div style={{ color: "#3DADF5", fontSize: 16 }} className="mb-1 ml-auto text-right">
+    <div
+      style={{ color: "#3DADF5", fontSize: 16 }}
+      className="mb-1 ml-auto text-right"
+    >
       <a href={link} id="paymentSettingsALT">
         {linkText}
         <FontAwesomeIcon

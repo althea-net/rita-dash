@@ -1,4 +1,11 @@
 {
+  "notEnoughFunds": "Not enough funds to deposit.",
+  "routerHas": "Your router has 0.0003 Eth, worth $2.34. The minimum amount of funds to deposit is 0.006 Eth, worth $5.00. To start a deposit, please add an additional 0.0031 Eth. Or you can withdraw 0.003 Eth.",
+  "EthToDai": "<b>Adding funds...</b> Converting 0.05 Eth to $25.03 Dai",
+  "DaiToXdai": "<b>Adding funds...</b> Transferring $25.03 Dai to xDai blockchain",
+  "XdaiToDai": "<b>Withdrawing funds...</b> Transferring $25.03 Dai to Ethereum blockchain",
+  "DaiToEth": "<b>Withdrawing funds...</b> Converting $25.03 Dai to 0.05 Eth",
+  "EthToDest": "<b>Withdrawing funds...</b> Sending 0.05 Eth, worth $23.05 to 0xj3ri240f29ij4f923fn023fn023if2",
   "adminPassword": "Admin password",
   "setAdminPassword": "Set Admin Password",
   "newPassword": "New password",
