@@ -54,7 +54,7 @@ export default ({ open, setOpen }) => {
   };
 
   return (
-    <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>
+    <Modal isOpen={open} centered toggle={() => setOpen(!open)}>
       <ModalHeader toggle={() => setOpen(!open)}>
         {t("backupAccount")}
       </ModalHeader>
@@ -71,10 +71,15 @@ export default ({ open, setOpen }) => {
         </div>
         <Label>{t("yourPrivateKey")}</Label>
         <div
-          className="card p-2 mb-4"
-          style={{ border: "1px solid #ddd", background: "#eee" }}
+          className="mb-4"
+          style={{
+            border: "1px solid #ddd",
+            borderRadius: 5,
+            background: "#eee",
+            wordWrap: "break-word"
+          }}
         >
-          <div className="d-flex">
+          <div className="d-flex py-2 px-0">
             <div className="col-11">{privateKey}</div>
 
             <Tooltip placement="top" isOpen={copied} target="copy">
