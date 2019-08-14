@@ -4,17 +4,15 @@ import { get, login, useStore } from "store";
 import {
   Alert,
   Button,
-  Card,
-  CardBody,
   Form,
   FormGroup,
   Input,
-  Label,
   Modal,
   ModalHeader,
   ModalBody,
   Progress
 } from "reactstrap";
+import key from "../images/key.png";
 
 const Login = () => {
   const [t] = useTranslation();
@@ -41,39 +39,38 @@ const Login = () => {
   };
 
   return (
-    <Modal isOpen={true} centered autoFocus={false}>
+    <Modal size="lg" isOpen={true} centered autoFocus={false}>
       <ModalHeader>{t("login")}</ModalHeader>
       <ModalBody>
         {error && <Alert color="danger">{t("loginError")}</Alert>}
-        <Card>
-          <CardBody>
-            <Form onSubmit={submit}>
-              {loading ? (
-                <Progress animated color="info" value="100" />
-              ) : (
-                <div className="d-flex">
-                  <FormGroup className="mb-0">
-                    <Label for="password">{t("password")}</Label>
-                    <Input
-                      autoFocus
-                      id="password"
-                      type="password"
-                      className="mr-3"
-                      onChange={e => setPassword(e.target.value)}
-                      value={password}
-                      style={{ width: 250 }}
-                    />
-                  </FormGroup>
-                  <div className="mt-auto">
-                    <Button color="primary" style={{ width: 100 }}>
-                      {t("submit")}
-                    </Button>
-                  </div>
+        <div className="d-flex">
+          <img src={key} alt={t("key")} className="mr-2" />
+          <Form onSubmit={submit} className="my-auto w-100">
+            {loading ? (
+              <Progress animated color="info" value="100" />
+            ) : (
+              <div className="d-flex">
+                <FormGroup className="mb-0">
+                  <Input
+                    autoFocus
+                    id="password"
+                    type="password"
+                    className="mr-3"
+                    placeholder={t("adminPassword")}
+                    onChange={e => setPassword(e.target.value)}
+                    value={password}
+                    style={{ width: 300 }}
+                  />
+                </FormGroup>
+                <div className="mt-auto ml-auto">
+                  <Button color="primary" style={{ width: 200 }}>
+                    {t("submit")}
+                  </Button>
                 </div>
-              )}
-            </Form>
-          </CardBody>
-        </Card>
+              </div>
+            )}
+          </Form>
+        </div>
       </ModalBody>
     </Modal>
   );

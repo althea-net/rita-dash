@@ -1,4 +1,5 @@
 {
+  "adminPassword": "Admin password",
   "setAdminPassword": "Set Admin Password",
   "newPassword": "New password",
   "typeAgain": "Type new password again",
@@ -57,7 +58,7 @@
   "privateKeyImportWarning": "After importing your private key, your router will be rebooted and will be assigned a new Wireguard VPN key and IP address. You'll need to re-register with any exit servers you wish to use. If you are connected via Wifi, you may need to reconnect once the router comes back online in case your device roams to another network.",
   "lessThanAWeek": "Based on your average usage of {{perMonthUsage}} GB per month, your balance will provide you with less than a week of service.",
   "loginError": "Password entry failed",
-  "login": "Router Password Required",
+  "login": "Log in",
   "passwordMismatch": "Passwords don't match",
   "passwordError": "Problem saving password",
   "passwordSuccess": "Password was set successfully",
