@@ -33,8 +33,18 @@ export default () => {
   const [loadingNickname] = useNickname();
   const [loadingWifiSettings] = useWifiSettings();
 
+  useEffect(
+    () => {
+      setDismissed(
+        window.sessionStorage.getItem("gettingStartedDismissed") === "true"
+      );
+    },
+    [dismissed]
+  );
+
   const dismiss = e => {
     e.preventDefault();
+    window.sessionStorage.setItem("gettingStartedDismissed", true);
     setDismissed(true);
   };
 
