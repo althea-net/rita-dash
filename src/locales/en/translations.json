@@ -1,4 +1,8 @@
 {
+  "setAdminPassword": "Set Admin Password",
+  "newPassword": "New password",
+  "typeAgain": "Type new password again",
+  "thisPassword": "This password protects this admin dashboard. It is different from your wifi password. Please set this to a secure password because you can use this dashboard to withdraw money from the router.",
   "needHelp": "Need help?",
   "currentlyConnected": "You are currently connected",
   "noConnectionDetected": "No connection detected",

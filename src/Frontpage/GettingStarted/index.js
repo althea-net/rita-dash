@@ -4,6 +4,7 @@ import { Progress } from "reactstrap";
 import { Card } from "../../ui";
 import Backup from "../../Backup";
 import Deposit from "../../Deposit";
+import Password from "../../Password";
 import { get, useStore } from "store";
 import List from "./List";
 import useNickname from "hooks/useNickname";
@@ -16,6 +17,7 @@ export default () => {
   const [backingUp, setBackingUp] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [depositing, setDepositing] = useState(false);
+  const [settingPassword, setSettingPassword] = useState(false);
 
   const [
     { balance, backupCreated, selectedExit, nickname, wifiSettings },
@@ -25,6 +27,7 @@ export default () => {
   const goBackup = () => setBackingUp(true);
   const goSettings = () => (window.location.href = "#settings");
   const goDeposit = () => setDepositing(true);
+  const goPassword = () => setSettingPassword(true);
   const goWifi = () => (window.location.href = "#router-settings");
 
   const [loadingNickname] = useNickname();
@@ -55,7 +58,7 @@ export default () => {
     {
       name: "setDashPass",
       completed: isRouterPasswordSet,
-      onClick: goSettings
+      onClick: goPassword
     }
   ];
 
@@ -93,6 +96,7 @@ export default () => {
     <Card>
       <Backup open={backingUp} setOpen={setBackingUp} />
       <Deposit open={depositing} setOpen={setDepositing} />
+      <Password open={settingPassword} setOpen={setSettingPassword} />
       <div className="w-100 d-flex flex-wrap justify-content-between">
         <h4>{t("gettingStarted")}</h4>
         <div
