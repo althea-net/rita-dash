@@ -27,9 +27,11 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
 
             <div className="d-flex w-100 flex-column mt-3">
               {modes.map((mode, i) => {
-                let selected = mode === interfaces[iface]
-                let disabled = !selected &&
-                  mode !== "Mesh" && Object.values(interfaces).includes(mode);
+                let selected = mode === interfaces[iface];
+                let disabled =
+                  !selected &&
+                  mode !== "Mesh" &&
+                  Object.values(interfaces).includes(mode);
                 return (
                   <PortToggle
                     id={mode + "_" + column}
@@ -37,7 +39,7 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                     selected={selected}
                     onClick={() => selected || setInterfaceMode(iface, mode)}
                     disabled={disabled}
-                    readonly={selected}
+                    readOnly={selected}
                   >
                     {mode}
                   </PortToggle>
