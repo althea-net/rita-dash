@@ -35,7 +35,21 @@ const Init = () => {
 
   useEffect(
     () => {
-      const init = async () => {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      (async () => {
+        try {
+          let { backupCreated } = await get(
+            "/backup_created",
+            true,
+            5000,
+            signal
+          );
+          if (!(backupCreated instanceof Error)) {
+            backupCreated = backupCreated === "true";
+            dispatch({ type: "backupCreated", backupCreated });
+          }
+        } catch {}
         getInfo();
 
         try {
@@ -47,14 +61,14 @@ const Init = () => {
           const blockchain = await get("/blockchain/get");
           dispatch({ type: "blockchain", blockchain });
         } catch {}
-      };
+      })();
 
-      init();
+      return controller.abort;
     },
     [authenticated, dispatch, getDebt, getInfo]
   );
 
-  return <></>;
+  return null;
 };
 
 export default Init;

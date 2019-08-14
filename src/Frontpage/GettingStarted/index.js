@@ -5,12 +5,10 @@ import { Card } from "../../ui";
 import Backup from "../../Backup";
 import Deposit from "../../Deposit";
 import Password from "../../Password";
-import { get, useStore } from "store";
+import { useStore } from "store";
 import List from "./List";
 import useNickname from "hooks/useNickname";
 import useWifiSettings from "hooks/useWifiSettings";
-
-const AbortController = window.AbortController;
 
 export default () => {
   const [t] = useTranslation();
@@ -20,8 +18,7 @@ export default () => {
   const [settingPassword, setSettingPassword] = useState(false);
 
   const [
-    { balance, backupCreated, selectedExit, nickname, wifiSettings },
-    dispatch
+    { balance, backupCreated, selectedExit, nickname, wifiSettings }
   ] = useStore();
 
   const goBackup = () => setBackingUp(true);
@@ -71,31 +68,6 @@ export default () => {
       onClick: goPassword
     }
   ];
-
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
-      (async () => {
-        try {
-          let { backupCreated } = await get(
-            "/backup_created",
-            true,
-            5000,
-            signal
-          );
-          if (!(backupCreated instanceof Error)) {
-            backupCreated = backupCreated === "true";
-            dispatch({ type: "backupCreated", backupCreated });
-          }
-        } catch {}
-      })();
-      return () => {
-        controller.abort();
-      };
-    },
-    [dispatch]
-  );
 
   if (loadingNickname || loadingWifiSettings)
     return <Progress animated color="info" value="100" />;
