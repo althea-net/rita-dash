@@ -52,7 +52,7 @@ const UsageMetrics = () => {
 
   return (
     <div
-      className="ml-0 row mt-4 pt-4 w-100"
+      className="ml-0 row pt-4 w-100"
       style={{ borderTop: "1px solid #dadada" }}
     >
       <div className="d-flex flex-column justify-content-between pr-lg-4 col-md-6">

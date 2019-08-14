@@ -46,9 +46,12 @@ const Finances = () => {
 
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />
-      <div className="d-flex flex-wrap" style={{ marginTop: -10 }}>
+      <div
+        className="d-flex flex-wrap flex-md-nowrap w-100"
+        style={{ marginTop: -10 }}
+      >
         <div
-          className="pr-lg-4 mx-auto mb-3 col-12 col-md-6"
+          className="pr-lg-4 mx-auto mb-3 w-50 flex-grow"
           style={{ marginTop: 30 }}
         >
           <h5
@@ -56,10 +59,11 @@ const Finances = () => {
             className="mx-auto text-center w-100 mb-3"
             style={{ color: "#777", fontSize: 18 }}
           >
-            {t("currentBalance")} 
+            {t("currentBalance")}
           </h5>
           <h2 className="text-center mb-3">
-            {symbol === "USD" && "$"}{toEth(balance, decimals)}{" "}
+            {symbol === "USD" && "$"}
+            {toEth(balance, decimals)}{" "}
             <span style={{ fontSize: 20 }}>{symbol}</span>
           </h2>
           <div className="d-flex justify-content-center mt-auto">
@@ -67,20 +71,20 @@ const Finances = () => {
               color="primary"
               id="deposit"
               onClick={() => setDepositing(true)}
-style={{ minWidth: 130 }}
-className="mr-3"
-              >
-                {t("topUp")}
-              </Button>
-              <Button
-                color="primary"
-                id="withdraw"
-                onClick={() => setWithdrawing(true)}
-style={{ minWidth: 130 }}
-              >
-                {t("withdraw")}
-              </Button>
-            </div>
+              style={{ minWidth: 130 }}
+              className="mr-3"
+            >
+              {t("topUp")}
+            </Button>
+            <Button
+              color="primary"
+              id="withdraw"
+              onClick={() => setWithdrawing(true)}
+              style={{ minWidth: 130 }}
+            >
+              {t("withdraw")}
+            </Button>
+          </div>
         </div>
         <Warning />
       </div>
