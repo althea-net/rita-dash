@@ -1,7 +1,7 @@
 import React from "react";
 import { Alert } from "reactstrap";
 
-export default ({ message }) => {
+const Success = ({ message }) => {
   if (!message) return null;
   return (
     <Alert color="success" className="text-break">
@@ -9,3 +9,5 @@ export default ({ message }) => {
     </Alert>
   );
 };
+
+export default Success;

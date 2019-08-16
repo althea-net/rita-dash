@@ -16,7 +16,7 @@ import padlock from "./images/padlock.svg";
 
 const AbortController = window.AbortController;
 
-export default ({ open, setOpen }) => {
+const Backup = ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [privateKey, setPrivateKey] = useState("");
   const [copied, setCopied] = useState(false);
@@ -103,3 +103,5 @@ export default ({ open, setOpen }) => {
     </Modal>
   );
 };
+
+export default Backup;

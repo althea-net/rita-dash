@@ -1,4 +1,10 @@
 {
+  "backupMyAccount": "Backup my account",
+  "updatePassword": "Update Password",
+  "updateMyPassword": "Update my password now",
+  "areYouSurePassword": "Are you sure you want to update your password?",
+  "ifYouForget": "If you forget your new password, you will lose access to your funding unless you backup your account.",
+  "exclamationMark": "Exclamation Mark Warning Symbol",
   "fundsAdded": "<b>Funds added.</b> It may still take several seconds or minutes for them to appear in your account.",
   "withdrawEth": "withdraw {{eth}} Eth.",
   "notEnoughFunds": "Not enough funds to deposit.",

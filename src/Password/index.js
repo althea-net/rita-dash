@@ -40,11 +40,11 @@ const Password = ({ open, setOpen }) => {
     }
   };
 
+  const toggle = () => setOpen(!open);
+
   return (
-    <Modal size="lg" isOpen={open} centered toggle={() => setOpen(!open)}>
-      <ModalHeader toggle={() => setOpen(!open)}>
-        {t("setAdminPassword")}
-      </ModalHeader>
+    <Modal size="lg" isOpen={open} centered toggle={toggle}>
+      <ModalHeader toggle={toggle}>{t("setAdminPassword")}</ModalHeader>
       <ModalBody>
         <p style={{ maxWidth: 500 }}>{t("thisPassword")}</p>
         <div className="d-flex">
@@ -84,9 +84,15 @@ const Password = ({ open, setOpen }) => {
         </div>
       </ModalBody>
       <ModalFooter className="border-top-0">
-        <Button color="primary" onClick={submit}>
-          Submit
-        </Button>
+        {success ? (
+          <Button color="secondary" onClick={toggle}>
+            {t("close")}
+          </Button>
+        ) : (
+          <Button color="primary" onClick={submit}>
+            {t("submit")}
+          </Button>
+        )}
       </ModalFooter>
     </Modal>
   );

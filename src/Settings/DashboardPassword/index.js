@@ -11,6 +11,8 @@ import {
   Input,
   Label
 } from "reactstrap";
+import Backup from "../../Backup";
+import Confirm from "./Confirm";
 
 const DashboardPassword = ({ balance, symbol }) => {
   const [t] = useTranslation();
@@ -18,9 +20,10 @@ const DashboardPassword = ({ balance, symbol }) => {
   const [passConfirm, setConfirm] = useState("");
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+  const [backingUp, setBackingUp] = useState(false);
 
-  const submit = async e => {
-    e.preventDefault();
+  const submit = async () => {
     setError();
     setSuccess();
 
@@ -37,10 +40,24 @@ const DashboardPassword = ({ balance, symbol }) => {
     }
   };
 
+  const confirm = e => {
+    e.preventDefault();
+    setConfirming(true);
+  };
+
+  const backup = () => setBackingUp(true);
+
   return (
     <Card className="mb-4">
       <CardBody>
-        <Form onSubmit={submit}>
+        <Backup open={backingUp} setOpen={setBackingUp} />
+        <Confirm
+          open={confirming}
+          setOpen={setConfirming}
+          submit={submit}
+          backup={backup}
+        />
+        <Form onSubmit={confirm}>
           <h3>{t("routerCredentials")}</h3>
           <p>{t("theseCredentials")}</p>
 
