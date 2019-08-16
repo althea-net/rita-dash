@@ -123,6 +123,7 @@ const FundingStatus = () => {
             dangerouslySetInnerHTML={{
               __html: t(key, { dai, eth, dest })
             }}
+            style={{ wordBreak: "break-all" }}
           />
         </div>
       )}
