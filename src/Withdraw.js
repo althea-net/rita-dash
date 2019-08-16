@@ -53,10 +53,15 @@ const Withdraw = ({ open, setOpen }) => {
   const link = txLink(blockchain, txid);
   const decimals = symbol === "Dai" ? 2 : 4;
 
+  const toggle = () => {
+    setOpen(!open);
+    setTxid(null);
+  };
+
   return (
     <div>
-      <Modal isOpen={open} toggle={() => setOpen(!open)}>
-        <ModalHeader toggle={() => setOpen(!open)}>
+      <Modal isOpen={open} toggle={toggle}>
+        <ModalHeader toggle={toggle}>
           {t("withdraw")} {symbol}
         </ModalHeader>
         <ModalBody>
@@ -84,7 +89,7 @@ const Withdraw = ({ open, setOpen }) => {
               <Button
                 type="button"
                 color="primary"
-                onClick={() => setOpen(false)}
+                onClick={toggle}
                 className="mr-2"
               >
                 {t("close")}
@@ -158,7 +163,7 @@ const Withdraw = ({ open, setOpen }) => {
                   type="button"
                   color="primary"
                   outline
-                  onClick={() => setOpen(false)}
+                  onClick={toggle}
                   className="mr-2"
                 >
                   Cancel

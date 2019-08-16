@@ -48,7 +48,7 @@ const Finances = () => {
         </h5>
         <h4 id="balance" className="w-100 mb-2">
           {symbol === "Dai" && "$"}
-          {toEth(balance, decimals)} {symbol} {decimals}
+          {toEth(balance, decimals)} {symbol}
         </h4>
         <div className="d-flex justify-content-center">
           <Button

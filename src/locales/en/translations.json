@@ -6,7 +6,7 @@
   "ethToDai": "<b>Adding funds...</b> Converting {{eth}} Eth to ${{dai}} Dai",
   "daiToXdai": "<b>Adding funds...</b> Transferring ${{dai}} Dai to xDai blockchain",
   "xdaiToDai": "<b>Withdrawing funds...</b> Transferring ${{dai}} Dai to Ethereum blockchain",
-  "daiToEth": "<b>Withdrawing funds...</b> Converting ${{dai} Dai to {{eth}} Eth",
+  "daiToEth": "<b>Withdrawing funds...</b> Converting ${{dai}} Dai to {{eth}} Eth",
   "ethToDest": "<b>Withdrawing funds...</b> Sending {{eth}} Eth, worth ${{dai}} to {{dest}}",
   "adminPassword": "Admin password",
   "setAdminPassword": "Set Admin Password",

@@ -29,8 +29,8 @@ const FundingStatus = () => {
         dai = parseFloat(toEth(state.amount));
         break;
       case "daiToEth":
-        dai = state.amountOfDai;
-        eth = (state.amountOfDai * rate).toFixed(4).toString();
+        dai = parseFloat(toEth(state.amountOfDai));
+        eth = (dai * rate).toFixed(4).toString();
         break;
       case "ethToDest":
         eth = toEth(state.amountOfEth);
@@ -119,13 +119,11 @@ const FundingStatus = () => {
       {key !== "noOp" && (
         <div className="d-flex w-100">
           <img src={clock} alt={t("clock")} className="mr-2" />
-          {
-            <div
-              dangerouslySetInnerHTML={{
-                __html: t(key, { dai, eth, dest })
-              }}
-            />
-          }
+          <div
+            dangerouslySetInnerHTML={{
+              __html: t(key, { dai, eth, dest })
+            }}
+          />
         </div>
       )}
     </div>
