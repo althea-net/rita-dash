@@ -30,8 +30,19 @@ const Init = () => {
     [dispatch]
   );
 
+  const getStatus = useCallback(
+    async () => {
+      try {
+        const status = await get("/token_bridge/status", true, 2000);
+        dispatch({ type: "status", status });
+      } catch (e) {}
+    },
+    [dispatch]
+  );
+
   useInterval(getDebt, 10000);
   useInterval(getInfo, 5000);
+  useInterval(getStatus, 2000);
 
   useEffect(
     () => {

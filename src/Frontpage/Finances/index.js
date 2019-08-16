@@ -35,7 +35,7 @@ const Finances = () => {
     [dispatch]
   );
 
-  const decimals = symbol === "USD" ? 2 : 3;
+  const decimals = symbol === "Dai" ? 2 : 4;
 
   return (
     <Card>
@@ -57,13 +57,13 @@ const Finances = () => {
         >
           <h5
             id="balance"
-            className="mx-auto text-center w-100 mb-3"
+            className="mx-auto text-center w-100 mb-2"
             style={{ color: "#777", fontSize: 18 }}
           >
             {t("currentBalance")}
           </h5>
           <h2 className="text-center mb-3">
-            {symbol === "USD" && "$"}
+            {symbol === "Dai" && "$"}
             {toEth(balance, decimals)}{" "}
             <span style={{ fontSize: 20 }}>{symbol}</span>
           </h2>

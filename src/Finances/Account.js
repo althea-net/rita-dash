@@ -36,7 +36,7 @@ const Finances = () => {
     [dispatch]
   );
 
-  const decimals = symbol === "USD" ? 2 : 4;
+  const decimals = symbol === "Dai" ? 2 : 4;
 
   return (
     <>
@@ -46,9 +46,9 @@ const Finances = () => {
         <h5 style={{ color: "gray", fontSize: 18 }} className="mb-3">
           {t("currentBalance")}
         </h5>
-        <h4 id="balance" className="w-100 mb-3">
-          {symbol === "USD" && "$"}
-          {toEth(balance, decimals)} {symbol}
+        <h4 id="balance" className="w-100 mb-2">
+          {symbol === "Dai" && "$"}
+          {toEth(balance, decimals)} {symbol} {decimals}
         </h4>
         <div className="d-flex justify-content-center">
           <Button

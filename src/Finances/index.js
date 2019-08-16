@@ -12,6 +12,7 @@ import WalletManagement from "../WalletManagement";
 
 import Account from "./Account";
 import Billing from "./Billing";
+import FundingStatus from "../FundingStatus";
 import PurchasingBandwidth from "./PurchasingBandwidth";
 
 const Finances = () => {
@@ -30,6 +31,7 @@ const Finances = () => {
         <WalletManagement open={managing} setOpen={setManaging} />
         <Left>
           <Account />
+          <FundingStatus />
         </Left>
         <Right>
           <div className="d-flex flex-column">

@@ -14,14 +14,14 @@ import {
   ModalHeader,
   ModalBody
 } from "reactstrap";
-import { Error, toEth, toWei, txLink } from "utils";
+import { Error, toWei, txLink } from "utils";
 import Web3 from "web3";
-import { post, useStore } from "store";
+import { post } from "store";
 import bigGreenCheck from "images/big_green_check.png";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 
-const Withdraw = ({ open, setOpen }) => {
+const WithdrawEth = ({ open, setOpen, eth }) => {
   const [t] = useTranslation();
 
   const [address, setAddress] = useState("");
@@ -29,46 +29,36 @@ const Withdraw = ({ open, setOpen }) => {
   const [error, setError] = useState();
   const [txid, setTxid] = useState();
 
-  const [{ balance, blockchain, symbol }] = useStore();
-
   const onSubmit = async e => {
     e.preventDefault();
     try {
-      const txid = await post(`/withdraw/${address}/${toWei(amount)}`);
+      const txid = await post(`/withdrawEth/${address}/${toWei(amount)}`);
       setTxid(txid.replace("txid:", ""));
     } catch {
       setError(t("withdrawalError"));
     }
   };
 
-  const balanceEth = toEth(balance);
   const fAmount = parseFloat(amount);
   const addressValid = !!(address && web3.utils.isAddress(address));
-  const amountValid = !!(
-    !isNaN(fAmount) &&
-    fAmount > 0 &&
-    fAmount <= balanceEth
-  );
+  const amountValid = !!(!isNaN(fAmount) && fAmount > 0 && fAmount <= eth);
   const valid = addressValid && amountValid;
-  const link = txLink(blockchain, txid);
-  const decimals = symbol === "Dai" ? 2 : 4;
+  const link = txLink("Ethereum", txid);
 
   return (
     <div>
       <Modal isOpen={open} toggle={() => setOpen(!open)}>
         <ModalHeader toggle={() => setOpen(!open)}>
-          {t("withdraw")} {symbol}
+          {t("withdraw")} ETH
         </ModalHeader>
         <ModalBody>
           <Error error={error} />
-
           <div className="text-center">
             <h5 style={{ color: "gray", fontSize: 18 }} className="mb-1">
               {t("currentBalance")}
             </h5>
             <h4 id="balance" className="w-100 mb-2">
-              {symbol === "Dai" && "$"}
-              {toEth(balance, decimals)} {symbol}
+              {eth} ETH
             </h4>
           </div>
 
@@ -136,12 +126,12 @@ const Withdraw = ({ open, setOpen }) => {
                         color: "#888"
                       }}
                     >
-                      {symbol}
+                      ETH
                     </InputGroupText>
                   </InputGroupAddon>
                 </InputGroup>
                 <FormFeedback invalid="true">
-                  {t("amountRequired", { balance: balanceEth })}
+                  {t("amountRequired", { balance: eth })}
                 </FormFeedback>
               </FormGroup>
               <FormGroup
@@ -175,4 +165,4 @@ const Withdraw = ({ open, setOpen }) => {
   );
 };
 
-export default Withdraw;
+export default WithdrawEth;

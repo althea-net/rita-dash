@@ -3,7 +3,7 @@ import { BigNumber } from "bignumber.js";
 const symbols = {
   Ethereum: "ETH",
   Rinkeby: "tETH",
-  Xdai: "USD"
+  Xdai: "Dai"
 };
 
 export default (state, action) => {
@@ -120,6 +120,7 @@ export default (state, action) => {
     }),
     startPortChange: () => ({ portChange: true }),
     startWaiting: ({ waiting }) => ({ waiting }),
+    status: ({ status }) => ({ status }),
     usage: ({ usage }) => ({ usage }),
     wgPublicKey: ({ wgPublicKey }) => ({ wgPublicKey }),
     wifiChange: () => ({ wifiChange: true }),

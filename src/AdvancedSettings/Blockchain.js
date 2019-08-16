@@ -55,7 +55,7 @@ const Blockchain = () => {
             >
               <option value="Ethereum">Ethereum (ETH)</option>
               <option value="Rinkeby">Rinkeby (tETH)</option>
-              <option value="Xdai">Xdai (USD)</option>
+              <option value="Xdai">Xdai (Dai / USD)</option>
             </Input>
           </FormGroup>
           <FormGroup>
