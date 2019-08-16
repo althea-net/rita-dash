@@ -34,7 +34,9 @@ const Init = () => {
     async () => {
       try {
         const status = await get("/token_bridge/status", true, 2000);
-        dispatch({ type: "status", status });
+        if (!(status instanceof Error)) {
+          dispatch({ type: "status", status });
+        }
       } catch (e) {}
     },
     [dispatch]

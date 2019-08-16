@@ -28,7 +28,7 @@ export default () => {
   const goWifi = () => (window.location.href = "#router-settings");
 
   const [loadingNickname] = useNickname();
-  const [loadingWifiSettings] = useWifiSettings();
+  const [, loadingWifiSettings] = useWifiSettings();
 
   useEffect(
     () => {
