@@ -65,33 +65,42 @@ const DashboardPassword = ({ balance, symbol }) => {
           {success && <Alert color="success">{t("passwordSuccess")}</Alert>}
 
           <div className="d-flex flex-wrap">
-            <FormGroup>
-              <Label for="password">{t("password")}</Label>
-              <Input
-                id="password"
-                type="password"
-                className="mr-3"
-                onChange={e => setPassword(e.target.value)}
-                value={password}
-                style={{ width: 250 }}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="passConfirm">{t("passConfirm")}</Label>
-              <Input
-                id="passConfirm"
-                type="password"
-                className="mr-3"
-                onChange={e => setConfirm(e.target.value)}
-                value={passConfirm}
-                style={{ width: 250 }}
-              />
-            </FormGroup>
-            <div className="mt-auto mb-3">
-              <Button color="primary" style={{ width: 100 }}>
-                {t("save")}
-              </Button>
+            <div className="d-flex flex-wrap">
+              <FormGroup>
+                <Label for="password">{t("password")}</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  className="mr-3"
+                  onChange={e => setPassword(e.target.value)}
+                  value={password}
+                  style={{ width: 250 }}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="passConfirm">{t("passConfirm")}</Label>
+                <Input
+                  id="passConfirm"
+                  type="password"
+                  className="mr-3"
+                  onChange={e => setConfirm(e.target.value)}
+                  value={passConfirm}
+                  style={{ maxWidth: 250 }}
+                />
+              </FormGroup>
             </div>
+            <Button
+              color="primary"
+              style={{
+                width: 100,
+                paddingTop: 12,
+                paddingBottom: 13,
+                marginBottom: "1rem"
+              }}
+              className="mt-auto"
+            >
+              {t("save")}
+            </Button>
           </div>
         </Form>
       </CardBody>

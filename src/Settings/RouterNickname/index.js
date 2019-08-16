@@ -8,7 +8,6 @@ import {
   FormGroup,
   Input,
   Progress,
-  InputGroup,
   Label
 } from "reactstrap";
 import { useTranslation } from "react-i18next";
@@ -55,16 +54,15 @@ const Nickname = () => {
             <FormGroup>
               <Label for="price">{t("nickname")}</Label>
               <div className="d-flex">
-                <InputGroup className="mr-3" style={{ width: 350 }}>
-                  <Input
-                    label={t("nickname")}
-                    name="nickname"
-                    id="nickname"
-                    onChange={e => setNewNickname(e.target.value)}
-                    value={newNickname}
-                    style={{ borderRight: "none" }}
-                  />
-                </InputGroup>
+                <Input
+                  label={t("nickname")}
+                  name="nickname"
+                  id="nickname"
+                  onChange={e => setNewNickname(e.target.value)}
+                  value={newNickname}
+                  style={{ maxWidth: 350 }}
+                  className="mr-2"
+                />
                 <Button type="submit" color="primary">
                   {t("save")}
                 </Button>
