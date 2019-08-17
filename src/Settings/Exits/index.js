@@ -17,7 +17,7 @@ const Exits = () => {
   const [initialized, setInitialized] = useState(false);
   const [registering, setRegistering] = useState(false);
 
-  const [{ blockchain, exits, resetting }, dispatch] = useStore();
+  const [{ exits, resetting, selectedExit }, dispatch] = useStore();
 
   const getExits = async signal => {
     if (!signal) {
@@ -85,19 +85,6 @@ const Exits = () => {
 
   useInterval(getExits, 5000);
 
-  let selected = null;
-  if (exits && exits.length) {
-    selected = exits.find(exit => {
-      let { state } = exit.exitSettings;
-      return (
-        exit.generalDetails &&
-        exit.generalDetails.exitCurrency === blockchain &&
-        exit.isSelected &&
-        state === "Registered"
-      );
-    });
-  }
-
   const store = {
     exits,
     getExits,
@@ -122,10 +109,10 @@ const Exits = () => {
           ) : (
             <div>
               <p>{t("exitNodesP1")}</p>
-              {selected ? (
+              {selectedExit ? (
                 <>
                   <ExitListItem
-                    exit={selected}
+                    exit={selectedExit}
                     click={() => setSelectingExit(true)}
                   />
                   <Button
