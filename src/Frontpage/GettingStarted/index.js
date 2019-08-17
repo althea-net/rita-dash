@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Progress } from "reactstrap";
 import { Card } from "../../ui";
 import Backup from "../../Backup";
 import Deposit from "../../Deposit";

@@ -5,7 +5,6 @@ import Topbar from "./Layout/Topbar";
 import { NoConnection } from "utils";
 import Router from "Router";
 import Init from "./Init";
-import { useStore } from "store";
 
 const App = () => {
   const [page, setPage] = useState("dashboard");
