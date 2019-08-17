@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Progress } from "reactstrap";
 import { useStore } from "store";
 import Login from "./Login";
 
@@ -23,7 +24,7 @@ let routes = {
 };
 
 const Router = ({ page, setPage, setOpen }) => {
-  const [{ authenticated }] = useStore();
+  const [{ authenticated, initialized }] = useStore();
 
   useEffect(
     () => {
@@ -42,6 +43,7 @@ const Router = ({ page, setPage, setOpen }) => {
   );
 
   if (!authenticated) return <Login />;
+  if (!initialized) return <Progress animated color="primary" value="100" />;
   if (routes[page]) return routes[page];
   else return <Frontpage />;
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import BandwidthSelling from "./BandwidthSelling";
 import Blockchain from "./Blockchain";
 import DaoFee from "./DaoFee";
 import Notifications from "./Notifications";
@@ -14,7 +15,10 @@ export default () => {
       <h2 id="advancedPage">{t("advancedSettings")}</h2>
 
       <Notifications />
-      <Blockchain />
+      <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
+        <BandwidthSelling />
+        <Blockchain />
+      </div>
       <DaoFee />
       <NodeInformation />
     </div>

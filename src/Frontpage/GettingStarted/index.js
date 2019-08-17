@@ -69,10 +69,7 @@ export default () => {
     }
   ];
 
-  if (loadingNickname || loadingWifiSettings)
-    return <Progress animated color="info" value="100" />;
-
-  if (dismissed) return null;
+  if (dismissed || loadingNickname || loadingWifiSettings) return null;
 
   return (
     <Card>

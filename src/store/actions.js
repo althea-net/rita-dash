@@ -113,6 +113,7 @@ export default (state, action) => {
           })
       };
     },
+    initialized: ({ initialized }) => ({ initialized }),
     nickname: ({ nickname }) => ({ nickname }),
     exitIp: ({ exitIp }) => ({ exitIp }),
     reset: ({ nickname }) => ({

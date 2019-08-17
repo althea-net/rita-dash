@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -18,6 +18,24 @@ const Blockchain = () => {
   const [{ blockchain }, dispatch] = useStore();
   const [newBlockchain, setBlockchain] = useState(blockchain);
 
+  useEffect(
+    () => {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      (async () => {
+        try {
+          const blockchain = await get("/blockchain/get", true, 5000, signal);
+          if (!(blockchain instanceof Error)) {
+            dispatch({ type: "blockchain", blockchain });
+          }
+        } catch (e) {}
+      })();
+
+      return () => controller.abort();
+    },
+    [dispatch]
+  );
+
   if (!blockchain || !newBlockchain) return null;
 
   let submit = async e => {
@@ -35,16 +53,12 @@ const Blockchain = () => {
   };
 
   return (
-    <Card style={{ height: "100%", marginBottom: 20 }}>
+    <Card className="mb-4" style={{ width: "calc(1/2*100% - (1 - 1/2)*20px)" }}>
       <CardBody>
         <Form onSubmit={submit}>
           <FormGroup id="form">
             <h3>{t("systemBlockchain")}</h3>
-            {success ? (
-              <Alert color="success">{t("blockchainSuccess")}</Alert>
-            ) : (
-              <Alert color="danger">{t("blockchainWarning")}</Alert>
-            )}
+            {success && <Alert color="success">{t("blockchainSuccess")}</Alert>}
             <Input
               label={t("blockchain")}
               name="blockchain"

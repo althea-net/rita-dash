@@ -28,6 +28,7 @@ const state = {
   exits: [],
   selectedExit: null,
   factor: 0,
+  initialized: false,
   interfaces: null,
   localFee: null,
   lowBalance: false,

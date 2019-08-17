@@ -58,22 +58,26 @@ const Init = () => {
             5000,
             signal
           );
+
           if (!(backupCreated instanceof Error)) {
             backupCreated = backupCreated === "true";
             dispatch({ type: "backupCreated", backupCreated });
           }
-        } catch {}
-        getInfo();
 
-        try {
-          const exits = await get("/exits");
+          getInfo();
+
+          const exits = await get("/exits", true, 5000, signal);
           if (exits instanceof Error) return;
           dispatch({ type: "exits", exits });
 
           await getDebt();
-          const blockchain = await get("/blockchain/get");
+          const blockchain = await get("/blockchain/get", true, 5000, signal);
           dispatch({ type: "blockchain", blockchain });
-        } catch {}
+
+          dispatch({ type: "initialized", initialized: true });
+        } catch (e) {
+          dispatch({ type: "initialized", initialized: false });
+        }
       })();
 
       return () => controller.abort();
