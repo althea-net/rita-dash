@@ -1,4 +1,7 @@
 {
+  "learnMoreAboutTheEquipment": "<a href='https://althea.net/getting-started'>Learn more</a> about the equipment required to sell bandwidth or contact your network organizer for details.",
+  "bandwidthSelling": "Enable Bandwidth Selling",
+  "enableBandwidthSelling": "Enable bandwidth selling",
   "backupMyAccount": "Backup my account",
   "updatePassword": "Update Password",
   "updateMyPassword": "Update my password now",

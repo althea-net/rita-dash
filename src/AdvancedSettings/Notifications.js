@@ -89,8 +89,8 @@ export default ({ balance, symbol }) => {
               id="notifications"
               onChange={() => setChecked(!checked)}
               checked={checked}
+              label={t("enableNotifications")}
             />
-            <Label for="notifications">{t("enableNotifications")}</Label>
           </FormGroup>
           <div className="d-flex flex-wrap">
             <FormGroup className="mr-2">
