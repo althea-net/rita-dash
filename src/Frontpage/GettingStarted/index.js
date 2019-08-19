@@ -32,7 +32,7 @@ export default () => {
   useEffect(
     () => {
       setDismissed(
-        window.sessionStorage.getItem("gettingStartedDismissed") === "true"
+        window.localStorage.getItem("gettingStartedDismissed") === "true"
       );
     },
     [dismissed]
@@ -40,7 +40,7 @@ export default () => {
 
   const dismiss = e => {
     e.preventDefault();
-    window.sessionStorage.setItem("gettingStartedDismissed", true);
+    window.localStorage.setItem("gettingStartedDismissed", true);
     setDismissed(true);
   };
 
