@@ -1,4 +1,5 @@
 {
+  "theseSettings": "These settings typically do not need to be updated and are used by technicians during the initial setup. Be sure you know what you're doing, as changes here may cause a service interruption.",
   "learnMoreAboutTheEquipment": "<a href='https://althea.net/getting-started'>Learn more</a> about the equipment required to sell bandwidth or contact your network organizer for details.",
   "bandwidthSelling": "Enable Bandwidth Selling",
   "enableBandwidthSelling": "Enable bandwidth selling",
