@@ -27,7 +27,10 @@ export default () => {
       </div>
 
       <Notifications />
-      <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
+      <div
+        className="d-flex flex-wrap"
+        style={{ justifyContent: "space-evenly" }}
+      >
         <BandwidthSelling />
         <Blockchain />
       </div>

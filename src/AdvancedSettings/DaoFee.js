@@ -78,7 +78,8 @@ const DaoFee = ({ readonly = false }) => {
     <Card className="mb-4">
       <CardBody>
         <Form onSubmit={submit}>
-          <h4>{t("daoFee")}</h4>
+          <h4>{t("serviceCost")}</h4>
+          <p>{t("theAmountYouPay")}</p>
 
           {success && <Alert color="success">{t("daoFeeSaved")}</Alert>}
 
@@ -93,7 +94,6 @@ const DaoFee = ({ readonly = false }) => {
                   style={{ flexWrap: "nowrap", width: 350 }}
                 >
                   <Input
-                    label={t("daoFee")}
                     name="daoFee"
                     id="daoFee"
                     onChange={e => setDaoFee(e.target.value)}
@@ -114,20 +114,21 @@ const DaoFee = ({ readonly = false }) => {
                   </InputGroupAddon>
                 </InputGroup>
                 {readonly || (
-                  <>
+                  <div>
                     <Button type="submit" color="primary">
                       {t("save")}
                     </Button>
                     <Button
                       type="button"
-                      color="secondary"
+                      color="primary"
+                      outline
                       className="ml-1"
                       onClick={defaultFee}
                       style={{ whiteSpace: "nowrap" }}
                     >
                       {t("defaultFee")}
                     </Button>
-                  </>
+                  </div>
                 )}
               </div>
             </FormGroup>

@@ -7,7 +7,7 @@ const BandwidthSelling = () => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <Card className="mb-4 col-md-6 mr-2">
+    <Card className="mb-4 mr-lg-2 col-12 small">
       <CardBody>
         <h4>{t("bandwidthSelling")}</h4>
         <Form>

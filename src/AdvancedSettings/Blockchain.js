@@ -53,27 +53,28 @@ const Blockchain = () => {
   };
 
   return (
-    <Card className="mb-4" style={{ width: "calc(1/2*100% - (1 - 1/2)*20px)" }}>
+    <Card className="mb-4 col-12 small">
       <CardBody>
         <Form onSubmit={submit}>
           <FormGroup id="form">
-            <h3>{t("systemBlockchain")}</h3>
+            <h4>{t("systemBlockchain")}</h4>
             {success && <Alert color="success">{t("blockchainSuccess")}</Alert>}
-            <Input
-              label={t("blockchain")}
-              name="blockchain"
-              placeholder={t("enterBlockchain")}
-              onChange={e => setBlockchain(e.target.value)}
-              value={newBlockchain}
-              type="select"
-            >
-              <option value="Ethereum">Ethereum (ETH)</option>
-              <option value="Rinkeby">Rinkeby (tETH)</option>
-              <option value="Xdai">Xdai (Dai / USD)</option>
-            </Input>
-          </FormGroup>
-          <FormGroup>
-            <Button color="primary">{t("save")}</Button>
+            <div className="d-flex flex-wrap">
+              <Input
+                label={t("blockchain")}
+                name="blockchain"
+                placeholder={t("enterBlockchain")}
+                onChange={e => setBlockchain(e.target.value)}
+                value={newBlockchain}
+                type="select"
+                className="mr-2 mb-2"
+              >
+                <option value="Ethereum">Ethereum (ETH)</option>
+                <option value="Rinkeby">Rinkeby (tETH)</option>
+                <option value="Xdai">Xdai (Dai / USD)</option>
+              </Input>
+              <Button color="primary">{t("save")}</Button>
+            </div>
           </FormGroup>
         </Form>
       </CardBody>

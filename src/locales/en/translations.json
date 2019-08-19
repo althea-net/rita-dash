@@ -1,4 +1,5 @@
 {
+  "theAmountYouPay": "The amount you pay to your network organizer every month",
   "theseSettings": "These settings typically do not need to be updated and are used by technicians during the initial setup. Be sure you know what you're doing, as changes here may cause a service interruption.",
   "learnMoreAboutTheEquipment": "<a href='https://althea.net/getting-started'>Learn more</a> about the equipment required to sell bandwidth or contact your network organizer for details.",
   "bandwidthSelling": "Enable Bandwidth Selling",
@@ -138,7 +139,7 @@
   "currentBalance": "Account Balance",
   "currentDebt": "Current debt",
   "daoError": "Unable to retrieve Subnet DAO address",
-  "daoFee": "Subnet DAO Fee",
+  "serviceCost": "Service Cost",
   "daoFeeSaved": "Subnet DAO Fee Updated Successfully",
   "daoSuccess": "Subnet DAO Address Updated Successfully",
   "dashboard": "Dashboard",
