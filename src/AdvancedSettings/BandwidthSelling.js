@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Form, FormGroup, CustomInput } from "reactstrap";
+import { useStore } from "store";
 
 const BandwidthSelling = () => {
   const [t] = useTranslation();
-  const [checked, setChecked] = useState(false);
+  const [{ sellingBandwidth }, dispatch] = useStore();
+
+  const check = e => {
+    dispatch({ type: "sellingBandwidth", sellingBandwidth: !sellingBandwidth });
+  };
 
   return (
     <Card className="mb-4 mr-lg-2 col-12 small">
@@ -15,8 +20,8 @@ const BandwidthSelling = () => {
             <CustomInput
               type="checkbox"
               id="bandwidthSelling"
-              onChange={() => setChecked(!checked)}
-              checked={checked}
+              onChange={check}
+              checked={sellingBandwidth}
               label={t("enableBandwidthSelling")}
             />
           </FormGroup>

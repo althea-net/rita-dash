@@ -119,6 +119,7 @@ export default (state, action) => {
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname]
     }),
+    sellingBandwidth: ({ sellingBandwidth }) => ({ sellingBandwidth }),
     startPortChange: () => ({ portChange: true }),
     startWaiting: ({ waiting }) => ({ waiting }),
     status: ({ status }) => ({ status }),

@@ -1,11 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavItem, NavLink } from "reactstrap";
+import { useStore } from "store";
 
 const padded = { paddingLeft: 5, paddingRight: 5 };
 
 const AltheaNav = ({ page, setOpen }) => {
   let [t] = useTranslation();
+  const [{ sellingBandwidth }] = useStore();
 
   let pages = {
     dashboard: t("dashboard"),
@@ -24,6 +26,8 @@ const AltheaNav = ({ page, setOpen }) => {
   });
 
   return navItems.map((page, i) => {
+    if (page.path === "selling-bandwidth" && !sellingBandwidth) return null;
+
     return (
       <NavItem style={padded} className={page.active} key={i}>
         <NavLink

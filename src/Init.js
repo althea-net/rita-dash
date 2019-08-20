@@ -74,6 +74,10 @@ const Init = () => {
           const blockchain = await get("/blockchain/get", true, 5000, signal);
           dispatch({ type: "blockchain", blockchain });
 
+          const sellingBandwidth =
+            window.localStorage.getItem("sellingBandwidth") === "true";
+          dispatch({ type: "sellingBandwidth", sellingBandwidth });
+
           dispatch({ type: "initialized", initialized: true });
         } catch (e) {
           dispatch({ type: "initialized", initialized: false });
