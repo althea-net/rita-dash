@@ -166,13 +166,13 @@ const Billing = (daoAddress, ipAddress) => {
         <CardBody>
           {!usage.length ? (
             <>
-              <h3>{t("billingHistory")}</h3>
+              <h4>{t("billingHistory")}</h4>
               <Alert color="info">{t("noUsage")}</Alert>
             </>
           ) : (
             <>
               <div className="d-flex flex-wrap">
-                <h3>{t("billingHistory")}</h3>
+                <h4>{t("billingHistory")}</h4>
                 <div className="ml-auto d-flex mb-4">
                   <div
                     style={{

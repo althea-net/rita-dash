@@ -42,7 +42,7 @@ const Nickname = () => {
   return (
     <Card className="mb-4 shadow">
       <CardBody>
-        <h3>{t("routerNickname")}</h3>
+        <h4>{t("routerNickname")}</h4>
         <Form onSubmit={submit}>
           <p>{t("otherRouters")}</p>
 

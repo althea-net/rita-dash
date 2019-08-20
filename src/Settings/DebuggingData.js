@@ -8,7 +8,7 @@ const DebuggingData = () => {
   return (
     <Card className="mb-4" style={{ width: "calc(1/2*100% - (1 - 1/2)*20px)" }}>
       <CardBody>
-        <h3>{t("debuggingData")}</h3>
+        <h4>{t("debuggingData")}</h4>
         <p>{t("snapshot")}</p>
         <Button href="#endpoints">{t("viewResults")}</Button>
       </CardBody>

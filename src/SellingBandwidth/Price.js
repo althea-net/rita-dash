@@ -19,13 +19,15 @@ import { get, post } from "store";
 import useInterval from "hooks/useInterval";
 import { BigNumber } from "bignumber.js";
 import { useStore } from "store";
+import { Left, Right } from "ui";
+import shoppingbag from "../images/shoppingbag.svg";
 
 const AbortController = window.AbortController;
 
 const weiPerEth = BigNumber("1000000000000000000");
 const bytesPerGb = BigNumber("1000000000");
 
-const PriceForm = () => {
+const Price = () => {
   const [t] = useTranslation();
   const [price, setPrice] = useState(0);
   const [autoPricing, setAutoPricing] = useState(false);
@@ -111,58 +113,72 @@ const PriceForm = () => {
 
   return (
     <Card className="mb-4">
-      <CardBody>
-        <Form onSubmit={submit}>
-          <h3>{t("sellingBandwidth")}</h3>
+      <CardBody className="d-flex">
+        <Left>
+          <Form onSubmit={submit}>
+            <h4>{t("price")}</h4>
+            <p>{t("setYourBandwidth")}</p>
 
-          <p>{t("setYourBandwidth")}</p>
-
-          {loading && <Progress animated color="info" value="100" />}
-          {success && <Alert color="success">{t("priceSaved")}</Alert>}
-
-          <FormGroup id="form">
-            <Label for="price">{t("bandwidthPrice")}</Label>
-            <div className="d-flex">
-              <InputGroup className="mr-3" style={{ width: 350 }}>
-                <Input
-                  label={t("price")}
-                  name="price"
-                  id="bandwidthPrice"
-                  placeholder={t("enterPrice")}
-                  onChange={changePrice}
-                  value={newPrice || price}
-                  readOnly={autoPricing}
-                  style={{ borderRight: "none" }}
-                />
-                <InputGroupAddon addonType="append">
-                  <InputGroupText
-                    style={{
-                      background: "#F8F9FA",
-                      fontSize: 14,
-                      color: "#888"
-                    }}
-                  >
-                    {symbol} / GB
-                  </InputGroupText>
-                </InputGroupAddon>
-              </InputGroup>
-              <Button color="primary">{t("save")}</Button>
+            {loading && <Progress animated color="info" value="100" />}
+            {success && <Alert color="success">{t("priceSaved")}</Alert>}
+            <FormGroup id="form">
+              <Label for="price">{t("bandwidthPrice")}</Label>
+              <div className="d-flex">
+                <InputGroup className="mr-3" style={{ width: 350 }}>
+                  <Input
+                    label={t("price")}
+                    name="price"
+                    id="bandwidthPrice"
+                    placeholder={t("enterPrice")}
+                    onChange={changePrice}
+                    value={newPrice || price}
+                    readOnly={autoPricing}
+                    style={{ borderRight: "none" }}
+                  />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText
+                      style={{
+                        background: "#F8F9FA",
+                        fontSize: 14,
+                        color: "#888"
+                      }}
+                    >
+                      {symbol} / GB
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
+                <Button color="primary">{t("save")}</Button>
+              </div>
+            </FormGroup>
+            <FormGroup className="d-flex">
+              <CustomInput
+                type="checkbox"
+                id="autoPricing"
+                onChange={togglePricing}
+                value={autoPricing}
+                checked={autoPricing}
+              />
+              <Label for="autoPricing">{t("automatedPricing")}</Label>
+            </FormGroup>
+          </Form>
+        </Left>
+        <Right>
+          <div className="my-auto d-flex">
+            <div className="pr-2 mr-3 pt-2">
+              <img
+                src={shoppingbag}
+                alt={t("shoppingBag")}
+                style={{ width: 80 }}
+              />
             </div>
-          </FormGroup>
-          <FormGroup className="d-flex">
-            <CustomInput
-              type="checkbox"
-              id="autoPricing"
-              onChange={togglePricing}
-              value={autoPricing}
-              checked={autoPricing}
-            />
-            <Label for="autoPricing">{t("automatedPricing")}</Label>
-          </FormGroup>
-        </Form>
+            <div>
+              <p dangerouslySetInnerHTML={{ __html: t("beforeYouChange") }} />
+            </div>
+          </div>
+        </Right>
       </CardBody>
     </Card>
   );
 };
 
-export default PriceForm;
+export default Price;

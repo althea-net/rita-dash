@@ -1,6 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Badge, Button, Progress, Table } from "reactstrap";
+import {
+  Alert,
+  Badge,
+  Button,
+  Card,
+  CardBody,
+  Progress,
+  Table
+} from "reactstrap";
 import { get, post, useStore } from "store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import EnforcementModal from "./EnforcementModal";
@@ -65,76 +73,78 @@ const RelaySettings = () => {
   };
 
   return (
-    <>
-      <h2 id="frontPage">{t("neighbors")}</h2>
-      {loading && !initialized ? (
-        <Progress animated color="info" value="100" />
-      ) : !neighbors || !neighbors.length ? (
-        <Alert color="info">{t("noNeighbors")}</Alert>
-      ) : (
-        <div className="table-responsive">
-          <Table className="table-striped">
-            <thead>
-              <tr>
-                <th style={{ whiteSpace: "nowrap" }}>{t("nickname")}</th>
-                <th style={{ whiteSpace: "nowrap" }}>
-                  {t("connectionQuality")}
-                </th>
-                <th
-                  style={{ cursor: "pointer", whiteSpace: "nowrap" }}
-                  onClick={toggle}
-                >
-                  {t("enforcing")}{" "}
-                  <FontAwesomeIcon
-                    id="tooltip"
-                    icon="question-circle"
-                    className="mr-2"
-                  />
-                  <EnforcementModal open={open} toggle={toggle} />
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {neighbors.map((n, i) => (
-                <tr key={i}>
-                  <td style={{ verticalAlign: "middle" }}>{n.nickname}</td>
-                  <td style={{ verticalAlign: "middle" }}>{n.routeMetric}</td>
-                  {n.debt &&
-                  n.debt.paymentDetails.action === "SuspendTunnel" &&
-                  !stopping[n.debt.identity.wgPublicKey] ? (
-                    <>
-                      <td style={{ verticalAlign: "middle" }}>
-                        <Badge color="danger" className="mb-1">
-                          {t("yes")}
-                        </Badge>
-                      </td>
-                      <td>
-                        <Button
-                          size="sm"
-                          outline
-                          style={{ whiteSpace: "nowrap" }}
-                          onClick={() => resetDebts(n)}
-                        >
-                          {t("stopEnforcing")}
-                        </Button>
-                      </td>
-                    </>
-                  ) : (
-                    <>
-                      <td>
-                        <Badge color="success">{t("no")}</Badge>
-                      </td>
-                      <td />
-                    </>
-                  )}
+    <Card className="mb-4">
+      <CardBody>
+        <h4>{t("neighbors")}</h4>
+        {loading && !initialized ? (
+          <Progress animated color="info" value="100" />
+        ) : !neighbors || !neighbors.length ? (
+          <Alert color="info">{t("noNeighbors")}</Alert>
+        ) : (
+          <div className="table-responsive">
+            <Table className="table-striped">
+              <thead>
+                <tr>
+                  <th style={{ whiteSpace: "nowrap" }}>{t("nickname")}</th>
+                  <th style={{ whiteSpace: "nowrap" }}>
+                    {t("connectionQuality")}
+                  </th>
+                  <th
+                    style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+                    onClick={toggle}
+                  >
+                    {t("enforcing")}{" "}
+                    <FontAwesomeIcon
+                      id="tooltip"
+                      icon="question-circle"
+                      className="mr-2"
+                    />
+                    <EnforcementModal open={open} toggle={toggle} />
+                  </th>
+                  <th />
                 </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
-      )}
-    </>
+              </thead>
+              <tbody>
+                {neighbors.map((n, i) => (
+                  <tr key={i}>
+                    <td style={{ verticalAlign: "middle" }}>{n.nickname}</td>
+                    <td style={{ verticalAlign: "middle" }}>{n.routeMetric}</td>
+                    {n.debt &&
+                    n.debt.paymentDetails.action === "SuspendTunnel" &&
+                    !stopping[n.debt.identity.wgPublicKey] ? (
+                      <>
+                        <td style={{ verticalAlign: "middle" }}>
+                          <Badge color="danger" className="mb-1">
+                            {t("yes")}
+                          </Badge>
+                        </td>
+                        <td>
+                          <Button
+                            size="sm"
+                            outline
+                            style={{ whiteSpace: "nowrap" }}
+                            onClick={() => resetDebts(n)}
+                          >
+                            {t("stopEnforcing")}
+                          </Button>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td>
+                          <Badge color="success">{t("no")}</Badge>
+                        </td>
+                        <td />
+                      </>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        )}
+      </CardBody>
+    </Card>
   );
 };
 

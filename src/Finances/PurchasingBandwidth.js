@@ -70,8 +70,8 @@ const PurchasingBandwidth = () => {
 
   return (
     <Card>
-      <div className="col-12">
-        <h3>{t("purchasingBandwidth")}</h3>
+      <div className="col-12 px-0">
+        <h4>{t("purchasingBandwidth")}</h4>
       </div>
       <Deposit open={depositing} setOpen={setDepositing} />
       <Withdraw open={withdrawing} setOpen={setWithdrawing} />

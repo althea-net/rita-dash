@@ -58,7 +58,7 @@ const DashboardPassword = ({ balance, symbol }) => {
           backup={backup}
         />
         <Form onSubmit={confirm}>
-          <h3>{t("routerCredentials")}</h3>
+          <h4>{t("routerCredentials")}</h4>
           <p>{t("theseCredentials")}</p>
 
           {error && <Alert color="danger">{error}</Alert>}

@@ -103,7 +103,7 @@ const Exits = () => {
       <Card className="mb-4">
         <CardBody>
           {selectingExit || <Error error={error} />}
-          <h3>{t("exitNode")}</h3>
+          <h4>{t("exitNode")}</h4>
           {!initialized && loading ? (
             <Progress value={100} animated color="info" />
           ) : (
