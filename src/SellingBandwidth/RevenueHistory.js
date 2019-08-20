@@ -150,34 +150,39 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
   return (
     <Card className="mb-2">
       <CardBody>
-        <div className="d-flex flex-wrap">
-          <h4>{t("revenueHistory")}</h4>
+        <div>
           {!client.length ? (
-            <Alert color="info">{t("noUsage")}</Alert>
+            <>
+              <h4>{t("revenueHistory")}</h4>
+              <Alert color="info">{t("noUsage")}</Alert>
+            </>
           ) : (
-            <div>
-              <div className="ml-auto d-flex mb-4">
-                <div
-                  style={{
-                    whiteSpace: "nowrap",
-                    fontSize: 16,
-                    color: "#666"
-                  }}
-                  className="mt-2 mr-2 d-flex"
-                >
-                  <div className="my-auto mr-2">{t("displayPeriod")}</div>
-                  <Input
-                    type="select"
-                    style={{ color: "#666" }}
-                    value={period}
-                    onChange={e => setPeriod(e.target.value)}
+            <>
+              <div className="d-flex mb-2">
+                <h4>{t("revenueHistory")}</h4>
+                <div className="ml-auto d-flex">
+                  <div
+                    style={{
+                      whiteSpace: "nowrap",
+                      fontSize: 16,
+                      color: "#666"
+                    }}
+                    className="mr-2 d-flex"
                   >
-                    {Object.keys(periods).map(p => (
-                      <option key={p} value={p}>
-                        {periods[p]}
-                      </option>
-                    ))}
-                  </Input>
+                    <div className="my-auto mr-2">{t("displayPeriod")}</div>
+                    <Input
+                      type="select"
+                      style={{ color: "#666" }}
+                      value={period}
+                      onChange={e => setPeriod(e.target.value)}
+                    >
+                      {Object.keys(periods).map(p => (
+                        <option key={p} value={p}>
+                          {periods[p]}
+                        </option>
+                      ))}
+                    </Input>
+                  </div>
                 </div>
               </div>
               <div className="table-responsive">
@@ -230,7 +235,7 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
                 page={page}
                 setPage={setPage}
               />
-            </div>
+            </>
           )}
         </div>
       </CardBody>

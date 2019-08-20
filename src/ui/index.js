@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import media from "media";
 
 export const Left = styled.div.attrs({
-  className: "d-flex flex-column justify-content-between pr-lg-4 col-md-6 px-0"
+  className: "d-flex flex-column justify-content-between pr-lg-4 col-md-6 pl-0"
 })`
   ${media.mobile`border-bottom: 1px solid #dadada; padding-bottom: 20px; margin-bottom: 20px`};
   ${media.desktop`border-right: 1px solid #dadada;`};
