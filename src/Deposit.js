@@ -28,7 +28,9 @@ const Deposit = ({ open, setOpen }) => {
 
   return (
     <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>
-      <ModalHeader>{t("deposit")} ETH</ModalHeader>
+      <ModalHeader>
+        {t("deposit")} {symbol}
+      </ModalHeader>
       <ModalBody>
         <div
           className="mb-4 shadow-none d-flex flex-wrap"
