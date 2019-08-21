@@ -3,15 +3,10 @@ import { useTranslation } from "react-i18next";
 import { Alert, Button, Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "../Pagination";
 import { get, useStore } from "store";
-import { BigNumber } from "bignumber.js";
-import { groupUsage, toEth } from "utils";
-import { format } from "date-fns";
+import { groupUsage } from "utils";
 import ExportCSV from "./ExportCSV";
 
 import { enUS as en, es, fr } from "date-fns/locale";
-
-const bytesPerGb = BigNumber("1000000000");
-const msPerHr = 3600000;
 
 const Billing = (daoAddress, ipAddress) => {
   const [t, i18n] = useTranslation();
