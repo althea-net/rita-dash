@@ -17,8 +17,7 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
   const locale = { en, es, fr }[i18n.language];
 
   const [period, setPeriod] = useState("w");
-  const [client, setClient] = useState([]);
-  const [relay, setRelay] = useState([]);
+  const [usage, setUsage] = useState([]);
   const [payments, setPayments] = useState([]);
   const [{ symbol }] = useStore();
   const [page, setPage] = useState(1);
@@ -40,9 +39,7 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
 
   let data = {};
 
-  let indices = client
-    .map(h => h.index)
-    .filter(x => relay.map(h => h.index).includes(x));
+  let indices = usage.map(h => h.index);
 
   indices.map(index => {
     const date = new Date(index * msPerHr);
@@ -83,7 +80,7 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
         .filter(p => p.to.meshIp === "::1")
         .reduce((a, b) => a + parseInt(b.amount), 0);
 
-    let c = client.find(c => c.index === index);
+    let c = usage.find(c => c.index === index);
 
     data[i].up += c.up;
     data[i].down += c.down;
@@ -95,13 +92,8 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
   useEffect(() => {
     (async () => {
       try {
-        let client = await get("/usage/client");
-        if (!(client instanceof Error)) setClient(client);
-      } catch {}
-
-      try {
-        let relay = await get("/usage/relay");
-        if (!(relay instanceof Error)) setRelay(relay);
+        let usage = await get("/usage/relay");
+        if (!(usage instanceof Error)) setUsage(usage);
       } catch {}
 
       try {
@@ -118,12 +110,12 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
       case "m":
         return format(date, "MMM", { locale });
       case "d":
-        return format(date, "MMM DD", { locale });
+        return format(date, "MMM dd", { locale });
       case "w":
-        return format(date, "MMM DD", { locale });
+        return format(date, "MMM dd", { locale });
       case "h":
       default:
-        return format(date, "MMM DD, HH:SS", { locale });
+        return format(date, "MMM dd, HH:SS", { locale });
     }
   };
 
@@ -136,10 +128,10 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
         return format(date, "MMM YYYY", { locale });
       case "d":
         date = new Date((parseInt(hour) + 24) * msPerHr);
-        return format(date, "DD, YYYY", { locale });
+        return format(date, "dd, YYYY", { locale });
       case "w":
         date = new Date((parseInt(hour) + 7 * 24) * msPerHr);
-        return format(date, "MMM DD, YYYY", { locale });
+        return format(date, "MMM dd, YYYY", { locale });
       case "h":
       default:
         date = new Date((parseInt(hour) + 1) * msPerHr);
@@ -151,7 +143,7 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
     <Card className="mb-2">
       <CardBody>
         <div>
-          {!client.length ? (
+          {!usage.length ? (
             <>
               <h4>{t("revenueHistory")}</h4>
               <Alert color="info">{t("noUsage")}</Alert>
@@ -190,10 +182,8 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
                   <thead>
                     <tr>
                       <th>{t("period")}</th>
-                      <th>{t("upload")}</th>
-                      <th>{t("download")}</th>
-                      <th>{t("bandwidthCost")}</th>
-                      <th>{t("serviceCost")}</th>
+                      <th className="text-right">{t("usage")}</th>
+                      <th className="text-right">{t("totalRevenue")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -205,23 +195,14 @@ const SellingBandwidth = (daoAddress, ipAddress) => {
                           <td>
                             {start(d)} - {end(d)}
                           </td>
-                          <td>
-                            {BigNumber(data[d].up)
+                          <td className="text-right">
+                            {BigNumber(data[d].up + data[d].down)
                               .div(bytesPerGb)
                               .toFixed(3)}
                             GB
                           </td>
-                          <td>
-                            {BigNumber(data[d].down)
-                              .div(bytesPerGb)
-                              .toFixed(3)}
-                            GB
-                          </td>
-                          <td>
+                          <td className="text-right">
                             {toEth(data[d].cost, 6)} {symbol}
-                          </td>
-                          <td>
-                            {toEth(data[d].service, 6)} {symbol}
                           </td>
                         </tr>
                       ))}
