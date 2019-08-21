@@ -9,13 +9,10 @@ const symbols = {
 export default (state, action) => {
   const { type, ...data } = action;
   const actions = {
-    blockchain: ({ blockchain }) => {
-      console.log("dispatching blockchain");
-      return {
-        blockchain,
-        symbol: symbols[blockchain]
-      };
-    },
+    blockchain: ({ blockchain }) => ({
+      blockchain,
+      symbol: symbols[blockchain]
+    }),
     channels: ({ channels }) => ({ channels }),
     debt: ({ debts }) => {
       const selectedExit = state.exits.find(e => e.isSelected);
