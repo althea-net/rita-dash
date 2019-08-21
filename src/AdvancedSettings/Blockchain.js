@@ -53,7 +53,7 @@ const Blockchain = () => {
   };
 
   return (
-    <Card className="mb-4 col-12 small">
+    <Card className="mb-4 col-12 card-small">
       <CardBody>
         <Form onSubmit={submit}>
           <FormGroup id="form">

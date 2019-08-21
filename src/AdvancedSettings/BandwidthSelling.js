@@ -12,7 +12,7 @@ const BandwidthSelling = () => {
   };
 
   return (
-    <Card className="mb-4 mr-lg-2 col-12 small">
+    <Card className="mb-4 mr-lg-2 col-12 card-small">
       <CardBody>
         <h4>{t("bandwidthSelling")}</h4>
         <Form>
@@ -25,12 +25,12 @@ const BandwidthSelling = () => {
               label={t("enableBandwidthSelling")}
             />
           </FormGroup>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: t("learnMoreAboutTheEquipment")
-            }}
-          />
         </Form>
+        <p
+          dangerouslySetInnerHTML={{
+            __html: t("learnMoreAboutTheEquipment")
+          }}
+        />
       </CardBody>
     </Card>
   );

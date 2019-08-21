@@ -176,7 +176,7 @@ a.nav-link {
 }
 
 @media (min-width: 991px) {
-  .card.small {
+  .card.card-small {
     flex: none;
     width: calc(1/2 * 100% - (1 - 1/2) * 20px) !important;
   } 
