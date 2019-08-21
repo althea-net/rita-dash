@@ -12,7 +12,7 @@ const Firmware = () => {
   const [{ version, ritaVersion }] = useStore();
 
   return (
-    <Card className="mb-4 col-md-6 mr-2">
+    <Card className="mb-4 col-12 col-lg-6 mr-2 card-small">
       <CardBody>
         <h4>{t("firmware")}</h4>
         <p>{t("version", { version, ritaVersion })}</p>

@@ -18,7 +18,10 @@ export default () => {
       <DashboardPassword />
       <Exits />
       <Subnet />
-      <div className="d-flex" style={{ justifyContent: "space-evenly" }}>
+      <div
+        className="d-flex flex-wrap"
+        style={{ justifyContent: "space-evenly" }}
+      >
         <Firmware />
         <DebuggingData />
       </div>

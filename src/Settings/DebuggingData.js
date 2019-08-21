@@ -6,7 +6,7 @@ const DebuggingData = () => {
   const [t] = useTranslation();
 
   return (
-    <Card className="mb-4" style={{ width: "calc(1/2*100% - (1 - 1/2)*20px)" }}>
+    <Card className="mb-4 col-12 col-lg-6 card-small">
       <CardBody>
         <h4>{t("debuggingData")}</h4>
         <p>{t("snapshot")}</p>
