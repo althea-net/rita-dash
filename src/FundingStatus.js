@@ -33,7 +33,8 @@ const FundingStatus = () => {
 
   if (!status) return null;
   const { reserve, minEth, minDai, requiredEth, dai, eth, dest } = status;
-  if (!(key && eth && reserve)) return null;
+  key = status.key;
+  if (!key) return null;
 
   return (
     <div className="mt-2">
@@ -81,7 +82,9 @@ const FundingStatus = () => {
             dangerouslySetInnerHTML={{
               __html: t(key, { dai, eth, dest })
             }}
-            style={key === "ethToDest" && { wordBreak: "break-all" }}
+            style={{
+              wordBreak: key === "ethToDest" ? "break-all" : "break-none"
+            }}
           />
         </div>
       )}

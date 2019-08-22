@@ -80,12 +80,16 @@ const Withdraw = ({ open, setOpen }) => {
           {txid ? (
             <div className="w-100 text-center mx-auto">
               <img src={bigGreenCheck} alt="Checkmark" className="mb-2" />
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: t("withdrawalSuccess", { txid, link })
-                }}
-                style={{ wordWrap: "break-word" }}
-              />
+              {txid.includes("View") ? (
+                <p>{t("withdrawalInProgress")}</p>
+              ) : (
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: t("withdrawalSuccess", { txid, link })
+                  }}
+                  style={{ wordWrap: "break-word" }}
+                />
+              )}
               <Button
                 type="button"
                 color="primary"

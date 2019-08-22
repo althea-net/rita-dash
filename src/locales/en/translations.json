@@ -1,4 +1,8 @@
 {
+  "contactNetworkOrganizers": "Please contact your network organizers.",
+  "somethingWentWrong": "Something went wrong",
+  "showDebugging": "Show Debugging Information",
+  "withdrawalInProgress": "Your withdrawal request has been submitted. The funds will be converted to ETH before being sent to your address.",
   "withdrawAllSuccess": "Your withdrawal request has been submitted. Once any Dai funds have been converted to ETH, the entire ETH balance will be withdrawn.",
   "withdrawAll": "Withdraw All Funds",
   "totalRevenue": "Total Revenue",

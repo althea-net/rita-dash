@@ -5,6 +5,7 @@ import Topbar from "./Layout/Topbar";
 import { NoConnection } from "utils";
 import Router from "Router";
 import Init from "./Init";
+import ErrorBoundary from "./ErrorBoundary";
 
 const App = () => {
   const [page, setPage] = useState("dashboard");
@@ -27,7 +28,9 @@ const App = () => {
         </Nav>
         <NoConnection />
         <div id="content">
-          <Router {...{ page, setPage, setOpen }} />
+          <ErrorBoundary>
+            <Router {...{ page, setPage, setOpen }} />
+          </ErrorBoundary>
         </div>
       </div>
     </>
