@@ -10,6 +10,7 @@ const FundingStatus = () => {
   const [withdrawing, setWithdrawing] = useState(false);
   const [waitingForXdai, setWaitingForXdai] = useState(false);
   const [{ status }] = useStore();
+  let key;
 
   useEffect(
     () => {
@@ -30,8 +31,9 @@ const FundingStatus = () => {
     setWithdrawing(true);
   };
 
-  if (!(status && eth && reserve)) return null;
-  const { key, reserve, minEth, minDai, requiredEth, dai, eth, dest } = status;
+  if (!status) return null;
+  const { reserve, minEth, minDai, requiredEth, dai, eth, dest } = status;
+  if (!(key && eth && reserve)) return null;
 
   return (
     <div className="mt-2">
