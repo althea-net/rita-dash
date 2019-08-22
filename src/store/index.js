@@ -48,7 +48,8 @@ const state = {
   waiting: 0,
   wgPublicKey: null,
   wifiChange: null,
-  wifiSettings: null
+  wifiSettings: null,
+  withdrawChainSymbol: null
 };
 
 let { protocol, hostname } = window.location;

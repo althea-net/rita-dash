@@ -18,18 +18,21 @@ const Deposit = ({ open, setOpen }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const [{ address, debt, lowBalance, symbol }] = useStore();
+  const [
+    { address, debt, lowBalance, status, withdrawChainSymbol }
+  ] = useStore();
 
-  const debtEth = toEth(debt) * 2;
+  let minDeposit = toEth(debt) * 2;
+  if (status) minDeposit = Math.max(status.minEth, minDeposit);
 
-  const recommendedDeposit = `${debtEth} ${symbol}`;
+  const recommendedDeposit = `${minDeposit} ${withdrawChainSymbol}`;
 
-  if (!(address && symbol)) return null;
+  if (!(address && withdrawChainSymbol)) return null;
 
   return (
     <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>
       <ModalHeader>
-        {t("deposit")} {symbol}
+        {t("deposit")} {withdrawChainSymbol}
       </ModalHeader>
       <ModalBody>
         <div
@@ -63,7 +66,7 @@ const Deposit = ({ open, setOpen }) => {
           <QR style={qrStyle} value={address} />
         </div>
         {lowBalance &&
-          debtEth > 0 &&
+          minDeposit > 0 &&
           t("recommendedDeposit", { recommendedDeposit })}
       </ModalBody>
     </Modal>

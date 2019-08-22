@@ -1,4 +1,6 @@
 {
+  "withdrawAllSuccess": "Your withdrawal request has been submitted. Once any Dai funds have been converted to ETH, the entire ETH balance will be withdrawn.",
+  "withdrawAll": "Withdraw All Funds",
   "totalRevenue": "Total Revenue",
   "revenueHistory": "Revenue History",
   "beforeYouChange": "Before you change the pricing, you should <a href='https://althea.net'>read more about best practices</a> of selling your bandwidth and pricing.",
@@ -14,9 +16,9 @@
   "ifYouForget": "If you forget your new password, you will lose access to your funding unless you backup your account.",
   "exclamationMark": "Exclamation Mark Warning Symbol",
   "fundsAdded": "<b>Funds added.</b> It may still take several seconds or minutes for them to appear in your account.",
-  "withdrawEth": "withdraw {{eth}} Eth.",
+  "withdrawEverything": "withdraw your entire balance",
   "notEnoughFunds": "Not enough funds to deposit.",
-  "routerHas": "Your router has {{eth}} Eth, worth ${{dai}}. The minimum amount of funds to deposit is {{minEth}} Eth, worth ${{minDai}}. To start a deposit, please add an additional {{requiredEth}} Eth.",
+  "routerHas": "Your router has {{eth}} Eth, worth ${{dai}}. The minimum amount of funds to deposit is {{minEth}} Eth, worth ${{minDai}}. To start a deposit, please add an additional {{requiredEth}} Eth. Or you can ",
   "ethToDai": "<b>Adding funds...</b> Converting {{eth}} Eth to ${{dai}} Dai",
   "daiToXdai": "<b>Adding funds...</b> Transferring ${{dai}} Dai to xDai blockchain",
   "xdaiToDai": "<b>Withdrawing funds...</b> Transferring ${{dai}} Dai to Ethereum blockchain",

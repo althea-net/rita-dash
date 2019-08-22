@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useStore } from "store";
-import { toEth } from "utils";
-import WithdrawEth from "./WithdrawEth";
+import WithdrawAll from "./WithdrawAll";
 import clock from "./images/clock.svg";
 
 const FundingStatus = () => {
@@ -12,48 +11,7 @@ const FundingStatus = () => {
   const [waitingForXdai, setWaitingForXdai] = useState(false);
   const [{ status }] = useStore();
 
-  let reserve, key, eth, dai, minEth, minDai, requiredEth, dest;
-
-  if (status) {
-    key = Object.keys(status.state)[0];
-    let state = status.state[key];
-    let rate = toEth(state.weiPerDollar, 8);
-
-    switch (key) {
-      case "ethToDai":
-        eth = toEth(state.amountOfEth);
-        dai = eth / rate;
-        break;
-      case "daiToXdai":
-      case "xdaiToDai":
-        dai = parseFloat(toEth(state.amount));
-        break;
-      case "daiToEth":
-        dai = parseFloat(toEth(state.amountOfDai));
-        eth = (dai * rate).toFixed(4).toString();
-        break;
-      case "ethToDest":
-        eth = toEth(state.amountOfEth);
-        dai = eth / rate;
-        dest = state.destAddress;
-        break;
-      default:
-      case "noOp":
-        eth = toEth(state.ethBalance);
-        dai = eth / rate;
-        break;
-    }
-
-    reserve = parseFloat(status.reserveAmount) * rate;
-    minDai = parseFloat(status.minimumDeposit);
-    minEth = minDai * rate;
-    requiredEth = minEth - eth + 0.0001;
-
-    dai = dai.toFixed(2).toString();
-    minDai = minDai.toFixed(2).toString();
-    minEth = minEth.toFixed(4).toString();
-    requiredEth = requiredEth.toFixed(4).toString();
-  }
+  const { key, reserve, minEth, minDai, requiredEth, dai, eth, dest } = status;
 
   useEffect(
     () => {
@@ -69,16 +27,16 @@ const FundingStatus = () => {
     [key, waitingForXdai]
   );
 
-  /*
   const withdraw = e => {
     e.preventDefault();
     setWithdrawing(true);
-    };
-  */
+  };
+
+  if (!(eth && reserve)) return null;
 
   return (
     <div className="mt-2">
-      <WithdrawEth open={withdrawing} setOpen={setWithdrawing} eth={eth} />
+      <WithdrawAll open={withdrawing} setOpen={setWithdrawing} />
       {key === "noOp" &&
         (waitingForXdai ? (
           <div className="d-flex w-100">
@@ -106,11 +64,10 @@ const FundingStatus = () => {
                 </p>
                 <p>
                   {t("routerHas", { eth, dai, minEth, minDai, requiredEth })}{" "}
-                  {/*
-                <a href="#withdraw" onClick={withdraw}>
-                  <u>{t("withdrawEth", { eth })}</u>
-                </a>
-                */}
+                  <a href="#withdraw" onClick={withdraw}>
+                    <u>{t("withdrawEverything", { eth })}</u>
+                  </a>
+                  .
                 </p>
               </div>
             </div>
@@ -123,7 +80,7 @@ const FundingStatus = () => {
             dangerouslySetInnerHTML={{
               __html: t(key, { dai, eth, dest })
             }}
-            style={{ wordBreak: "break-all" }}
+            style={key === "ethToDest" && { wordBreak: "break-all" }}
           />
         </div>
       )}

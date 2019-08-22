@@ -1,4 +1,5 @@
 import { BigNumber } from "bignumber.js";
+import { toEth } from "utils";
 
 const symbols = {
   Ethereum: "ETH",
@@ -122,7 +123,65 @@ export default (state, action) => {
     sellingBandwidth: ({ sellingBandwidth }) => ({ sellingBandwidth }),
     startPortChange: () => ({ portChange: true }),
     startWaiting: ({ waiting }) => ({ waiting }),
-    status: ({ status }) => ({ status }),
+    status: ({ status }) => {
+      try {
+        let reserve, key, eth, dai, minEth, minDai, requiredEth, dest;
+        key = Object.keys(status.state)[0];
+        let state = status.state[key];
+        let rate = toEth(state.weiPerDollar, 8);
+
+        switch (key) {
+          case "ethToDai":
+            eth = toEth(state.amountOfEth);
+            dai = eth / rate;
+            break;
+          case "daiToXdai":
+          case "xdaiToDai":
+            dai = parseFloat(toEth(state.amount));
+            break;
+          case "daiToEth":
+            dai = parseFloat(toEth(state.amountOfDai));
+            eth = (dai * rate).toFixed(4).toString();
+            break;
+          case "ethToDest":
+            eth = toEth(state.amountOfEth);
+            dai = eth / rate;
+            dest = state.destAddress;
+            break;
+          default:
+          case "noOp":
+            eth = toEth(state.ethBalance);
+            dai = eth / rate;
+            break;
+        }
+
+        reserve = parseFloat(status.reserveAmount) * rate;
+        minDai = parseFloat(status.minimumDeposit);
+        minEth = minDai * rate;
+        requiredEth = minEth - eth + 0.0001;
+
+        dai = dai.toFixed(2).toString();
+        minDai = minDai.toFixed(2).toString();
+        minEth = minEth.toFixed(4).toString();
+        requiredEth = requiredEth.toFixed(4).toString();
+        status = {
+          ...status,
+          key,
+          eth,
+          dai,
+          minDai,
+          minEth,
+          requiredEth,
+          reserve,
+          dest
+        };
+
+        return { status, withdrawChainSymbol: symbols[status.withdrawChain] };
+      } catch (e) {
+        console.log(e);
+        return {};
+      }
+    },
     usage: ({ usage }) => ({ usage }),
     wgPublicKey: ({ wgPublicKey }) => ({ wgPublicKey }),
     wifiChange: () => ({ wifiChange: true }),

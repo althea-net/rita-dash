@@ -6,50 +6,49 @@ import {
   FormFeedback,
   FormGroup,
   Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Label,
   Modal,
   ModalHeader,
   ModalBody
 } from "reactstrap";
-import { Error, toWei, txLink } from "utils";
+import { Error, txLink, toEth } from "utils";
 import Web3 from "web3";
-import { post } from "store";
+import { post, useStore } from "store";
 import bigGreenCheck from "images/big_green_check.png";
 
 const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 
-const WithdrawEth = ({ open, setOpen, eth }) => {
+const WithdrawAll = ({ open, setOpen }) => {
   const [t] = useTranslation();
 
   const [address, setAddress] = useState("");
-  const [amount, setAmount] = useState("");
   const [error, setError] = useState();
   const [txid, setTxid] = useState();
+
+  const [{ balance, status }] = useStore();
+  const { eth, dai } = status;
 
   const onSubmit = async e => {
     e.preventDefault();
     try {
-      const txid = await post(`/withdrawEth/${address}/${toWei(amount)}`);
+      const txid = await post(`/withdraw_all/${address}`);
       setTxid(txid.replace("txid:", ""));
     } catch {
       setError(t("withdrawalError"));
     }
   };
 
-  const fAmount = parseFloat(amount);
   const addressValid = !!(address && web3.utils.isAddress(address));
-  const amountValid = !!(!isNaN(fAmount) && fAmount > 0 && fAmount <= eth);
-  const valid = addressValid && amountValid;
+  const valid = addressValid;
   const link = txLink("Ethereum", txid);
+
+  if (isNaN(eth) || isNaN(dai)) return null;
 
   return (
     <div>
       <Modal isOpen={open} toggle={() => setOpen(!open)}>
         <ModalHeader toggle={() => setOpen(!open)}>
-          {t("withdraw")} ETH
+          {t("withdrawAll")}
         </ModalHeader>
         <ModalBody>
           <Error error={error} />
@@ -57,9 +56,8 @@ const WithdrawEth = ({ open, setOpen, eth }) => {
             <h5 style={{ color: "gray", fontSize: 18 }} className="mb-1">
               {t("currentBalance")}
             </h5>
-            <h4 id="balance" className="w-100 mb-2">
-              {eth} ETH
-            </h4>
+            <h4 className="w-100 mb-2">{toEth(balance)} DAI</h4>
+            <h4 className="w-100 mb-2">{eth} ETH</h4>
           </div>
 
           {txid ? (
@@ -67,7 +65,7 @@ const WithdrawEth = ({ open, setOpen, eth }) => {
               <img src={bigGreenCheck} alt="Checkmark" className="mb-2" />
               <p
                 dangerouslySetInnerHTML={{
-                  __html: t("withdrawalSuccess", { txid, link })
+                  __html: t("withdrawAllSuccess", { txid, link })
                 }}
                 style={{ wordWrap: "break-word" }}
               />
@@ -101,47 +99,6 @@ const WithdrawEth = ({ open, setOpen, eth }) => {
                   {t("addressRequired")}
                 </FormFeedback>
               </FormGroup>
-              <FormGroup id="form">
-                <Label for="amount" style={{ marginRight: 5 }}>
-                  <b>{t("amount")}</b>
-                </Label>
-                <InputGroup
-                  className={amount && !amountValid ? "is-invalid" : null}
-                >
-                  <Input
-                    id={"amount"}
-                    label={t("to")}
-                    name="amount"
-                    placeholder={0}
-                    onChange={e => setAmount(e.target.value)}
-                    value={amount}
-                    valid={amountValid}
-                    invalid={!!(amount && !amountValid)}
-                  />
-                  <InputGroupAddon addonType="append">
-                    <InputGroupText
-                      style={{
-                        background: "#F8F9FA",
-                        fontSize: 14,
-                        color: "#888"
-                      }}
-                    >
-                      ETH
-                    </InputGroupText>
-                  </InputGroupAddon>
-                </InputGroup>
-                <FormFeedback invalid="true">
-                  {t("amountRequired", { balance: eth })}
-                </FormFeedback>
-              </FormGroup>
-              <FormGroup
-                style={{
-                  display: "flex",
-                  margin: -20,
-                  marginTop: 0,
-                  padding: 10
-                }}
-              />
 
               <div className="d-flex justify-content-center">
                 <Button
@@ -165,4 +122,4 @@ const WithdrawEth = ({ open, setOpen, eth }) => {
   );
 };
 
-export default WithdrawEth;
+export default WithdrawAll;
