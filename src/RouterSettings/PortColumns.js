@@ -40,6 +40,7 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                     onClick={() => selected || setInterfaceMode(iface, mode)}
                     disabled={disabled}
                     readOnly={selected}
+                    className="active"
                   >
                     {mode}
                   </PortToggle>
