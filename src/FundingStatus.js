@@ -9,21 +9,34 @@ const FundingStatus = () => {
   const [t] = useTranslation();
   const [withdrawing, setWithdrawing] = useState(false);
   const [waitingForXdai, setWaitingForXdai] = useState(false);
+  const [waitingForEth, setWaitingForEth] = useState(false);
   const [{ status }] = useStore();
-  let key;
+
+  let key, reserve, minEth, minDai, requiredEth, dai, eth, dest;
+
+  if (status)
+    ({ key, reserve, minEth, minDai, requiredEth, dai, eth, dest } = status);
 
   useEffect(
     () => {
       let timer;
+
       if (key === "daiToXdai") {
         setWaitingForXdai(true);
         timer = setTimeout(() => setWaitingForXdai(false), 120000);
       }
+
+      if (key === "ethToDest") {
+        console.log("set waiting for eth", status, dai, eth, dest);
+        setWaitingForEth(t(key, { dai, eth, dest }));
+        timer = setTimeout(() => setWaitingForEth(false), 120000);
+      }
+
       return () => {
         if (key === "noOp") clearTimeout(timer);
       };
     },
-    [key, waitingForXdai]
+    [dai, eth, dest, t, key]
   );
 
   const withdraw = e => {
@@ -31,15 +44,13 @@ const FundingStatus = () => {
     setWithdrawing(true);
   };
 
-  if (!status) return null;
-  const { reserve, minEth, minDai, requiredEth, dai, eth, dest } = status;
-  key = status.key;
-  if (!key) return null;
+  if (!(status && key)) return null;
 
   return (
     <div className="mt-2">
       <WithdrawAll open={withdrawing} setOpen={setWithdrawing} />
       {key === "noOp" &&
+        !waitingForEth &&
         (waitingForXdai ? (
           <div className="d-flex w-100">
             <img src={clock} alt={t("clock")} className="mr-2" />
@@ -75,12 +86,12 @@ const FundingStatus = () => {
             </div>
           )
         ))}
-      {key !== "noOp" && (
+      {(key !== "noOp" || waitingForEth) && (
         <div className="d-flex w-100">
           <img src={clock} alt={t("clock")} className="mr-2" />
           <div
             dangerouslySetInnerHTML={{
-              __html: t(key, { dai, eth, dest })
+              __html: waitingForEth || t(key, { dai, eth, dest })
             }}
             style={{
               wordBreak: key === "ethToDest" ? "break-all" : "break-none"
