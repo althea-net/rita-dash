@@ -93,9 +93,6 @@ const FundingStatus = () => {
             dangerouslySetInnerHTML={{
               __html: waitingForEth || t(key, { dai, eth, dest })
             }}
-            style={{
-              wordBreak: key === "ethToDest" ? "break-all" : "break-none"
-            }}
           />
         </div>
       )}
