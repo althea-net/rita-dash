@@ -36,7 +36,7 @@ const FundingStatus = () => {
         if (key === "noOp") clearTimeout(timer);
       };
     },
-    [dai, eth, dest, t, key]
+    [dai, eth, dest, t, key, status]
   );
 
   const withdraw = e => {
