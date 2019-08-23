@@ -30,6 +30,11 @@ const Nickname = () => {
     [nickname]
   );
 
+  const update = e => {
+    setNewNickname(e.target.value);
+    setSuccess(false);
+  };
+
   const submit = async e => {
     e.preventDefault();
 
@@ -59,7 +64,7 @@ const Nickname = () => {
                   label={t("nickname")}
                   name="nickname"
                   id="nickname"
-                  onChange={e => setNewNickname(e.target.value)}
+                  onChange={update}
                   value={newNickname}
                   style={{ maxWidth: 350 }}
                   className="mr-2"
