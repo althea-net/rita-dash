@@ -24,7 +24,8 @@ const Nickname = () => {
 
   useEffect(
     () => {
-      setNewNickname(nickname);
+      nickname && setNewNickname(nickname);
+      return;
     },
     [nickname]
   );
