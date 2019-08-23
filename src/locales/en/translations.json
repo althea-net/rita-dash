@@ -173,7 +173,7 @@
   "enterAmount": "Please enter an amount in Ether",
   "enterCode": "Please enter your confirmation code to complete the node connection process.",
   "enterEmail": "Please enter your email address to receive a confirmation code to connect to this node.",
-  "enterEthAddress": "Enter an Ethereum Address",
+  "enterEthAddress": "Enter an address",
   "enterIpAddress": "Please enter a valid IPv6 address",
   "enterPhone": "Please enter your phone number to receive a confirmation code to connect to this node.",
   "enterPrice": "Please enter a price",

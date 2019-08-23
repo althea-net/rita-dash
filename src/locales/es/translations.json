@@ -169,7 +169,7 @@
   "enterAmount": "Por favor ingrese una cantidad de Ethereum",
   "enterCode": "Ingrese un código válido",
   "enterEmail": "Por favor, ingrese su dirección de correo electrónico",
-  "enterEthAddress": "Por favor ingrese una dirección válida de Ethereum",
+  "enterEthAddress": "Por favor ingrese una dirección válida",
   "enterIpAddress": "Por favor ingrese una dirección IPv6 válida",
   "enterPhone": "Por favor ingrese su numero de teléfono para recibir un numero de confirmación y conectarse a este nodo",
   "enterPrice": "Por favor ingrese un precio",
