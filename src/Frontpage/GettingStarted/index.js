@@ -51,11 +51,13 @@ export default () => {
   const isRouterPasswordSet =
     window.sessionStorage.getItem("Authorization") !== null;
 
+  console.log(selectedExit);
+
   const steps = [
     { name: "backupWallet", completed: backupCreated, onClick: goBackup },
     {
       name: "setupExit",
-      completed: selectedExit !== null,
+      completed: selectedExit,
       onClick: goSettings
     },
     { name: "addFunding", completed: balance > 0, onClick: goDeposit },

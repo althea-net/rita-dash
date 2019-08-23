@@ -7,26 +7,26 @@ const List = ({ steps }) => {
 
   return (
     <ul className="mb-0">
-      {steps.map(step => (
-        <li style={{ listStyle: "none" }} className="d-flex" key={step.name}>
+      {steps.map(({ name, completed, onClick }) => (
+        <li style={{ listStyle: "none" }} className="d-flex" key={name}>
           <CustomInput
             type="checkbox"
-            id={step.name}
-            name={step.name}
-            checked={step.completed}
+            id={name}
+            name={name}
+            checked={completed}
             readOnly
-            onClick={step.onClick}
+            onClick={onClick}
             value="yes"
           />
           <Label
-            for={step.name}
+            for={name}
             style={{
               color: "#6C757D",
               cursor: "pointer",
               textDecoration: "underline"
             }}
           >
-            {t(step.name)}
+            {t(name)}
           </Label>
         </li>
       ))}
