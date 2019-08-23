@@ -33,7 +33,7 @@ const Init = () => {
   const getStatus = useCallback(
     async () => {
       try {
-        const status = await get("/token_bridge/status", true, 2000);
+        const status = await get("/token_bridge/status", true, 5000);
         if (!(status instanceof Error)) {
           dispatch({ type: "status", status });
         }
@@ -44,7 +44,7 @@ const Init = () => {
 
   useInterval(getDebt, 10000);
   useInterval(getInfo, 5000);
-  useInterval(getStatus, 2000);
+  useInterval(getStatus, 5000);
 
   useEffect(
     () => {

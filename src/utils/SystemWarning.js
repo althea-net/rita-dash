@@ -6,7 +6,6 @@ import { BigNumber } from "bignumber.js";
 const SystemWarning = () => {
   const [t] = useTranslation();
   const [{ balance, closeThreshold, debt, lowBalance }] = useStore();
-
   if (!(lowBalance && debt)) return null;
 
   return (

@@ -65,9 +65,11 @@ const Deposit = ({ open, setOpen }) => {
         <div className="w-100 text-center mb-4">
           <QR style={qrStyle} value={address} />
         </div>
-        {lowBalance &&
-          minDeposit > 0 &&
-          t("recommendedDeposit", { recommendedDeposit })}
+        <div>
+          {lowBalance &&
+            minDeposit > 0 &&
+            t("recommendedDeposit", { recommendedDeposit })}
+        </div>
       </ModalBody>
     </Modal>
   );

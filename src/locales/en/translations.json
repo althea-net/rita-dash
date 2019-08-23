@@ -224,7 +224,7 @@
   "no": "No",
   "noConnection": "Waiting for Connection",
   "noDevice": "Unable to determine the router device model",
-  "noExits": "None",
+  "noExits": "None available",
   "noInterfaces": "No port interfaces found",
   "noPeers": "No peers found",
   "noReboot": "Do not reboot your router at this time",
