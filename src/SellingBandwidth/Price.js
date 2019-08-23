@@ -116,7 +116,7 @@ const Price = () => {
           <h4>{t("price")}</h4>
           <p>{t("setYourBandwidth")}</p>
 
-          {loading && <Progress animated color="info" value="100" />}
+          {loading && <Progress animated color="primary" value="100" />}
           {success && <Alert color="success">{t("priceSaved")}</Alert>}
           <FormGroup id="form">
             <Label for="price">{t("bandwidthPrice")}</Label>
@@ -135,9 +135,9 @@ const Price = () => {
                 <InputGroupAddon addonType="append">
                   <InputGroupText
                     style={{
-                    background: "#F8F9FA",
-                    fontSize: 14,
-                    color: "#888"
+                      background: "#F8F9FA",
+                      fontSize: 14,
+                      color: "#888"
                     }}
                   >
                     {symbol} / GB

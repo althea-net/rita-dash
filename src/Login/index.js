@@ -52,7 +52,7 @@ const Login = () => {
           />
           <Form onSubmit={submit} className="mt-lg-2 w-100">
             {loading ? (
-              <Progress animated color="info" value="100" />
+              <Progress animated color="primary" value="100" />
             ) : (
               <div className="d-flex flex-wrap">
                 <FormGroup className="flex-grow-1">

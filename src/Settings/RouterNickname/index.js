@@ -55,7 +55,7 @@ const Nickname = () => {
           {success && <Alert color="success">{t("nicknameUpdated")}</Alert>}
 
           {loading ? (
-            <Progress animated color="info" value="100" />
+            <Progress animated color="primary" value="100" />
           ) : (
             <FormGroup>
               <Label for="price">{t("nickname")}</Label>

@@ -65,7 +65,7 @@ const APIDump = () => {
     <div>
       <h4>{t("debuggingData")}</h4>
       {loading ? (
-        <Progress animated color="info" value="100" />
+        <Progress animated color="primary" value="100" />
       ) : (
         <Card className="my-4">
           <CardBody>

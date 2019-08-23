@@ -49,7 +49,7 @@ const Ports = () => {
   };
 
   if (loading || !interfaces) {
-    return <Progress animated color="info" value={100} />;
+    return <Progress animated color="primary" value={100} />;
   }
 
   let confirm = async () => {

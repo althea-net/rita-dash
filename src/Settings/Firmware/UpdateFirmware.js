@@ -51,7 +51,7 @@ export default ({ open, setOpen }) => {
           <img src={router} alt="Router" className="mb-2" />
           <Error error={error} />
           {loading ? (
-            <Progress animated color="info" value={100} />
+            <Progress animated color="primary" value={100} />
           ) : (
             <Button
               className="mb-2"

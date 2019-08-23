@@ -159,7 +159,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
         {resetting.length ? (
           <ModalBody>
             <Alert color="info">{t("resetting")}</Alert>
-            <Progress value={100} animated color="info" />
+            <Progress value={100} animated color="primary" />
           </ModalBody>
         ) : (
           <>
@@ -174,7 +174,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
               )}
               {gotinfo &&
                 (registering ? (
-                  <Progress value={100} animated color="info" />
+                  <Progress value={100} animated color="primary" />
                 ) : (
                   (() => {
                     switch (verifMode) {

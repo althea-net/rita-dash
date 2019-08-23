@@ -77,7 +77,7 @@ const RelaySettings = () => {
       <CardBody>
         <h4>{t("neighbors")}</h4>
         {loading && !initialized ? (
-          <Progress animated color="info" value="100" />
+          <Progress animated color="primary" value="100" />
         ) : !neighbors || !neighbors.length ? (
           <Alert color="info">{t("noNeighbors")}</Alert>
         ) : (

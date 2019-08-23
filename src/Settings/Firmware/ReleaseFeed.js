@@ -53,7 +53,7 @@ const ReleaseFeed = () => {
       {success && <Alert color="success">{t("releaseFeedSaved")}</Alert>}
       {error && <Alert color="danger">{t("problemSubmittingForm")}</Alert>}
       {loading ? (
-        <Progress animated color="info" value="100" />
+        <Progress animated color="primary" value="100" />
       ) : (
         <FormGroup>
           <Label for="releaseFeed">{t("releaseFeed")}</Label>

@@ -20,7 +20,7 @@ const Wifi = () => {
 
   if (!wifiSettings || !wifiSettings.length)
     if (loading && !error)
-      return <Progress animated color="info" value={100} />;
+      return <Progress animated color="primary" value={100} />;
     else return <Alert color="info">{t("noWifi")}</Alert>;
 
   let submit = async e => {

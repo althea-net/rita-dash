@@ -105,7 +105,7 @@ const Exits = () => {
           {selectingExit || <Error error={error} />}
           <h4>{t("exitNode")}</h4>
           {!initialized && loading ? (
-            <Progress value={100} animated color="info" />
+            <Progress value={100} animated color="primary" />
           ) : (
             <div>
               <p>{t("exitNodesP1")}</p>

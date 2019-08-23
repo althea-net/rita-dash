@@ -84,7 +84,7 @@ const DaoFee = ({ readonly = false }) => {
           {success && <Alert color="success">{t("daoFeeSaved")}</Alert>}
 
           {loading ? (
-            <Progress animated color="info" value="100" />
+            <Progress animated color="primary" value="100" />
           ) : (
             <FormGroup>
               <Label for="price">{t("monthlyCost")}</Label>

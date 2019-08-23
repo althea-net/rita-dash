@@ -55,7 +55,7 @@ export default ({ nickname, registered, targetLength, setOpen }) => {
           <Form>
             <FormGroup>
               {waiting && code.length === targetLength ? (
-                <Progress animated color="info" value="100" />
+                <Progress animated color="primary" value="100" />
               ) : (
                 <>
                   {expired &&
