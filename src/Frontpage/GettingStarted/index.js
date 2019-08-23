@@ -21,7 +21,27 @@ export default () => {
   ] = useStore();
 
   const goBackup = () => setBackingUp(true);
-  const goSettings = () => (window.location.href = "#settings");
+
+  const goExit = () => {
+    window.location.href = "#settings";
+    let scroll = () => {
+      let el = document.getElementById("exits");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      else setTimeout(scroll, 100);
+    };
+    scroll();
+  };
+
+  const goNickname = () => {
+    window.location.href = "#settings";
+    let scroll = () => {
+      let el = document.getElementById("nicknameCard");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      else setTimeout(scroll, 100);
+    };
+    scroll();
+  };
+
   const goDeposit = () => setDepositing(true);
   const goPassword = () => setSettingPassword(true);
   const goWifi = () => (window.location.href = "#router-settings");
@@ -56,11 +76,11 @@ export default () => {
     {
       name: "setupExit",
       completed: selectedExit,
-      onClick: goSettings
+      onClick: goExit
     },
     { name: "addFunding", completed: balance > 0, onClick: goDeposit },
     { name: "setWifiPass", completed: isWifiPasswordSet, onClick: goWifi },
-    { name: "setNickname", completed: nickname !== null, onClick: goSettings },
+    { name: "setNickname", completed: nickname !== null, onClick: goNickname },
     {
       name: "setDashPass",
       completed: isRouterPasswordSet,
