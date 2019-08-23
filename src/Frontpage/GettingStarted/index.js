@@ -51,8 +51,6 @@ export default () => {
   const isRouterPasswordSet =
     window.sessionStorage.getItem("Authorization") !== null;
 
-  console.log(selectedExit);
-
   const steps = [
     { name: "backupWallet", completed: backupCreated, onClick: goBackup },
     {
