@@ -74,7 +74,7 @@ const ImportPrivateKey = () => {
                       {t("privateKeyImportWarning")}
                     </Alert>
                     <p>{t("proceed")}</p>
-                    <Button color="primary" onClick={save}>
+                    <Button color="primary" onClick={save} className="mr-2">
                       {t("yes")}
                     </Button>
                     <Button color="secondary" onClick={cancel}>
