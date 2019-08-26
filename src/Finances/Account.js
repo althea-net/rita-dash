@@ -16,7 +16,7 @@ const Finances = () => {
 
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
-  const [{ balance, symbol }, dispatch] = useStore();
+  const [{ balance, status, symbol }, dispatch] = useStore();
 
   useEffect(
     () => {
@@ -63,6 +63,7 @@ const Finances = () => {
             color="primary"
             id="withdraw"
             onClick={() => setWithdrawing(true)}
+            disabled={status.key !== "noOp"}
           >
             {t("withdraw")}
           </Button>
