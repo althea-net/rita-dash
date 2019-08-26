@@ -63,11 +63,11 @@ const ExportCSV = ({ open, setOpen, rows }) => {
     }
   };
 
+  const toggle = () => setOpen(!open);
+
   return (
-    <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>
-      <ModalHeader toggle={() => setOpen(!open)}>
-        {t("exportToCsv")}
-      </ModalHeader>
+    <Modal isOpen={open} size="sm" centered toggle={toggle}>
+      <ModalHeader toggle={toggle}>{t("exportToCsv")}</ModalHeader>
       <ModalBody>
         <FormGroup className="d-flex">
           <CustomInput
@@ -101,7 +101,12 @@ const ExportCSV = ({ open, setOpen, rows }) => {
           />
         </FormGroup>
         <div className="d-flex justify-content-between">
-          <Button color="primary" outline className="w-50 mr-2">
+          <Button
+            color="primary"
+            outline
+            className="w-50 mr-2"
+            onClick={toggle}
+          >
             {t("cancel")}
           </Button>
           <Button color="primary" className="w-50" onClick={save}>
