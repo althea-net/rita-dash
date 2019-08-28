@@ -93,7 +93,7 @@ export default ({ balance, symbol }) => {
             />
           </FormGroup>
           <div className="d-flex flex-wrap">
-            <FormGroup className="mr-2">
+            <FormGroup className="mr-2 flex-grow-1">
               <Label for="email">{t("emailAddress")}</Label>
               <Input
                 name="email"
@@ -102,10 +102,10 @@ export default ({ balance, symbol }) => {
                 onChange={handleEmail}
                 placeholder={t("placeholderEmail")}
                 invalid={!validEmail}
-                style={{ width: 300 }}
+                style={{ minWidth: 280 }}
               />
             </FormGroup>
-            <FormGroup className="mr-2">
+            <FormGroup className="mr-2 flex-grow-1">
               <Label for="phone">{t("phoneNumber")}</Label>
               <PhoneInput
                 country="US"
@@ -115,7 +115,6 @@ export default ({ balance, symbol }) => {
                 placeholder={t("phoneNumber")}
                 value={phone}
                 onChange={p => handlePhone(p)}
-                style={{ width: 300 }}
               />
             </FormGroup>
             <FormGroup className="mt-auto">

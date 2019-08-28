@@ -65,7 +65,7 @@ const DashboardPassword = ({ balance, symbol }) => {
           {success && <Alert color="success">{t("passwordSuccess")}</Alert>}
 
           <div className="d-flex flex-wrap">
-            <FormGroup>
+            <FormGroup className="flex-grow-1 mr-2">
               <Label for="password">{t("password")}</Label>
               <Input
                 id="password"
@@ -73,10 +73,9 @@ const DashboardPassword = ({ balance, symbol }) => {
                 className="mr-3"
                 onChange={e => setPassword(e.target.value)}
                 value={password}
-                style={{ width: 250 }}
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="flex-grow-1 mr-2">
               <Label for="passConfirm">{t("passConfirm")}</Label>
               <Input
                 id="passConfirm"
@@ -84,7 +83,6 @@ const DashboardPassword = ({ balance, symbol }) => {
                 className="mr-3"
                 onChange={e => setConfirm(e.target.value)}
                 value={passConfirm}
-                style={{ maxWidth: 250 }}
               />
             </FormGroup>
 

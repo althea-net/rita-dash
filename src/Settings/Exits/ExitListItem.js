@@ -1,9 +1,10 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ListGroupItem } from "reactstrap";
-import usa from "images/usa.svg";
+import US from "images/flags/US.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
+import media from "media";
 
 const Item = styled(ListGroupItem)`
   border-radius: 0 !important;
@@ -18,9 +19,14 @@ const Item = styled(ListGroupItem)`
 `;
 
 const Flag = styled.img`
-  width: 50px;
-  height: 50px;
   margin-right: 20px;
+  max-width: 100px;
+  max-height: 60px;
+  margin-top: 5px;
+  ${media.mobile`
+    max-width: 60px;
+    max-height: 40px;
+  `};
 `;
 
 export default ({ exit, click }) => {
@@ -45,29 +51,40 @@ export default ({ exit, click }) => {
   if (!connected) pseudostate = "Problem";
 
   return (
-    <Item className="d-flex" onClick={click} id={nickname + "_Banner"}>
-      <Flag src={usa} alt="USA" />
-      <div className="d-flex">
-        <div>
-          <h5 id="exitServerTitle">{nickname}</h5>
-          <p className="mb-0">{description}</p>
+    <Item
+      className="d-flex flex-wrap w-100"
+      onClick={click}
+      id={nickname + "_Banner"}
+    >
+      <div className="d-flex flex-grow-1">
+        <Flag src={US} alt="USA" />
+        <div class="mb-2">
+          <h5 id="exitServerTitle" className="mb-1">
+            {nickname}
+          </h5>
+          <p
+            className="mb-0"
+            style={{ wordBreak: "break-none", whiteSpace: "no-wrap" }}
+          >
+            {description}
+          </p>
         </div>
-        {pseudostate === "Problem" ? (
-          <div className="ml-2">
-            <FontAwesomeIcon color="red" icon="exclamation-triangle" />
-            <span style={{ marginLeft: 5, color: "red" }}>
-              {t("connectionProblem")}
-            </span>
-          </div>
-        ) : (
-          <div className="ml-2">
-            <FontAwesomeIcon color="#27D38D" icon="check-circle" />
-            <span style={{ marginLeft: 5, color: "#27d38d" }}>
-              {t("greatConnection")}
-            </span>
-          </div>
-        )}
       </div>
+      {pseudostate === "Problem" ? (
+        <div className="ml-sm-auto text-sm-right">
+          <FontAwesomeIcon color="red" icon="exclamation-triangle" />
+          <span style={{ marginLeft: 5, color: "red" }}>
+            {t("connectionProblem")}
+          </span>
+        </div>
+      ) : (
+        <div className="ml-auto text-right">
+          <FontAwesomeIcon color="#27D38D" icon="check-circle" />
+          <span style={{ marginLeft: 5, color: "#27d38d" }}>
+            {t("greatConnection")}
+          </span>
+        </div>
+      )}
     </Item>
   );
 };

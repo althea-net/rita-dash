@@ -58,7 +58,7 @@ const Password = ({ open, setOpen }) => {
             {error && <Alert color="danger">{error}</Alert>}
             {success && <Alert color="success">{t("passwordSuccess")}</Alert>}
 
-            <FormGroup>
+            <FormGroup className="flex-grow-1">
               <Input
                 id="password"
                 type="password"
@@ -69,7 +69,7 @@ const Password = ({ open, setOpen }) => {
                 style={{ width: 300 }}
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup className="flex-grow-1">
               <Input
                 id="passConfirm"
                 type="password"
