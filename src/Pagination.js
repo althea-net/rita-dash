@@ -21,7 +21,7 @@ export default styled(({ className, data, limit, page, setPage }) => {
 
   const end = Math.min(start + 5, Math.floor(data.length / limit));
 
-  if (pages.length < 1) return null;
+  if (pages.length <= 1) return null;
 
   return (
     <div className={className + " d-flex justify-content-center text-center"}>
