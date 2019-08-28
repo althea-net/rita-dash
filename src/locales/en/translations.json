@@ -1,4 +1,7 @@
 {
+  "undefined": "---",
+  "paymentAddress": "Organizer Payment Address",
+  "networkOrganizer": "Network Organizer",
   "contactNetworkOrganizers": "Please contact your network organizers.",
   "somethingWentWrong": "Something went wrong",
   "showDebugging": "Show Debugging Information",
@@ -150,7 +153,7 @@
   "daoError": "Unable to retrieve Subnet DAO address",
   "serviceCost": "Service Cost",
   "daoFeeSaved": "Subnet DAO Fee Updated Successfully",
-  "daoSuccess": "Subnet DAO Address Updated Successfully",
+  "daoSuccess": "Addresses Updated Successfully",
   "dashboard": "Dashboard",
   "debtsError": "Problem retrieving debts",
   "debugReachable": "reachable: {{reachable}}",
@@ -173,7 +176,7 @@
   "enterAmount": "Please enter an amount in Ether",
   "enterCode": "Please enter your confirmation code to complete the node connection process.",
   "enterEmail": "Please enter your email address to receive a confirmation code to connect to this node.",
-  "enterEthAddress": "Enter an address",
+  "enterEthAddress": "Invalid address",
   "enterIpAddress": "Please enter a valid IPv6 address",
   "enterPhone": "Please enter your phone number to receive a confirmation code to connect to this node.",
   "enterPrice": "Please enter a price",
@@ -294,7 +297,7 @@
   "submittingCode": "Submitting verification code to exit...",
   "submittingEmail": "Submitting email to exit...",
   "subnet": "Subnet",
-  "subnetAddress": "Subnet Organization Ethereum Address",
+  "subnetAddress": "Network Organizer Ethereum Address",
   "subnetDao": "Subnet DAO",
   "subnetDetected": "IP Subnet Detected",
   "subnetOrganization": "Subnet Organization",
@@ -337,5 +340,5 @@
   "withdrawalSuccess": "Withdrawal submitted successfully with transaction id <a href='{{link}}'>{{txid}}</a>. The transaction is in flight and your balance will be updated once it confirms, typically within a few minutes.",
   "yes": "Yes",
   "yourConnection": "Your connection is looking great!",
-  "yourOrganizer": "Your organizer who helps maintain your local mesh network will provide you with your IP address and the Ethereum Address for the Subnet Organization. These fields can be manually populated or they can be populated by scanning a QR code."
+  "yourOrganizer": "Network organizers are the service providers who help maintain your local network and provide you with your IP address."
 }

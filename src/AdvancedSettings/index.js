@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import BandwidthSelling from "./BandwidthSelling";
 import Blockchain from "./Blockchain";
 import DaoFee from "./DaoFee";
-import Notifications from "./Notifications";
 import NodeInformation from "./NodeInformation";
+import NetworkOrganizer from "./NetworkOrganizer";
 
 import exclamation from "images/exclamation.svg";
 
@@ -26,7 +26,7 @@ export default () => {
         <p>{t("theseSettings")}</p>
       </div>
 
-      <Notifications />
+      <NetworkOrganizer />
       <div
         className="d-flex flex-wrap"
         style={{ justifyContent: "space-evenly" }}

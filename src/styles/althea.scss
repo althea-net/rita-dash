@@ -1,4 +1,5 @@
 $primary: #3DADF5;
+$secondary: #A8AEB3;
 $btn-border-radius: 4px;
 $btn-font-weight: bold;
 $input-btn-padding-y: 0.7rem;
@@ -11,6 +12,14 @@ $input-placeholder-color: #aaa;
 @import "~bootstrap/scss/bootstrap";
 @import "./react-phonenumber";
 @import "./font";
+
+.btn-secondary {
+  @include button-variant($secondary, darken($secondary, 7.5%), darken($secondary, 10%), lighten($secondary,5%), lighten($secondary, 10%), darken($secondary,30%));
+  color: white;
+  border-radius: 2;
+  min-width: 200px;
+  padding: 0.5rem 1.5rem;
+}
 
 body {
   color: #002B36;
