@@ -110,14 +110,14 @@ const Withdraw = ({ open, setOpen }) => {
                   label={t("to")}
                   type="text"
                   name="address"
-                  placeholder={t("enterEthAddress")}
+                  placeholder={t("recipientAddress")}
                   onChange={e => setAddress(e.target.value)}
                   value={address}
                   valid={addressValid}
                   invalid={!!(address && !addressValid)}
                 />
                 <FormFeedback invalid="true">
-                  {t("addressRequired")}
+                  {t("invalidAddress")}
                 </FormFeedback>
               </FormGroup>
               <FormGroup id="form">

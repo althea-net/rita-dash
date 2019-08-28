@@ -89,7 +89,7 @@ const WithdrawAll = ({ open, setOpen }) => {
                   label={t("to")}
                   type="text"
                   name="address"
-                  placeholder={t("enterEthAddress")}
+                  placeholder={t("recipientAddress")}
                   onChange={e => setAddress(e.target.value)}
                   value={address}
                   valid={addressValid}

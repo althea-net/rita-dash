@@ -119,14 +119,14 @@ const NetworkOrganizer = () => {
             </FormGroup>
             <FormGroup>
               <Input
-                placeholder={t("paymentAddress")}
+                placeholder={t("organizerAddress")}
                 onChange={handleDao}
                 value={paymentAddress}
                 valid={daoValid}
                 invalid={daoInvalid}
                 id="subnetDAOAddr"
               />
-              <FormFeedback invalid="true">{t("enterEthAddress")}</FormFeedback>
+              <FormFeedback invalid="true">{t("invalidAddress")}</FormFeedback>
             </FormGroup>
             <div className="d-flex">
               <Button
@@ -150,7 +150,7 @@ const NetworkOrganizer = () => {
               <div>{ipAddress}</div>
             </div>
             <div>
-              <Label>{t("paymentAddress")}</Label>
+              <Label>{t("organizerAddress")}</Label>
               <div>{paymentAddress || t("undefined")}</div>
             </div>
           </div>

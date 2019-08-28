@@ -86,7 +86,7 @@ const NodeInformation = () => {
           </InputGroup>
           {copied === "ip" && <p>{t("copied")}</p>}
           <Label>
-            <b>{t("ethereumAddress")}</b>
+            <b>{t("paymentAddress")}</b>
           </Label>
           <InputGroup>
             <Input id="ethAddr" readOnly value={address || ""} />
