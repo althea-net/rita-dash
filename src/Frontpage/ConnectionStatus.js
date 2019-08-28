@@ -40,11 +40,17 @@ const ConnectionStatus = () => {
   if (!state) return null;
 
   return (
-    <div className={`ml-auto my-auto ${state.color}`}>
-      <img src={state.icon} alt={state.msg} className="mr-1" />
-      {state.msg}
+    <div
+      className={`d-flex flex-wrap d-sm-block ml-sm-auto my-auto ${
+        state.color
+      }`}
+    >
+      <div>
+        <img src={state.icon} alt={state.msg} className="mr-1" />
+        {state.msg}
+      </div>
       {state.link && (
-        <p className="text-right">
+        <p className="ml-2 text-right">
           <a href="#help" onClick={help}>
             {t("needHelp")}
           </a>

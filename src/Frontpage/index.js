@@ -12,13 +12,15 @@ const Frontpage = () => {
 
   return (
     <>
-      <div className="d-flex">
-        <h2 id="frontPage" className="mb-0">
-          {t("welcome")}
-        </h2>
+      <div className="d-flex flex-wrap mb-2">
+        <div>
+          <h2 id="frontPage" className="mb-0">
+            {t("welcome")}
+          </h2>
+          <p id="version">{t("version", { version, ritaVersion })}</p>
+        </div>
         <ConnectionStatus />
       </div>
-      <p id="version">{t("version", { version, ritaVersion })}</p>
       <GettingStarted />
       <Finances />
     </>
