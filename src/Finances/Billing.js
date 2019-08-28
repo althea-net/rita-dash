@@ -70,7 +70,7 @@ const Billing = (daoAddress, ipAddress) => {
             <>
               <div className="d-flex flex-wrap">
                 <h4>{t("billingHistory")}</h4>
-                <div className="ml-auto d-flex mb-4">
+                <div className="ml-auto d-flex mb-4 flex-wrap">
                   <div
                     style={{
                       whiteSpace: "nowrap",

@@ -61,7 +61,7 @@ const RevenueHistory = () => {
             </>
           ) : (
             <>
-              <div className="d-flex mb-2">
+              <div className="d-flex mb-2 flex-wrap">
                 <h4>{t("revenueHistory")}</h4>
                 <div className="ml-auto d-flex">
                   <div
