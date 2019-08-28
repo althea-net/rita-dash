@@ -28,6 +28,7 @@ export const PortToggle = styled(Button)`
   font-weight: normal !important;
   font-size: 20px !important;
   padding: 0.5rem 0.7rem !important;
+  white-space: nowrap;
 `;
 
 export const RouterImage = styled.img`
