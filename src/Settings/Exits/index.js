@@ -122,7 +122,7 @@ const Exits = () => {
                       color="primary"
                       onClick={() => setSelectingExit(true)}
                       id="exitNodeButton"
-                      className="mr-2"
+                      className="mb-2 mb-sm-0 mr-1"
                     >
                       {t("updateExit")}
                     </Button>
@@ -130,6 +130,7 @@ const Exits = () => {
                       color="primary"
                       outline
                       onClick={() => resetExit(selectedExit)}
+                      className="mb-2 mb-sm-0"
                       id="exitNodeButton"
                     >
                       <FontAwesomeIcon icon="sync" className="mr-2" />
