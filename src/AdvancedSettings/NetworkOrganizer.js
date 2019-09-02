@@ -151,7 +151,9 @@ const NetworkOrganizer = () => {
             </div>
             <div>
               <Label>{t("organizerAddress")}</Label>
-              <div>{paymentAddress || t("undefined")}</div>
+              <div style={{ wordBreak: "break-all" }}>
+                {paymentAddress || t("undefined")}
+              </div>
             </div>
           </div>
           <Button color="secondary" text onClick={edit}>
