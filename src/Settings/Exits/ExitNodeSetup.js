@@ -68,7 +68,8 @@ const ExitNodeSetup = ({ open, setOpen }) => {
 
     if (state === "Registered") {
       selectExit(nickname);
-      setOpen(false);
+      toggle();
+      return;
     }
 
     if (!verifMode && gotinfo) {
@@ -99,17 +100,18 @@ const ExitNodeSetup = ({ open, setOpen }) => {
     resetExit(exit);
   };
 
-  const finish = () => {
+  const toggle = () => {
     setRegistering(false);
     setOpen(false);
+    dispatch({ type: "exitIp", exitIp: null });
   };
 
   return (
     <div>
-      <Modal isOpen={open} centered size="lg" toggle={() => setOpen(!open)}>
+      <Modal isOpen={open} centered size="lg" toggle={toggle}>
         <div className="modal-header d-flex justify-content-between">
           <div className="d-flex mr-auto">
-            <h4 className="modal-close" onClick={() => setOpen(false)}>
+            <h4 className="modal-close" onClick={toggle}>
               &times;
             </h4>
             <h4 className="ml-2">{t("exitNodeSetup")}</h4>
@@ -148,7 +150,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
             <Button
               color="primary"
               className="ml-auto"
-              onClick={finish}
+              onClick={toggle}
               style={{ width: 150 }}
               id="setupModalFinishButton"
             >

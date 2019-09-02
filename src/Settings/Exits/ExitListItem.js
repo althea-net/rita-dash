@@ -58,7 +58,7 @@ export default ({ exit, click }) => {
     >
       <div className="d-flex flex-grow-1">
         <Flag src={US} alt="USA" />
-        <div class="mb-2">
+        <div className="mb-2">
           <h5 id="exitServerTitle" className="mb-1">
             {nickname}
           </h5>

@@ -1,4 +1,5 @@
 {
+  "resetConnection": "Reset Connection",
   "recipientAddress": "Recipient Address",
   "paymentAddress": "Payment Address",
   "undefined": "---",

@@ -7,6 +7,8 @@ import ExitNodeSetup from "./ExitNodeSetup";
 import { Provider } from "store/Exits";
 import { get, post, useStore } from "store";
 import useInterval from "hooks/useInterval";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const AbortController = window.AbortController;
 
 const Exits = () => {
@@ -115,14 +117,25 @@ const Exits = () => {
                     exit={selectedExit}
                     click={() => setSelectingExit(true)}
                   />
-                  <Button
-                    color="secondary"
-                    style={{ width: 240 }}
-                    onClick={() => setSelectingExit(true)}
-                    id="exitNodeButton"
-                  >
-                    {t("updateExit")}
-                  </Button>
+                  <div className="d-flex flex-wrap">
+                    <Button
+                      color="primary"
+                      onClick={() => setSelectingExit(true)}
+                      id="exitNodeButton"
+                      className="mr-2"
+                    >
+                      {t("updateExit")}
+                    </Button>
+                    <Button
+                      color="primary"
+                      outline
+                      onClick={() => resetExit(selectedExit)}
+                      id="exitNodeButton"
+                    >
+                      <FontAwesomeIcon icon="sync" className="mr-2" />
+                      {t("resetConnection")}
+                    </Button>
+                  </div>
                 </>
               ) : (
                 <div>
