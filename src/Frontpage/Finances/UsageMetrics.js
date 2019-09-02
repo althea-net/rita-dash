@@ -56,43 +56,41 @@ const UsageMetrics = () => {
       style={{ borderTop: "1px solid #dadada" }}
     >
       <div className="d-flex flex-column justify-content-between pr-lg-4 col-md-6">
-        <div className="d-flex flex-wrap justify-content-between w-100">
-          <h5 style={{ color: "gray" }}>{t("monthToDate")}</h5>
+        <div className="d-flex flex-wrap justify-content-between w-100 text-center">
+          <h5 className="w-100" style={{ color: "gray", fontSize: 18 }}>
+            {t("monthToDate")}
+          </h5>
           <div className="d-flex w-100 justify-content-around">
             <div>
-              <div>
-                <h4>{format(thisMonthUsage)} GB</h4>
-              </div>
-              <div style={{ color: "gray" }}>{t("usage")}</div>
+              <h4 className="mb-1">{format(thisMonthUsage)} GB</h4>
+              <div style={{ color: "#aaa" }}>{t("usage")}</div>
             </div>
             <div>
-              <div>
-                <h4>
-                  {format(thisMonthCost)} {symbol}
-                </h4>
-              </div>
-              <div style={{ color: "gray" }}>Cost</div>
+              <h4 className="mb-1">
+                {format(thisMonthCost)} {symbol}
+              </h4>
+              <div style={{ color: "#aaa" }}>Cost</div>
             </div>
           </div>
         </div>
       </div>
       <Right>
-        <div className="d-flex flex-wrap justify-content-between w-100">
-          <h5 style={{ color: "gray" }}>{t("lastMonth")}</h5>
+        <div className="d-flex flex-wrap justify-content-between w-100 text-center">
+          <h5 className="w-100" style={{ color: "gray", fontSize: 18 }}>
+            {t("lastMonth")}
+          </h5>
           <div className="d-flex w-100 justify-content-around">
             <div>
-              <div>
-                <h4>{format(lastMonthUsage)} GB</h4>
-              </div>
-              <div style={{ color: "gray" }}>{t("usage")}</div>
+              <h4 className="mb-1">{format(lastMonthUsage)} GB</h4>
+              <div style={{ color: "#aaa" }}>{t("usage")}</div>
             </div>
             <div>
               <div>
-                <h4>
+                <h4 className="mb-1">
                   {format(lastMonthCost)} {symbol}
                 </h4>
               </div>
-              <div style={{ color: "gray" }}>{t("cost")}</div>
+              <div style={{ color: "#aaa" }}>{t("cost")}</div>
             </div>
           </div>
         </div>
