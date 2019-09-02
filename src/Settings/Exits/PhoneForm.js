@@ -13,25 +13,28 @@ export default ({ phone, handlePhone }) => {
     <div>
       <h5>{t("phoneNumber")}</h5>
 
-      <div className="d-flex p-4">
-        <img src={phoneIcon} alt="Phone" className="mr-4" />
-        <div>
-          <p>{t("enterPhone")}</p>
-          <Form>
-            <FormGroup>
-              <PhoneInput
-                country="US"
-                flags={Flags}
-                id="exitPhone"
-                inputComponent={SmartInput}
-                placeholder={t("phoneNumber")}
-                value={phone}
-                onChange={p => handlePhone(p)}
-              />
-            </FormGroup>
-          </Form>
-        </div>
+      <div className="d-flex mb-4">
+        <img
+          src={phoneIcon}
+          alt="Phone"
+          style={{ maxWidth: 80 }}
+          className="mr-4"
+        />
+        <p style={{ maxWidth: 400 }}>{t("enterPhone")}</p>
       </div>
+      <Form>
+        <FormGroup>
+          <PhoneInput
+            country="US"
+            flags={Flags}
+            id="exitPhone"
+            inputComponent={SmartInput}
+            placeholder={t("phoneNumber")}
+            value={phone}
+            onChange={p => handlePhone(p)}
+          />
+        </FormGroup>
+      </Form>
     </div>
   );
 };
