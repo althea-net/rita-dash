@@ -186,7 +186,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
                         );
                       case "Phone":
                         return (
-                          <PhoneForm phone={phone} handlePhone={handlePhone} />
+                          <PhoneForm phone={phone} handlePhone={handlePhone} next={next} />
                         );
                       default:
                         return null;

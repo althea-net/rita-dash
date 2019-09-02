@@ -6,8 +6,14 @@ import PhoneInput from "react-phone-number-input";
 import SmartInput from "react-phone-number-input/smart-input";
 import { Flags } from "utils";
 
-export default ({ phone, handlePhone }) => {
-  let [t] = useTranslation();
+const PhoneForm = ({ phone, handlePhone, next }) => {
+  const [t] = useTranslation();
+
+  const submit = e => {
+    e.preventDefault();
+    handlePhone(phone);
+    next();
+  };
 
   return (
     <div>
@@ -22,7 +28,7 @@ export default ({ phone, handlePhone }) => {
         />
         <p style={{ maxWidth: 400 }}>{t("enterPhone")}</p>
       </div>
-      <Form>
+      <Form onSubmit={submit}>
         <FormGroup>
           <PhoneInput
             country="US"
@@ -38,3 +44,5 @@ export default ({ phone, handlePhone }) => {
     </div>
   );
 };
+
+export default PhoneForm;
