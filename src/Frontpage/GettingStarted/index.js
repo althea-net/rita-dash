@@ -70,7 +70,7 @@ export default () => {
   };
 
   const isWifiPasswordSet = !!(
-    wifiSettings && wifiSettings.findIndex(s => s.key === "ChangeMe") < 0
+    wifiSettings && wifiSettings.findIndex(s => s.key !== "ChangeMe") >= 0
   );
 
   const isRouterPasswordSet =
