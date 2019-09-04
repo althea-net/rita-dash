@@ -156,7 +156,7 @@ const NetworkOrganizer = () => {
               </div>
             </div>
           </div>
-          <Button color="secondary" text onClick={edit}>
+          <Button color="secondary" onClick={edit}>
             {t("edit")}
           </Button>
         </>
