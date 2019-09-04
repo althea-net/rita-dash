@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button, Card, CardBody } from "reactstrap";
 import glImage from "images/gl.jpg";
 import linksysImage from "images/linksyswrt3200acm.jpg";
+import linksysEaImage from "images/linksysea6350v3.jpg";
 
 export const PortNumber = styled.div`
   position: absolute;
@@ -58,10 +59,19 @@ const LinkSys = () => {
   return <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />;
 };
 
+const LinkSysEa = () => {
+  return <RouterImage src={linksysEaImage} alt="Linksys EA 6350 v3" />;
+};
+
 const deviceImages = {
-  "gl-b1300": <GL />,
-  "linksys-wrt3200acm": <LinkSys />,
-  "linksys-wrt32x": <LinkSys />
+  "gl-b1300": <RouterImage src={glImage} alt="GL B-1300" />,
+  linksys_ea6350v3: (
+    <RouterImage src={linksysEaImage} alt="Linksys EA 6350 v3" />
+  ),
+  "linksys-wrt3200acm": (
+    <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
+  ),
+  "linksys-wrt32x": <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
 };
 
 export const Device = ({ device }) => (
