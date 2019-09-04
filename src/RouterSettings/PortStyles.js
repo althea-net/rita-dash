@@ -60,7 +60,8 @@ const LinkSys = () => {
 
 const deviceImages = {
   "gl-b1300": <GL />,
-  "linksys-wrt3200acm": <LinkSys />
+  "linksys-wrt3200acm": <LinkSys />,
+  "linksys-wrt32x": <LinkSys />
 };
 
 export const Device = ({ device }) => (
