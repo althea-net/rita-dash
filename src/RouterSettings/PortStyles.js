@@ -51,18 +51,6 @@ export const PortColumn = props => (
   </StyledCard>
 );
 
-const GL = () => {
-  return <RouterImage src={glImage} alt="GL B-1300" />;
-};
-
-const LinkSys = () => {
-  return <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />;
-};
-
-const LinkSysEa = () => {
-  return <RouterImage src={linksysEaImage} alt="Linksys EA 6350 v3" />;
-};
-
 const deviceImages = {
   "gl-b1300": <RouterImage src={glImage} alt="GL B-1300" />,
   linksys_ea6350v3: (
