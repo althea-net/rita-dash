@@ -17,7 +17,14 @@ export default () => {
   const [settingPassword, setSettingPassword] = useState(false);
 
   const [
-    { balance, backupCreated, selectedExit, nickname, wifiSettings }
+    {
+      balance,
+      backupCreated,
+      wgPublicKey,
+      selectedExit,
+      nickname,
+      wifiSettings
+    }
   ] = useStore();
 
   const goBackup = () => setBackingUp(true);
@@ -51,16 +58,14 @@ export default () => {
 
   useEffect(
     () => {
-      setDismissed(
-        window.localStorage.getItem("gettingStartedDismissed") === "true"
-      );
+      setDismissed(window.localStorage.getItem(wgPublicKey) === "true");
     },
-    [dismissed]
+    [dismissed, wgPublicKey]
   );
 
   const dismiss = e => {
     e.preventDefault();
-    window.localStorage.setItem("gettingStartedDismissed", true);
+    window.localStorage.setItem(wgPublicKey, true);
     setDismissed(true);
   };
 

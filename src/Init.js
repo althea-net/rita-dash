@@ -78,6 +78,9 @@ const Init = () => {
             window.localStorage.getItem("sellingBandwidth") === "true";
           dispatch({ type: "sellingBandwidth", sellingBandwidth });
 
+          const wgPublicKey = await get("/wg_public_key");
+          dispatch({ type: "wgPublicKey", wgPublicKey });
+
           dispatch({ type: "initialized", initialized: true });
         } catch (e) {
           dispatch({ type: "initialized", initialized: false });
