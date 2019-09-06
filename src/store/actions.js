@@ -121,7 +121,10 @@ export default (state, action) => {
       resetting: [...state.resetting, nickname]
     }),
     remoteAccess: ({ remoteAccess }) => ({ remoteAccess }),
-    sellingBandwidth: ({ sellingBandwidth }) => ({ sellingBandwidth }),
+    sellingBandwidth: ({ sellingBandwidth }) => {
+      window.localStorage.setItem("sellingBandwidth", sellingBandwidth);
+      return { sellingBandwidth };
+    },
     startPortChange: () => ({ portChange: true }),
     startWaiting: ({ waiting }) => ({ waiting }),
     status: ({ status }) => {
