@@ -24,7 +24,7 @@ const Confirm = ({ open, cancel, confirm, message }) => {
         <Button color="primary" onClick={confirm}>
           {t("yes")}
         </Button>
-        <Button color="secondary" onClick={cancel}>
+        <Button color="secondary" onClick={cancel} style={{ height: "100%" }}>
           {t("no")}
         </Button>
       </ModalFooter>

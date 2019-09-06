@@ -19,29 +19,30 @@ const Ports = () => {
 
   const [{ device, interfaces, waiting }, dispatch] = useStore();
 
+  const getInterfaces = async () => {
+    try {
+      let interfaces = await get("/interfaces", false);
+      dispatch({ type: "interfaces", interfaces });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useInterval(() => {
     if (portsWaiting) dispatch({ type: "keepWaiting" });
   }, waiting ? 1000 : null);
 
-  useEffect(
-    () => {
-      const getInterfaces = async () => {
-        setLoading(true);
-
-        try {
-          let interfaces = await get("/interfaces", false);
-          dispatch({ type: "interfaces", interfaces });
-        } catch (e) {
-          console.log(e);
-        }
-
-        setLoading(false);
-      };
-
-      getInterfaces();
-    },
-    [dispatch]
-  );
+  useInterval(getInterfaces, 5000);
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    (async () => {
+      setLoading(true);
+      await getInterfaces();
+      setLoading(false);
+    })();
+    return () => controller.abort();
+  }, []); 
 
   let setInterfaceMode = (iface, mode) => {
     setSelected(iface);
@@ -54,21 +55,26 @@ const Ports = () => {
   }
 
   let confirm = async () => {
+    setError(null);
     setOpen(false);
+    let unexpectedError = false;
 
     try {
-      let res = await post("/interfaces", { interface: selected, mode });
-      if (!(res instanceof Error)) {
-        setPortsWaiting(true);
-        interfaces[selected] = mode;
-        dispatch({ type: "startPortChange" });
-        dispatch({ type: "startWaiting", waiting: 120 });
-        dispatch({ type: "interfaces", interfaces });
+      await post("/interfaces", { interface: selected, mode });
+    } catch (e) {
+      if (e.message.includes("500")) {
+        unexpectedError = true;
+        setError(t("portToggleError"));
+        cancel();
       }
-      else throw new Error();
-    } catch {
-      setError(t("portToggleError"));
-      cancel();
+    }
+
+    if (!unexpectedError) {
+      setPortsWaiting(true);
+      interfaces[selected] = mode;
+      dispatch({ type: "startPortChange" });
+      dispatch({ type: "startWaiting", waiting: 120 });
+      dispatch({ type: "interfaces", interfaces });
     }
   };
 

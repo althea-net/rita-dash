@@ -70,7 +70,11 @@ const NetworkOrganizer = () => {
       await Promise.all(
         daos.map(address => post(`/dao_list/remove/${address}`))
       );
-      await post(`/dao_list/add/${paymentAddress}`);
+
+      if (paymentAddress) {
+        await post(`/dao_list/add/${paymentAddress}`);
+      }
+
       setSuccess(t("daoSuccess"));
       setEditing(false);
     } catch {
@@ -96,7 +100,7 @@ const NetworkOrganizer = () => {
             onSubmit={submit}
             style={{ width: 450, maxWidth: "100%" }}
           >
-            <Error message={error} />
+            <Error error={error} />
 
             <FormGroup>
               {ipNeedsFormatting && (
@@ -156,7 +160,7 @@ const NetworkOrganizer = () => {
               </div>
             </div>
           </div>
-          <Button color="secondary" onClick={edit}>
+          <Button color="secondary" style={{ color: "white", minWidth: 200 }} onClick={edit}>
             {t("edit")}
           </Button>
         </>

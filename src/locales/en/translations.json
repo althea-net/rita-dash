@@ -155,7 +155,7 @@
   "cost": "Cost",
   "currentBalance": "Account Balance",
   "currentDebt": "Current debt",
-  "daoError": "Unable to retrieve Subnet DAO address",
+  "daoError": "Problem saving organizer address",
   "serviceCost": "Service Cost",
   "daoFeeSaved": "Subnet DAO Fee Updated Successfully",
   "daoSuccess": "Addresses Updated Successfully",

@@ -16,9 +16,6 @@ $input-placeholder-color: #aaa;
 .btn-secondary {
   @include button-variant($secondary, darken($secondary, 7.5%), darken($secondary, 10%), lighten($secondary,5%), lighten($secondary, 10%), darken($secondary,30%));
   color: white;
-  border-radius: 2;
-  min-width: 200px;
-  padding: 0.5rem 1.5rem;
 }
 
 body {
