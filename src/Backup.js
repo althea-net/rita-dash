@@ -47,9 +47,12 @@ const Backup = ({ open, setOpen }) => {
     return () => controller.abort();
   }, []);
 
-  const done = () => {
-    post("/backup_created/true");
-    dispatch({ type: "backupCreated", backupCreated: true });
+  const done = async () => {
+    try {
+      await post("/backup_created/true");
+      dispatch({ type: "backupCreated", backupCreated: true });
+    } catch {}
+
     setOpen(false);
   };
 

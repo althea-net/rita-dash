@@ -4,6 +4,7 @@ import useInterval from "hooks/useInterval";
 import { Alert, Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { get, post, useStore } from "store";
 import refresh from "../images/refresh.svg";
+import { Error } from "utils";
 
 const ImportPrivateKey = () => {
   const [t] = useTranslation();
@@ -11,6 +12,7 @@ const ImportPrivateKey = () => {
   const [confirming, setConfirming] = useState(false);
   const [initiating, setInitiating] = useState(false);
   const [oldKey, setOldKey] = useState();
+  const [error, setError] = useState(false);
 
   const valid = parseInt(privateKey, 16) > 0;
 
@@ -37,8 +39,12 @@ const ImportPrivateKey = () => {
   const save = async e => {
     e.preventDefault();
 
-    post("/eth_private_key", { eth_private_key: privateKey });
-    setInitiating(true);
+    try { 
+      await post("/eth_private_key", { eth_private_key: privateKey });
+      setInitiating(true);
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
   const confirm = e => {
@@ -90,6 +96,7 @@ const ImportPrivateKey = () => {
             <Form onSubmit={confirm}>
               <p className="mb-0">{t("ifYouWant")}</p>
 
+              <Error error={error} />
               <FormGroup>
                 <Label for="privateKey">{t("newPrivateKey")}</Label>
                 <div className="d-flex flex-wrap">

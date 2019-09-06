@@ -88,9 +88,11 @@ const Price = () => {
       .div(bytesPerGb)
       .toFixed(0);
 
-    await post(`/local_fee/${priceWei}`);
+    try {
+      await post(`/local_fee/${priceWei}`);
+      setSuccess(true);
+    } catch {}
 
-    setSuccess(true);
     setLoading(false);
   };
 
@@ -98,9 +100,11 @@ const Price = () => {
     setSuccess(false);
 
     setAutoPricing(!autoPricing);
-    await post(`/auto_price/enabled/${!autoPricing}`);
-    if (autoPricing) setNewPrice(0);
-    else setLoading(true);
+    try {
+      await post(`/auto_price/enabled/${!autoPricing}`);
+      if (autoPricing) setNewPrice(0);
+      else setLoading(true);
+    } catch {}
   };
 
   const changePrice = e => {

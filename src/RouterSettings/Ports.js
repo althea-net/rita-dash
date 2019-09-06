@@ -5,7 +5,7 @@ import { get, post, useStore } from "store";
 
 import { Device } from "./PortStyles.js";
 import PortColumns from "./PortColumns";
-import { Confirm } from "utils";
+import { Confirm, Error } from "utils";
 import useInterval from "hooks/useInterval";
 
 const Ports = () => {
@@ -15,6 +15,7 @@ const Ports = () => {
   const [mode, setMode] = useState("");
   const [loading, setLoading] = useState(false);
   const [portsWaiting, setPortsWaiting] = useState(false);
+  const [error, setError] = useState(false);
 
   const [{ device, interfaces, waiting }, dispatch] = useStore();
 
@@ -54,16 +55,21 @@ const Ports = () => {
 
   let confirm = async () => {
     setOpen(false);
-    setPortsWaiting(true);
-    dispatch({ type: "startPortChange" });
-    dispatch({ type: "startWaiting", waiting: 120 });
-
-    interfaces[selected] = mode;
-    dispatch({ type: "interfaces", interfaces });
 
     try {
-      await post("/interfaces", { interface: selected, mode });
-    } catch {}
+      let res = await post("/interfaces", { interface: selected, mode });
+      if (!(res instanceof Error)) {
+        setPortsWaiting(true);
+        interfaces[selected] = mode;
+        dispatch({ type: "startPortChange" });
+        dispatch({ type: "startWaiting", waiting: 120 });
+        dispatch({ type: "interfaces", interfaces });
+      }
+      else throw new Error();
+    } catch {
+      setError(t("portToggleError"));
+      cancel();
+    }
   };
 
   let cancel = () => setOpen(false);
@@ -85,6 +91,7 @@ const Ports = () => {
 
           <div className="d-flex flex-wrap justify-content-center">
             <Device device={device} />
+            <Error error={error} />
             <PortColumns
               device={device}
               interfaces={interfaces}

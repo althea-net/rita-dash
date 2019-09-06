@@ -17,6 +17,7 @@ import {
 import { get, post, useStore } from "store";
 import { toEth, toWei, sleep } from "utils";
 import { BigNumber } from "bignumber.js";
+import { Error } from "utils";
 
 const AbortController = window.AbortController;
 const secondsPerMonth = 60 * 60 * 24 * 30;
@@ -27,6 +28,7 @@ const DaoFee = ({ readonly = false }) => {
   const [success, setSuccess] = useState(false);
   const [daoFee, setDaoFee] = useState();
   const [{ symbol }] = useStore();
+  const [error, setError] = useState(false);
 
   const getDaoFee = useCallback(async signal => {
     setLoading(true);
@@ -49,7 +51,9 @@ const DaoFee = ({ readonly = false }) => {
     try {
       await post("/dao_fee/" + daoFeeWei.toString(10));
       setSuccess(true);
-    } catch {}
+    } catch (e) {
+      setError(e.message);
+    }
   };
 
   useEffect(
@@ -82,6 +86,7 @@ const DaoFee = ({ readonly = false }) => {
           <p>{t("theAmountYouPay")}</p>
 
           {success && <Alert color="success">{t("daoFeeSaved")}</Alert>}
+          <Error error={error} />
 
           {loading ? (
             <Progress animated color="primary" value="100" />
