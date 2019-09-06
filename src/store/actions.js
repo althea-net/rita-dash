@@ -120,6 +120,7 @@ export default (state, action) => {
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname]
     }),
+    remoteAccess: ({ remoteAccess }) => ({ remoteAccess }),
     sellingBandwidth: ({ sellingBandwidth }) => ({ sellingBandwidth }),
     startPortChange: () => ({ portChange: true }),
     startWaiting: ({ waiting }) => ({ waiting }),

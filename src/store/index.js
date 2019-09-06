@@ -37,6 +37,7 @@ const state = {
   neighbors: [],
   port: null,
   portChange: false,
+  remoteAccess: false,
   resetting: [],
   ritaVersion: null,
   sellingBandwidth: false,

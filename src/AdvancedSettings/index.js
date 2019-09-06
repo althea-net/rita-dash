@@ -6,6 +6,7 @@ import Blockchain from "./Blockchain";
 import DaoFee from "./DaoFee";
 import NodeInformation from "./NodeInformation";
 import NetworkOrganizer from "./NetworkOrganizer";
+import RemoteAccess from "./RemoteAccess";
 
 import exclamation from "images/exclamation.svg";
 
@@ -34,6 +35,7 @@ export default () => {
         <BandwidthSelling />
         <Blockchain />
       </div>
+      <RemoteAccess />
       <DaoFee />
       <NodeInformation />
     </div>

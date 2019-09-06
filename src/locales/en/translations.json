@@ -1,4 +1,6 @@
 {
+  "remoteAccessBlurb": "Enable remote access for your network organizer. Useful for debugging. You may not want to leave this on all the time.",
+  "remoteAccess": "Remote Access",
   "resetConnection": "Reset Connection",
   "recipientAddress": "Recipient Address",
   "paymentAddress": "Payment Address",
