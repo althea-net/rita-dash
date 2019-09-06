@@ -35,9 +35,9 @@ export default () => {
         <BandwidthSelling />
         <Blockchain />
       </div>
-      <RemoteAccess />
       <DaoFee />
       <NodeInformation />
+      <RemoteAccess />
     </div>
   );
 };
