@@ -69,7 +69,7 @@ const UsageMetrics = () => {
               <h4 className="mb-1">
                 {format(thisMonthCost)} {symbol}
               </h4>
-              <div style={{ color: "#aaa" }}>Cost</div>
+              <div style={{ color: "#aaa" }}>{t("cost")}</div>
             </div>
           </div>
         </div>
