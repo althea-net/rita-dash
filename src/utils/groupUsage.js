@@ -51,11 +51,11 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
         data[i].service += p.payments
           .filter(p => p.to.meshIp === "::1")
           .reduce((a, b) => a + parseInt(b.amount), 0);
-
-      data[i].up += c.up;
-      data[i].down += c.down;
-      data[i].cost += c.price * (c.up + c.down);
     }
+
+    data[i].up += c.up;
+    data[i].down += c.down;
+    data[i].cost += c.price * (c.up + c.down);
 
     return c;
   });
