@@ -38,7 +38,7 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                     key={i}
                     selected={selected}
                     onClick={() => selected || setInterfaceMode(iface, mode)}
-                    disabled={false}
+                    disabled={disabled}
                     readOnly={selected}
                     className="active"
                   >

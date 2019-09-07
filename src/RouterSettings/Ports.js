@@ -19,9 +19,14 @@ const Ports = () => {
 
   const [{ device, interfaces, waiting }, dispatch] = useStore();
 
-  const getInterfaces = async () => {
+  const getInterfaces = async signal => {
+    if (!signal) {
+      const controller = new AbortController();
+      signal = controller.signal;
+    }
+
     try {
-      let interfaces = await get("/interfaces", false);
+      let interfaces = await get("/interfaces", false, 5000, signal);
       dispatch({ type: "interfaces", interfaces });
     } catch (e) {
       console.log(e);
@@ -33,16 +38,6 @@ const Ports = () => {
   }, waiting ? 1000 : null);
 
   useInterval(getInterfaces, 5000);
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    (async () => {
-      setLoading(true);
-      await getInterfaces();
-      setLoading(false);
-    })();
-    return () => controller.abort();
-  }, []); 
 
   let setInterfaceMode = (iface, mode) => {
     setSelected(iface);
