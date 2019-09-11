@@ -1,4 +1,8 @@
 {
+  "static": "Estática",
+  "dynamic": "Dinámica (DHCP)",
+  "netmask": "Máscara de red",
+  "configureWAN": "Configure WAN",
   "portToggleError": "Hubo un problema al configurar el modo Puerto. Intente nuevamente y comuníquese con su organizador de red si el problema persiste.",
   "remoteAccessBlurb": "Habilite el acceso remoto para su organizador de red. Útil para la depuración. Es posible que no desee dejar esto activado todo el tiempo.",
   "remoteAccess": "Acceso remoto",

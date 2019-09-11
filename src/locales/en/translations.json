@@ -1,4 +1,8 @@
 {
+  "static": "Static",
+  "dynamic": "Dynamic (DHCP)",
+  "netmask": "Netmask",
+  "configureWAN": "Configure WAN",
   "portToggleError": "There was a problem while setting the Port mode. Please try again and contact your network organizer if the issue persists.",
   "remoteAccessBlurb": "Enable remote access for your network organizer. Useful for debugging. You may not want to leave this on all the time.",
   "remoteAccess": "Remote Access",
@@ -200,7 +204,7 @@
   "finances": "Finances",
   "finish": "Finish",
   "firmware": "Firmware",
-  "gateway": "(Gateway)",
+  "gateway": "Gateway",
   "greatConnection": "Great connection",
   "highestAcceptable": "Highest acceptable price",
   "history": "History",
