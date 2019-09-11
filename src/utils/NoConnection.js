@@ -1,8 +1,6 @@
 import React from "react";
 import {
   Alert,
-  Card,
-  CardBody,
   Modal,
   ModalHeader,
   ModalBody,
@@ -24,23 +22,19 @@ const NoConnection = () => {
       <Modal isOpen={!version || waiting > 0} centered zIndex={9999}>
         <ModalHeader>{t("noConnection")}</ModalHeader>
         <ModalBody>
-          <Card>
-            <CardBody>
-              {portChange &&
-                (!version || waiting > 60 ? (
-                  <Alert color="warning">{t("noReboot")}</Alert>
-                ) : (
-                  <Alert color="info">{t("safeToReboot")}</Alert>
-                ))}
-              {keyChange && <Alert color="danger">{t("keyChange")}</Alert>}
-              {wifiChange &&
-                waiting < 115 && (
-                  <Alert color="danger">{t("wifiChange")}</Alert>
-                )}
-              {waiting > 0 ? t("waiting", { seconds: waiting }) : t("noRita")}
-              <Progress value={100} animated color="danger" />
-            </CardBody>
-          </Card>
+          {portChange &&
+              (!version || waiting > 60 ? (
+                <Alert color="warning">{t("noReboot")}</Alert>
+              ) : (
+                <Alert color="info">{t("safeToReboot")}</Alert>
+          ))}
+          {keyChange && <Alert color="danger">{t("keyChange")}</Alert>}
+          {wifiChange &&
+              waiting < 115 && (
+                <Alert color="danger">{t("wifiChange")}</Alert>
+          )}
+          {waiting > 0 ? t("waiting", { seconds: waiting }) : t("noRita")}
+          <Progress value={100} animated color="danger" />
         </ModalBody>
       </Modal>
     </div>
