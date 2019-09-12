@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Form, FormGroup, CustomInput } from "reactstrap";
-import { Card } from "ui";
+import { LeftCard } from "ui";
 import { post, useStore } from "store";
 import useRemoteAccess from "hooks/useRemoteAccess";
 
@@ -17,7 +17,7 @@ const RemoteAccess = () => {
   };
 
   return (
-    <Card>
+    <LeftCard>
       <h4>{t("remoteAccess")}</h4>
       <p>{t("remoteAccessBlurb")}</p>
       <Form className="w-100">
@@ -31,7 +31,7 @@ const RemoteAccess = () => {
           />
         </FormGroup>
       </Form>
-    </Card>
+    </LeftCard>
   );
 };
 

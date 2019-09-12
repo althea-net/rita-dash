@@ -84,6 +84,7 @@ export default (state, action) => {
       version,
       waiting: state.portChange ? state.waiting : 0
     }),
+    level: ({ level }) => ({ level }),
     meshIp: ({ meshIp }) => ({ meshIp }),
     keepWaiting: () => ({
       portChange: state.portChange && state.waiting >= 1,
@@ -121,6 +122,7 @@ export default (state, action) => {
       resetting: [...state.resetting, nickname]
     }),
     remoteAccess: ({ remoteAccess }) => ({ remoteAccess }),
+    remoteLogging: ({ remoteLogging }) => ({ remoteLogging }),
     sellingBandwidth: ({ sellingBandwidth }) => {
       window.localStorage.setItem("sellingBandwidth", sellingBandwidth);
       return { sellingBandwidth };
