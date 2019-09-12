@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Progress } from "reactstrap";
 import { get, post, useStore } from "store";
@@ -13,7 +13,6 @@ const Ports = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("");
   const [mode, setMode] = useState("");
-  const [loading, setLoading] = useState(false);
   const [portsWaiting, setPortsWaiting] = useState(false);
   const [error, setError] = useState(false);
 
@@ -45,7 +44,7 @@ const Ports = () => {
     setOpen(true);
   };
 
-  if (loading || !interfaces) {
+  if (!interfaces) {
     return <Progress animated color="primary" value={100} />;
   }
 
