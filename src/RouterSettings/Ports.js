@@ -2,19 +2,21 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardBody, Progress } from "reactstrap";
 import { get, post, useStore } from "store";
-
-import { Device } from "./PortStyles.js";
-import PortColumns from "./PortColumns";
 import { Confirm, Error } from "utils";
 import useInterval from "hooks/useInterval";
 
+import { Device } from "./PortStyles";
+import PortColumns from "./PortColumns";
+import WANConfig from "./WANConfig";
+
 const Ports = () => {
   const [t] = useTranslation();
-  const [open, setOpen] = useState(false);
+  const [confirming, setConfirming] = useState(false);
   const [selected, setSelected] = useState("");
   const [mode, setMode] = useState("");
   const [portsWaiting, setPortsWaiting] = useState(false);
   const [error, setError] = useState(false);
+  const [wan, setWan] = useState(false);
 
   const [{ device, interfaces, waiting }, dispatch] = useStore();
 
@@ -40,8 +42,13 @@ const Ports = () => {
 
   let setInterfaceMode = (iface, mode) => {
     setSelected(iface);
-    setMode(mode);
-    setOpen(true);
+    if (mode === "WAN") {
+      setWan(true);
+    } 
+    else {
+      setMode(mode);
+      setConfirming(true);
+    } 
   };
 
   if (!interfaces) {
@@ -50,7 +57,7 @@ const Ports = () => {
 
   let confirm = async () => {
     setError(null);
-    setOpen(false);
+    setConfirming(false);
     let unexpectedError = false;
 
     try {
@@ -72,16 +79,18 @@ const Ports = () => {
     }
   };
 
-  let cancel = () => setOpen(false);
+  let cancel = () => setConfirming(false);
 
   return (
     <div>
       <Confirm
-        open={open}
-        setOpen={setOpen}
+        open={confirming}
+        setOpen={setConfirming}
         confirm={confirm}
         cancel={cancel}
       />
+
+      <WANConfig open={wan} setOpen={setWan} setMode={setMode} setConfirming={setConfirming} />
 
       <Card>
         <CardBody>
