@@ -7,6 +7,7 @@ import DaoFee from "./DaoFee";
 import NodeInformation from "./NodeInformation";
 import NetworkOrganizer from "./NetworkOrganizer";
 import RemoteAccess from "./RemoteAccess";
+import RemoteLogging from "./RemoteLogging";
 
 import exclamation from "images/exclamation.svg";
 
@@ -37,7 +38,13 @@ export default () => {
       </div>
       <DaoFee />
       <NodeInformation />
-      <RemoteAccess />
+      <div
+        className="d-flex flex-wrap"
+        style={{ justifyContent: "space-evenly" }}
+      >
+        <RemoteAccess />
+        <RemoteLogging />
+      </div>
     </div>
   );
 };
