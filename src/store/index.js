@@ -30,6 +30,7 @@ const state = {
   factor: 0,
   initialized: false,
   interfaces: null,
+  lastVersion: null,
   level: null,
   localFee: null,
   lowBalance: false,

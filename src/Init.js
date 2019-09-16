@@ -1,9 +1,12 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { get, useStore } from "store";
 import useInterval from "hooks/useInterval";
 
+const setTimeout = window.setTimeout.bind(window);
+const clearTimeout = window.clearTimeout.bind(window);
+
 const Init = () => {
-  const [{ authenticated }, dispatch] = useStore();
+  const [{ authenticated, initialized }, dispatch] = useStore();
   const getDebt = useCallback(
     async () => {
       try {
@@ -14,6 +17,13 @@ const Init = () => {
     [dispatch]
   );
 
+  const timeout = useRef();
+
+  useEffect(() => {
+    timeout.current && timeout.current.map(t => clearTimeout(t));
+    return;
+  } , [initialized]);
+
   const getInfo = useCallback(
     async () => {
       try {
@@ -23,11 +33,16 @@ const Init = () => {
         );
         dispatch({ type: "authenticated", authenticated });
         dispatch({ type: "info", info });
+
+        if (!initialized) {
+          if (!timeout.current) timeout.current = [];
+          timeout.current.push(setTimeout(() => window.location.reload(), 10000));
+        } 
       } catch (e) {
         dispatch({ type: "info", info: { version: null } });
       }
     },
-    [dispatch]
+    [dispatch, initialized]
   );
 
   const getStatus = useCallback(

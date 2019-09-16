@@ -73,17 +73,24 @@ export default (state, action) => {
         ritaVersion,
         version
       }
-    }) => ({
-      address,
-      balance,
-      closeThreshold,
-      device,
-      localFee,
-      lowBalance,
-      ritaVersion,
-      version,
-      waiting: state.portChange ? state.waiting : 0
-    }),
+    }) => {
+      let lastVersion;
+      if (state.lastVersion && version !== state.lastVersion) window.location.reload();
+      if (version) lastVersion = version;
+
+      return {
+        address,
+        balance,
+        closeThreshold,
+        device,
+        lastVersion,
+        localFee,
+        lowBalance,
+        ritaVersion,
+        version,
+        waiting: state.portChange ? state.waiting : 0
+      };
+    },
     level: ({ level }) => ({ level }),
     meshIp: ({ meshIp }) => ({ meshIp }),
     keepWaiting: () => ({

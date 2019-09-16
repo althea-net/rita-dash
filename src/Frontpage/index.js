@@ -15,7 +15,7 @@ const Frontpage = () => {
       <div className="d-flex flex-wrap mb-2">
         <div>
           <h2 id="frontPage" className="mb-0">
-            Welcome Baby Welcome
+            {t("welcome")}
           </h2>
           <p id="version">{t("version", { version, ritaVersion })}</p>
         </div>
