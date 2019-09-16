@@ -2,16 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
-  Badge,
-  Button,
   Card,
   CardBody,
+  Popover,
+  PopoverHeader,
+  PopoverBody,
   Progress,
   Table
 } from "reactstrap";
-import { get, post, useStore } from "store";
+import { get, useStore } from "store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import EnforcementModal from "./EnforcementModal";
 import useInterval from "hooks/useInterval";
 
 const AbortController = window.AbortController;
@@ -21,7 +21,6 @@ const RelaySettings = () => {
   const [loading, setLoading] = useState();
   const [open, setOpen] = useState(false);
   const [{ neighbors }, dispatch] = useStore();
-  const [stopping, setStopping] = useState({});
   const [initialized, setInitialized] = useState(false);
 
   const getNeighbors = useCallback(
@@ -54,24 +53,6 @@ const RelaySettings = () => {
 
   const toggle = () => setOpen(!open);
 
-  const resetDebts = async n => {
-    const { wgPublicKey } = n.debt.identity;
-
-    stopping[wgPublicKey] = true;
-    setStopping(stopping);
-
-    await post("/debts/reset", {
-      mesh_ip: n.debt.identity.meshIp,
-      eth_address: n.debt.identity.ethAddress,
-      wg_public_key: wgPublicKey
-    });
-
-    setInterval(() => {
-      stopping[wgPublicKey] = false;
-      setStopping(stopping);
-    }, 60000);
-  };
-
   return (
     <Card className="mb-4">
       <CardBody>
@@ -82,6 +63,17 @@ const RelaySettings = () => {
           <Alert color="info">{t("noNeighbors")}</Alert>
         ) : (
           <div className="table-responsive">
+            <Popover
+              boundariesElement="tooltip"
+              placement="top"
+              isOpen={open}
+              target="tooltip"
+              toggle={toggle}
+              flip={false}
+            >
+              <PopoverHeader>{t("whatIsEnforcing")}</PopoverHeader>
+              <PopoverBody>{t("enforcingIs")}</PopoverBody>
+            </Popover>
             <Table className="table-striped">
               <thead>
                 <tr>
@@ -89,17 +81,13 @@ const RelaySettings = () => {
                   <th style={{ whiteSpace: "nowrap" }}>
                     {t("connectionQuality")}
                   </th>
-                  <th
-                    style={{ cursor: "pointer", whiteSpace: "nowrap" }}
-                    onClick={toggle}
-                  >
+                  <th style={{ cursor: "pointer", whiteSpace: "nowrap" }}>
                     {t("enforcing")}{" "}
                     <FontAwesomeIcon
                       id="tooltip"
                       icon="question-circle"
                       className="mr-2"
                     />
-                    <EnforcementModal open={open} toggle={toggle} />
                   </th>
                   <th />
                 </tr>
@@ -109,34 +97,12 @@ const RelaySettings = () => {
                   <tr key={i}>
                     <td style={{ verticalAlign: "middle" }}>{n.nickname}</td>
                     <td style={{ verticalAlign: "middle" }}>{n.routeMetric}</td>
-                    {n.debt &&
-                    n.debt.paymentDetails.action === "SuspendTunnel" &&
-                    !stopping[n.debt.identity.wgPublicKey] ? (
-                      <>
-                        <td style={{ verticalAlign: "middle" }}>
-                          <Badge color="danger" className="mb-1">
-                            {t("yes")}
-                          </Badge>
-                        </td>
-                        <td>
-                          <Button
-                            size="sm"
-                            outline
-                            style={{ whiteSpace: "nowrap" }}
-                            onClick={() => resetDebts(n)}
-                          >
-                            {t("stopEnforcing")}
-                          </Button>
-                        </td>
-                      </>
-                    ) : (
-                      <>
-                        <td>
-                          <Badge color="success">{t("no")}</Badge>
-                        </td>
-                        <td />
-                      </>
-                    )}
+                    <td style={{ verticalAlign: "middle" }}>
+                      {n.debt &&
+                      n.debt.paymentDetails.action === "SuspendTunnel"
+                        ? t("yes")
+                        : t("no")}
+                    </td>
                   </tr>
                 ))}
               </tbody>

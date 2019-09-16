@@ -117,7 +117,7 @@
   "monthly": "Monthly",
   "lastMonth": "Last Month",
   "stopEnforcing": "Stop Enforcing",
-  "enforcingIs": "Enforcing is when your router is throttling the connection of a neighbor because they have not paid you. This could happen because they do not have enough money in their device or because an error has occurred in the system. Use the \"Stop Enforcing\" button to give them a break.",
+  "enforcingIs": "Enforcing is when your router is throttling the connection of a neighbor because they have not paid you.",
   "whatIsEnforcing": "What is enforcing?",
   "enforcing" :"Enforcing",
   "connectionQuality": "Connection Quality (Lower is better)",
