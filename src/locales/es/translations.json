@@ -24,7 +24,7 @@
   "theseSettings": "Estas configuraciones generalmente no necesitan actualizarse y son utilizadas por los técnicos durante la configuración inicial. Asegúrese de saber lo que está haciendo, ya que los cambios aquí pueden causar una interrupción del servicio.",
   "learnMoreAboutTheEquipment": "<a href='https://althea.net/getting-started'> Obtenga más información</a> sobre el equipo necesario para vender ancho de banda o comuníquese con su organizador de red para obtener más detalles",
   "bandwidthSelling": "Habilitar la venta de ancho de banda",
-  "enableBandwidthSelling": "Habilitar la venta de ancho de banda",
+  "enableBandwidthSelling": "Habilite la página 'Vendiendo conectividad' en el menú del tablero",
   "backupMyAccount": "Copia de seguridad de mi cuenta",
   "updatePassword": "Actualizar contraseña",
   "updateMyPassword": "Actualizar mi contraseña ahora",

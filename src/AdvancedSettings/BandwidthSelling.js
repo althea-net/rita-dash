@@ -14,7 +14,7 @@ const BandwidthSelling = () => {
   return (
     <Card className="mb-4 mr-lg-2 col-12 card-small">
       <CardBody>
-        <h4>{t("bandwidthSelling")}</h4>
+        <h4>{t("sellingBandwidth")}</h4>
         <Form>
           <FormGroup>
             <CustomInput
