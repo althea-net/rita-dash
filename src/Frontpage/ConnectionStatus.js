@@ -37,6 +37,16 @@ const ConnectionStatus = () => {
       "https://discordapp.com/channels/477147257251299350/482001608238956545";
   };
 
+  const setupExit = () => {
+    window.location.href = "#settings";
+    let scroll = () => {
+      let el = document.getElementById("exits");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      else setTimeout(scroll, 100);
+    };
+    scroll();
+  };
+
   if (!state) return null;
 
   return (
@@ -47,15 +57,18 @@ const ConnectionStatus = () => {
     >
       <div>
         <img src={state.icon} alt={state.msg} className="mr-1" />
-        {state.msg}
+        {connectionStatus === "noConnection" ? (
+          <>
+            <span>{t("noConnectionDetected")}.</span>{" "}
+            <span>{t("youNeedTo")}</span>
+            <a href="#settings" onClick={setupExit}>
+              {t("setupYourExit")}
+            </a>
+          </>
+        ) : (
+          state.msg
+        )}
       </div>
-      {state.link && (
-        <p className="ml-2 text-right">
-          <a href="#help" onClick={help}>
-            {t("needHelp")}
-          </a>
-        </p>
-      )}
     </div>
   );
 };

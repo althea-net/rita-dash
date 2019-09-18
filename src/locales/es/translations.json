@@ -1,4 +1,6 @@
 {
+  "setupYourExit": "configurar su nodo de salida.",
+  "youNeedTo": "Necesita ",
   "static": "Estática",
   "dynamic": "Dinámica (DHCP)",
   "netmask": "Máscara de red",

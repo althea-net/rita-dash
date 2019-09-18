@@ -1,4 +1,6 @@
 {
+  "setupYourExit": "setup your exit node.",
+  "youNeedTo": "You need to ",
   "static": "Static",
   "dynamic": "Dynamic (DHCP)",
   "netmask": "Netmask",
