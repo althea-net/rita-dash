@@ -31,12 +31,6 @@ const ConnectionStatus = () => {
     }
   }[connectionStatus];
 
-  const help = e => {
-    e.preventDefault();
-    window.location.href =
-      "https://discordapp.com/channels/477147257251299350/482001608238956545";
-  };
-
   const setupExit = () => {
     window.location.href = "#settings";
     let scroll = () => {
