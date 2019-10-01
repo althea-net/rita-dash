@@ -21,7 +21,6 @@ const Billing = (daoAddress, ipAddress) => {
   const [{ symbol }] = useStore();
 
   const periods = {
-    h: t("hourly"),
     d: t("daily"),
     w: t("weekly"),
     m: t("monthly")

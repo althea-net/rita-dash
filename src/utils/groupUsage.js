@@ -15,9 +15,6 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
     let i;
 
     switch (period) {
-      case "h":
-        i = index;
-        break;
       case "d":
         i =
           new Date(
@@ -45,7 +42,7 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
 
     let c = usage.find(c => c.index === index);
 
-    if (payments.length) {
+    if (payments && payments.length) {
       let p = payments.find(p => p.index === index);
       if (p) {
         data[i].service += p.payments
@@ -74,11 +71,9 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
         return format(date, "MMM", { locale });
       case "d":
         return format(date, "MMM dd", { locale });
+      default:
       case "w":
         return format(date, "MMM dd", { locale });
-      case "h":
-      default:
-        return format(date, "MMM dd, HH:SS", { locale });
     }
   };
 
@@ -93,12 +88,9 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
         date = new Date((parseInt(hour) + 24) * msPerHr);
         return format(date, "dd, YYYY", { locale });
       case "w":
+      default:
         date = new Date((parseInt(hour) + 7 * 24) * msPerHr);
         return format(date, "MMM dd, YYYY", { locale });
-      case "h":
-      default:
-        date = new Date((parseInt(hour) + 1) * msPerHr);
-        return format(date, "HH:SS", { locale });
     }
   };
 

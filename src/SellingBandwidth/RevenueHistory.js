@@ -19,7 +19,6 @@ const RevenueHistory = () => {
   const [exporting, setExporting] = useState(false);
 
   const periods = {
-    h: t("hourly"),
     d: t("daily"),
     w: t("weekly"),
     m: t("monthly")
