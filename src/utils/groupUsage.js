@@ -41,21 +41,27 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
         break;
     }
 
-    if (!data[i]) data[i] = { up: 0, down: 0, cost: 0 };
+    if (!data[i]) data[i] = { up: 0, down: 0, cost: 0, service: 0 };
 
     let c = usage.find(c => c.index === index);
 
-    if (payments) {
+    if (payments.length) {
       let p = payments.find(p => p.index === index);
-      if (p)
+      if (p) {
         data[i].service += p.payments
           .filter(p => p.to.meshIp === "::1")
           .reduce((a, b) => a + parseInt(b.amount), 0);
+
+        data[i].cost += p.payments
+          .filter(p => p.to.meshIp !== "::1")
+          .reduce((a, b) => a + parseInt(b.amount), 0);
+      }
+    } else {
+      data[i].cost += c.price * (c.up + c.down);
     }
 
     data[i].up += c.up;
     data[i].down += c.down;
-    data[i].cost += c.price * (c.up + c.down);
 
     return c;
   });
@@ -105,8 +111,10 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
       usage:
         BigNumber(data[d].up + data[d].down)
           .div(bytesPerGb)
-          .toFixed(3) + "GB",
-      totalCost: `${toEth(data[d].cost, 3)} ${symbol}`
+          .toFixed(4) + "GB",
+      bandwidthCost: `${toEth(data[d].cost, 4)} ${symbol}`,
+      serviceCost: `${toEth(data[d].service, 4)} ${symbol}`,
+      totalCost: `${toEth(data[d].cost + data[d].service, 4)} ${symbol}`
     }));
 
   return [rows, data];
