@@ -5,15 +5,22 @@ import { BigNumber } from "bignumber.js";
 
 const SystemWarning = () => {
   const [t] = useTranslation();
-  const [{ balance, closeThreshold, debt, lowBalance }] = useStore();
+  const [
+    { balance, closeThreshold, debt, lowBalance, selectedExit }
+  ] = useStore();
   if (!(lowBalance && debt)) return null;
 
   return (
     <div className="system-warning">
-      {debt.negated().isLessThan(BigNumber(closeThreshold)) ||
-      parseInt(balance) === 0
-        ? t("accountThrottled")
-        : t("accountWarning")}
+      {selectedExit
+        ? debt.negated().isLessThan(BigNumber(closeThreshold)) ||
+          parseInt(balance) === 0
+          ? t("accountThrottled")
+          : t("accountWarning")
+        : t("noConnectionDetected") +
+          ". " +
+          t("youNeedTo") +
+          t("setupYourExit")}
     </div>
   );
 };
