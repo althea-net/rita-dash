@@ -1,4 +1,6 @@
 {
+  "withdrawEntireBalance": "Retirar todos los fondos",
+  "firmwareUpgrading": "El firmware se está actualizando. Espere a que el enrutador vuelva a estar en línea.",
   "setupYourExit": "configurar su nodo de salida.",
   "youNeedTo": "Necesita ",
   "static": "Estática",

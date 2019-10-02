@@ -33,8 +33,13 @@ const Withdraw = ({ open, setOpen }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
+    let txid;
     try {
-      const txid = await post(`/withdraw/${address}/${toWei(amount)}`);
+      if (amount === balanceEth) {
+        txid = await post(`/withdraw_all/${address}`);
+      } else {
+        txid = await post(`/withdraw/${address}/${toWei(amount)}`);
+      }
       setTxid(txid.replace("txid:", ""));
     } catch {
       setError(t("withdrawalError"));
@@ -56,6 +61,12 @@ const Withdraw = ({ open, setOpen }) => {
   const toggle = () => {
     setOpen(!open);
     setTxid(null);
+  };
+
+  const withdrawAll = e => {
+    e.preventDefault();
+
+    setAmount(balanceEth);
   };
 
   return (
@@ -150,7 +161,11 @@ const Withdraw = ({ open, setOpen }) => {
                   </InputGroupAddon>
                 </InputGroup>
                 <FormFeedback invalid="true">
-                  {t("amountRequired", { balance: balanceEth })}
+                  <span>{t("amountRequired", { balance: balanceEth })}.</span>
+                  &nbsp;
+                  <a href="#" onClick={withdrawAll}>
+                    {t("withdrawEntireBalance")}
+                  </a>
                 </FormFeedback>
               </FormGroup>
               <FormGroup

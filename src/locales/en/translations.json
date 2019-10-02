@@ -1,4 +1,5 @@
 {
+  "withdrawEntireBalance": "Withdraw all funds",
   "firmwareUpgrading": "The firmware is being upgraded. Please wait for the router to come back online.",
   "setupYourExit": "setup your exit node.",
   "youNeedTo": "You need to ",
