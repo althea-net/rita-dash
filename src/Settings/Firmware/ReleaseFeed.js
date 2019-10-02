@@ -68,8 +68,8 @@ const ReleaseFeed = () => {
               <option value="GeneralAvailability">
                 {t("generalAvailability")}
               </option>
-              <option value="ReleaseCandidate">{t("releaseCandidate")}</option>
               <option value="PreRelease">{t("preRelease")}</option>
+              <option value="ReleaseCandidate">{t("releaseCandidate")}</option>
             </Input>
             <Button type="submit" color="primary" className="ml-2">
               {t("save")}
