@@ -19,10 +19,13 @@ const Init = () => {
 
   const timeout = useRef();
 
-  useEffect(() => {
-    timeout.current && timeout.current.map(t => clearTimeout(t));
-    return;
-  } , [initialized]);
+  useEffect(
+    () => {
+      timeout.current && timeout.current.map(t => clearTimeout(t));
+      return;
+    },
+    [initialized]
+  );
 
   const getInfo = useCallback(
     async () => {
@@ -36,8 +39,11 @@ const Init = () => {
 
         if (!initialized) {
           if (!timeout.current) timeout.current = [];
-          timeout.current.push(setTimeout(() => window.location.reload(), 10000));
-        } 
+          console.log("not initialized");
+          timeout.current.push(
+            setTimeout(() => window.location.reload(), 10000)
+          );
+        }
       } catch (e) {
         dispatch({ type: "info", info: { version: null } });
       }

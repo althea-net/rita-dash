@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Modal, ModalBody, Progress } from "reactstrap";
-import { post } from "store";
+import { Alert, Button, Modal, ModalBody, Progress } from "reactstrap";
+import { post, useStore } from "store";
 import { Error } from "utils";
 
 import router from "images/router.png";
 import bigGreenCheck from "images/big_green_check.png";
+
+import useInterval from "hooks/useInterval";
 
 export default ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [updated, setUpdated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [{ waiting }, dispatch] = useStore();
+  const [firmwareUpgrading, setFirmwareUpgrading] = useState(false);
 
   const toggle = () => setOpen(!open);
   const closed = () => setUpdated(false);
@@ -20,6 +24,9 @@ export default ({ open, setOpen }) => {
     setLoading(true);
 
     try {
+      setFirmwareUpgrading(true);
+      dispatch({ type: "firmwareUpgrading", firmwareUpgrading: true });
+      dispatch({ type: "startWaiting", waiting: 120 });
       await post("/router/update");
       setUpdated(true);
     } catch (e) {
@@ -30,8 +37,18 @@ export default ({ open, setOpen }) => {
     setLoading(false);
   };
 
+  useInterval(() => {
+    if (firmwareUpgrading) dispatch({ type: "keepWaiting" });
+  }, waiting ? 1000 : null);
+
   return (
-    <Modal isOpen={open} centered toggle={toggle} onClosed={closed} size="sm">
+    <Modal
+      isOpen={open && !waiting}
+      centered
+      toggle={toggle}
+      onClosed={closed}
+      size="sm"
+    >
       <div className="modal-header d-flex justify-content-between">
         <h4 className="m-0">{t("updateFirmware")}</h4>
         <h2
@@ -44,7 +61,7 @@ export default ({ open, setOpen }) => {
       {updated ? (
         <ModalBody className="text-center">
           <img src={bigGreenCheck} alt="Checkmark" className="mb-2" />
-          <h5>{t("upToDate")}</h5>
+          <Alert color="success">{t("upToDate")}</Alert>
         </ModalBody>
       ) : (
         <ModalBody className="text-center">

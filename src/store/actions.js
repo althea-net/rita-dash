@@ -62,6 +62,7 @@ export default (state, action) => {
 
       return { connectionStatus, exits, selectedExit, resetting };
     },
+    firmwareUpgrading: ({ firmwareUpgrading }) => ({ firmwareUpgrading }),
     info: ({
       info: {
         address,
@@ -75,9 +76,12 @@ export default (state, action) => {
       }
     }) => {
       let lastVersion;
-      if (state.lastVersion && version !== state.lastVersion) window.location.reload();
+      if (version && state.lastVersion && version !== state.lastVersion) {
+        window.location.reload();
+      }
       if (version) lastVersion = version;
 
+      console.log(state.firmwareUpgrading, state.waiting, version);
       return {
         address,
         balance,
@@ -88,7 +92,7 @@ export default (state, action) => {
         lowBalance,
         ritaVersion,
         version,
-        waiting: state.portChange ? state.waiting : 0
+        waiting: !version || state.portChange ? state.waiting : 0
       };
     },
     level: ({ level }) => ({ level }),

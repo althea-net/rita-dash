@@ -1,4 +1,5 @@
 {
+  "firmwareUpgrading": "The firmware is being upgraded. Please wait for the router to come back online.",
   "setupYourExit": "setup your exit node.",
   "youNeedTo": "You need to ",
   "static": "Static",
@@ -328,7 +329,7 @@
   "throttleSpeed": "Throttle speed",
   "topUp": "Add Funds",
   "unableToReachExit": "Unable to reach exit.",
-  "upToDate": "Your router is currently up to date!",
+  "upToDate": "Firmware upgraded successfully!",
   "updateError": "There was an error updating the router",
   "updateExit": "Update Exit Node",
   "updateNow": "Update Now",

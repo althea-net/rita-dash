@@ -28,6 +28,7 @@ const state = {
   exits: [],
   selectedExit: null,
   factor: 0,
+  firmwareUpgrading: false,
   initialized: false,
   interfaces: null,
   lastVersion: null,
