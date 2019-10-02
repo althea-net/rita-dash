@@ -163,7 +163,7 @@ const Withdraw = ({ open, setOpen }) => {
                 <FormFeedback invalid="true">
                   <span>{t("amountRequired", { balance: balanceEth })}.</span>
                   &nbsp;
-                  <a href="#" onClick={withdrawAll}>
+                  <a href="#withdraw" onClick={withdrawAll}>
                     {t("withdrawEntireBalance")}
                   </a>
                 </FormFeedback>

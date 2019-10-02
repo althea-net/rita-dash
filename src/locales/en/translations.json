@@ -1,4 +1,5 @@
 {
+  "firmwareNoUpdate": "The firmware was not upgraded. It's possible you are already running the latest version.",
   "withdrawEntireBalance": "Withdraw all funds",
   "firmwareUpgrading": "The firmware is being upgraded. Please wait for the router to come back online.",
   "setupYourExit": "setup your exit node.",
@@ -331,7 +332,6 @@
   "topUp": "Add Funds",
   "unableToReachExit": "Unable to reach exit.",
   "upToDate": "Firmware upgraded successfully!",
-  "updateError": "There was an error updating the router",
   "updateExit": "Update Exit Node",
   "updateNow": "Update Now",
   "updateWarning": "If an update is found, it will be installed automatically in which case the router will reset and could take several minutes to come back online",

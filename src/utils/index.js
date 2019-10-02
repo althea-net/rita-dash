@@ -1,4 +1,5 @@
 import { default as Error } from "./Error";
+import { default as Warning } from "./Warning";
 import { default as NoConnection } from "./NoConnection";
 import { default as Success } from "./Success";
 import { default as Confirm } from "./Confirm";
@@ -56,5 +57,6 @@ export {
   toWei,
   txLink,
   sleep,
-  groupUsage
+  groupUsage,
+  Warning
 };

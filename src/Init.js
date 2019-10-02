@@ -39,7 +39,6 @@ const Init = () => {
 
         if (!initialized) {
           if (!timeout.current) timeout.current = [];
-          console.log("not initialized");
           timeout.current.push(
             setTimeout(() => window.location.reload(), 10000)
           );

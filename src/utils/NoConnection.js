@@ -8,6 +8,7 @@ const NoConnection = () => {
   const [
     {
       authenticated,
+      error,
       firmwareUpgrading,
       keyChange,
       portChange,
@@ -19,9 +20,11 @@ const NoConnection = () => {
 
   if (!authenticated) return null;
 
+  const open = !(error || firmwareUpgrading) && (!version || waiting > 0);
+
   return (
     <div>
-      <Modal isOpen={!version || waiting > 0} centered zIndex={9999}>
+      <Modal isOpen={open} centered zIndex={9999}>
         <ModalHeader>{t("noConnection")}</ModalHeader>
         <ModalBody>
           {firmwareUpgrading && (
