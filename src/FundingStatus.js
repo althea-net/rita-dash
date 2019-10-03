@@ -10,7 +10,7 @@ const FundingStatus = () => {
   const [withdrawing, setWithdrawing] = useState(false);
   const [waitingForXdai, setWaitingForXdai] = useState(false);
   const [waitingForEth, setWaitingForEth] = useState(false);
-  const [{ status }] = useStore();
+  const [{ symbol, status }] = useStore();
 
   let key, reserve, minEth, minDai, requiredEth, dai, eth, dest;
 
@@ -27,7 +27,6 @@ const FundingStatus = () => {
       }
 
       if (key === "ethToDest") {
-        console.log("set waiting for eth", status, dai, eth, dest);
         setWaitingForEth(t(key, { dai, eth, dest }));
         timer = setTimeout(() => setWaitingForEth(false), 120000);
       }
@@ -44,7 +43,7 @@ const FundingStatus = () => {
     setWithdrawing(true);
   };
 
-  if (!(status && key)) return null;
+  if (!(status && key) || symbol !== "Dai") return null;
 
   return (
     <div className="mt-2">
