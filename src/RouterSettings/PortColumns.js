@@ -30,7 +30,7 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                 let selected = mode === interfaces[iface];
                 let disabled =
                   !selected &&
-                  mode !== "Mesh" &&
+                  mode === "WAN" &&
                   Object.values(interfaces).includes(mode);
                 return (
                   <PortToggle
