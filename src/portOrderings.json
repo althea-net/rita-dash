@@ -8,7 +8,7 @@
   "gl-b1300": ["eth0.3", "eth0.4", "eth1"],
   "linksys-wrt3200acm": ["eth0.1", "eth0.3", "eth0.4", "eth0.5", "eth1.2"],
   "linksys-wrt32x": ["eth0.1", "eth0.3", "eth0.4", "eth0.5", "eth1.2"],
-  "linksys_ea6350v3": ["eth0.1", "eth0.2", "eth0.3", "eth0.4", "eth1"],
+  "linksys_ea6350v3": ["eth0.3", "eth0.4", "eth0.5", "eth0.6", "eth1"],
   "mynet-n600": ["eth0.1", "eth0.2", "eth0.3", "eth0.4", "eth1"],
   "mynet-n750": ["eth0.1", "eth0.4", "eth0.5", "eth0.3", "eth0.2"],
   "rpi-2": ["eth0"],
@@ -18,4 +18,4 @@
   "ubnt-erx": ["eth0.1", "eth0.2", "eth0.3", "eth0.4", "eth0.5"],
   "ubnt-unifiac-lite": ["eth0"],
   "zyxel_nbg6817": ["eth1.1", "eth1.2", "eth1.3", "eth1.4", "eth0.5"]
-} 
+}
