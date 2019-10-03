@@ -20,6 +20,7 @@ const state = {
   blockchain: null,
   channels: [],
   closeThreshold: null,
+  counter: 0,
   daoAddress: null,
   debt: new BigNumber("0"),
   debts: [],

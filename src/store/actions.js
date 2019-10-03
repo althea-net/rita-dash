@@ -61,7 +61,14 @@ export default (state, action) => {
           : "connectionTrouble";
       }
 
-      return { connectionStatus, exits, selectedExit, resetting };
+      let counter = state.counter;
+      if (connectionStatus === "connectionTrouble") {
+        counter += 1;
+        if (counter < 5)
+          connectionStatus = state.connectionStatus || "noConnection";
+      }
+
+      return { connectionStatus, exits, selectedExit, resetting, counter };
     },
     firmwareUpgrading: ({ firmwareUpgrading }) => ({ firmwareUpgrading }),
     error: ({ error }) => ({ error }),
