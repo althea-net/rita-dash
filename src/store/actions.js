@@ -48,10 +48,11 @@ export default (state, action) => {
 
       if (resetOccurred) resetting = [];
 
-      const selectedExit = exits.find(exit => {
-        let { state } = exit.exitSettings;
-        return exit.isSelected && state === "Registered";
-      });
+      const selectedExit =
+        exits.find(exit => {
+          let { state } = exit.exitSettings;
+          return exit.isSelected && state === "Registered";
+        }) || state.selectedExit;
 
       let connectionStatus = "noConnection";
       if (selectedExit) {

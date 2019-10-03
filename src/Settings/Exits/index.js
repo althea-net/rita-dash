@@ -32,10 +32,12 @@ const Exits = () => {
 
     try {
       const blockchain = await get("/blockchain/get", true, 5000, signal);
-      dispatch({ type: "blockchain", blockchain });
+      if (!(blockchain instanceof Error))
+        dispatch({ type: "blockchain", blockchain });
 
       let exits = await get("/exits", true, 5000, signal);
-      if (exits.length) dispatch({ type: "exits", exits, resetting });
+      if (!(exits instanceof Error) && exits.length)
+        dispatch({ type: "exits", exits, resetting });
 
       setLoading(false);
       setInitialized(true);
