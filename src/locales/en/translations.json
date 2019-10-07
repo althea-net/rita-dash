@@ -1,4 +1,13 @@
 {
+  "hasExitRoute": "Neighbor has working route to exit",
+  "hasNeighborRoute": "Have working route to neighbor",
+  "haveRoute": "Route to exit is installed",
+  "isReachable": "Exit IPv4 is reachable",
+  "isTunnelWorking": "Exit IPv6 is reachable via tunnel",
+  "exitProblem": "You are connected to your neighbor, who is connected to the exit. The exit may not be functioning propertly or an intermediate antenna is unreliable.",
+  "noNeighborExit": "You have a connection to your neighbor, but they are not connected to the exit. Please check their connection.",
+  "noNeighbor": "You do not have a neighbor, please check your antenna and cables.",
+  "advancedDebugging": "Advanced Debugging",
   "firmwareNoUpdate": "The firmware was not upgraded. It's possible you are already running the latest version.",
   "withdrawEntireBalance": "Withdraw all funds",
   "firmwareUpgrading": "The firmware is being upgraded. Please wait for the router to come back online.",

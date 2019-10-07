@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
+import AdvancedDebugging from "./AdvancedDebugging";
 import BandwidthSelling from "./BandwidthSelling";
 import Blockchain from "./Blockchain";
 import DaoFee from "./DaoFee";
@@ -45,6 +46,8 @@ export default () => {
         <RemoteAccess />
         <RemoteLogging />
       </div>
+
+      <AdvancedDebugging />
     </div>
   );
 };

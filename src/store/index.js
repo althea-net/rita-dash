@@ -34,6 +34,7 @@ const state = {
   firmwareUpgraded: false,
   initialized: false,
   interfaces: null,
+  isGateway: false,
   lastVersion: null,
   level: null,
   localFee: null,
