@@ -14,14 +14,18 @@ const RemoteLogging = () => {
   const [newLevel, setNewLevel] = useState();
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
+  const [nowWaiting, setNowWaiting] = useState(false);
 
-  useEffect(() => {
-    if (level && !newLevel) setNewLevel(level);
-    return;
-  }, [level, newLevel]);
+  useEffect(
+    () => {
+      if (level && !newLevel) setNewLevel(level);
+      return;
+    },
+    [level, newLevel]
+  );
 
   useInterval(() => {
-    dispatch({ type: "keepWaiting" });
+    if (nowWaiting) dispatch({ type: "keepWaiting" });
   }, waiting ? 1000 : null);
 
   useRemoteLogging();
@@ -40,7 +44,7 @@ const RemoteLogging = () => {
     setSuccess(null);
 
     try {
-      console.log("changing level");
+      setNowWaiting(true);
       dispatch({ type: "startWaiting", waiting: 30 });
       await post(`/remote_logging/level/${e.target.value}`);
       dispatch({ type: "level", level });
@@ -52,7 +56,7 @@ const RemoteLogging = () => {
         setSuccess(t("logLevelSuccess"));
       }
     }
-  } 
+  };
 
   return (
     <RightCard>
