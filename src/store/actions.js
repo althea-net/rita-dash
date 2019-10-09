@@ -88,7 +88,7 @@ export default (state, action) => {
     }) => {
       let lastVersion = state.lastVersion;
       if (version) {
-        if (lastVersion && version !== lastVersion) {
+        if (lastVersion && version !== lastVersion && state.firmwareUpgrading) {
           window.localStorage.setItem("firmwareUpgraded", true);
           window.location.reload();
         }
