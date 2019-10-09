@@ -51,9 +51,9 @@ const AdvancedDebugging = () => {
 
   if (!isGateway)
     indicators = {
-      ...indicators,
       hasNeighborRoute,
-      hasExitRoute
+      hasExitRoute,
+      ...indicators
     };
 
   useInterval(getNeighbors, 10000);
