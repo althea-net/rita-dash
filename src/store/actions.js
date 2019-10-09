@@ -9,6 +9,7 @@ const symbols = {
 
 export default (state, action) => {
   const { type, ...data } = action;
+
   const actions = {
     blockchain: ({ blockchain }) => ({
       blockchain,

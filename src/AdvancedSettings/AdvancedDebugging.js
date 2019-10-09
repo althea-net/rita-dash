@@ -1,8 +1,7 @@
 import React, { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Card, Left, Right } from "ui";
-import { Alert } from "reactstrap";
+import { Card } from "ui";
 import { get, useStore } from "store";
 import useInterval from "hooks/useInterval";
 
@@ -17,7 +16,7 @@ const Indicator = ({ condition }) => (
   />
 );
 
-const NodeInformation = () => {
+const AdvancedDebugging = () => {
   const [t] = useTranslation();
   const [{ isGateway, neighbors, selectedExit }, dispatch] = useStore();
 
@@ -64,7 +63,7 @@ const NodeInformation = () => {
       <div className="col-12 px-0">
         <h4>{t("advancedDebugging")}</h4>
       </div>
-      <div>
+      <div className="mb-4">
         {Object.keys(indicators).map(indicator => (
           <div className="mb-2" key={indicator}>
             <Indicator condition={indicators[indicator]} />
@@ -73,18 +72,22 @@ const NodeInformation = () => {
         ))}
       </div>
       {!isGateway &&
-        Object.values(indicators).findIndex(v => !v) > 0 &&
-        (hasNeighborRoute ? (
-          hasExitRoute ? (
-            <p>{t("noNeighbor")}</p>
-          ) : (
-            <p>{t("noNeighborExit")}</p>
-          )
-        ) : (
-          <p>{t("exitProblem")}</p>
+        (Object.values(indicators).findIndex(v => !v) >= 0 && (
+          <div className="col-12">
+            <h5>{t("suggestedAction")}</h5>
+            {hasNeighborRoute ? (
+              hasExitRoute ? (
+                <p>{t("exitProblem")}</p>
+              ) : (
+                <p>{t("noNeighborExit")}</p>
+              )
+            ) : (
+              <p>{t("noNeighbor")}</p>
+            )}
+          </div>
         ))}
     </Card>
   );
 };
 
-export default NodeInformation;
+export default AdvancedDebugging;
