@@ -46,6 +46,9 @@ const Blockchain = () => {
 
       const info = await get("/info", true, 5000);
       dispatch({ type: "info", info });
+
+      const exits = await get("/exits", true, 8000);
+      if (!(exits instanceof Error)) dispatch({ type: "exits", exits });
     } catch (e) {
       console.log(e);
     }
