@@ -63,7 +63,7 @@ const AdvancedDebugging = () => {
       <div className="col-12 px-0">
         <h4>{t("advancedDebugging")}</h4>
       </div>
-      <div className="mb-4">
+      <div>
         {Object.keys(indicators).map(indicator => (
           <div className="mb-2" key={indicator}>
             <Indicator condition={indicators[indicator]} />
@@ -73,7 +73,7 @@ const AdvancedDebugging = () => {
       </div>
       {!isGateway &&
         (Object.values(indicators).findIndex(v => !v) >= 0 && (
-          <div className="col-12">
+          <div className="mt-4 col-12">
             <h5>{t("suggestedAction")}</h5>
             {hasNeighborRoute ? (
               hasExitRoute ? (
