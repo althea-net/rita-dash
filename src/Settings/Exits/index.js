@@ -6,7 +6,6 @@ import ExitListItem from "./ExitListItem";
 import ExitNodeSetup from "./ExitNodeSetup";
 import { Provider } from "store/Exits";
 import { get, post, useStore } from "store";
-import useInterval from "hooks/useInterval";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AbortController = window.AbortController;
@@ -86,8 +85,6 @@ const Exits = () => {
     }
     getExits();
   };
-
-  useInterval(getExits, 5000);
 
   const store = {
     exits,

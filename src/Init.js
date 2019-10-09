@@ -62,9 +62,33 @@ const Init = () => {
     [dispatch]
   );
 
+  const getExits = useCallback(
+    async signal => {
+      if (!signal) {
+        const controller = new AbortController();
+        signal = controller.signal;
+      }
+
+      try {
+        const blockchain = await get("/blockchain/get", true, 8000, signal);
+        if (!(blockchain instanceof Error))
+          dispatch({ type: "blockchain", blockchain });
+        else throw new Error("Problem fetching blockchain");
+
+        let exits = await get("/exits", true, 8000, signal);
+        if (!(exits instanceof Error)) dispatch({ type: "exits", exits });
+        else throw new Error("Problem fetching exits");
+      } catch (e) {
+        if (e.message && !e.message.includes("aborted")) console.log(e.message);
+      }
+    },
+    [dispatch]
+  );
+
   useInterval(getDebt, 10000);
   useInterval(getInfo, 5000);
   useInterval(getStatus, 5000);
+  useInterval(getExits, 8000);
 
   useEffect(
     () => {
@@ -85,10 +109,7 @@ const Init = () => {
           }
 
           getInfo();
-
-          const exits = await get("/exits", true, 5000, signal);
-          if (exits instanceof Error) return;
-          dispatch({ type: "exits", exits });
+          getExits(signal);
 
           await getDebt();
           const blockchain = await get("/blockchain/get", true, 5000, signal);
@@ -109,7 +130,7 @@ const Init = () => {
 
       return () => controller.abort();
     },
-    [authenticated, dispatch, getDebt, getInfo]
+    [authenticated, dispatch, getDebt, getInfo, getExits]
   );
 
   return null;

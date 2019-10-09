@@ -36,6 +36,7 @@ export default (state, action) => {
     backupCreated: ({ backupCreated }) => ({ backupCreated }),
     exits: ({ exits }) => {
       let { resetting } = state;
+
       const resetOccurred =
         exits.length &&
         state.resetting &&
@@ -49,11 +50,13 @@ export default (state, action) => {
 
       if (resetOccurred) resetting = [];
 
-      const selectedExit =
-        exits.find(exit => {
-          let { state } = exit.exitSettings;
-          return exit.isSelected && state === "Registered";
-        }) || state.selectedExit;
+      const selectedExit = exits.find(exit => {
+        return (
+          exit.isSelected &&
+          exit.exitSettings.state === "Registered" &&
+          exit.exitSettings.generalDetails.exitCurrency === state.blockchain
+        );
+      });
 
       let connectionStatus = "noConnection";
       if (selectedExit) {
@@ -67,6 +70,8 @@ export default (state, action) => {
         counter += 1;
         if (counter < 5)
           connectionStatus = state.connectionStatus || "noConnection";
+      } else if (connectionStatus === "connected") {
+        counter = 0;
       }
 
       return { connectionStatus, exits, selectedExit, resetting, counter };

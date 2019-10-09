@@ -80,7 +80,7 @@ export default () => {
     { name: "backupWallet", completed: backupCreated, onClick: goBackup },
     {
       name: "setupExit",
-      completed: selectedExit,
+      completed: selectedExit !== undefined,
       onClick: goExit
     },
     { name: "addFunding", completed: balance > 0, onClick: goDeposit },
