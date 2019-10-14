@@ -40,7 +40,7 @@ const Init = () => {
         if (!initialized) {
           if (!timeout.current) timeout.current = [];
           timeout.current.push(
-            setTimeout(() => window.location.reload(), 10000)
+            setTimeout(() => window.location.reload(true), 10000)
           );
         }
       } catch (e) {
