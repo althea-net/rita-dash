@@ -68,8 +68,7 @@ export default (state, action) => {
       let counter = state.counter;
       if (connectionStatus === "connectionTrouble") {
         counter += 1;
-        if (counter < 5)
-          connectionStatus = state.connectionStatus || "noConnection";
+        if (counter < 5) connectionStatus = "connected";
       } else if (connectionStatus === "connected") {
         counter = 0;
       }
