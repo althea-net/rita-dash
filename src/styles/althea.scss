@@ -275,3 +275,7 @@ input {
 .custom-control-label::before, .custom-control-label::after {
   top: 0.2rem;
 } 
+
+th, td {
+  white-space: nowrap;
+} 

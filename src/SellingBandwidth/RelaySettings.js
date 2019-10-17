@@ -25,6 +25,11 @@ const RelaySettings = () => {
 
   const getNeighbors = useCallback(
     async signal => {
+      if (!signal) {
+        const controller = new AbortController();
+        signal = controller.signal;
+      }
+
       setLoading(true);
       try {
         let neighbors = await get("/neighbors", true, 10000, signal);

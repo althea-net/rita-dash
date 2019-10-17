@@ -122,8 +122,8 @@ const Price = () => {
         {success && <Alert color="success">{t("priceSaved")}</Alert>}
         <FormGroup id="form">
           <Label for="price">{t("bandwidthPrice")}</Label>
-          <div className="d-flex">
-            <InputGroup className="mr-3" style={{ width: 350 }}>
+          <div className="d-flex flex-wrap">
+            <InputGroup className="mr-2 mb-2" style={{ width: 320 }}>
               <Input
                 label={t("price")}
                 name="price"
@@ -146,7 +146,9 @@ const Price = () => {
                 </InputGroupText>
               </InputGroupAddon>
             </InputGroup>
-            <Button color="primary">{t("save")}</Button>
+            <div>
+              <Button color="primary">{t("save")}</Button>
+            </div>
           </div>
         </FormGroup>
         <FormGroup className="d-flex">

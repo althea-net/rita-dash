@@ -108,16 +108,17 @@ const RevenueHistory = () => {
                 </Table>
               </div>
 
-              <div className="d-flex w-100 justify-content-between">
-                <div />
+              <div className="d-flex flex-wrap w-100 justify-content-between">
+                <div className="d-none d-sm-block" />
                 <Pagination
                   data={Object.keys(data)}
                   limit={limit}
                   page={page}
                   setPage={setPage}
+                  className="mb-2 mx-auto"
                 />
 
-                <div className="text-right">
+                <div className="text-right mx-auto mx-sm-0">
                   <Button onClick={() => setExporting(true)}>
                     {t("exportToCsv")}
                   </Button>
