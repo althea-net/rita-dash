@@ -3,7 +3,7 @@
   "archer-c7-v2": ["eth0.1", "eth1.2", "eth1.3", "eth1.4", "eth1.5"],
   "dir-860l-b1": ["eth0.1", "eth0.2", "eth0.3", "eth0.3", "eth0.5"],
   "erlite": ["eth0", "eth1", "eth2"],
-  "ea3500": ["eth1", "eth0.6", "eth0.5", "eth0.4", "eth0.3"],
+  "ea3500": ["eth1", "eth0.3", "eth0.4", "eth0.5", "eth0.6"],
   "gl-ar750": ["eth0", "eth1.1", "eth1.2"],
   "gl-b1300": ["eth0.3", "eth0.4", "eth1"],
   "linksys-wrt3200acm": ["eth0.1", "eth0.3", "eth0.4", "eth0.5", "eth1.2"],
