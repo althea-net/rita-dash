@@ -3,9 +3,6 @@ import { useTranslation } from "react-i18next";
 import { ListGroupItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import media from "media";
-import greencheck from "images/greencheck.svg";
-import redx from "images/redx.svg";
 
 const Item = styled(ListGroupItem)`
   border-radius: 0 !important;
@@ -47,15 +44,6 @@ export default ({ exit, click }) => {
       id={nickname + "_Banner"}
     >
       <div className="d-flex flex-grow-1">
-        {pseudostate === "Problem" ? (
-          <img src={redx} alt="Red X" className="mr-2 mb-auto mt-1" />
-        ) : (
-          <img
-            src={greencheck}
-            alt="Green Check"
-            className="mr-2 mb-auto mt-1"
-          />
-        )}
         <div className="mb-2">
           <h5 id="exitServerTitle" className="mb-1">
             {nickname}
