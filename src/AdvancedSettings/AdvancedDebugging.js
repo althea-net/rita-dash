@@ -56,6 +56,8 @@ const AdvancedDebugging = () => {
       ...indicators
     };
 
+  const haveProblem = Object.values(indicators).findIndex(v => !v) >= 0;
+
   useInterval(getNeighbors, 10000);
 
   return (
@@ -72,12 +74,16 @@ const AdvancedDebugging = () => {
         ))}
       </div>
       {!isGateway &&
-        (Object.values(indicators).findIndex(v => !v) >= 0 && (
+        (haveProblem && (
           <div className="mt-4 col-12">
             <h5>{t("suggestedAction")}</h5>
             {hasNeighborRoute ? (
               hasExitRoute ? (
-                <p>{t("exitProblem")}</p>
+                selectedExit ? (
+                  <p>{t("exitProblem")}</p>
+                ) : (
+                  <p>{t("noExit")}</p>
+                )
               ) : (
                 <p>{t("noNeighborExit")}</p>
               )

@@ -1,10 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ListGroupItem } from "reactstrap";
-import US from "images/flags/US.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
 import media from "media";
+import greencheck from "images/greencheck.svg";
+import redx from "images/redx.svg";
 
 const Item = styled(ListGroupItem)`
   border-radius: 0 !important;
@@ -16,17 +17,6 @@ const Item = styled(ListGroupItem)`
     border-color: #3fabf4;
     outline: 1px solid #3fabf4;
   }
-`;
-
-const Flag = styled.img`
-  margin-right: 20px;
-  max-width: 100px;
-  max-height: 60px;
-  margin-top: 5px;
-  ${media.mobile`
-    max-width: 60px;
-    max-height: 40px;
-  `};
 `;
 
 export default ({ exit, click }) => {
@@ -57,7 +47,15 @@ export default ({ exit, click }) => {
       id={nickname + "_Banner"}
     >
       <div className="d-flex flex-grow-1">
-        <Flag src={US} alt="USA" />
+        {pseudostate === "Problem" ? (
+          <img src={redx} alt="Red X" className="mr-2 mb-auto mt-1" />
+        ) : (
+          <img
+            src={greencheck}
+            alt="Green Check"
+            className="mr-2 mb-auto mt-1"
+          />
+        )}
         <div className="mb-2">
           <h5 id="exitServerTitle" className="mb-1">
             {nickname}

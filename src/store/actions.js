@@ -17,12 +17,11 @@ export default (state, action) => {
     }),
     channels: ({ channels }) => ({ channels }),
     debt: ({ debts }) => {
-      const selectedExit = state.exits.find(e => e.isSelected);
-
-      if (selectedExit && debts.length) {
+      if (state.selectedExit && debts.length) {
         return {
           debt: debts.reduce((a, b) => {
-            return b.identity.meshIp === selectedExit.exitSettings.id.meshIp
+            return b.identity.meshIp ===
+              state.selectedExit.exitSettings.id.meshIp
               ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
               : a;
           }, BigNumber("0")),
