@@ -29,8 +29,7 @@ export default ({ exit, setRegistering }) => {
 
   return (
     <div>
-      <h5 className="pl-4 pt-4 pb-2">{t("selectedExit")}</h5>
-      <div className="d-flex pl-4">
+      <div className="d-flex pl-4 mt-2">
         <div className="d-flex">
           <div>
             <h5 id="exitServerTitle">{nickname}</h5>

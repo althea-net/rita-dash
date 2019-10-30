@@ -305,7 +305,6 @@
   "save": "Save",
   "saveKey": "Save this key somewhere safe and never share it with anyone. You will need this if you ever want to recover your current account.",
   "selectNode": "You should select a node that is in your region and with the best connection.",
-  "selectedExit": "Selected Exit Node",
   "sellingBandwidth": "Selling Bandwidth",
   "sendTo": "Send To",
   "serverError": "Problem connecting to rita server",

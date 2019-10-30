@@ -298,7 +298,6 @@
   "save": "Salvar",
   "saveKey": "Salve esta llave en algún lugar seguro y nunca comparta la llave con alguien. Vas a necesitar de la llave si quieres recuperar la misma cuenta",
   "selectNode": "Deberías seleccionar un nodo que este en su región para la mejor conexión",
-  "selectedExit": "Salida seleccionada",
   "sellingBandwidth": "Vendiendo conectividad",
   "sendTo": "Enviar a",
   "serverError": "Problema al conectarse al servidor de rita",
