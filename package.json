@@ -63,7 +63,7 @@
     "i18next-browser-languagedetector": "^2.2.3",
     "i18next-xhr-backend": "^1.5.1",
     "ip-address": "^5.8.9",
-    "jquery": "^1.12.4",
+    "jquery": "^3.4.0",
     "js-sha3": "^0.8.0",
     "node-sass": "^4.11.0",
     "npm": "^6.3.0",
