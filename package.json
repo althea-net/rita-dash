@@ -18,7 +18,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-add-swift-support": {},
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-stripe-google-pay": {}
     },
     "platforms": [
       "android",
@@ -46,6 +47,7 @@
     "cordova-android": "^7.1.1",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-add-swift-support": "^1.7.2",
+    "cordova-plugin-stripe-google-pay": "0.0.8",
     "cordova-plugin-whitelist": "1",
     "core-util-is": "^1.0.2",
     "cross-env": "^5.2.0",

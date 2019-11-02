@@ -42,7 +42,7 @@ const Deposit = ({ open, setOpen }) => {
   return (
     <Modal isOpen={open} size="md" centered toggle={toggle}>
       <ModalHeader>
-        {t("deposit")} {withdrawChainSymbol}
+        {t("deposit")}
       </ModalHeader>
       <ModalBody>
         {manual && 
