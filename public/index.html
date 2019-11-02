@@ -17,6 +17,49 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+<button id='buy'>Buy</button>
+<div id="wyre-dropin-widget-container"></div>
     <div id="root"></div>
-  </body>
+<script src="https://js.stripe.com/v3"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://verify.sendwyre.com/js/verify-module-init-beta.js"></script>
+  <script>
+(function($) {
+      let widget = new Wyre({
+        env: "test",
+        accountId: "AC_RE7RR9G7BD3",
+        operation: {
+          type: "debitcard-whitelabel",
+          dest: "0xa8e9fC9b55673a9cd9A3DBbA15D5A507d3038cf3",
+          destCurrency: "ETH",
+          sourceAmount: 10.0,
+          paymentMethod: "google-pay"
+        }
+      });
+
+      widget.on("exit", function(e) {
+        console.log("exit", e);
+      });
+
+      widget.on("error", function(e) {
+        console.log("error", e);
+      });
+
+      widget.on("complete", function(e) {
+        console.log("complete", e);
+      });
+
+            widget.on('ready', function(e) {
+                console.log("ready", e );
+                // widget.open();
+            })
+
+            $('#buy').click(function(){
+                console.log('open')
+                widget.open();
+            })
+
+        })(jQuery);</script>
+    </body>
 </html>
+
