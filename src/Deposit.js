@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Modal, ModalHeader, ModalBody, Tooltip } from "reactstrap";
 import QR from "qrcode.react";
@@ -12,11 +12,19 @@ const qrStyle = { height: "auto", width: "80%" };
 const Deposit = ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [copied, setCopied] = useState(false);
+  const [manual, setManual] = useState(false);
 
   const copy = () => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  useEffect(() => {
+    if (open) {
+      setTimeout(window.wyre, 500);
+    } 
+    return;
+  }, [open]);
 
   const [
     { address, debt, lowBalance, status, withdrawChainSymbol }
@@ -27,14 +35,18 @@ const Deposit = ({ open, setOpen }) => {
 
   const recommendedDeposit = `${minDeposit} ${withdrawChainSymbol}`;
 
+  const toggle = () => setOpen(!open);
+
   if (!(address && withdrawChainSymbol)) return null;
 
   return (
-    <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>
+    <Modal isOpen={open} size="md" centered toggle={toggle}>
       <ModalHeader>
         {t("deposit")} {withdrawChainSymbol}
       </ModalHeader>
       <ModalBody>
+        {manual && 
+          <>
         <div
           className="mb-4 shadow-none d-flex flex-wrap"
           style={{
@@ -70,6 +82,8 @@ const Deposit = ({ open, setOpen }) => {
             minDeposit > 0 &&
             t("recommendedDeposit", { recommendedDeposit })}
         </div>
+            </>
+          }
       </ModalBody>
     </Modal>
   );

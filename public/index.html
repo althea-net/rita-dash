@@ -17,8 +17,7 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-<button id='buy'>Buy</button>
-<div id="wyre-dropin-widget-container"></div>
+    <div id="wyre-dropin-widget-container"></div>
     <div id="root"></div>
 <script src="https://js.stripe.com/v3"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -29,11 +28,9 @@
         env: "test",
         accountId: "AC_RE7RR9G7BD3",
         operation: {
-          type: "debitcard-whitelabel",
+          type: "debitcard",
           dest: "0xa8e9fC9b55673a9cd9A3DBbA15D5A507d3038cf3",
           destCurrency: "ETH",
-          sourceAmount: 10.0,
-          paymentMethod: "google-pay"
         }
       });
 
@@ -54,10 +51,29 @@
                 // widget.open();
             })
 
-            $('#buy').click(function(){
-                console.log('open')
-                widget.open();
-            })
+            window.widget = widget;
+
+            window.wyre = function(){
+              console.log('open')
+              let widget = window.widget;
+              widget.open();
+              let el = document.getElementById("wyre-dropin-widget-container");
+              document.querySelector(".modal-body").appendChild(el);
+
+              el.style.width = "100%";
+              el.style.height = "auto";
+              el.style.position = "static";
+              el.style.overflow = "hidden";
+              el.style.backgroundColor = "white";
+
+              document.getElementById("mainContainer").style.backgroundColor = "white";
+              document.querySelector(".containerWrapper").style.minHeight = "auto";
+              document.querySelector(".modal-body").style.padding = 0;
+              document.querySelector(".widget-header").remove();
+              document.querySelector(".containerBox").style.width = "100%";
+              document.querySelector(".css-1hwfws3").style.marginTop = "-10px";
+              document.querySelector(".bVaJSB").style.marginTop = "-14px";
+            };
 
         })(jQuery);</script>
     </body>
