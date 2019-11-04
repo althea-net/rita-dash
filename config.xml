@@ -25,6 +25,12 @@
     </platform>
     <plugin name="cordova-plugin-add-swift-support" spec="^1.7.2" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-customurlscheme" spec="^4.4.0">
+        <variable name="URL_SCHEME" value="althea" />
+        <variable name="ANDROID_SCHEME" value=" " />
+        <variable name="ANDROID_HOST" value=" " />
+        <variable name="ANDROID_PATHPREFIX" value="/" />
+    </plugin>
     <engine name="android" spec="^7.1.1" />
     <engine name="ios" spec="^5.0.1" />
 </widget>

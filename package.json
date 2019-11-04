@@ -18,7 +18,13 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-add-swift-support": {},
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-customurlscheme": {
+        "URL_SCHEME": "althea",
+        "ANDROID_SCHEME": " ",
+        "ANDROID_HOST": " ",
+        "ANDROID_PATHPREFIX": "/"
+      }
     },
     "platforms": [
       "android",
@@ -46,6 +52,7 @@
     "cordova-android": "^7.1.1",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-add-swift-support": "^1.7.2",
+    "cordova-plugin-customurlscheme": "^4.4.0",
     "cordova-plugin-whitelist": "1",
     "core-util-is": "^1.0.2",
     "cross-env": "^5.2.0",
@@ -72,7 +79,7 @@
     "prop-types": "^15.6.2",
     "qrcode.react": "^0.8.0",
     "qrious": "^4.0.2",
-    "react": "^16.8.1",
+    "react": "^16.11.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.1",
     "react-i18next": "^10.0.0",
