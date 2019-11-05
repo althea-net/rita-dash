@@ -34,7 +34,7 @@ const Deposit = ({ open, setOpen }) => {
   const toggle = () => {
     setDepositing(withdrawChainSymbol !== "ETH");
     setOpen(!open);
-  } 
+  };
 
   return (
     <Modal isOpen={open} size="sm" centered toggle={toggle}>
@@ -57,9 +57,15 @@ const Deposit = ({ open, setOpen }) => {
               {t("buy")} ETH
             </Button>
 
-            <Button color="primary" className="w-100 mb-2" onClick={() => setDepositing(true)}>
-              {t("deposit")} {withdrawChainSymbol}
-            </Button>
+            {depositing || (
+              <Button
+                color="primary"
+                className="w-100 mb-2"
+                onClick={() => setDepositing(true)}
+              >
+                {t("deposit")} {withdrawChainSymbol}
+              </Button>
+            )}
           </>
         )}
 
