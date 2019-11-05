@@ -31,8 +31,13 @@ const Deposit = ({ open, setOpen }) => {
 
   if (!(address && withdrawChainSymbol)) return null;
 
+  const toggle = () => {
+    setDepositing(withdrawChainSymbol !== "ETH");
+    setOpen(!open);
+  } 
+
   return (
-    <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>
+    <Modal isOpen={open} size="sm" centered toggle={toggle}>
       <ModalHeader>{t("addFunds")}</ModalHeader>
       <ModalBody>
         {withdrawChainSymbol === "ETH" && (
