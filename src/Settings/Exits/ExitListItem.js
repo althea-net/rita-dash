@@ -30,11 +30,6 @@ export default ({ exit, click }) => {
   let connected = isReachable && haveRoute;
   let pseudostate = state;
 
-  if (state === "Registered" && isSelected) {
-    connected = exit.isTunnelWorking;
-    pseudostate = connected && "Connected";
-  }
-
   if (!connected) pseudostate = "Problem";
 
   return (

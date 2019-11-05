@@ -58,6 +58,11 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   }
 
   const select = exit => {
+    let verifMode;
+    
+    if (exit.exitSettings.generalDetails)
+      verifMode = exit.exitSettings.generalDetails.verifMode;
+
     let {
       nickname,
       exitSettings: {
@@ -69,11 +74,11 @@ const ExitNodeSetup = ({ open, setOpen }) => {
     if (state === "Registered") {
       selectExit(nickname);
       toggle();
-      return;
     }
 
-    if (!verifMode && gotinfo) {
+    if (verifMode === "Off" && state === "GotInfo") {
       registerExit(nickname, email, phone);
+      toggle();
     }
 
     dispatch({ type: "exitIp", exitIp: meshIp });
@@ -140,7 +145,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
                 color="primary"
                 onClick={next}
                 style={{ width: 150 }}
-                disabled={!valid}
+                disabled={verifMode !== "Off" && !valid}
                 id="setupModalNextButton"
               >
                 {t("next")}
