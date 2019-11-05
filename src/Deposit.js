@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Modal, ModalHeader, ModalBody, Tooltip } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, Tooltip } from "reactstrap";
 import QR from "qrcode.react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,6 +22,8 @@ const Deposit = ({ open, setOpen }) => {
     { address, debt, lowBalance, status, withdrawChainSymbol }
   ] = useStore();
 
+  const [depositing, setDepositing] = useState(withdrawChainSymbol !== "ETH");
+
   let minDeposit = toEth(debt) * 2;
   if (status) minDeposit = Math.max(status.minEth, minDeposit);
 
@@ -31,40 +33,65 @@ const Deposit = ({ open, setOpen }) => {
 
   return (
     <Modal isOpen={open} size="sm" centered toggle={() => setOpen(!open)}>
-      <ModalHeader>
-        {t("deposit")} {withdrawChainSymbol}
-      </ModalHeader>
+      <ModalHeader>{t("addFunds")}</ModalHeader>
       <ModalBody>
-        <div
-          className="mb-4 shadow-none d-flex flex-wrap"
-          style={{
-            border: "1px solid #ddd",
-            borderRadius: 5,
-            wordWrap: "break-word"
-          }}
-        >
-          <div className="d-flex py-2 px-0 w-100">
-            <div className="col-11" id="walletAddr">
-              {address}
-            </div>
+        {withdrawChainSymbol === "ETH" && (
+          <>
+            <Button
+              href={
+                "https://pay.sendwyre.com/purchase" +
+                `?dest=${address}` +
+                "&destCurrency=ETH" +
+                `&redirectUrl=${
+                  window.isMobile ? "althea://" : window.location.href
+                }`
+              }
+              color="primary"
+              className="w-100 mb-2"
+            >
+              {t("buy")} ETH
+            </Button>
 
-            <Tooltip placement="top" isOpen={copied} target="copy">
-              {t("copied")}
-            </Tooltip>
-            <CopyToClipboard text={address} onCopy={copy}>
-              <FontAwesomeIcon
-                id="copy"
-                icon="copy"
-                color="#999"
-                className="mr-2"
-                style={{ cursor: "pointer" }}
-              />
-            </CopyToClipboard>
-          </div>
-        </div>
-        <div className="w-100 text-center mb-4">
-          <QR style={qrStyle} value={address} />
-        </div>
+            <Button color="primary" className="w-100 mb-2" onClick={() => setDepositing(true)}>
+              {t("deposit")} {withdrawChainSymbol}
+            </Button>
+          </>
+        )}
+
+        {depositing && (
+          <>
+            <div
+              className="mb-4 shadow-none d-flex flex-wrap"
+              style={{
+                border: "1px solid #ddd",
+                borderRadius: 5,
+                wordWrap: "break-word"
+              }}
+            >
+              <div className="d-flex py-2 px-0 w-100">
+                <div className="col-11" id="walletAddr">
+                  {address}
+                </div>
+
+                <Tooltip placement="top" isOpen={copied} target="copy">
+                  {t("copied")}
+                </Tooltip>
+                <CopyToClipboard text={address} onCopy={copy}>
+                  <FontAwesomeIcon
+                    id="copy"
+                    icon="copy"
+                    color="#999"
+                    className="mr-2"
+                    style={{ cursor: "pointer" }}
+                  />
+                </CopyToClipboard>
+              </div>
+            </div>
+            <div className="w-100 text-center mb-4">
+              <QR style={qrStyle} value={address} />
+            </div>
+          </>
+        )}
         <div>
           {lowBalance &&
             minDeposit > 0 &&

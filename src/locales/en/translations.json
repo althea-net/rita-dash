@@ -1,4 +1,6 @@
 {
+  "buy": "Buy",
+  "addFunds": "Add Funds",
   "suggestedAction": "Suggested Action",
   "hasExitRoute": "Neighbor has route to exit",
   "hasNeighborRoute": "Have route to neighbor",
@@ -338,7 +340,6 @@
   "thisAction": "This action will interrupt the connection to the router. After initiating the change, please wait 60 seconds and then re-plug your ethernet cables into the router.",
   "threshold": "Threshold",
   "throttleSpeed": "Throttle speed",
-  "topUp": "Add Funds",
   "unableToReachExit": "Unable to reach exit.",
   "upToDate": "Firmware upgraded successfully!",
   "updateExit": "Update Exit Node",

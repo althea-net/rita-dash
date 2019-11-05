@@ -57,7 +57,7 @@ const Finances = () => {
             className="mr-3"
             onClick={() => setDepositing(true)}
           >
-            {t("topUp")}
+            {t("addFunds")}
           </Button>
           <Button
             color="primary"

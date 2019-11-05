@@ -1,4 +1,5 @@
 {
+  "addFunds": "Agregar fondos",
   "suggestedAction": "Acción sugerida",
   "hasExitRoute": "El vecino tiene una ruta de trabajo para salir",
   "hasNeighborRoute": "Tener ruta de trabajo al vecino",
@@ -331,7 +332,6 @@
   "thisAction": "Esta acción va a interrumpir con la conexión hacia el router. Después de realizar el cambio, por favor espere 60 segundos y después reconecte sus cables de ethernet de su router",
   "threshold": "Límite",
   "throttleSpeed": "Velocidad limitada",
-  "topUp": "Agregar fondos",
   "unableToReachExit": "No se puede conectar a la salida.",
   "upToDate": "¡Su enrutador está actualmente actualizado!",
   "updateExit": "Actualizar el nodo de salida",

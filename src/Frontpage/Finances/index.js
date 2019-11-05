@@ -75,7 +75,7 @@ const Finances = () => {
               style={{ minWidth: 130 }}
               className="mr-3"
             >
-              {t("topUp")}
+              {t("addFunds")}
             </Button>
             <Button
               color="primary"
