@@ -20,17 +20,13 @@ export default ({ exit, click }) => {
   const [t] = useTranslation();
   if (!exit.exitSettings) return null;
   let {
-    exitSettings: { description, state },
+    exitSettings: { description },
     nickname,
-    isSelected,
     isReachable,
     haveRoute
   } = exit;
 
   let connected = isReachable && haveRoute;
-  let pseudostate = state;
-
-  if (!connected) pseudostate = "Problem";
 
   return (
     <Item
@@ -51,18 +47,18 @@ export default ({ exit, click }) => {
           </p>
         </div>
       </div>
-      {pseudostate === "Problem" ? (
-        <div className="ml-sm-auto text-sm-right">
-          <FontAwesomeIcon color="red" icon="exclamation-triangle" />
-          <span style={{ marginLeft: 5, color: "red" }}>
-            {t("connectionProblem")}
-          </span>
-        </div>
-      ) : (
+      {connected ? (
         <div className="ml-auto text-right">
           <FontAwesomeIcon color="#27D38D" icon="check-circle" />
           <span style={{ marginLeft: 5, color: "#27d38d" }}>
             {t("greatConnection")}
+          </span>
+        </div>
+      ) : (
+        <div className="ml-sm-auto text-sm-right">
+          <FontAwesomeIcon color="red" icon="exclamation-triangle" />
+          <span style={{ marginLeft: 5, color: "red" }}>
+            {t("connectionProblem")}
           </span>
         </div>
       )}
