@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Modal, ModalHeader, ModalBody, Tooltip } from "reactstrap";
 import QR from "qrcode.react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useStore } from "store";
+import { get, useStore } from "store";
 import { toEth } from "utils";
 
 const qrStyle = { height: "auto", width: "80%" };
@@ -12,6 +12,31 @@ const qrStyle = { height: "auto", width: "80%" };
 const Deposit = ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [wyreEnabled, setWyreEnabled] = useState(false);
+
+  const getWyreEnabled = async signal => {
+    try {
+      const wyreEnabled = (await get("/localization", true, 5000, signal)).wyreEnabled;
+      setWyreEnabled(wyreEnabled);
+      if (wyreEnabled) setDepositing(false);
+    } catch {}
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    (async () => {
+      setLoading(true);
+      await getWyreEnabled(signal);
+      setLoading(false);
+    })();
+
+    return () => controller.abort();
+  }, []);
 
   const copy = () => {
     setCopied(true);
@@ -37,10 +62,10 @@ const Deposit = ({ open, setOpen }) => {
   };
 
   return (
-    <Modal isOpen={open} size="sm" centered toggle={toggle}>
+    <Modal isOpen={open && !loading} size="sm" centered toggle={toggle}>
       <ModalHeader>{t("addFunds")}</ModalHeader>
       <ModalBody>
-        {withdrawChainSymbol === "ETH" && (
+        {wyreEnabled && withdrawChainSymbol === "ETH" && (
           <>
             <Button
               href={
