@@ -15,6 +15,7 @@ const Deposit = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   const [depositing, setDepositing] = useState(false);
   const [wyreEnabled, setWyreEnabled] = useState(false);
+  const [wyreAccountId, setWyreAccountId] = useState();
 
   const [
     { address, debt, lowBalance, status, withdrawChainSymbol }
@@ -22,9 +23,9 @@ const Deposit = ({ open, setOpen }) => {
 
   const getWyreEnabled = useCallback(async signal => {
     try {
-      const wyreEnabled = (await get("/localization", true, 5000, signal))
-        .wyreEnabled;
+      const { wyreEnabled, wyreAccountId } = await get("/localization", true, 5000, signal)
       setWyreEnabled(wyreEnabled);
+      setWyreAccountId(wyreAccountId);
       if (!(wyreEnabled && withdrawChainSymbol === "ETH")) setDepositing(true);
     } catch {}
 
@@ -78,6 +79,7 @@ const Deposit = ({ open, setOpen }) => {
                   "https://pay.sendwyre.com/purchase" +
                   `?dest=${address}` +
                   "&destCurrency=ETH" +
+                  `&account_id=${wyreAccountId}` +
                   `&redirectUrl=${
                     window.isMobile ? "althea://" : window.location.href
                   }`
