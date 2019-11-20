@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button, Card, CardBody } from "reactstrap";
 import glImage from "images/gl.jpg";
-import linksysImage from "images/linksyswrt3200acm.jpg";
+import linksysImage from "images/linksyswrt3200acm.webp";
 import linksysEaImage from "images/linksysea6350v3.jpg";
 
 export const PortNumber = styled.div`
