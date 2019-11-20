@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Modal, ModalHeader, ModalBody, Tooltip } from "reactstrap";
 import QR from "qrcode.react";
@@ -13,41 +13,39 @@ const Deposit = ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [depositing, setDepositing] = useState(false);
   const [wyreEnabled, setWyreEnabled] = useState(false);
-
-  const getWyreEnabled = async signal => {
-    try {
-      const wyreEnabled = (await get("/localization", true, 5000, signal)).wyreEnabled;
-      setWyreEnabled(wyreEnabled);
-      if (wyreEnabled) setDepositing(false);
-    } catch {}
-
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    (async () => {
-      setLoading(true);
-      await getWyreEnabled(signal);
-      setLoading(false);
-    })();
-
-    return () => controller.abort();
-  }, []);
-
-  const copy = () => {
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const [
     { address, debt, lowBalance, status, withdrawChainSymbol }
   ] = useStore();
 
-  const [depositing, setDepositing] = useState(withdrawChainSymbol !== "ETH");
+  const getWyreEnabled = useCallback(async signal => {
+    try {
+      const wyreEnabled = (await get("/localization", true, 5000, signal))
+        .wyreEnabled;
+      setWyreEnabled(wyreEnabled);
+      if (!(wyreEnabled && withdrawChainSymbol === "ETH")) setDepositing(true);
+    } catch {}
+
+    setLoading(false);
+  }, [withdrawChainSymbol]);
+
+  useEffect(
+    () => {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      (async () => {
+        setLoading(true);
+        await getWyreEnabled(signal);
+        setLoading(false);
+      })();
+
+      return () => controller.abort();
+    },
+    [getWyreEnabled]
+  );
 
   let minDeposit = toEth(debt) * 2;
   if (status) minDeposit = Math.max(status.minEth, minDeposit);
@@ -57,42 +55,50 @@ const Deposit = ({ open, setOpen }) => {
   if (!(address && withdrawChainSymbol)) return null;
 
   const toggle = () => {
-    setDepositing(withdrawChainSymbol !== "ETH");
     setOpen(!open);
+    setDepositing(false);
+  } 
+
+  const copy = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
+
+  console.log(wyreEnabled, withdrawChainSymbol, depositing);
 
   return (
     <Modal isOpen={open && !loading} size="sm" centered toggle={toggle}>
       <ModalHeader>{t("addFunds")}</ModalHeader>
       <ModalBody>
-        {wyreEnabled && withdrawChainSymbol === "ETH" && (
-          <>
-            <Button
-              href={
-                "https://pay.sendwyre.com/purchase" +
-                `?dest=${address}` +
-                "&destCurrency=ETH" +
-                `&redirectUrl=${
-                  window.isMobile ? "althea://" : window.location.href
-                }`
-              }
-              color="primary"
-              className="w-100 mb-2"
-            >
-              {t("buy")} ETH
-            </Button>
-
-            {depositing || (
+        {wyreEnabled &&
+          withdrawChainSymbol === "ETH" && (
+            <>
               <Button
+                href={
+                  "https://pay.sendwyre.com/purchase" +
+                  `?dest=${address}` +
+                  "&destCurrency=ETH" +
+                  `&redirectUrl=${
+                    window.isMobile ? "althea://" : window.location.href
+                  }`
+                }
                 color="primary"
                 className="w-100 mb-2"
-                onClick={() => setDepositing(true)}
               >
-                {t("deposit")} {withdrawChainSymbol}
+                {t("buy")} ETH
               </Button>
-            )}
-          </>
-        )}
+
+              {depositing || (
+                <Button
+                  color="primary"
+                  className="w-100 mb-2"
+                  onClick={() => setDepositing(true)}
+                >
+                  {t("deposit")} {withdrawChainSymbol}
+                </Button>
+              )}
+            </>
+          )}
 
         {depositing && (
           <>
