@@ -65,6 +65,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.12.4",
+    "ethereum-address": "^0.0.4",
     "i": "^0.3.6",
     "i18next": "^14.0.1",
     "i18next-browser-languagedetector": "^2.2.3",
@@ -94,7 +95,6 @@
     "source-map-explorer": "^2.0.1",
     "styled-components": "^3.4.9",
     "typescript": "^3.4.5",
-    "unstated": "^2.1.1",
-    "web3": "^1.0.0-beta.35"
+    "unstated": "^2.1.1"
   }
 }

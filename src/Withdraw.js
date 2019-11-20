@@ -15,11 +15,9 @@ import {
   ModalBody
 } from "reactstrap";
 import { Error, toEth, toWei, txLink } from "utils";
-import Web3 from "web3";
+import { isAddress } from "ethereum-address";
 import { post, useStore } from "store";
 import bigGreenCheck from "images/big_green_check.png";
-
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
 
 const Withdraw = ({ open, setOpen }) => {
   const [t] = useTranslation();
@@ -48,7 +46,7 @@ const Withdraw = ({ open, setOpen }) => {
 
   const balanceEth = toEth(balance);
   const fAmount = parseFloat(amount);
-  const addressValid = !!(address && web3.utils.isAddress(address));
+  const addressValid = !!(address && isAddress(address));
   const amountValid = !!(
     !isNaN(fAmount) &&
     fAmount > 0 &&

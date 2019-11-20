@@ -12,12 +12,9 @@ import {
   Progress
 } from "reactstrap";
 import { Address6 } from "ip-address";
-import Web3 from "web3";
 import { Error, Success } from "utils";
 import { Card } from "ui";
-
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-const { isAddress } = web3.utils;
+import { isAddress } from "ethereum-address";
 
 const NetworkOrganizer = () => {
   const [t] = useTranslation();

@@ -12,11 +12,9 @@ import {
   ModalBody
 } from "reactstrap";
 import { Error, txLink, toEth } from "utils";
-import Web3 from "web3";
 import { post, useStore } from "store";
 import bigGreenCheck from "images/big_green_check.png";
-
-const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+import { isAddress } from "ethereum-address";
 
 const WithdrawAll = ({ open, setOpen }) => {
   const [t] = useTranslation();
@@ -38,7 +36,7 @@ const WithdrawAll = ({ open, setOpen }) => {
     }
   };
 
-  const addressValid = !!(address && web3.utils.isAddress(address));
+  const addressValid = !!(address && isAddress(address));
   const valid = addressValid;
   const link = txLink("Ethereum", txid);
 
