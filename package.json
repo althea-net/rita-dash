@@ -8,7 +8,6 @@
     "start": "PORT=3005 react-scripts start",
     "build": "react-scripts build && rm build/static/**/*.map",
     "buildwithmaps": "react-scripts build",
-    "buildwithstats": "react-scripts build --stats && webpack-bundle-analyzer build/bundle-stats.json -m static -r build/bundle-stats.html -O",
     "package-android": "cordova build android --release",
     "package-ios": "cordova build ios --release --buildFlag=\"-useModernBuildSystem=0\"",
     "test": "react-scripts test --env=jsdom",
@@ -96,5 +95,6 @@
     "styled-components": "^3.4.9",
     "typescript": "^3.4.5",
     "unstated": "^2.1.1"
-  }
+  },
+  "devDependencies": {}
 }
