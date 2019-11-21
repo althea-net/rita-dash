@@ -6,8 +6,8 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "PORT=3005 react-scripts start",
-    "build": "react-scripts build && rm build/static/**/*.map",
-    "buildwithmaps": "react-scripts build",
+    "build": "craco build && rm build/static/**/*.map && rm -rf build/icons",
+    "buildall": "react-scripts build",
     "package-android": "cordova build android --release",
     "package-ios": "cordova build ios --release --buildFlag=\"-useModernBuildSystem=0\"",
     "test": "react-scripts test --env=jsdom",
@@ -37,6 +37,7 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@craco/craco": "^5.6.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@fortawesome/react-fontawesome": "0.1.0-11",
@@ -96,5 +97,8 @@
     "typescript": "^3.4.5",
     "unstated": "^2.1.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "glob-all": "^3.1.0",
+    "purgecss-webpack-plugin": "^1.6.0"
+  }
 }
