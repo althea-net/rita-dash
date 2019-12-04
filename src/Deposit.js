@@ -65,8 +65,6 @@ const Deposit = ({ open, setOpen }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  console.log(wyreEnabled, withdrawChainSymbol, depositing);
-
   return (
     <Modal isOpen={open && !loading} size="sm" centered toggle={toggle}>
       <ModalHeader>{t("addFunds")}</ModalHeader>
