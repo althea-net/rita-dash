@@ -6,7 +6,7 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "PORT=3005 react-scripts start",
-    "build": "craco build && rm build/static/**/*.map && rm -rf build/icons",
+    "build": "react-scripts build && rm build/static/**/*.map && rm -rf build/icons",
     "buildall": "react-scripts build",
     "package-android": "cordova build android --release",
     "package-ios": "cordova build ios --release --buildFlag=\"-useModernBuildSystem=0\"",
