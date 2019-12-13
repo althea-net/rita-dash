@@ -13,7 +13,7 @@ const Deposit = ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [depositing, setDepositing] = useState(false);
+  const [depositing, setDepositing] = useState(true);
   const [wyreEnabled, setWyreEnabled] = useState(false);
   const [wyreAccountId, setWyreAccountId] = useState();
 
@@ -26,7 +26,7 @@ const Deposit = ({ open, setOpen }) => {
       const { wyreEnabled, wyreAccountId } = await get("/localization", true, 5000, signal)
       setWyreEnabled(wyreEnabled);
       setWyreAccountId(wyreAccountId);
-      if (!(wyreEnabled && withdrawChainSymbol === "ETH")) setDepositing(true);
+      if (wyreEnabled && withdrawChainSymbol === "ETH") setDepositing(false);
     } catch {}
 
     setLoading(false);
@@ -57,7 +57,7 @@ const Deposit = ({ open, setOpen }) => {
 
   const toggle = () => {
     setOpen(!open);
-    setDepositing(false);
+    if (wyreEnabled && withdrawChainSymbol === "ETH") setDepositing(false);
   } 
 
   const copy = () => {
