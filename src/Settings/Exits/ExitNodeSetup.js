@@ -175,7 +175,6 @@ const ExitNodeSetup = ({ open, setOpen }) => {
               <Error error={error} />
               {!exit && (
                 <div>
-                  <p>{t("selectNode")}</p>
                   <ExitList select={select} />
                 </div>
               )}

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, ListGroup } from "reactstrap";
+import { Alert, Button, ListGroup } from "reactstrap";
+import AddExit from "./AddExit";
 import ExitListItem from "./ExitListItem";
 import { useStore } from "store";
 
 const ExitList = ({ setOpen, select }) => {
   const [t] = useTranslation();
+  const [adding, setAdding] = useState(false);
   let [{ blockchain, exits }] = useStore();
 
   const sort = (a, b) => {
@@ -13,6 +15,8 @@ const ExitList = ({ setOpen, select }) => {
       sensitivity: "base"
     });
   };
+
+  const addExit = () => setAdding(true);
 
   exits = exits
     .filter(exit => {
@@ -31,7 +35,9 @@ const ExitList = ({ setOpen, select }) => {
 
   return (
     <div>
-      {exits.length ? (
+      {adding ? <AddExit setAdding={setAdding} /> : exits.length ? (
+        <>
+        <p>{t("selectNode")}</p>
         <ListGroup>
           {exits.map(exit => (
             <ExitListItem
@@ -41,9 +47,15 @@ const ExitList = ({ setOpen, select }) => {
             />
           ))}
         </ListGroup>
+        <Button color="primary" onClick={addExit}>{t("addExit")}</Button>
+        </>
       ) : (
+        <>
         <Alert color="danger">{t("noExits")}</Alert>
+        <Button color="primary" onClick={addExit}>{t("addExit")}</Button>
+        </>
       )}
+
     </div>
   );
 };
