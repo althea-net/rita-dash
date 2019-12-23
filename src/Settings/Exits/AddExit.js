@@ -1,118 +1,45 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Form, FormGroup, Input, Label, Progress } from "reactstrap";
-import { Error, Success } from "utils";
-import { post } from "store";
+import { Button } from "reactstrap";
+import AddExitForm from "./AddExitForm";
+import JsonForm from "./JsonForm";
+import SyncForm from "./SyncForm";
 
 const AddExit = ({ setAdding }) => {
-  let [t] = useTranslation();
-  let [identifier, setIdentifier] = useState("");
-  let [description, setDescription] = useState("");
-  let [meshIp, setMeshIp] = useState("");
-  let [ethAddress, setEthAddress] = useState("");
-  let [wgPubKey, setWgPubKey] = useState("");
-  let [registrationPort, setRegistrationPort] = useState(4875);
-  let [loading, setLoading] = useState(false);
-  let [success, setSuccess] = useState(false);
-  let [error, setError] = useState(false);
-
-  let submit = async e => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      await post("/exits", {
-        [identifier]: {
-          id: {
-            mesh_ip: meshIp,
-            eth_address: ethAddress,
-            wg_public_key: wgPubKey
-          },
-          registration_port: registrationPort,
-          description,
-          state: "New",
-          nickname: ""
-        }
-      });
-
-      setSuccess(t("addExitSuccess"));
-    } catch (e) {
-      setError(t("addExitError"));
-    }
-
-    setLoading(false);
-  };
+  const [t] = useTranslation();
+  const [fillForm, setFillForm] = useState(false);
+  const [pasteJson, setPasteJson] = useState(false);
+  const [urlSync, setUrlSync] = useState(false);
 
   return (
-    <Form onSubmit={submit}>
-      {loading && <Progress animated color="primary" value="100" />}
-      <Error error={error} />
-      {success ? (
-      <>
-        <Success message={success} />
-        <Button onClick={() => setAdding(false)}>{t("back")}</Button>
-        </>
-        
-        )
-    : (
-        <>
-      <FormGroup>
-        <Label>{t("identifier")}</Label>
-        <Input
-          value={identifier}
-          onChange={e => setIdentifier(e.target.value)}
-          placeholder={t("identifier")}
-          autoFocus
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label>{t("description")}</Label>
-        <Input
-          value={description}
-          onChange={e => setDescription(e.target.value)}
-          placeholder={t("description")}
-          autoFocus
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label>{t("meshIp")}</Label>
-        <Input
-          value={meshIp}
-          onChange={e => setMeshIp(e.target.value)}
-          placeholder={t("meshIp")}
-          autoFocus
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label>{t("ethereumAddress")}</Label>
-        <Input
-          value={ethAddress}
-          onChange={e => setEthAddress(e.target.value)}
-          placeholder={t("ethereumAddress")}
-          autoFocus
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label>{t("wireguardPublicKey")}</Label>
-        <Input
-          value={wgPubKey}
-          onChange={e => setWgPubKey(e.target.value)}
-          placeholder={t("wireguardPublicKey")}
-          autoFocus
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label>{t("registrationPort")}</Label>
-        <Input
-          value={registrationPort}
-          onChange={e => setRegistrationPort(e.target.value)}
-          placeholder={t("registrationPort")}
-          autoFocus
-        />
-      </FormGroup>
-      <Button className="float-right" color="primary">{t("submit")}</Button>
-      </>)}
-    </Form>
+    <>
+      {!(fillForm || pasteJson || urlSync) && (
+        <div className="d-flex justify-content-around flex-wrap">
+          <Button
+            color="primary"
+            className="mb-2"
+            onClick={() => setFillForm(true)}
+          >
+            {t("addManually")}
+          </Button>
+          <Button
+            color="primary"
+            className="mb-2"
+            onClick={() => setPasteJson(true)}
+          >
+            {t("pasteJson")}
+          </Button>
+          <Button color="primary" 
+            className="mb-2"
+            onClick={() => setUrlSync(true)}>
+            {t("syncFromURL")}
+          </Button>
+        </div>
+      )}
+      {fillForm && <AddExitForm setAdding={setAdding} setFillForm={setFillForm} />}
+      {pasteJson && <JsonForm setAdding={setAdding} setPasteJson={setPasteJson} />}
+      {urlSync && <SyncForm setAdding={setAdding} setUrlSync={setUrlSync} />}
+    </>
   );
 };
 

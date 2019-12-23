@@ -1,4 +1,8 @@
 {
+  "syncFromURL": "Sync from URL",
+  "exitJson": "Exit JSON",
+  "addManually": "Add Manually",
+  "pasteJson": "Paste JSON",
   "addExit": "Add Exit",
   "addExitSuccess": "Exit added successfully",
   "addExitError": "There was a problem adding the exit, please contact your network organizer",
