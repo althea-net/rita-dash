@@ -5,7 +5,7 @@ import { Alert, Form, FormGroup, Input, Progress } from "reactstrap";
 import ExitsContext from "store/Exits";
 import bigGreenCheck from "images/big_green_check.png";
 
-export default ({ nickname, registered, targetLength, setOpen }) => {
+const CodeForm = ({ nickname, registered, targetLength, setOpen }) => {
   let [t] = useTranslation();
   let [code, setCode] = useState("");
   let [waiting, setWaiting] = useState(false);
@@ -78,3 +78,5 @@ export default ({ nickname, registered, targetLength, setOpen }) => {
     </div>
   );
 };
+
+export default CodeForm;

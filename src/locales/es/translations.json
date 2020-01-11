@@ -1,4 +1,9 @@
 {
+  "addExit": "Add Exit",
+  "addExitSuccess": "Exit added successfully",
+  "addExitError": "There was a problem adding the exit, please contact your network organizer",
+  "url": "URL",
+  "registrationPort": "Puerto de registro",
   "addFunds": "Agregar fondos",
   "suggestedAction": "Acción sugerida",
   "hasExitRoute": "El vecino tiene una ruta de trabajo para salir",

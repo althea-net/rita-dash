@@ -63,7 +63,7 @@ const NodeInformation = () => {
             </div>
           )}
           <Label>
-            <b>{t("meshIp")}</b>
+            <b>{t("meshIp")}:</b>
           </Label>
           <InputGroup>
             <Input id="meshIP" readOnly value={meshIp || ""} />
