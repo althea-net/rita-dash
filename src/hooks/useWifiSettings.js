@@ -3,6 +3,12 @@ import { get, useStore } from "store";
 
 const AbortController = window.AbortController;
 
+function filterPhone(wifiSetting) {
+  let ssid = wifiSetting.ssid;
+  console.log(ssid);
+  return !ssid.includes("Phone");
+}
+
 const useWifiSettings = () => {
   const [, dispatch] = useStore();
   const [error, setError] = useState(null);
@@ -14,7 +20,11 @@ const useWifiSettings = () => {
       const signal = controller.signal;
       (async () => {
         try {
-          const wifiSettings = await get("/wifi_settings", true, 5000, signal);
+          const wifiSettingsNoValidation = await get("/wifi_settings", true, 5000, signal);
+
+          // this filters out the AltheaPhone network, which the user shouldn't edit
+          let wifiSettings = wifiSettingsNoValidation.filter(filterPhone);
+
           const channels = [];
 
           await Promise.all(

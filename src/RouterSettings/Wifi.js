@@ -50,7 +50,7 @@ const Wifi = () => {
   };
 
   let valid = wifiSettings.reduce(
-    (a, b) => a && (b.ssid.length >= 8 && b.key.length >= 8),
+    (a, b) => a && (b.ssid.length >= 8 && b.key != null && b.key.length >= 8),
     true
   );
 
