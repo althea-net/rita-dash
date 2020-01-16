@@ -28,6 +28,7 @@ const Ports = () => {
 
     try {
       let interfaces = await get("/interfaces", false, 5000, signal);
+
       dispatch({ type: "interfaces", interfaces });
     } catch (e) {
       console.log(e);

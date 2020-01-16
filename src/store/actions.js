@@ -125,7 +125,6 @@ export default (state, action) => {
     }),
     interfaces: ({ interfaces }) => ({
       interfaces: Object.keys(interfaces)
-        .filter(i => !i.startsWith("wlan"))
         /*eslint no-sequences: 0*/
         .reduce((a, b) => ((a[b] = interfaces[b]), a), {})
     }),

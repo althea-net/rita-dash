@@ -27,7 +27,14 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
 
             <div className="d-flex w-100 flex-column mt-3">
               {modes.map((mode, i) => {
-                let selected = mode === interfaces[iface];
+                let currentInterface = interfaces[iface];
+                // static wan is a special case because it's an object
+                // in this case we just map it to wan
+                if(interfaces[iface].StaticWAN != null) {
+                  currentInterface = "WAN"
+                }
+                console.log(interfaces[iface].StaticWAN)
+                let selected = mode === currentInterface;
                 let disabled =
                   !selected &&
                   mode === "WAN" &&

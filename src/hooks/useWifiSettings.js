@@ -5,7 +5,6 @@ const AbortController = window.AbortController;
 
 function filterPhone(wifiSetting) {
   let ssid = wifiSetting.ssid;
-  console.log(ssid);
   return !ssid.includes("Phone");
 }
 
