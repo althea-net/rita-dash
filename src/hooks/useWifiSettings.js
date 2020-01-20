@@ -5,7 +5,7 @@ const AbortController = window.AbortController;
 
 function filterPhone(wifiSetting) {
   let ssid = wifiSetting.ssid;
-  return !ssid.includes("Phone");
+  return !ssid.includes("AltheaMobile");
 }
 
 const useWifiSettings = () => {
