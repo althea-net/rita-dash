@@ -74,7 +74,6 @@
   "selectedExit": "Sortie sélectionnée",
   "serverError": "Problème de connexion au serveur Rita",
   "settingsError": "Problème lors de la récupération des paramètres",
-  "settingsError": "Problème lors de la récupération des paramètres",
   "settingsSaved": "Paramètres enregistrés avec succès",
   "ssid": "SSID",
   "stateConnected": "Connecté",
@@ -99,5 +98,10 @@
   "wifi": "Wifi",
   "wifiError": "Les paramètres Wifi n'ont pas pu être analysés. Le routeur peut ne pas prendre en charge le Wifi.",
   "wifiSettings": "Paramètres WiFi",
-  "wireguardPublicKey": "Clé publique WireGuard"
+  "wireguardPublicKey": "Clé publique WireGuard",
+  "organizerFeeName": "Organisateur fee: ",
+  "bandwidthPriceName": "Bandwidth price: ",
+  "organizerFeeContent": "{{readableDAOPrice}} {{symbol}}/Month",
+  "bandwidthPriceContent": "{{readableExitPrice}} {{symbol}}/GB",
+  "pricesCopy": "Ce sont les tarifs que votre routeur paie actuellement, ils sont déterminés par les autres membres de votre réseau et votre organisateur de réseau."
 }
