@@ -9,6 +9,8 @@ import NodeInformation from "./NodeInformation";
 import NetworkOrganizer from "./NetworkOrganizer";
 import RemoteAccess from "./RemoteAccess";
 import RemoteLogging from "./RemoteLogging";
+import MeshAP from "./MeshAP";
+import LightClientAP from "./LightClientAP";
 
 import exclamation from "images/exclamation.svg";
 
@@ -47,6 +49,13 @@ export default () => {
         <RemoteLogging />
       </div>
 
+      <div
+        className="d-flex flex-wrap"
+        style={{ justifyContent: "space-evenly" }}
+      >
+        <LightClientAP />
+        <MeshAP />
+      </div>
       <AdvancedDebugging />
     </div>
   );
