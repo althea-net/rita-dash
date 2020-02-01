@@ -103,5 +103,10 @@
   "bandwidthPriceName": "Bandwidth price: ",
   "organizerFeeContent": "{{readableDAOPrice}} {{symbol}}/Month",
   "bandwidthPriceContent": "{{readableExitPrice}} {{symbol}}/GB",
-  "pricesCopy": "Ce sont les tarifs que votre routeur paie actuellement, ils sont déterminés par les autres membres de votre réseau et votre organisateur de réseau."
+  "pricesCopy": "Ce sont les tarifs que votre routeur paie actuellement, ils sont déterminés par les autres membres de votre réseau et votre organisateur de réseau.",
+  "lightClientAPBlurb": "Active le réseau WiFi AltheaMobile. Ce réseau sera utilisé pour vendre de la bande passante aux téléphones Android à proximité via le client de téléphone Althea pour Android. Ces clients seront facturés au prix actuel de la bande passante",
+  "lightClientDownloadLinkText": "Télécharger depuis le Play Store",
+  "lightClientAP": "Althea Mobile",
+  "meshAPBlurb": "Active le réseau WiFi AltheaMesh. Le réseau sera utilisé pour permettre à ce routeur de se connecter directement à d'autres routeurs à proximité à l'aide de la radio interne. Ceci n'est pas recommandé pour une utilisation en dehors de situations très spécifiques.",
+  "meshAP": "Direct WiFi Meshing"
 }

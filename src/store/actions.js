@@ -65,7 +65,10 @@ export default (state, action) => {
       }
 
       let counter = state.counter;
-      if (connectionStatus === "connectionTrouble" && state.connectionStatus === "connected") {
+      if (
+        connectionStatus === "connectionTrouble" &&
+        state.connectionStatus === "connected"
+      ) {
         counter += 1;
         if (counter < 5) connectionStatus = "connected";
       } else if (connectionStatus === "connected") {
@@ -152,6 +155,8 @@ export default (state, action) => {
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname]
     }),
+    lightClientAP: ({ lightClientAP }) => ({ lightClientAP }),
+    meshAP: ({ meshAP }) => ({ meshAP }),
     remoteAccess: ({ remoteAccess }) => ({ remoteAccess }),
     remoteLogging: ({ remoteLogging }) => ({ remoteLogging }),
     sellingBandwidth: ({ sellingBandwidth }) => {
