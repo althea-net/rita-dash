@@ -31,11 +31,15 @@ const Prices = () => {
     .toFixed(0)
     .toString();
 
+  const maybeDollarSymbol = symbol === "Dai" ? "$" : "";
+
   const organizerFeeCopy = t("organizerFeeContent", {
+    maybeDollarSymbol,
     readableDAOPrice,
     symbol
   });
   const bandwidthPriceCopy = t("bandwidthPriceContent", {
+    maybeDollarSymbol,
     readableExitPrice,
     symbol
   });
