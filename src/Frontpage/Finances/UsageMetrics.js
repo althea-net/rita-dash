@@ -31,7 +31,7 @@ const UsageMetrics = () => {
     .reduce(sumUsage, initialUsage);
 
   const lastMonthData = usage
-    .filter(i => i.index >= startOfLastMonth && i < startOfThisMonth)
+    .filter(i => i.index >= startOfLastMonth && i.index < startOfThisMonth)
     .reduce(sumUsage, initialUsage);
 
   const thisMonthUsage = BigNumber(thisMonthData.usage)
