@@ -30,10 +30,13 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                 let currentInterface = interfaces[iface];
                 // static wan is a special case because it's an object
                 // in this case we just map it to wan
-                if(interfaces[iface].StaticWAN != null) {
-                  currentInterface = "WAN"
+                if (
+                  currentInterface != null &&
+                  interfaces[iface].StaticWAN != null
+                ) {
+                  currentInterface = "WAN";
                 }
-                console.log(interfaces[iface].StaticWAN)
+                console.log(interfaces[iface].StaticWAN);
                 let selected = mode === currentInterface;
                 let disabled =
                   !selected &&
