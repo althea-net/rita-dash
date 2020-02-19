@@ -36,7 +36,6 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                 ) {
                   currentInterface = "WAN";
                 }
-                console.log(interfaces[iface].StaticWAN);
                 let selected = mode === currentInterface;
                 let disabled =
                   !selected &&
