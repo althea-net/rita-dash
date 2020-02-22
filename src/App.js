@@ -3,7 +3,7 @@ import { Nav } from "reactstrap";
 import AltheaNav from "./Layout/Nav";
 import Topbar from "./Layout/Topbar";
 import { NoConnection } from "utils";
-import Router from "Router";
+import Router from "./Router";
 import Init from "./Init";
 import ErrorBoundary from "./ErrorBoundary";
 

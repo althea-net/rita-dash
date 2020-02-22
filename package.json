@@ -66,10 +66,12 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.12.4",
     "ethereum-address": "^0.0.4",
+    "hooks": "link:./src/hooks",
     "i": "^0.3.6",
     "i18next": "^14.0.1",
     "i18next-browser-languagedetector": "^2.2.3",
     "i18next-xhr-backend": "^1.5.1",
+    "images": "link:./src/images",
     "ip-address": "^5.8.9",
     "jquery": "^1.12.4",
     "js-sha3": "^0.8.0",
@@ -87,18 +89,25 @@
     "react-phone-number-input": "^2.3.11",
     "react-scripts": "^3.0.1",
     "react-sigma": "^1.2.30",
-    "react-stateful": "https://github.com/asoltys/react-stateful",
     "react-testing-library": "^5.9.0",
     "react-widgets": "4",
     "react-widgets-date-fns": "^4.0.26",
     "reactstrap": "^8.0.0",
     "source-map-explorer": "^2.0.1",
+    "store": "link:./src/store",
     "styled-components": "^3.4.9",
     "typescript": "^3.4.5",
-    "unstated": "^2.1.1"
+    "ui": "link:./src/ui",
+    "unstated": "^2.1.1",
+    "utils": "link:./src/utils"
   },
   "devDependencies": {
     "glob-all": "^3.1.0",
     "purgecss-webpack-plugin": "^1.6.0"
+  },
+  "dependenciesMeta": {
+    "bootstrap": {
+      "unplugged": true
+    }
   }
 }

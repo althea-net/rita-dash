@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Card as Boot, CardBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import media from "media";
+import media from "../media";
 
 export const Left = styled.div.attrs({
   className: "d-flex flex-column justify-content-between pr-lg-4 col-md-6 pl-0"
