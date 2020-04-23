@@ -18,19 +18,27 @@ const Deposit = ({ open, setOpen }) => {
   const [wyreAccountId, setWyreAccountId] = useState();
 
   const [
-    { address, debt, lowBalance, status, withdrawChainSymbol }
+    { address, debt, lowBalance, status, withdrawChainSymbol },
   ] = useStore();
 
-  const getWyreEnabled = useCallback(async signal => {
-    try {
-      const { wyreEnabled, wyreAccountId } = await get("/localization", true, 5000, signal)
-      setWyreEnabled(wyreEnabled);
-      setWyreAccountId(wyreAccountId);
-      if (wyreEnabled && withdrawChainSymbol === "ETH") setDepositing(false);
-    } catch {}
+  const getWyreEnabled = useCallback(
+    async (signal) => {
+      try {
+        const { wyreEnabled, wyreAccountId } = await get(
+          "/localization",
+          true,
+          5000,
+          signal
+        );
+        setWyreEnabled(wyreEnabled);
+        setWyreAccountId(wyreAccountId);
+        if (wyreEnabled && withdrawChainSymbol === "ETH") setDepositing(false);
+      } catch {}
 
-    setLoading(false);
-  }, [withdrawChainSymbol]);
+      setLoading(false);
+    },
+    [withdrawChainSymbol]
+  );
 
   useEffect(
     () => {
@@ -58,7 +66,7 @@ const Deposit = ({ open, setOpen }) => {
   const toggle = () => {
     setOpen(!open);
     if (wyreEnabled && withdrawChainSymbol === "ETH") setDepositing(false);
-  } 
+  };
 
   const copy = () => {
     setCopied(true);
@@ -77,7 +85,7 @@ const Deposit = ({ open, setOpen }) => {
                   "https://pay.sendwyre.com/purchase" +
                   `?dest=${address}` +
                   "&destCurrency=ETH" +
-                  `&account_id=${wyreAccountId}` +
+                  `&accountId=${wyreAccountId}` +
                   `&redirectUrl=${
                     window.isMobile ? "althea://" : window.location.href
                   }`
@@ -107,7 +115,7 @@ const Deposit = ({ open, setOpen }) => {
               style={{
                 border: "1px solid #ddd",
                 borderRadius: 5,
-                wordWrap: "break-word"
+                wordWrap: "break-word",
               }}
             >
               <div className="d-flex py-2 px-0 w-100">
