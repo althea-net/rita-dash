@@ -19,7 +19,19 @@ const Prices = () => {
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [prices, setPrices] = useState([]);
+  const [localization, setLocalization] = useState([]);
   const [t] = useTranslation();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let prices = await get("/prices");
+        let localization = await get("/localization");
+        if (!(prices instanceof Error)) setPrices(prices);
+        if (!(localization instanceof Error)) setLocalization(localization);
+      } catch {}
+    })();
+  }, []);
 
   const readableExitPrice = BigNumber(prices.exitDestPrice)
     .div(weiPerEth)
@@ -31,28 +43,28 @@ const Prices = () => {
     .toFixed(0)
     .toString();
 
-  const maybeDollarSymbol = symbol === "Dai" ? "$" : "";
+  // prepends the dollar symbol if we're using DAI
+  const maybeDollarSymbol =
+    symbol === "Dai" && localization.displayCurrencySymbol ? "$" : "";
+
+  // either the actually currency symbol or the dai start if display_currency_symbol
+  // is off in localization
+  let symbol_or_star =
+    symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
 
   const organizerFeeCopy = t("organizerFeeContent", {
     maybeDollarSymbol,
     readableDAOPrice,
-    symbol
+    symbol_or_star,
   });
   const bandwidthPriceCopy = t("bandwidthPriceContent", {
     maybeDollarSymbol,
     readableExitPrice,
-    symbol
+    symbol_or_star,
   });
+  console.log(symbol_or_star);
+  console.log(organizerFeeCopy);
   const pricesCopy = t("pricesCopy");
-
-  useEffect(() => {
-    (async () => {
-      try {
-        let prices = await get("/prices");
-        if (!(prices instanceof Error)) setPrices(prices);
-      } catch {}
-    })();
-  }, []);
 
   return (
     <Card>

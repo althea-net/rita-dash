@@ -17,13 +17,25 @@ const Billing = (daoAddress, ipAddress) => {
   const [exporting, setExporting] = useState(false);
   const [payments, setPayments] = useState([]);
   const [page, setPage] = useState(1);
+  const [localization, setLocalization] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let localization = await get("/localization");
+        if (!(localization instanceof Error)) setLocalization(localization);
+      } catch {}
+    })();
+  }, []);
 
   const [{ symbol }] = useStore();
+  let symbol_or_star =
+    symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
 
   const periods = {
     d: t("daily"),
     w: t("weekly"),
-    m: t("monthly")
+    m: t("monthly"),
   };
 
   useEffect(() => setPage(1), [period]);
@@ -32,12 +44,13 @@ const Billing = (daoAddress, ipAddress) => {
     h: 24,
     d: 10,
     w: 4,
-    m: 12
+    m: 12,
   }[period];
 
   const [rows, data] = useMemo(
-    () => groupUsage(usage, period, symbol, locale, page, limit, payments),
-    [usage, period, symbol, locale, page, limit, payments]
+    () =>
+      groupUsage(usage, period, symbol_or_star, locale, page, limit, payments),
+    [usage, period, symbol_or_star, locale, page, limit, payments]
   );
 
   useEffect(() => {
@@ -74,7 +87,7 @@ const Billing = (daoAddress, ipAddress) => {
                     style={{
                       whiteSpace: "nowrap",
                       fontSize: 16,
-                      color: "#666"
+                      color: "#666",
                     }}
                     className="mt-2 mr-2 d-flex"
                   >
@@ -83,9 +96,9 @@ const Billing = (daoAddress, ipAddress) => {
                       type="select"
                       style={{ color: "#666" }}
                       value={period}
-                      onChange={e => setPeriod(e.target.value)}
+                      onChange={(e) => setPeriod(e.target.value)}
                     >
-                      {Object.keys(periods).map(p => (
+                      {Object.keys(periods).map((p) => (
                         <option key={p} value={p}>
                           {periods[p]}
                         </option>
@@ -106,7 +119,7 @@ const Billing = (daoAddress, ipAddress) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.map(r => (
+                    {rows.map((r) => (
                       <tr key={r.period}>
                         <td>{r.period}</td>
                         <td>{r.usage}</td>

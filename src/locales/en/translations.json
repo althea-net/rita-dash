@@ -386,7 +386,7 @@
   "yourOrganizer": "Network organizers are the service providers who help maintain your local network and provide you with your IP address.",
   "organizerFeeName": "Organizer fee: ",
   "bandwidthPriceName": "Bandwidth price: ",
-  "organizerFeeContent": " {{maybeDollarSymbol}}{{readableDAOPrice}} {{symbol}}/Month",
-  "bandwidthPriceContent": " {{maybeDollarSymbol}}{{readableExitPrice}} {{symbol}}/GB",
+  "organizerFeeContent": " {{maybeDollarSymbol}}{{readableDAOPrice}} {{symbol_or_star}}/Month",
+  "bandwidthPriceContent": " {{maybeDollarSymbol}}{{readableExitPrice}} {{symbol_or_star}}/GB",
   "pricesCopy": "These are the rates your router is currently paying, they are determined by other members of your network and your network organizer."
 }

@@ -16,6 +16,10 @@ const Finances = () => {
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [{ balance, status, symbol }, dispatch] = useStore();
+  const [localization, setLocalization] = useState([]);
+
+  let symbol_or_star =
+    symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
 
   useEffect(
     () => {
@@ -26,6 +30,8 @@ const Finances = () => {
         try {
           const usage = await get("/usage/client", true, 10000, signal);
           if (usage instanceof Error) return;
+          let localization = await get("/localization");
+          if (!(localization instanceof Error)) setLocalization(localization);
           dispatch({ type: "usage", usage });
         } catch (e) {}
       })();
@@ -63,9 +69,9 @@ const Finances = () => {
             {t("currentBalance")}
           </h5>
           <h2 className="text-center mb-3">
-            {symbol === "Dai" && "$"}
+            {symbol === "Dai" && localization.displayCurrencySymbol ? "$" : ""}
             {toEth(balance, decimals)}{" "}
-            <span style={{ fontSize: 20 }}>{symbol}</span>
+            <span style={{ fontSize: 20 }}>{symbol_or_star}</span>
           </h2>
           <div className="d-flex justify-content-center mt-auto">
             <Button

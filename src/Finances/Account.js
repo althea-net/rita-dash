@@ -17,6 +17,7 @@ const Finances = () => {
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
   const [{ balance, status, symbol }, dispatch] = useStore();
+  const [localization, setLocalization] = useState([]);
 
   useEffect(
     () => {
@@ -26,6 +27,8 @@ const Finances = () => {
       (async () => {
         try {
           const usage = await get("/usage/client", true, 10000, signal);
+          let localization = await get("/localization");
+          if (!(localization instanceof Error)) setLocalization(localization);
           if (usage instanceof Error) return;
           dispatch({ type: "usage", usage });
         } catch (e) {}
@@ -47,8 +50,11 @@ const Finances = () => {
           {t("currentBalance")}
         </h5>
         <h4 id="balance" className="w-100 mb-2">
-          {symbol === "Dai" && "$"}
-          {toEth(balance, decimals)} {symbol}
+          {symbol === "Dai" && localization.displayCurrencySymbol ? "$" : ""}
+          {toEth(balance, decimals)}{" "}
+          {symbol === "Dai" && !localization.displayCurrencySymbol
+            ? "◈"
+            : symbol}
         </h4>
         <div className="d-flex justify-content-center">
           <Button

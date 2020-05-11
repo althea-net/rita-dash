@@ -374,7 +374,7 @@
   "yourOrganizer": "Su organizador es la persona que ayuda a mantener su red comunitaria. Te va a dar un dirección IP y la dirección de Ethereum de su Subnet DAO. Estas direcciones se pueden introducir manualamente o al escanear el código de QR",
   "organizerFeeName": "Organizador cuota: ",
   "bandwidthPriceName": "Bandwidth price: ",
-  "organizerFeeContent": " {{maybeDollarSymbol}}{{readableDAOPrice}} {{symbol}}/Mes",
-  "bandwidthPriceContent": " {{maybeDollarSymbol}}{{readableExitPrice}} {{symbol}}/GB",
+  "organizerFeeContent": " {{maybeDollarSymbol}}{{readableDAOPrice}} {{symbol_or_star}}/Mes",
+  "bandwidthPriceContent": " {{maybeDollarSymbol}}{{readableExitPrice}} {{symbol_or_star}}/GB",
   "pricesCopy": "Estas son las tarifas que paga actualmente su enrutador; las determinan otros miembros de su red y su organizador de red."
 }

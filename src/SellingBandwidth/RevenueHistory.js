@@ -17,18 +17,19 @@ const RevenueHistory = () => {
   const [{ symbol }] = useStore();
   const [page, setPage] = useState(1);
   const [exporting, setExporting] = useState(false);
+  const [localization, setLocalization] = useState([]);
 
   const periods = {
     d: t("daily"),
     w: t("weekly"),
-    m: t("monthly")
+    m: t("monthly"),
   };
 
   const limit = {
     h: 24,
     d: 10,
     w: 4,
-    m: 12
+    m: 12,
   }[period];
 
   useEffect(() => setPage(1), [period]);
@@ -37,14 +38,19 @@ const RevenueHistory = () => {
     (async () => {
       try {
         let usage = await get("/usage/relay");
+        let localization = await get("/localization");
         if (!(usage instanceof Error)) setUsage(usage);
+        if (!(localization instanceof Error)) setLocalization(localization);
       } catch {}
     })();
   }, []);
 
+  let symbol_or_star =
+    symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
+
   const [rows, data] = useMemo(
-    () => groupUsage(usage, period, symbol, locale, page, limit),
-    [usage, period, symbol, locale, page, limit]
+    () => groupUsage(usage, period, symbol_or_star, locale, page, limit),
+    [usage, period, symbol_or_star, locale, page, limit]
   );
 
   return (
@@ -67,7 +73,7 @@ const RevenueHistory = () => {
                     style={{
                       whiteSpace: "nowrap",
                       fontSize: 16,
-                      color: "#666"
+                      color: "#666",
                     }}
                     className="mr-2 d-flex"
                   >
@@ -76,9 +82,9 @@ const RevenueHistory = () => {
                       type="select"
                       style={{ color: "#666" }}
                       value={period}
-                      onChange={e => setPeriod(e.target.value)}
+                      onChange={(e) => setPeriod(e.target.value)}
                     >
-                      {Object.keys(periods).map(p => (
+                      {Object.keys(periods).map((p) => (
                         <option key={p} value={p}>
                           {periods[p]}
                         </option>
@@ -97,7 +103,7 @@ const RevenueHistory = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.map(r => (
+                    {rows.map((r) => (
                       <tr key={r.period}>
                         <td>{r.period}</td>
                         <td className="text-right">{r.usage}</td>
