@@ -5,9 +5,13 @@ import { BigNumber } from "bignumber.js";
 const msPerHr = 3600000;
 const bytesPerGb = BigNumber("1000000000");
 
+// takes usage data and correlates it with payment data, used for both relay usage
+// and client usage with slightly different arguments
 const groupData = (
   // takes our_info to identify who is us in the payment 'from' and 'to' fields
   our_info,
+  // boolean true/false if false we're doing relay billing
+  client,
   usage,
   period,
   symbol,
@@ -59,20 +63,33 @@ const groupData = (
           .filter((p) => p.to.meshIp === "::1")
           .reduce((a, b) => a + parseInt(b.amount), 0);
 
+        // this relies on us having the same eth address as the payment records
+        // if you are copying payment records from one router to another and always
+        // see zero for your own usage cost this right here is why. You can either set
+        // the same eth address locally, or uncomment the 'easy' block below and comment
+        // this out.
+        // As for what this actually does, this is where we toggle between filtering payments
+        // from us and payments to us when we determine client costs and relay income
         if (our_info) {
-          data[i].cost += p.payments
-            .filter(
-              (p) =>
-                // this relies on us having the same eth address as the payment records
-                // if you are copying payment records from one router to another and always
-                // see zero for your own usage cost this right here is why. You can either set
-                // the same eth address locally, or uncomment the 'easy' block below and comment
-                // this out.
-                p.from.ethAddress.toLowerCase() ===
-                our_info.address.toLowerCase()
-            )
-            .filter((p) => !(p.to.meshIp === "::1"))
-            .reduce((a, b) => a + parseInt(b.amount), 0);
+          if (client) {
+            data[i].cost += p.payments
+              .filter(
+                (p) =>
+                  p.from.ethAddress.toLowerCase() ===
+                  our_info.address.toLowerCase()
+              )
+              .filter((p) => !(p.to.meshIp === "::1"))
+              .reduce((a, b) => a + parseInt(b.amount), 0);
+          } else {
+            data[i].cost += p.payments
+              .filter(
+                (p) =>
+                  p.to.ethAddress.toLowerCase() ===
+                  our_info.address.toLowerCase()
+              )
+              .filter((p) => !(p.to.meshIp === "::1"))
+              .reduce((a, b) => a + parseInt(b.amount), 0);
+          }
         }
       }
     }

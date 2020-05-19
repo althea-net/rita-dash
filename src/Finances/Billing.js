@@ -54,6 +54,7 @@ const Billing = (daoAddress, ipAddress) => {
     () =>
       groupUsage(
         info,
+        true,
         usage,
         period,
         symbol_or_star,

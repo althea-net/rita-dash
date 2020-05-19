@@ -19,6 +19,7 @@ const RevenueHistory = () => {
   const [exporting, setExporting] = useState(false);
   const [localization, setLocalization] = useState([]);
   const [info, setInfo] = useState([]);
+  const [payments, setPayments] = useState([]);
 
   const periods = {
     d: t("daily"),
@@ -38,12 +39,14 @@ const RevenueHistory = () => {
   useEffect(() => {
     (async () => {
       try {
+        let payments = await get("/usage/payments");
         let usage = await get("/usage/relay");
         let info = await get("/info");
         let localization = await get("/localization");
         if (!(usage instanceof Error)) setUsage(usage);
         if (!(localization instanceof Error)) setLocalization(localization);
         if (!(info instanceof Error)) setInfo(info);
+        if (!(payments instanceof Error)) setPayments(payments);
       } catch {}
     })();
   }, []);
@@ -52,8 +55,19 @@ const RevenueHistory = () => {
     symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
 
   const [rows, data] = useMemo(
-    () => groupUsage(info, usage, period, symbol_or_star, locale, page, limit),
-    [info, usage, period, symbol_or_star, locale, page, limit]
+    () =>
+      groupUsage(
+        info,
+        false,
+        usage,
+        period,
+        symbol_or_star,
+        locale,
+        page,
+        limit,
+        payments
+      ),
+    [info, usage, period, symbol_or_star, locale, page, limit, payments]
   );
 
   return (
