@@ -5,12 +5,22 @@ import { BigNumber } from "bignumber.js";
 const msPerHr = 3600000;
 const bytesPerGb = BigNumber("1000000000");
 
-const groupData = (usage, period, symbol, locale, page, limit, payments) => {
+const groupData = (
+  // takes our_info to identify who is us in the payment 'from' and 'to' fields
+  our_info,
+  usage,
+  period,
+  symbol,
+  locale,
+  page,
+  limit,
+  payments
+) => {
   let data = {};
 
-  let indices = usage.map(h => h.index);
+  let indices = usage.map((h) => h.index);
 
-  indices.map(index => {
+  indices.map((index) => {
     const date = new Date(index * msPerHr);
     let i;
 
@@ -40,22 +50,36 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
 
     if (!data[i]) data[i] = { up: 0, down: 0, cost: 0, service: 0 };
 
-    let c = usage.find(c => c.index === index);
+    let c = usage.find((c) => c.index === index);
 
     if (payments && payments.length) {
-      let p = payments.find(p => p.index === index);
+      let p = payments.find((p) => p.index === index);
       if (p) {
         data[i].service += p.payments
-          .filter(p => p.to.meshIp === "::1")
+          .filter((p) => p.to.meshIp === "::1")
           .reduce((a, b) => a + parseInt(b.amount), 0);
 
-        data[i].cost += p.payments
-          .filter(p => p.to.meshIp !== "::1")
-          .reduce((a, b) => a + parseInt(b.amount), 0);
+        if (our_info) {
+          data[i].cost += p.payments
+            .filter(
+              (p) =>
+                // this relies on us having the same eth address as the payment records
+                // if you are copying payment records from one router to another and always
+                // see zero for your own usage cost this right here is why. You can either set
+                // the same eth address locally, or uncomment the 'easy' block below and comment
+                // this out.
+                p.from.ethAddress.toLowerCase() ===
+                our_info.address.toLowerCase()
+            )
+            .filter((p) => !(p.to.meshIp === "::1"))
+            .reduce((a, b) => a + parseInt(b.amount), 0);
+        }
       }
-    } else {
-      data[i].cost += c.price * (c.up + c.down);
     }
+    // Hey you developer! uncomment this for a very close (only missing tx fees)
+    // estimate, this is good if you have decided that the lack of portability in
+    // the tx history is bad idea
+    //data[i].cost += c.price * (c.up + c.down);
 
     data[i].up += c.up;
     data[i].down += c.down;
@@ -63,7 +87,7 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
     return c;
   });
 
-  const start = hour => {
+  const start = (hour) => {
     let date = new Date(hour * msPerHr);
 
     switch (period) {
@@ -77,7 +101,7 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
     }
   };
 
-  const end = hour => {
+  const end = (hour) => {
     let date = new Date(hour * msPerHr);
 
     switch (period) {
@@ -97,7 +121,7 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
   const rows = Object.keys(data)
     .reverse()
     .slice((page - 1) * limit, page * limit)
-    .map(d => ({
+    .map((d) => ({
       index: d,
       period: `${start(d)} - ${end(d)}`,
       usage:
@@ -106,7 +130,7 @@ const groupData = (usage, period, symbol, locale, page, limit, payments) => {
           .toFixed(4) + "GB",
       bandwidthCost: `${toEth(data[d].cost, 4)} ${symbol}`,
       serviceCost: `${toEth(data[d].service, 4)} ${symbol}`,
-      totalCost: `${toEth(data[d].cost + data[d].service, 4)} ${symbol}`
+      totalCost: `${toEth(data[d].cost + data[d].service, 4)} ${symbol}`,
     }));
 
   return [rows, data];

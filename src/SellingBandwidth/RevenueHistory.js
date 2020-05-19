@@ -18,6 +18,7 @@ const RevenueHistory = () => {
   const [page, setPage] = useState(1);
   const [exporting, setExporting] = useState(false);
   const [localization, setLocalization] = useState([]);
+  const [info, setInfo] = useState([]);
 
   const periods = {
     d: t("daily"),
@@ -38,9 +39,11 @@ const RevenueHistory = () => {
     (async () => {
       try {
         let usage = await get("/usage/relay");
+        let info = await get("/info");
         let localization = await get("/localization");
         if (!(usage instanceof Error)) setUsage(usage);
         if (!(localization instanceof Error)) setLocalization(localization);
+        if (!(info instanceof Error)) setInfo(info);
       } catch {}
     })();
   }, []);
@@ -49,8 +52,8 @@ const RevenueHistory = () => {
     symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
 
   const [rows, data] = useMemo(
-    () => groupUsage(usage, period, symbol_or_star, locale, page, limit),
-    [usage, period, symbol_or_star, locale, page, limit]
+    () => groupUsage(info, usage, period, symbol_or_star, locale, page, limit),
+    [info, usage, period, symbol_or_star, locale, page, limit]
   );
 
   return (

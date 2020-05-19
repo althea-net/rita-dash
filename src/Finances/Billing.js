@@ -18,12 +18,15 @@ const Billing = (daoAddress, ipAddress) => {
   const [payments, setPayments] = useState([]);
   const [page, setPage] = useState(1);
   const [localization, setLocalization] = useState([]);
+  const [info, setInfo] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         let localization = await get("/localization");
+        let info = await get("/info");
         if (!(localization instanceof Error)) setLocalization(localization);
+        if (!(info instanceof Error)) setInfo(info);
       } catch {}
     })();
   }, []);
@@ -49,8 +52,17 @@ const Billing = (daoAddress, ipAddress) => {
 
   const [rows, data] = useMemo(
     () =>
-      groupUsage(usage, period, symbol_or_star, locale, page, limit, payments),
-    [usage, period, symbol_or_star, locale, page, limit, payments]
+      groupUsage(
+        info,
+        usage,
+        period,
+        symbol_or_star,
+        locale,
+        page,
+        limit,
+        payments
+      ),
+    [info, usage, period, symbol_or_star, locale, page, limit, payments]
   );
 
   useEffect(() => {
