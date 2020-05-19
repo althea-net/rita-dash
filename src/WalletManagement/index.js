@@ -16,7 +16,6 @@ const WalletManagement = ({ open, setOpen }) => {
       <ModalBody>
         <p>{t("altheaUses")}</p>
         <BackupPrivateKey />
-        <ImportPrivateKey />
       </ModalBody>
     </Modal>
   );

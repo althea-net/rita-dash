@@ -96,7 +96,7 @@
   "newPrivateKey": "Nueva clave privada",
   "billingHistory": "Historial de facturación",
   "purchasingBandwidth": "Compras de ancho de banda",
-  "backupOrReplace": "Copia de seguridad o reemplazar billetera",
+  "backupOrReplace": "Copia de seguridad billetera",
   "routerHasWallet": "Su enrutador tiene una billetera de criptomonedas que envía y recibe pagos. Es importante hacer una copia de seguridad para que no pierda dinero",
   "dismissWarning": "Advertencia de descarte",
   "settings": "Configuración",

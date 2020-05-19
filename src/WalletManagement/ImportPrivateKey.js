@@ -6,6 +6,9 @@ import { get, post, useStore } from "store";
 import refresh from "../images/refresh.svg";
 import { Error } from "utils";
 
+// TODO this needs to be replaced with 'import funds from key' which is
+// more useful as it doesn't require gaming exit registrations and such
+// but for now it's just not used anywhere.
 const ImportPrivateKey = () => {
   const [t] = useTranslation();
   const [privateKey, setPrivateKey] = useState("");
@@ -36,10 +39,10 @@ const ImportPrivateKey = () => {
     return;
   }, []);
 
-  const save = async e => {
+  const save = async (e) => {
     e.preventDefault();
 
-    try { 
+    try {
       await post("/eth_private_key", { eth_private_key: privateKey });
       setInitiating(true);
     } catch (e) {
@@ -47,7 +50,7 @@ const ImportPrivateKey = () => {
     }
   };
 
-  const confirm = e => {
+  const confirm = (e) => {
     e.preventDefault();
     setConfirming(true);
   };
@@ -104,7 +107,7 @@ const ImportPrivateKey = () => {
                     className="mr-3 mb-2"
                     id="privateKey"
                     name="privateKey"
-                    onChange={e => setPrivateKey(e.target.value)}
+                    onChange={(e) => setPrivateKey(e.target.value)}
                     value={privateKey}
                     style={{ width: 350 }}
                   />
