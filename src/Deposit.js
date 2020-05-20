@@ -15,6 +15,7 @@ const Deposit = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   const [depositing, setDepositing] = useState(true);
   const [wyreEnabled, setWyreEnabled] = useState(false);
+  const [operatorDebt, setOperatorDebt] = useState(0);
   const [wyreAccountId, setWyreAccountId] = useState();
 
   const [
@@ -46,6 +47,9 @@ const Deposit = ({ open, setOpen }) => {
       const signal = controller.signal;
 
       (async () => {
+        let operatorDebt = await get("/operator_debt");
+        if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
+
         setLoading(true);
         await getWyreEnabled(signal);
         setLoading(false);
@@ -56,7 +60,7 @@ const Deposit = ({ open, setOpen }) => {
     [getWyreEnabled]
   );
 
-  let minDeposit = toEth(debt) * 2;
+  let minDeposit = toEth(debt) * 2 + toEth(operatorDebt);
   if (status) minDeposit = Math.max(status.minEth, minDeposit);
 
   const recommendedDeposit = `${minDeposit} ${withdrawChainSymbol}`;

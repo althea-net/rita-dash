@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useStore } from "store";
 import exclamation from "images/exclamation.svg";
-import Backup from "../../Backup";
+import { useStore } from "store";
 
-const Warning = () => {
+const DebtWarning = (props) => {
+  let debt_value = props.debtValue;
   const [t] = useTranslation();
-  const [{ backupCreated }] = useStore();
-  const [backingUp, setBackingUp] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
   const dismiss = (e) => {
@@ -15,16 +13,13 @@ const Warning = () => {
     setDismissed(true);
   };
 
-  const backup = () => setBackingUp(true);
-
-  if (backupCreated || dismissed) return null;
+  if (dismissed) return null;
 
   return (
     <div
       className="d-flex flex-column mx-auto my-auto pb-2"
       style={{ marginTop: 30 }}
     >
-      <Backup open={backingUp} setOpen={setBackingUp} />
       <div className="d-flex w-100 justify-content-around">
         <img
           src={exclamation}
@@ -32,11 +27,10 @@ const Warning = () => {
           style={{ marginRight: 10 }}
         />
         <div
-          onClick={backup}
           className="my-auto"
           style={{ color: "#777", fontSize: 18, cursor: "pointer" }}
           dangerouslySetInnerHTML={{
-            __html: t("backupYourWallet"),
+            __html: t("youHaveDebt", { debt_value }),
           }}
         />
       </div>
@@ -49,4 +43,4 @@ const Warning = () => {
   );
 };
 
-export default Warning;
+export default DebtWarning;

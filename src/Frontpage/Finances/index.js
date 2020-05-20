@@ -9,17 +9,44 @@ import Deposit from "../../Deposit";
 import Withdraw from "../../Withdraw";
 import UsageMetrics from "./UsageMetrics";
 import Warning from "./Warning";
+import DebtWarning from "./DebtWarning";
 import FundingStatus from "../../FundingStatus";
 
 const Finances = () => {
   const [t] = useTranslation();
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
-  const [{ balance, status, symbol }, dispatch] = useStore();
+  const [operatorDebt, setOperatorDebt] = useState(0);
   const [localization, setLocalization] = useState([]);
+
+  const [{ debt, balance, status, symbol }, dispatch] = useStore();
+
+  const decimals = symbol === "Dai" ? 2 : 4;
 
   let symbol_or_star =
     symbol === "Dai" && !localization.displayCurrencySymbol ? "◈" : symbol;
+
+  let dollar_or_nothing =
+    symbol === "Dai" && localization.displayCurrencySymbol ? "$" : "";
+
+  // the amount of debt where we display a user warning about money being
+  // withdrawn on the next deposit. This will hide the backup wallet warning
+  // if it is still being shown
+  const daiThreshold = 0.5;
+  // $5 at $210/eth
+  const ethThreshold = 0.02;
+  let threshold;
+  if (symbol === "Dai") {
+    threshold = daiThreshold;
+  } else {
+    threshold = ethThreshold;
+  }
+
+  let debtToBePaid =
+    Number(toEth(debt, decimals)) + Number(toEth(operatorDebt, decimals));
+  const debtToBePaidString = `${dollar_or_nothing}${debtToBePaid} ${symbol_or_star}`;
+
+  let show_debt_warning = debtToBePaid > threshold;
 
   useEffect(
     () => {
@@ -28,10 +55,13 @@ const Finances = () => {
 
       (async () => {
         try {
-          const usage = await get("/usage/client", true, 10000, signal);
-          if (usage instanceof Error) return;
           let localization = await get("/localization");
           if (!(localization instanceof Error)) setLocalization(localization);
+          let operatorDebt = await get("/operator_debt");
+          if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
+
+          const usage = await get("/usage/client", true, 10000, signal);
+          if (usage instanceof Error) return;
           dispatch({ type: "usage", usage });
         } catch (e) {}
       })();
@@ -40,8 +70,6 @@ const Finances = () => {
     },
     [dispatch]
   );
-
-  const decimals = symbol === "Dai" ? 2 : 4;
 
   return (
     <Card>
@@ -96,7 +124,11 @@ const Finances = () => {
 
           <FundingStatus />
         </div>
-        <Warning />
+        {show_debt_warning ? (
+          <DebtWarning debtValue={debtToBePaidString} />
+        ) : (
+          <Warning />
+        )}
       </div>
       <UsageMetrics />
     </Card>
