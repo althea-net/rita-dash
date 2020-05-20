@@ -73,7 +73,7 @@
   "fundsAdded": "<b>Funds added.</b> It may still take several seconds or minutes for them to appear in your account.",
   "withdrawEverything": "withdraw your entire balance",
   "notEnoughFunds": "Not enough funds to deposit.",
-  "routerHas": "Your router has {{eth}} Eth, worth ${{dai}}. The minimum amount of funds to deposit is {{minEth}} Eth, worth ${{minDai}}. To start a deposit, please add an additional {{requiredEth}} Eth. Or you can ",
+  "routerHas": "The minimum amount of funds to deposit is ${{minDai}}.",
   "ethToDai": "<b>Adding funds...</b> Converting {{eth}} Eth to ${{dai}} Dai",
   "daiToXdai": "<b>Adding funds...</b> Transferring ${{dai}} Dai to xDai blockchain",
   "xdaiToDai": "<b>Withdrawing funds...</b> Transferring ${{dai}} Dai to Ethereum blockchain",
