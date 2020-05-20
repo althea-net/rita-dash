@@ -33,7 +33,7 @@ const Billing = (daoAddress, ipAddress) => {
 
   const [{ symbol }] = useStore();
   let symbol_or_star =
-    symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
+    symbol === "Dai" && !localization.displayCurrencySymbol ? "◈" : symbol;
 
   const periods = {
     d: t("daily"),

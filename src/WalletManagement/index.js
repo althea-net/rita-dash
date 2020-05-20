@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import BackupPrivateKey from "./BackupPrivateKey";
-import ImportPrivateKey from "./ImportPrivateKey";
+//import ImportPrivateKey from "./ImportPrivateKey";
 
 const WalletManagement = ({ open, setOpen }) => {
   const [t] = useTranslation();

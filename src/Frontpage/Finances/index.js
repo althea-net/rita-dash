@@ -19,7 +19,7 @@ const Finances = () => {
   const [localization, setLocalization] = useState([]);
 
   let symbol_or_star =
-    symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
+    symbol === "Dai" && !localization.displayCurrencySymbol ? "◈" : symbol;
 
   useEffect(
     () => {

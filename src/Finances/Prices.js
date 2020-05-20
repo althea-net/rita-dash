@@ -50,7 +50,7 @@ const Prices = () => {
   // either the actually currency symbol or the dai start if display_currency_symbol
   // is off in localization
   let symbol_or_star =
-    symbol === "Dai" && localization.displayCurrencySymbol ? symbol : "◈";
+    symbol === "Dai" && !localization.displayCurrencySymbol ? "◈" : symbol;
 
   const organizerFeeCopy = t("organizerFeeContent", {
     maybeDollarSymbol,
