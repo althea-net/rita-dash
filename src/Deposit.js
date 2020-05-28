@@ -6,6 +6,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { get, useStore } from "store";
 import { toEth } from "utils";
+import { symbol } from "prop-types";
 
 const qrStyle = { height: "auto", width: "80%" };
 
@@ -17,22 +18,27 @@ const Deposit = ({ open, setOpen }) => {
   const [wyreEnabled, setWyreEnabled] = useState(false);
   const [operatorDebt, setOperatorDebt] = useState(0);
   const [wyreAccountId, setWyreAccountId] = useState();
+  const [wyreWarningModal, setWyreWarningModal] = useState(false);
+  const [supportNumber, setSupportNumber] = useState("");
+  const [wyrePrefaceMessage, setWyrePrefaceMessage] = useState("");
 
   const [
-    { address, debt, lowBalance, status, withdrawChainSymbol },
+    { address, debt, lowBalance, status, withdrawChainSymbol, symbol },
   ] = useStore();
 
   const getWyreEnabled = useCallback(
     async (signal) => {
       try {
-        const { wyreEnabled, wyreAccountId } = await get(
-          "/localization",
-          true,
-          5000,
-          signal
-        );
+        const {
+          wyreEnabled,
+          wyreAccountId,
+          supportNumber,
+          wyrePrefaceMessage,
+        } = await get("/localization", true, 5000, signal);
         setWyreEnabled(wyreEnabled);
         setWyreAccountId(wyreAccountId);
+        setWyrePrefaceMessage(wyrePrefaceMessage);
+        setSupportNumber(supportNumber);
         if (wyreEnabled && withdrawChainSymbol === "ETH") setDepositing(false);
       } catch {}
 
@@ -60,10 +66,11 @@ const Deposit = ({ open, setOpen }) => {
     [getWyreEnabled]
   );
 
-  let minDeposit = toEth(debt) * 2 + toEth(operatorDebt);
+  let decimals = symbol === "Dai" ? 2 : 4;
+  let minDeposit = toEth(debt, decimals) * 2 + toEth(operatorDebt, decimals);
   if (status) minDeposit = Math.max(status.minEth, minDeposit);
 
-  const recommendedDeposit = `${minDeposit} ${withdrawChainSymbol}`;
+  const recommendedDeposit = `${minDeposit} ${symbol}`;
 
   if (!(address && withdrawChainSymbol)) return null;
 
@@ -77,81 +84,141 @@ const Deposit = ({ open, setOpen }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  return (
-    <Modal isOpen={open && !loading} size="sm" centered toggle={toggle}>
-      <ModalHeader>{t("addFunds")}</ModalHeader>
-      <ModalBody>
-        {wyreEnabled &&
-          withdrawChainSymbol === "ETH" && (
-            <>
-              <Button
-                href={
-                  "https://pay.sendwyre.com/purchase" +
-                  `?dest=${address}` +
-                  "&destCurrency=ETH" +
-                  `&accountId=${wyreAccountId}` +
-                  `&redirectUrl=${
-                    window.isMobile ? "althea://" : window.location.href
-                  }`
-                }
-                color="primary"
-                className="w-100 mb-2"
-              >
-                {t("buy")} ETH
-              </Button>
+  let frontpage;
+  let wyre_deposit_error_page;
+  if (window.isMobile) {
+    frontpage = "althea://";
+    wyre_deposit_error_page = "althea://#wyre_deposit_error";
+  } else {
+    frontpage = "http://192.168.10.1";
+    wyre_deposit_error_page = "http://192.168.10.1/#wyre_deposit_error";
+  }
 
-              {depositing || (
-                <Button
-                  color="primary"
-                  className="w-100 mb-2"
-                  onClick={() => setDepositing(true)}
-                >
-                  {t("deposit")} {withdrawChainSymbol}
-                </Button>
-              )}
-            </>
-          )}
+  let modal_body;
+  let modal_header = t("addFunds");
 
-        {depositing && (
-          <>
-            <div
-              className="mb-4 shadow-none d-flex flex-wrap"
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: 5,
-                wordWrap: "break-word",
-              }}
-            >
-              <div className="d-flex py-2 px-0 w-100">
-                <div className="col-11" id="walletAddr">
-                  {address}
-                </div>
-
-                <Tooltip placement="top" isOpen={copied} target="copy">
-                  {t("copied")}
-                </Tooltip>
-                <CopyToClipboard text={address} onCopy={copy}>
-                  <FontAwesomeIcon
-                    id="copy"
-                    icon="copy"
-                    color="#999"
-                    className="mr-2"
-                    style={{ cursor: "pointer" }}
-                  />
-                </CopyToClipboard>
-              </div>
+  // the modal size, edited for when a message case needs a larger modal
+  let size = "sm";
+  if (depositing) {
+    modal_body = (
+      <>
+        <div
+          className="mb-4 shadow-none d-flex flex-wrap"
+          style={{
+            border: "1px solid #ddd",
+            borderRadius: 5,
+            wordWrap: "break-word",
+          }}
+        >
+          <div className="d-flex py-2 px-0 w-100">
+            <div className="col-11" id="walletAddr">
+              {address}
             </div>
-            <div className="w-100 text-center mb-4">
-              <QR style={qrStyle} value={address} />
-            </div>
-          </>
-        )}
+
+            <Tooltip placement="top" isOpen={copied} target="copy">
+              {t("copied")}
+            </Tooltip>
+            <CopyToClipboard text={address} onCopy={copy}>
+              <FontAwesomeIcon
+                id="copy"
+                icon="copy"
+                color="#999"
+                className="mr-2"
+                style={{ cursor: "pointer" }}
+              />
+            </CopyToClipboard>
+          </div>
+        </div>
+        <div className="w-100 text-center mb-4">
+          <QR style={qrStyle} value={address} />
+        </div>
+
         <div>
           {lowBalance &&
             minDeposit > 0 &&
             t("recommendedDeposit", { recommendedDeposit })}
         </div>
-      </ModalBody>
+      </>
+    );
+  } else if (
+    wyreEnabled &&
+    withdrawChainSymbol === "ETH" &&
+    !wyreWarningModal
+  ) {
+    modal_body = (
+      <>
+        <Button
+          color="primary"
+          className="w-100 mb-2"
+          onClick={() => setWyreWarningModal(true)}
+        >
+          {t("buy")} ETH
+        </Button>
+
+        {depositing || (
+          <Button
+            color="primary"
+            className="w-100 mb-2"
+            onClick={() => setDepositing(true)}
+          >
+            {t("deposit")} {withdrawChainSymbol}
+          </Button>
+        )}
+
+        <div>
+          {lowBalance &&
+            minDeposit > 0 &&
+            t("recommendedDeposit", { recommendedDeposit })}
+        </div>
+      </>
+    );
+  } else if (wyreEnabled && withdrawChainSymbol === "ETH" && wyreWarningModal) {
+    modal_header = "A few notes about our payment partner";
+    size = "md";
+    modal_body = (
+      <>
+        <div>
+          {wyrePrefaceMessage}
+          {supportNumber}
+        </div>
+        <div />
+        <Button
+          href={
+            "https://pay.sendwyre.com/purchase" +
+            `?dest=${address}` +
+            "&destCurrency=ETH" +
+            `&accountId=${wyreAccountId}` +
+            `&redirectUrl=${frontpage}` +
+            `&failureRedirectUrl=${wyre_deposit_error_page}`
+          }
+          color="primary"
+          className="w-25 mb-2"
+        >
+          {t("continueToWyre")}
+        </Button>
+      </>
+    );
+  }
+  return (
+    <Modal
+      isOpen={open && !loading}
+      // this resets the wyre warning modal flow
+      // the flow goes, depositing true -> false
+      // which shows the selection modal if appropriate
+      // if you show the selection modal once wyreWarningModal
+      // is set to true it shows the final warning page then
+      // the user exits.
+      // both warning modal and depositing are reset here
+      onClosed={() => {
+        setWyreWarningModal(false);
+        setDepositing(false);
+      }}
+      size={size}
+      centered
+      toggle={toggle}
+    >
+      <ModalHeader>{modal_header}</ModalHeader>
+      <ModalBody>{modal_body}</ModalBody>
     </Modal>
   );
 };

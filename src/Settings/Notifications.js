@@ -8,7 +8,7 @@ import {
   FormGroup,
   CustomInput,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 import { get, post } from "store";
 import PhoneInput from "react-phone-number-input";
@@ -32,9 +32,10 @@ export default ({ balance, symbol }) => {
     let res = await get("/low_balance_notification");
     setChecked(res === "true");
 
-    let settings = await get("/settings");
-    setEmail(settings.exitClient.regDetails.email);
-    setPhone(settings.exitClient.regDetails.phone);
+    let phone = await get("/phone");
+    let email = await get("/email");
+    setEmail(email);
+    setPhone(phone);
   };
 
   useEffect(() => {
@@ -45,28 +46,21 @@ export default ({ balance, symbol }) => {
   let validEmail = !email || isValidEmail(email);
   let validPhone = !phone || isValidPhoneNumber(phone);
 
-  let handleEmail = e => {
+  let handleEmail = (e) => {
     let { value } = e.target;
     setEmail(value);
   };
 
-  let handlePhone = value => {
+  let handlePhone = (value) => {
     setPhone(value);
   };
 
-  let submit = async e => {
+  let submit = async (e) => {
     e.preventDefault();
     if (validEmail && validPhone) {
       try {
-        await post(`/settings`, {
-          exit_client: {
-            reg_details: {
-              email,
-              phone,
-              low_balance_notification: checked
-            }
-          }
-        });
+        await post(`/phone`, phone);
+        await post(`/email`, email);
 
         post(`/low_balance_notification/${checked}`);
 
@@ -114,7 +108,7 @@ export default ({ balance, symbol }) => {
                 flags={Flags}
                 placeholder={t("phoneNumber")}
                 value={phone}
-                onChange={p => handlePhone(p)}
+                onChange={(p) => handlePhone(p)}
               />
             </FormGroup>
             <FormGroup className="mt-auto">
