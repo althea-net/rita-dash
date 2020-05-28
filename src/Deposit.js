@@ -1,6 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Modal, ModalHeader, ModalBody, Tooltip } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Tooltip,
+  Input,
+} from "reactstrap";
 import QR from "qrcode.react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,6 +26,7 @@ const Deposit = ({ open, setOpen }) => {
   const [operatorDebt, setOperatorDebt] = useState(0);
   const [wyreAccountId, setWyreAccountId] = useState();
   const [wyreWarningModal, setWyreWarningModal] = useState(false);
+  const [phone, setPhone] = useState("");
   const [supportNumber, setSupportNumber] = useState("");
   const [wyrePrefaceMessage, setWyrePrefaceMessage] = useState("");
 
@@ -54,6 +62,8 @@ const Deposit = ({ open, setOpen }) => {
 
       (async () => {
         let operatorDebt = await get("/operator_debt");
+        let phone = await get("/phone");
+        if (!(phone instanceof Error)) setPhone(phone);
         if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
 
         setLoading(true);
@@ -84,14 +94,24 @@ const Deposit = ({ open, setOpen }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const updateContact = () => {
+    window.location.href = "#settings";
+    let scroll = () => {
+      let el = document.getElementById("notifications");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+      else setTimeout(scroll, 100);
+    };
+    scroll();
+  };
+
   let frontpage;
   let wyre_deposit_error_page;
   if (window.isMobile) {
     frontpage = "althea://";
-    wyre_deposit_error_page = "althea://#wyre_deposit_error";
+    wyre_deposit_error_page = "althea://";
   } else {
     frontpage = "http://192.168.10.1";
-    wyre_deposit_error_page = "http://192.168.10.1/#wyre_deposit_error";
+    wyre_deposit_error_page = "http://192.168.10.1/";
   }
 
   let modal_body;
@@ -99,7 +119,75 @@ const Deposit = ({ open, setOpen }) => {
 
   // the modal size, edited for when a message case needs a larger modal
   let size = "sm";
-  if (depositing) {
+  if (wyreEnabled && withdrawChainSymbol === "ETH" && !wyreWarningModal) {
+    modal_body = (
+      <>
+        <Button
+          color="primary"
+          className="w-100 mb-2"
+          onClick={() => setWyreWarningModal(true)}
+        >
+          {t("buy")} ETH
+        </Button>
+
+        {depositing || (
+          <Button
+            color="primary"
+            className="w-100 mb-2"
+            onClick={() => setDepositing(true)}
+          >
+            {t("deposit")} {withdrawChainSymbol}
+          </Button>
+        )}
+
+        <div>
+          {lowBalance &&
+            minDeposit > 0 &&
+            t("recommendedDeposit", { recommendedDeposit })}
+        </div>
+      </>
+    );
+  } else if (wyreEnabled && withdrawChainSymbol === "ETH" && wyreWarningModal) {
+    size = "lg";
+
+    modal_body = (
+      <>
+        <div>
+          {phone ? t("wyreNumberHelp") : t("wyreNumberHelpNoExample")}
+          {phone ? <Input id="phone" readOnly value={phone || ""} /> : <></>}
+          {phone ? (
+            <>
+              {t("wyreNumberChange")}
+              <a href="#settings" onClick={updateContact}>
+                {"here"}
+              </a>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+        <br />
+        <div>{t("wyreInternational")}</div>
+        <br />
+        <div>{t("wyreSupport", { supportNumber })}</div>
+        <hr />
+        <Button
+          href={
+            "https://pay.sendwyre.com/purchase" +
+            `?dest=${address}` +
+            "&destCurrency=ETH" +
+            `&accountId=${wyreAccountId}` +
+            `&redirectUrl=${frontpage}` +
+            `&failureRedirectUrl=${wyre_deposit_error_page}`
+          }
+          color="primary"
+          className="w-25 mb-2"
+        >
+          {t("continueToWyre")}
+        </Button>
+      </>
+    );
+  } else {
     modal_body = (
       <>
         <div
@@ -138,64 +226,6 @@ const Deposit = ({ open, setOpen }) => {
             minDeposit > 0 &&
             t("recommendedDeposit", { recommendedDeposit })}
         </div>
-      </>
-    );
-  } else if (
-    wyreEnabled &&
-    withdrawChainSymbol === "ETH" &&
-    !wyreWarningModal
-  ) {
-    modal_body = (
-      <>
-        <Button
-          color="primary"
-          className="w-100 mb-2"
-          onClick={() => setWyreWarningModal(true)}
-        >
-          {t("buy")} ETH
-        </Button>
-
-        {depositing || (
-          <Button
-            color="primary"
-            className="w-100 mb-2"
-            onClick={() => setDepositing(true)}
-          >
-            {t("deposit")} {withdrawChainSymbol}
-          </Button>
-        )}
-
-        <div>
-          {lowBalance &&
-            minDeposit > 0 &&
-            t("recommendedDeposit", { recommendedDeposit })}
-        </div>
-      </>
-    );
-  } else if (wyreEnabled && withdrawChainSymbol === "ETH" && wyreWarningModal) {
-    modal_header = "A few notes about our payment partner";
-    size = "md";
-    modal_body = (
-      <>
-        <div>
-          {wyrePrefaceMessage}
-          {supportNumber}
-        </div>
-        <div />
-        <Button
-          href={
-            "https://pay.sendwyre.com/purchase" +
-            `?dest=${address}` +
-            "&destCurrency=ETH" +
-            `&accountId=${wyreAccountId}` +
-            `&redirectUrl=${frontpage}` +
-            `&failureRedirectUrl=${wyre_deposit_error_page}`
-          }
-          color="primary"
-          className="w-25 mb-2"
-        >
-          {t("continueToWyre")}
-        </Button>
       </>
     );
   }

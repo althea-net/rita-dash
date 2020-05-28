@@ -70,7 +70,7 @@ export default ({ balance, symbol }) => {
   };
 
   return (
-    <Card className="mb-4">
+    <Card className="mb-4" id="notifications">
       <CardBody>
         <h4>{t("lowBalanceNotifications")}</h4>
         <p>{t("whenEmail")}</p>
