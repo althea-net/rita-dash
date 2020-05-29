@@ -13,7 +13,6 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { get, useStore } from "store";
 import { toEth } from "utils";
-import { symbol } from "prop-types";
 
 const qrStyle = { height: "auto", width: "80%" };
 

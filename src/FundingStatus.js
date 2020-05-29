@@ -12,10 +12,9 @@ const FundingStatus = () => {
   const [waitingForEth, setWaitingForEth] = useState(false);
   const [{ symbol, status }] = useStore();
 
-  let key, reserve, minEth, minDai, requiredEth, dai, eth, dest;
+  let key, reserve, minDai, dai, eth, dest;
 
-  if (status)
-    ({ key, reserve, minEth, minDai, requiredEth, dai, eth, dest } = status);
+  if (status) ({ key, reserve, minDai, dai, eth, dest } = status);
 
   useEffect(
     () => {

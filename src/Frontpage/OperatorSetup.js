@@ -6,7 +6,6 @@ import { get, post } from "store";
 import PhoneInput from "react-phone-number-input";
 import SmartInput from "react-phone-number-input/smart-input";
 import { Flags } from "utils";
-import { isValidPhoneNumber } from "react-phone-number-input";
 
 const OperatorSetup = () => {
   const [shouldDisplay, setShouldDisplay] = useState(null);
@@ -18,11 +17,9 @@ const OperatorSetup = () => {
   const [mailingAddress, setMailingAddress] = useState(null);
   const [physicalAddress, setPhysicalAddress] = useState(null);
   const [equipmentDetails, setEquipmentDetails] = useState(null);
-  const [valid, setValid] = useState(false);
 
   const handlePhone = (value) => {
     setPhone(value);
-    setValid(isValidPhoneNumber(value));
   };
 
   const [t] = useTranslation();

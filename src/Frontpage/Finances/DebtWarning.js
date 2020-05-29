@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import exclamation from "images/exclamation.svg";
-import { useStore } from "store";
 
 const DebtWarning = (props) => {
   let debt_value = props.debtValue;
