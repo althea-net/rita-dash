@@ -9,6 +9,7 @@ import { Flags } from "utils";
 
 const OperatorSetup = () => {
   const [shouldDisplay, setShouldDisplay] = useState(null);
+  const [userName, setUserName] = useState(null);
   const [email, setEmail] = useState(null);
   const [phone, setPhone] = useState(null);
   const [cpeIP, setCpeIP] = useState(null);
@@ -42,6 +43,7 @@ const OperatorSetup = () => {
   let submit = async (e) => {
     try {
       let install_details = {};
+      install_details.user_name = userName;
       install_details.phone = phone;
       install_details.email = email;
       install_details.client_antenna_ip = cpeIP;
@@ -78,6 +80,14 @@ const OperatorSetup = () => {
           {t("dismiss")}
         </a>
       </div>
+      <InputGroup>
+        <Input
+          type="text"
+          defaultValue={userName}
+          placeholder="User Name"
+          onChange={(e) => setUserName(e.target.value)}
+        />
+      </InputGroup>
       <InputGroup>
         <Input
           type="text"
