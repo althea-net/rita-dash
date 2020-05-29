@@ -5,6 +5,7 @@ import { useStore } from "store";
 import Finances from "./Finances";
 import GettingStarted from "./GettingStarted";
 import ConnectionStatus from "./ConnectionStatus";
+import OperatorSetup from "./OperatorSetup";
 
 const Frontpage = () => {
   const [t] = useTranslation();
@@ -21,6 +22,7 @@ const Frontpage = () => {
         </div>
         <ConnectionStatus />
       </div>
+      <OperatorSetup />
       <GettingStarted />
       <Finances />
     </>

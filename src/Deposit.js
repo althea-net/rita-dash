@@ -28,7 +28,6 @@ const Deposit = ({ open, setOpen }) => {
   const [wyreWarningModal, setWyreWarningModal] = useState(false);
   const [phone, setPhone] = useState("");
   const [supportNumber, setSupportNumber] = useState("");
-  const [wyrePrefaceMessage, setWyrePrefaceMessage] = useState("");
 
   const [
     { address, debt, lowBalance, status, withdrawChainSymbol, symbol },
@@ -37,15 +36,14 @@ const Deposit = ({ open, setOpen }) => {
   const getWyreEnabled = useCallback(
     async (signal) => {
       try {
-        const {
-          wyreEnabled,
-          wyreAccountId,
-          supportNumber,
-          wyrePrefaceMessage,
-        } = await get("/localization", true, 5000, signal);
+        const { wyreEnabled, wyreAccountId, supportNumber } = await get(
+          "/localization",
+          true,
+          5000,
+          signal
+        );
         setWyreEnabled(wyreEnabled);
         setWyreAccountId(wyreAccountId);
-        setWyrePrefaceMessage(wyrePrefaceMessage);
         setSupportNumber(supportNumber);
         if (wyreEnabled && withdrawChainSymbol === "ETH") setDepositing(false);
       } catch {}
