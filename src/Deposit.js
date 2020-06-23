@@ -18,6 +18,7 @@ import { get, useStore, post } from "store";
 import { toEth, Flags } from "utils";
 import PhoneInput from "react-phone-number-input";
 import SmartInput from "react-phone-number-input/smart-input";
+import { support } from "jquery";
 
 const qrStyle = { height: "auto", width: "80%" };
 
@@ -404,7 +405,16 @@ const Deposit = ({ open, setOpen }) => {
     modal_header = "Select deposit amount";
     modal_body = (
       <div>
-        <p>Please select an amount to deposit</p>
+        <h5>Please select an amount to deposit from the choices below.</h5>
+
+        <p>
+          You will be redirected to our payment processor. Our payment processor
+          is international, so charges may come from outside the United States.{" "}
+        </p>
+        <p>
+          If you experience any problems please call us at {supportNumber} Thank
+          you!
+        </p>
         <div
           style={{
             display: "flex",
