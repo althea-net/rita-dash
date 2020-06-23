@@ -236,6 +236,7 @@ const Deposit = ({ open, setOpen }) => {
   const [canEdit, setCanEdit] = useState(false);
   const [operatorDebt, setOperatorDebt] = useState(0);
   const [wyreAccountId, setWyreAccountId] = useState();
+  const [wyreReservationFlow, setWyreReservationFlow] = useState(false);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [supportNumber, setSupportNumber] = useState("");
@@ -250,6 +251,9 @@ const Deposit = ({ open, setOpen }) => {
   //                can return to none or progress to selectAmount
   // selectAmount:  The user selects the amount they would like to deposit, the user
   //                will either leave the page to go to wyre or return to None
+  // there is another totally parallel flow for non reservation based wyre that goes
+  // buySelect -> wyreWarningMessage
+  // wyreWarningMessage: displays a message about wyre and it's problems
   const [modalDisplayState, setModalDisplayState] = useState("");
 
   const toggle = () => {
@@ -272,12 +276,14 @@ const Deposit = ({ open, setOpen }) => {
   const getWyreEnabled = useCallback(
     async (signal) => {
       try {
-        const { wyreEnabled, wyreAccountId, supportNumber } = await get(
-          "/localization",
-          true,
-          5000,
-          signal
-        );
+        const {
+          wyreEnabled,
+          wyreAccountId,
+          supportNumber,
+          wyreReservationFlow,
+        } = await get("/localization", true, 5000, signal);
+        console.log(wyreReservationFlow);
+        setWyreReservationFlow(wyreReservationFlow);
         setWyreEnabled(wyreEnabled);
         setWyreAccountId(wyreAccountId);
         setSupportNumber(supportNumber);
@@ -341,8 +347,43 @@ const Deposit = ({ open, setOpen }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  let frontpage;
+  let wyre_deposit_error_page;
+  if (window.isMobile) {
+    frontpage = "althea://";
+    wyre_deposit_error_page = "althea://";
+  } else {
+    frontpage = "http://192.168.10.1";
+    wyre_deposit_error_page = "http://192.168.10.1/";
+  }
+
   let modal_body;
   let modal_header = t("addFunds");
+
+  let buy_button;
+  if (wyreReservationFlow) {
+    buy_button = (
+      <Button
+        color="primary"
+        className="w-100 mb-2"
+        onClick={() => setModalDisplayState("reviewDetails")}
+      >
+        {t("buy")} ETH
+      </Button>
+    );
+  } else {
+    buy_button = (
+      <>
+        <Button
+          color="primary"
+          className="w-100 mb-2"
+          onClick={() => setModalDisplayState("wyreWarningMessage")}
+        >
+          {t("buy")} ETH
+        </Button>
+      </>
+    );
+  }
 
   // the modal size, edited for when a message case needs a larger modal
   let size = "sm";
@@ -354,14 +395,7 @@ const Deposit = ({ open, setOpen }) => {
   ) {
     modal_body = (
       <>
-        <Button
-          color="primary"
-          className="w-100 mb-2"
-          onClick={() => setModalDisplayState("reviewDetails")}
-        >
-          {t("buy")} ETH
-        </Button>
-
+        {buy_button}
         <Button
           color="primary"
           className="w-100 mb-2"
@@ -375,6 +409,57 @@ const Deposit = ({ open, setOpen }) => {
             minDeposit > 0 &&
             t("recommendedDeposit", { recommendedDeposit })}
         </div>
+      </>
+    );
+  } else if (
+    wyreEnabled &&
+    withdrawChainSymbol === "ETH" &&
+    modalDisplayState === "wyreWarningMessage"
+  ) {
+    const updateContact = () => {
+      window.location.href = "#settings";
+      let scroll = () => {
+        let el = document.getElementById("notifications");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+        else setTimeout(scroll, 100);
+      };
+      scroll();
+    };
+
+    size = "lg";
+    modal_body = (
+      <>
+        <div>
+          {phone ? t("wyreNumberHelp") : t("wyreNumberHelpNoExample")}
+          {phone ? <Input id="phone" readOnly value={phone || ""} /> : <></>}
+          {phone ? (
+            <>
+              {t("wyreNumberChange")}
+              <a href="#settings" onClick={updateContact}>
+                {"here"}
+              </a>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+        <br />
+        <div>{t("wyreSupport", { supportNumber })}</div>
+        <hr />
+        <Button
+          href={
+            "https://pay.sendwyre.com/purchase" +
+            `?dest=${address}` +
+            "&destCurrency=ETH" +
+            `&accountId=${wyreAccountId}` +
+            `&redirectUrl=${frontpage}` +
+            `&failureRedirectUrl=${wyre_deposit_error_page}`
+          }
+          color="primary"
+          className="w-25 mb-2"
+        >
+          {t("continueToWyre")}
+        </Button>
       </>
     );
   } else if (

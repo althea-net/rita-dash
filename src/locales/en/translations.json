@@ -390,10 +390,9 @@
   "bandwidthPriceContent": " {{maybeDollarSymbol}}{{readableExitPrice}} {{symbol_or_star}}/GB",
   "pricesCopy": "These are the rates your router is currently paying, they are determined by other members of your network and your network organizer.",
   "youHaveDebt": "There is an outstanding debt of {{debt_value}}, which will be paid on deposit",
-  "wyreNumberHelp": "Our payment partner Wyre is international. Here is an example of your number in international format.",
-  "wyreNumberChange": "If the above number is incorrect update it ",
+  "wyreNumberHelp": "You will be redirected to our payment processor. Our payment processor is international, so charges may come from outside the United States.",
+  "wyreNumberChange": "This is your phone number in international format, please update it if required ",
   "wyreNumberHelpNoExample": "Our payment partner Wyre is international. Please format your number as +1<areacode><number> like +18885555 ",
   "continueToWyre": "continue",
-  "wyreSupport": "If you have trouble with your deposit please call us at {{supportNumber}}",
-  "wyreInternational": "You may see a charge from outside the United States, this is normal"
+  "wyreSupport": "If you experience any problems please call us at {{supportNumber}} Thank you!"
 }
