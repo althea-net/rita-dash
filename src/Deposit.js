@@ -444,6 +444,8 @@ const Deposit = ({ open, setOpen }) => {
           )}
         </div>
         <br />
+        <div>{t("wyreFees", { supportNumber })}</div>
+        <br />
         <div>{t("wyreSupport", { supportNumber })}</div>
         <hr />
         <Button
@@ -496,6 +498,7 @@ const Deposit = ({ open, setOpen }) => {
           You will be redirected to our payment processor. Our payment processor
           is international, so charges may come from outside the United States.{" "}
         </p>
+        <p>{t("wyreFees", { supportNumber })}</p>
         <p>
           If you experience any problems please call us at {supportNumber} Thank
           you!
@@ -507,15 +510,6 @@ const Deposit = ({ open, setOpen }) => {
             justifyContent: "space-evenly",
           }}
         >
-          <Button
-            onClick={(e) => {
-              get_wyre_url_and_redirect(10.0);
-            }}
-            outline
-            color="primary"
-          >
-            $10
-          </Button>
           <Button
             onClick={(e) => {
               get_wyre_url_and_redirect(20.0);
