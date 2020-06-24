@@ -62,10 +62,12 @@ const deviceImages = {
   "linksys-wrt32x": (
     <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
   ),
-  linksys_wrt3200acm: (
+  // prettier-ignore
+  "linksys_wrt3200acm": (
     <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
   ),
-  linksys_wrt32x: <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />,
+  // prettier-ignore
+  "linksys_wrt32x": <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
 };
 
 export const Device = ({ device }) => (
