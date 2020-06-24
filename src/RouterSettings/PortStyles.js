@@ -20,10 +20,10 @@ export const PortNumber = styled.div`
 
 export const PortToggle = styled(Button)`
   width: 100%;
-  background: ${props => (props.selected ? "#0BB36D" : "white")} !important;
-  color: ${props => (props.selected ? "white" : "gray")} !important;
+  background: ${(props) => (props.selected ? "#0BB36D" : "white")} !important;
+  color: ${(props) => (props.selected ? "white" : "gray")} !important;
   border: 1px solid #aaa;
-  border-color: ${props => (props.selected ? "#0BB36D" : "#aaa")} !important;
+  border-color: ${(props) => (props.selected ? "#0BB36D" : "#aaa")} !important;
   border-radius: 0 !important;
   margin-top: 6px;
   font-weight: normal !important;
@@ -45,7 +45,7 @@ const StyledCard = styled(Card)`
   margin-bottom: 10px;
 `;
 
-export const PortColumn = props => (
+export const PortColumn = (props) => (
   <StyledCard className="col-12 col-sm-6 col-md-4 p-0">
     <CardBody className="text-center w-100 px-1">{props.children}</CardBody>
   </StyledCard>
@@ -59,7 +59,13 @@ const deviceImages = {
   "linksys-wrt3200acm": (
     <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
   ),
-  "linksys-wrt32x": <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
+  "linksys-wrt32x": (
+    <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
+  ),
+  linksys_wrt3200acm: (
+    <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />
+  ),
+  linksys_wrt32x: <RouterImage src={linksysImage} alt="Linksys WRT 3200ACM" />,
 };
 
 export const Device = ({ device }) => (
