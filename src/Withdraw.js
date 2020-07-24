@@ -12,7 +12,7 @@ import {
   Label,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 import { Error, toEth, toWei, txLink } from "utils";
 import { isAddress } from "ethereum-address";
@@ -29,11 +29,11 @@ const Withdraw = ({ open, setOpen }) => {
 
   const [{ balance, blockchain, symbol }] = useStore();
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     let txid;
     try {
-      if (amount === balanceEth) {
+      if (amount >= balanceEth) {
         txid = await post(`/withdraw_all/${address}`);
       } else {
         txid = await post(`/withdraw/${address}/${toWei(amount)}`);
@@ -61,7 +61,7 @@ const Withdraw = ({ open, setOpen }) => {
     setTxid(null);
   };
 
-  const withdrawAll = e => {
+  const withdrawAll = (e) => {
     e.preventDefault();
 
     setAmount(balanceEth);
@@ -94,7 +94,7 @@ const Withdraw = ({ open, setOpen }) => {
               ) : (
                 <p
                   dangerouslySetInnerHTML={{
-                    __html: t("withdrawalSuccess", { txid, link })
+                    __html: t("withdrawalSuccess", { txid, link }),
                   }}
                   style={{ wordWrap: "break-word" }}
                 />
@@ -120,7 +120,7 @@ const Withdraw = ({ open, setOpen }) => {
                   type="text"
                   name="address"
                   placeholder={t("recipientAddress")}
-                  onChange={e => setAddress(e.target.value)}
+                  onChange={(e) => setAddress(e.target.value)}
                   value={address}
                   valid={addressValid}
                   invalid={!!(address && !addressValid)}
@@ -141,7 +141,7 @@ const Withdraw = ({ open, setOpen }) => {
                     label={t("to")}
                     name="amount"
                     placeholder={0}
-                    onChange={e => setAmount(e.target.value)}
+                    onChange={(e) => setAmount(e.target.value)}
                     value={amount}
                     valid={amountValid}
                     invalid={!!(amount && !amountValid)}
@@ -151,7 +151,7 @@ const Withdraw = ({ open, setOpen }) => {
                       style={{
                         background: "#F8F9FA",
                         fontSize: 14,
-                        color: "#888"
+                        color: "#888",
                       }}
                     >
                       {symbol}
@@ -171,7 +171,7 @@ const Withdraw = ({ open, setOpen }) => {
                   display: "flex",
                   margin: -20,
                   marginTop: 0,
-                  padding: 10
+                  padding: 10,
                 }}
               />
 
