@@ -238,22 +238,24 @@ const Deposit = ({ open, setOpen }) => {
   // this variable controls our progression through the depositing state
   // machine, displaying one of several options each time. States are
   // None: display no modal
-  // buySelect: displays the selection between buying and depositing can progress to QR
-  //            reviewDetails or None
   // QR: Display the QR code, this only returns to None
   // reviewDetails: This is where the user views and possibly updates their details
   //                can return to none or progress to selectAmount
   // selectAmount:  The user selects the amount they would like to deposit, the user
   //                will either leave the page to go to wyre or return to None
   // there is another totally parallel flow for non reservation based wyre that goes
-  // buySelect -> wyreWarningMessage
+  // only to wyreWarningMessage
   // wyreWarningMessage: displays a message about wyre and it's problems
   const [modalDisplayState, setModalDisplayState] = useState("");
 
   const toggle = () => {
     if (modalDisplayState === "None") {
       if (wyreEnabled && withdrawChainSymbol === "ETH") {
-        setModalDisplayState("buySelect");
+        if (wyreReservationFlow) {
+          setModalDisplayState("reviewDetails");
+        } else {
+          setModalDisplayState("wyreWarningMessage");
+        }
       } else {
         setModalDisplayState("QR");
       }
@@ -317,7 +319,11 @@ const Deposit = ({ open, setOpen }) => {
 
   if ((modalDisplayState === "" || modalDisplayState === "None") && open) {
     if (wyreEnabled && withdrawChainSymbol === "ETH") {
-      setModalDisplayState("buySelect");
+      if (wyreReservationFlow) {
+        setModalDisplayState("reviewDetails");
+      } else {
+        setModalDisplayState("wyreWarningMessage");
+      }
     } else {
       setModalDisplayState("QR");
     }
@@ -350,58 +356,9 @@ const Deposit = ({ open, setOpen }) => {
   let modal_body;
   let modal_header = t("addFunds");
 
-  let buy_button;
-  if (wyreReservationFlow) {
-    buy_button = (
-      <Button
-        color="primary"
-        className="w-100 mb-2"
-        onClick={() => setModalDisplayState("reviewDetails")}
-      >
-        {t("buy")} ETH
-      </Button>
-    );
-  } else {
-    buy_button = (
-      <>
-        <Button
-          color="primary"
-          className="w-100 mb-2"
-          onClick={() => setModalDisplayState("wyreWarningMessage")}
-        >
-          {t("buy")} ETH
-        </Button>
-      </>
-    );
-  }
-
   // the modal size, edited for when a message case needs a larger modal
   let size = "sm";
-  // this displays the buy or QR code modal, only if wyre is enabled
   if (
-    wyreEnabled &&
-    withdrawChainSymbol === "ETH" &&
-    modalDisplayState === "buySelect"
-  ) {
-    modal_body = (
-      <>
-        {buy_button}
-        <Button
-          color="primary"
-          className="w-100 mb-2"
-          onClick={() => setModalDisplayState("QR")}
-        >
-          {t("deposit")} {withdrawChainSymbol}
-        </Button>
-
-        <div>
-          {lowBalance &&
-            minDeposit > 0 &&
-            t("recommendedDeposit", { recommendedDeposit })}
-        </div>
-      </>
-    );
-  } else if (
     wyreEnabled &&
     withdrawChainSymbol === "ETH" &&
     modalDisplayState === "wyreWarningMessage"
