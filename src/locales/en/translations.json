@@ -393,7 +393,7 @@
   "wyreNumberHelp": "You will be redirected to our payment processor. Our payment processor is international, so charges may come from outside the United States.",
   "wyreNumberChange": "This is your phone number in international format, please update it if required by clicking ",
   "wyreNumberHelpNoExample": "Our payment partner Wyre is international. Please format your number as +1<areacode><number> like +18885555 ",
-  "wyreFees": "A fee of up to $2 will be removed from your deposit amount by our payment processor.",
+  "wyreFees": "A fee of up to ${{minDeposit}} will be removed from your deposit amount by our payment processor.",
   "continueToWyre": "continue",
   "wyreSupport": "If you experience any problems please call us at {{supportNumber}} Thank you!"
 }

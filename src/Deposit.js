@@ -228,12 +228,6 @@ const Deposit = ({ open, setOpen }) => {
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
   const [wyreEnabled, setWyreEnabled] = useState(false);
-  // this is true if we find some set of existing details, this
-  // determines if we start in 'review' or 'edit' mode. As normally
-  // the user will be presented an un-editable view that they can opt to
-  // edit, but if no details have been entered this obviously makes no sense
-  // and they are allowed to edit immediately.
-  const [canEdit, setCanEdit] = useState(false);
   const [operatorDebt, setOperatorDebt] = useState(0);
   const [wyreAccountId, setWyreAccountId] = useState();
   const [wyreReservationFlow, setWyreReservationFlow] = useState(false);
@@ -305,11 +299,6 @@ const Deposit = ({ open, setOpen }) => {
         let email = await get("/email");
         let phone = await get("/phone");
 
-        if (billingDetails) {
-          setCanEdit(true);
-        } else {
-          setCanEdit(false);
-        }
         if (!(phone instanceof Error)) setPhone(phone);
         if (!(email instanceof Error)) setEmail(email);
         if (!(billingDetails instanceof Error))
@@ -335,8 +324,9 @@ const Deposit = ({ open, setOpen }) => {
   }
 
   let decimals = symbol === "Dai" ? 2 : 4;
-  let minDeposit = toEth(debt, decimals) * 2 + toEth(operatorDebt, decimals);
-  if (status) minDeposit = Math.max(status.minEth, minDeposit);
+  let minDeposit =
+    Number(toEth(debt, decimals)) * 2 + Number(toEth(operatorDebt, decimals));
+  if (status) minDeposit = status.reserveAmount + minDeposit;
 
   const recommendedDeposit = `${minDeposit} ${symbol}`;
 
@@ -444,7 +434,7 @@ const Deposit = ({ open, setOpen }) => {
           )}
         </div>
         <br />
-        <div>{t("wyreFees", { supportNumber })}</div>
+        <div>{t("wyreFees", { minDeposit })}</div>
         <br />
         <div>{t("wyreSupport", { supportNumber })}</div>
         <hr />
@@ -498,7 +488,7 @@ const Deposit = ({ open, setOpen }) => {
           You will be redirected to our payment processor. Our payment processor
           is international, so charges may come from outside the United States.{" "}
         </p>
-        <p>{t("wyreFees", { supportNumber })}</p>
+        <p>{t("wyreFees", { minDeposit })}</p>
         <p>
           If you experience any problems please call us at {supportNumber} Thank
           you!
