@@ -447,7 +447,7 @@ const Deposit = ({ open, setOpen }) => {
         </p>
         <p>{t("wyreFees", { minDeposit })}</p>
         <p>
-          If you experience any problems please call us at {supportNumber} Thank
+          If you experience any problems please call us at 1-866-4ALTHEA Thank
           you!
         </p>
         <div
