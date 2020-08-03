@@ -196,16 +196,16 @@ function user_info_forum(
               setBillingDetails(local);
             }}
           >
-            <option selected value="United States">
+            <option selected value="US">
               United States
             </option>
-            <option value="Canada">Canada</option>
-            <option value="Mexico">Mexico</option>
-            <option value="Nigeria">Nigeria</option>
-            <option value="Ghana">Ghana</option>
-            <option value="Uganda">Uganda</option>
-            <option value="Kenya">Kenya</option>
-            <option value="The Bahamas">The Bahamas</option>
+            <option value="CA">Canada</option>
+            <option value="MX">Mexico</option>
+            <option value="NG">Nigeria</option>
+            <option value="GH">Ghana</option>
+            <option value="UG">Uganda</option>
+            <option value="KE">Kenya</option>
+            <option value="BS">The Bahamas</option>
             <option value="Other">Other</option>
           </Input>
         </FormGroup>
