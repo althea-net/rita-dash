@@ -366,7 +366,6 @@ const Deposit = ({ open, setOpen }) => {
           You will be redirected to our payment processor. Our payment processor
           is international, so charges may come from outside the United States.{" "}
         </p>
-        <p>{t("wyreFees", { minDeposit })}</p>
         <p>
           If you experience any problems please call us at 1-866-4ALTHEA Thank
           you!
