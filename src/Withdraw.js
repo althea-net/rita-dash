@@ -33,7 +33,11 @@ const Withdraw = ({ open, setOpen }) => {
     e.preventDefault();
     let txid;
     try {
-      if (amount >= balanceEth) {
+      let num_amount = parseFloat(amount);
+      let num_balance = parseFloat(balanceEth);
+      if (isNaN(num_amount) || isNaN(num_balance)) {
+        setError(t("withdrawalError"));
+      } else if (num_amount > num_balance) {
         txid = await post(`/withdraw_all/${address}`);
       } else {
         txid = await post(`/withdraw/${address}/${toWei(amount)}`);
