@@ -59,9 +59,11 @@ const groupData = (
     if (payments && payments.length) {
       let p = payments.find((p) => p.index === index);
       if (p) {
-        data[i].service += p.payments
-          .filter((p) => p.to.meshIp === "::1")
-          .reduce((a, b) => a + parseInt(b.amount), 0);
+        if (client) {
+          data[i].service += p.payments
+            .filter((p) => p.to.meshIp === "::1")
+            .reduce((a, b) => a + parseInt(b.amount), 0);
+        }
 
         // this relies on us having the same eth address as the payment records
         // if you are copying payment records from one router to another and always
@@ -98,8 +100,18 @@ const groupData = (
     // the tx history is bad idea
     //data[i].cost += c.price * (c.up + c.down);
 
-    data[i].up += c.up;
-    data[i].down += c.down;
+    // if we are a client upload and download are distinct values
+    // billed differently. If we are a relay then upload and download
+    // are always equal, different only by the margin of error that is
+    // whatever packets are in the buffer when you take a traffic checkpoint
+    // so if we sum up and down for relay usage we're actually doubling things
+    // which is a problem
+    if (client) {
+      data[i].up += c.up;
+      data[i].down += c.down;
+    } else {
+      data[i].down += c.down;
+    }
 
     return c;
   });
