@@ -226,7 +226,7 @@ function user_info_forum(
 const Deposit = ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [copied, setCopied] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(null);
   const [wyreEnabled, setWyreEnabled] = useState(false);
   const [operatorDebt, setOperatorDebt] = useState(0);
   const [email, setEmail] = useState("");
@@ -245,7 +245,7 @@ const Deposit = ({ open, setOpen }) => {
 
   const toggle = () => {
     if (modalDisplayState === "None") {
-      if (wyreEnabled && withdrawChainSymbol === "ETH") {
+      if (wyreEnabled) {
         setModalDisplayState("reviewDetails");
       } else {
         setModalDisplayState("QR");
@@ -256,57 +256,37 @@ const Deposit = ({ open, setOpen }) => {
     }
   };
 
-  const [
-    { address, debt, lowBalance, status, withdrawChainSymbol, symbol },
-  ] = useStore();
+  const [{ address, debt, lowBalance, status, symbol }] = useStore();
 
-  const getWyreEnabled = useCallback(
-    async (signal) => {
-      try {
-        const { wyreEnabled, supportNumber } = await get(
-          "/localization",
-          true,
-          5000,
-          signal
-        );
-        setWyreEnabled(wyreEnabled);
-        setSupportNumber(supportNumber);
-      } catch {}
+  useEffect(() => {
+    const controller = new AbortController();
 
-      setLoading(false);
-    },
-    [withdrawChainSymbol]
-  );
-
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
-
-      (async () => {
+    (async () => {
+      if (loading == null) {
+        setLoading(true);
         let billingDetails = await get("/billing_details", false);
         let operatorDebt = await get("/operator_debt");
         let email = await get("/email");
         let phone = await get("/phone");
+        let { wyreEnabled, supportNumber } = await get("/localization");
 
         if (!(phone instanceof Error)) setPhone(phone);
         if (!(email instanceof Error)) setEmail(email);
         if (!(billingDetails instanceof Error))
           setBillingDetails(billingDetails);
         if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
+        if (!(wyreEnabled instanceof Error)) setWyreEnabled(wyreEnabled);
+        if (!(supportNumber instanceof Error)) setSupportNumber(supportNumber);
 
-        setLoading(true);
-        await getWyreEnabled(signal);
         setLoading(false);
-      })();
+      }
+    })();
 
-      return () => controller.abort();
-    },
-    [getWyreEnabled]
-  );
+    return () => controller.abort();
+  });
 
   if ((modalDisplayState === "" || modalDisplayState === "None") && open) {
-    if (wyreEnabled && withdrawChainSymbol === "ETH") {
+    if (wyreEnabled) {
       setModalDisplayState("reviewDetails");
     } else {
       setModalDisplayState("QR");
@@ -320,7 +300,7 @@ const Deposit = ({ open, setOpen }) => {
 
   const recommendedDeposit = `${minDeposit} ${symbol}`;
 
-  if (!(address && withdrawChainSymbol)) return null;
+  if (!address) return null;
 
   const copy = () => {
     setCopied(true);
@@ -332,11 +312,7 @@ const Deposit = ({ open, setOpen }) => {
 
   // the modal size, edited for when a message case needs a larger modal
   let size = "sm";
-  if (
-    wyreEnabled &&
-    withdrawChainSymbol === "ETH" &&
-    modalDisplayState === "reviewDetails"
-  ) {
+  if (wyreEnabled && modalDisplayState === "reviewDetails") {
     size = "lg";
     modal_header = "Review Contact info";
 
@@ -351,11 +327,7 @@ const Deposit = ({ open, setOpen }) => {
       false,
       setModalDisplayState
     );
-  } else if (
-    wyreEnabled &&
-    withdrawChainSymbol === "ETH" &&
-    modalDisplayState === "selectAmount"
-  ) {
+  } else if (wyreEnabled && modalDisplayState === "selectAmount") {
     size = "md";
     modal_header = "Select deposit amount";
     modal_body = (
