@@ -59,7 +59,7 @@
   "totalRevenue": "Total Revenue",
   "revenueHistory": "Revenue History",
   "beforeYouChange": "Before you change the pricing, you should <a href='https://althea.net'>read more about best practices</a> of selling your bandwidth and pricing.",
-  "theAmountYouPay": "The amount you pay to your network organizer every month",
+  "theAmountYouPay": "The amount you pay your network operator every month. This value can be increased above the default to facilitate payment plans. But can not be reduced below the base operator fee set by your operator.",
   "theseSettings": "These settings typically do not need to be updated and are used by technicians during the initial setup. Be sure you know what you're doing, as changes here may cause a service interruption.",
   "learnMoreAboutTheEquipment": "<a href='https://althea.net/getting-started'>Learn more</a> about the equipment required to sell bandwidth or contact your network organizer for details.",
   "bandwidthSelling": "Bandwidth Selling",
@@ -395,5 +395,11 @@
   "wyreNumberHelpNoExample": "Our payment partner Wyre is international. Please format your number as +1<areacode><number> like +18885555 ",
   "wyreFees": "A fee of up to ${{minDeposit}} will be removed from your deposit amount by our payment processor.",
   "continueToWyre": "continue",
-  "wyreSupport": "If you experience any problems please call us at {{supportNumber}} Thank you!"
+  "wyreSupport": "If you experience any problems please call us at {{supportNumber}} Thank you!",
+  "bandwidth": "Bandwidth",
+  "enterSpeed": "Unlimited",
+  "enableSelfLimit": "Enable bandwidth limiter",
+  "bandwidthLimitSaved": "Changes Saved",
+  "bandwidthLimitTitle": "Your bandwidth limit",
+  "setYourBandwidth": "Your Althea network provides the fastest service possible at any given time. To control costs you may wish to limit this. For more details and advice on how to use this option contact your local operator or call at"
 }

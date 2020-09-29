@@ -13,6 +13,7 @@ import WalletManagement from "../WalletManagement";
 import Account from "./Account";
 import Billing from "./Billing";
 import Prices from "./Prices";
+import BandwidthLimit from "../AdvancedSettings/BandwidthLimit";
 import FundingStatus from "../FundingStatus";
 import PurchasingBandwidth from "./PurchasingBandwidth";
 

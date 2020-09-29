@@ -11,6 +11,7 @@ import RemoteAccess from "./RemoteAccess";
 import RemoteLogging from "./RemoteLogging";
 import MeshAP from "./MeshAP";
 import LightClientAP from "./LightClientAP";
+import BandwidthLimit from "./BandwidthLimit";
 
 import exclamation from "images/exclamation.svg";
 
@@ -39,7 +40,7 @@ export default () => {
         <BandwidthSelling />
         <Blockchain />
       </div>
-      <DaoFee />
+      <BandwidthLimit />
       <NodeInformation />
       <div
         className="d-flex flex-wrap"
@@ -55,6 +56,7 @@ export default () => {
       >
         <LightClientAP />
         <MeshAP />
+        <DaoFee />
       </div>
       <AdvancedDebugging />
     </div>

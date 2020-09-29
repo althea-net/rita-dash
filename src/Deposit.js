@@ -339,8 +339,8 @@ const Deposit = ({ open, setOpen }) => {
           is international, so charges may come from outside the United States.{" "}
         </p>
         <p>
-          If you experience any problems please call us at 1-866-4ALTHEA Thank
-          you!
+          If you experience any problems please call us at{" "}
+          <a href="tel:8664258432">1-866-4ALTHEA</a> Thank you!
         </p>
         <div
           style={{
