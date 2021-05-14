@@ -9,7 +9,7 @@ import portImage from "images/port.png";
 
 const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
   let [t] = useTranslation();
-  let modes = [t("LAN"), t("Mesh"), t("Phone"), t("WAN")];
+  let modes = [t("Lan"), t("Mesh"), t("Phone"), t("Wan")];
 
   if (!portOrderings[device])
     return <Alert color="danger">{t("deviceNotRecognized")}</Alert>;
@@ -34,12 +34,12 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                   currentInterface != null &&
                   interfaces[iface].StaticWAN != null
                 ) {
-                  currentInterface = "WAN";
+                  currentInterface = "Wan";
                 }
                 let selected = mode === currentInterface;
                 let disabled =
                   !selected &&
-                  mode === "WAN" &&
+                  mode === "Wan" &&
                   Object.values(interfaces).includes(mode);
                 return (
                   <PortToggle

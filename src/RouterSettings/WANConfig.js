@@ -41,7 +41,7 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
 
   const submit = async e => {
     e.preventDefault();
-    setMode("WAN");
+    setMode("Wan");
     if (type === "static") setMode({ StaticWAN: { ipaddr, netmask, gateway } });
     toggle();
     setConfirming(true);

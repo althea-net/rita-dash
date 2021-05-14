@@ -43,7 +43,7 @@ const Ports = () => {
 
   let setInterfaceMode = (iface, mode) => {
     setSelected(iface);
-    if (mode === "WAN") {
+    if (mode === "Wan") {
       setWan(true);
     } 
     else {
