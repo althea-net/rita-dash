@@ -27,10 +27,6 @@ const OperatorSetup = () => {
   const [physicalAddress, setPhysicalAddress] = useState(null);
   const [equipmentDetails, setEquipmentDetails] = useState(null);
 
-  const handlePhone = (value) => {
-    setPhone(value);
-  };
-
   const [t] = useTranslation();
   useEffect(() => {
     (async () => {

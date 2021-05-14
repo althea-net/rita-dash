@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Alert,
@@ -14,15 +14,8 @@ import {
   Progress,
 } from "reactstrap";
 import { get, post } from "store";
-import useInterval from "hooks/useInterval";
-import { BigNumber } from "bignumber.js";
-import { useStore } from "store";
 import { Card } from "ui";
 
-const AbortController = window.AbortController;
-
-const weiPerEth = BigNumber("1000000000000000000");
-const bytesPerGb = BigNumber("1000000000");
 
 const BandwidthLimit = () => {
   const [t] = useTranslation();

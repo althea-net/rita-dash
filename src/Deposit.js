@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -18,7 +18,6 @@ import { get, useStore, post } from "store";
 import { toEth, Flags } from "utils";
 import PhoneInput from "react-phone-number-input";
 import SmartInput from "react-phone-number-input/smart-input";
-import { support } from "jquery";
 
 const qrStyle = { height: "auto", width: "80%" };
 
@@ -231,7 +230,6 @@ const Deposit = ({ open, setOpen }) => {
   const [operatorDebt, setOperatorDebt] = useState(0);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [supportNumber, setSupportNumber] = useState("");
   const [billingDetails, setBillingDetails] = useState("");
   // this variable controls our progression through the depositing state
   // machine, displaying one of several options each time. States are
@@ -268,7 +266,7 @@ const Deposit = ({ open, setOpen }) => {
         let operatorDebt = await get("/operator_debt");
         let email = await get("/email");
         let phone = await get("/phone");
-        let { wyreEnabled, supportNumber } = await get("/localization");
+        let { wyreEnabled } = await get("/localization");
 
         if (!(phone instanceof Error)) setPhone(phone);
         if (!(email instanceof Error)) setEmail(email);
@@ -276,7 +274,6 @@ const Deposit = ({ open, setOpen }) => {
           setBillingDetails(billingDetails);
         if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
         if (!(wyreEnabled instanceof Error)) setWyreEnabled(wyreEnabled);
-        if (!(supportNumber instanceof Error)) setSupportNumber(supportNumber);
 
         setLoading(false);
       }
