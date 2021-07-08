@@ -38,7 +38,7 @@ const Wifi = () => {
         let channel = parseInt(setting.device.channel, 10);
 
         data.push({ WifiChannel: { radio, channel } });
-        data.push({ WifiSSID: { radio, ssid } });
+        data.push({ WifiSsid: { radio, ssid } });
         data.push({ WifiPass: { radio, pass: key } });
 
         return setting;

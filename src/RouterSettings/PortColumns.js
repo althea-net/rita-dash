@@ -32,7 +32,7 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                 // in this case we just map it to wan
                 if (
                   currentInterface != null &&
-                  interfaces[iface].StaticWAN != null
+                  interfaces[iface].StaticWan != null
                 ) {
                   currentInterface = "Wan";
                 }
