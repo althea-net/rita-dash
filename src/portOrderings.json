@@ -13,7 +13,7 @@
   "linksys_ea6350v3": ["eth0.11", "eth0.12", "eth0.13", "eth0.14", "eth1"],
   "mynet-n600": ["eth0.1", "eth0.2", "eth0.3", "eth0.4", "eth1"],
   "mynet-n750": ["eth0.1", "eth0.4", "eth0.5", "eth0.3", "eth0.2"],
-  "nanopi-r2s": ["eth0", "eth1"],
+  "nanopi-r2s": ["eth1", "eth0"],
   "rpi-2": ["eth0"],
   "rpi-3": ["eth0"],
   "tl-wdr3600-v1": ["eth0.2", "eth0.3", "eth0.4", "eth0.5", "eth0.1"],
