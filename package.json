@@ -1,7 +1,7 @@
 {
   "name": "althea-dash",
   "productName": "althea",
-  "version": "0.3.26",
+  "version": "0.3.27",
   "private": true,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
