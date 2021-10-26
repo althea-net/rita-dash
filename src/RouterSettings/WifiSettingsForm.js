@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { FormGroup, Input, Label } from "reactstrap";
+import { FormGroup, Input, Label, CustomInput } from "reactstrap";
 import { useStore } from "store";
 
 const WifiSettingsForm = ({ index }) => {
@@ -38,6 +38,12 @@ const WifiSettingsForm = ({ index }) => {
     saveSettings();
   };
 
+  const setDisabled = e => {
+    settings.device.disabled = e.target.checked ? '1' : '0';
+    saveSettings();
+  };
+
+
   return (
     <>
       <h4 className="mb-0">{t(radioType)}</h4>
@@ -47,7 +53,7 @@ const WifiSettingsForm = ({ index }) => {
           <Input
             type="text"
             name="ssid"
-            id={"ssid_" + radioType}
+            id={"ssid_" + radio}
             placeholder="min. 8 characters"
             invalid={!ssidValid}
             onChange={setSSID}
@@ -59,7 +65,7 @@ const WifiSettingsForm = ({ index }) => {
           <Input
             type="text"
             name="key"
-            id={"key_" + radioType}
+            id={"key_" + radio}
             placeholder="min. 8 characters"
             invalid={!keyValid}
             onChange={setKey}
@@ -71,7 +77,7 @@ const WifiSettingsForm = ({ index }) => {
           <Input
             type="select"
             name="channel"
-            id={"channel_" + radioType}
+            id={"channel_" + radio}
             onChange={setChannel}
             value={settings.device.channel}
           >
@@ -80,6 +86,18 @@ const WifiSettingsForm = ({ index }) => {
               channels[radio].map(c => <option key={c}>{c}</option>)}
           </Input>
         </FormGroup>
+        <FormGroup className="pr-2 mb-0">
+          <Label for="dis">{t("disabled")}</Label>
+          <CustomInput
+            type="checkbox"
+            id={"disabled_" + radio}
+            name="dis"
+            label=""
+            onChange={setDisabled}
+            checked={settings.device.disabled === '1'}
+          />
+        </FormGroup>
+
       </div>
     </>
   );
