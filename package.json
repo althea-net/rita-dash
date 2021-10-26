@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "start80": "PORT=80 react-scripts start",
     "start": "PORT=3005 react-scripts start",
     "build": "react-scripts build && rm build/static/**/*.map && rm -rf build/icons",
     "buildall": "react-scripts build",
