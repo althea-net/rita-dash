@@ -10,9 +10,10 @@ import useInterval from "hooks/useInterval";
 const Wifi = () => {
   const [t] = useTranslation();
   const [wifiWaiting, setWifiWaiting] = useState(false);
+  const [error, setError] = useState(null);
 
   const [{ wifiSettings, waiting }, dispatch] = useStore();
-  const [error, loading] = useWifiSettings();
+  const [wifiError, loading] = useWifiSettings();
 
   useInterval(() => {
     if (wifiWaiting) dispatch({ type: "keepWaiting" });
@@ -37,16 +38,36 @@ const Wifi = () => {
         let { ssid, key } = setting;
         let channel = parseInt(setting.device.channel, 10);
 
+        //convert from string to boolean: '0' === enabled = false, '1' === disabled = true
+        let disabled = setting.device.disabled === '1';
+
         data.push({ WifiChannel: { radio, channel } });
         data.push({ WifiSsid: { radio, ssid } });
         data.push({ WifiPass: { radio, pass: key } });
+        data.push({ WifiDisabled: { radio, disabled } });
 
         return setting;
       });
 
-      await post("/wifi_settings", data);
-      dispatch({ type: "wifiChange" });
-    } catch {}
+      let unexpectedError = false;
+
+      try {
+        await post("/wifi_settings", data);
+      } catch (e) {
+        if (e.message.includes("500")) {
+          unexpectedError = true;
+          setError(t("wifiSaveError"));
+        }
+      }
+
+      if (!unexpectedError) {
+        // setPortsWaiting(true);
+        // dispatch({ type: "startPortChange" });
+        // dispatch({ type: "startWaiting", waiting: 120 });
+        // dispatch({ type: "wifiChange" });
+      }
+
+    } catch { }
   };
 
   let valid = wifiSettings.reduce(
@@ -57,7 +78,7 @@ const Wifi = () => {
   return (
     <Card>
       <CardBody>
-        <Error error={error} />
+        <Error error={wifiError ? t('wifiError') : error ? error : null} />
         <Form onSubmit={submit}>
           {wifiSettings.map((_, i) => (
             <WifiSettingsForm key={i} index={i} />
