@@ -68,7 +68,7 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.12.4",
     "ethereum-address": "^0.0.4",
-    "i": "^0.3.6",
+    "i": "^0.3.7",
     "i18next": "^14.0.1",
     "i18next-browser-languagedetector": "^2.2.3",
     "i18next-xhr-backend": "^1.5.1",
