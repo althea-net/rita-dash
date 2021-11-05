@@ -12,3 +12,7 @@ The app is implemented with React. To get started:
   yarn
   yarn start
 ```
+
+1.) Make sure openwrt_upload is running
+2.) run ssh -L localhost:4877:localhost:4877 root@192.168.10.1 in terminal
+3.) navigate to althea-dash repo and run yarn start
