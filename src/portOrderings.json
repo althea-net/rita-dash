@@ -8,6 +8,7 @@
   "friendlyarm_nanopi-r2s": ["eth1", "eth0"],
   "gl-ar750": ["eth0", "eth1.1", "eth1.2"],
   "gl-b1300": ["eth0.3", "eth0.4", "eth1"],
+  "linksys_e5600": ["lan1","lan2","lan3","lan4","wan"],
   "linksys_ea6350v3": ["eth0.11", "eth0.12", "eth0.13", "eth0.14", "eth1"],
   "linksys_ea7300v1": ["wan","lan1","lan2","lan3","lan4"],
   "linksys_ea7300v2": ["wan","lan1","lan2","lan3","lan4"],
