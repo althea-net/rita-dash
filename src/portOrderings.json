@@ -13,6 +13,7 @@
   "linksys_ea7300v1": ["wan","lan1","lan2","lan3","lan4"],
   "linksys_ea7300v2": ["wan","lan1","lan2","lan3","lan4"],
   "linksys_ea7500v2": ["wan","lan1","lan2","lan3","lan4"],
+  "linksys_ex6100v2": ["eth0"],
   "linksys_mr8300": ["eth0.11", "eth0.12", "eth0.13", "eth0.14", "eth1"],
   "linksys_wrt3200acm": ["lan4", "lan3", "lan2", "lan1", "wan"],
   "linksys_wrt32x": ["lan4", "lan3", "lan2", "lan1", "wan"],
