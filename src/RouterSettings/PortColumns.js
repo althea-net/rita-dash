@@ -9,7 +9,7 @@ import portImage from "images/port.png";
 
 const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
   let [t] = useTranslation();
-  let modes = [t("Lan"), t("Mesh"), t("Phone"), t("Wan")];
+  let modes = [t("Lan"), t("Mesh"), t("LTE"), t("Phone"), t("Wan")];
 
   if (!portOrderings[device])
     return <Alert color="danger">{t("deviceNotRecognized")}</Alert>;
