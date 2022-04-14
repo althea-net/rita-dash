@@ -71,6 +71,18 @@ const Finances = () => {
     [dispatch]
   );
 
+  let balanceDisplay;
+  if (balance != null) {
+    balanceDisplay = <>
+              {symbol === "Dai" && localization.displayCurrencySymbol ? "$" : ""}
+              {toEth(balance, decimals)}{" "}
+              <span style={{ fontSize: 20 }}>{symbol_or_star}</span>
+        </>;
+  } else {
+    balanceDisplay = "Loading..."
+  }
+
+
   return (
     <Card>
       <Heading
@@ -97,9 +109,7 @@ const Finances = () => {
             {t("currentBalance")}
           </h5>
           <h2 className="text-center mb-3">
-            {symbol === "Dai" && localization.displayCurrencySymbol ? "$" : ""}
-            {toEth(balance, decimals)}{" "}
-            <span style={{ fontSize: 20 }}>{symbol_or_star}</span>
+            {balanceDisplay}
           </h2>
           <div className="d-flex justify-content-center mt-auto">
             <Button
