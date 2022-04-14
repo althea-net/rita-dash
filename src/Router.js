@@ -26,21 +26,18 @@ let routes = {
 const Router = ({ page, setPage, setOpen }) => {
   const [{ authenticated, initialized }] = useStore();
 
-  useEffect(
-    () => {
-      const getPage = () => {
-        let page = window.location.hash.substr(1);
-        setPage(page);
-        setOpen(false);
-        window.document.body.scrollTop = 0;
-        window.document.documentElement.scrollTop = 0;
-      };
+  useEffect(() => {
+    const getPage = () => {
+      let page = window.location.hash.substr(1);
+      setPage(page);
+      setOpen(false);
+      window.document.body.scrollTop = 0;
+      window.document.documentElement.scrollTop = 0;
+    };
 
-      getPage();
-      window.addEventListener("hashchange", getPage, false);
-    },
-    [setOpen, setPage]
-  );
+    getPage();
+    window.addEventListener("hashchange", getPage, false);
+  }, [setOpen, setPage]);
 
   if (!authenticated) return <Login />;
   if (!initialized) return <Progress animated color="primary" value="100" />;

@@ -19,25 +19,22 @@ const Finances = () => {
   const [{ balance, status, symbol }, dispatch] = useStore();
   const [localization, setLocalization] = useState([]);
 
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      (async () => {
-        try {
-          const usage = await get("/usage/client", true, 10000, signal);
-          let localization = await get("/localization");
-          if (!(localization instanceof Error)) setLocalization(localization);
-          if (usage instanceof Error) return;
-          dispatch({ type: "usage", usage });
-        } catch (e) {}
-      })();
+    (async () => {
+      try {
+        const usage = await get("/usage/client", true, 10000, signal);
+        let localization = await get("/localization");
+        if (!(localization instanceof Error)) setLocalization(localization);
+        if (usage instanceof Error) return;
+        dispatch({ type: "usage", usage });
+      } catch (e) {}
+    })();
 
-      return () => controller.abort();
-    },
-    [dispatch]
-  );
+    return () => controller.abort();
+  }, [dispatch]);
 
   const decimals = symbol === "Dai" ? 2 : 4;
 

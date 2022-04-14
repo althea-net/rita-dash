@@ -48,40 +48,38 @@ const Finances = () => {
 
   let show_debt_warning = debtToBePaid > threshold;
 
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      (async () => {
-        try {
-          let localization = await get("/localization");
-          if (!(localization instanceof Error)) setLocalization(localization);
-          let operatorDebt = await get("/operator_debt");
-          if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
+    (async () => {
+      try {
+        let localization = await get("/localization");
+        if (!(localization instanceof Error)) setLocalization(localization);
+        let operatorDebt = await get("/operator_debt");
+        if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
 
-          const usage = await get("/usage/client", true, 10000, signal);
-          if (usage instanceof Error) return;
-          dispatch({ type: "usage", usage });
-        } catch (e) {}
-      })();
+        const usage = await get("/usage/client", true, 10000, signal);
+        if (usage instanceof Error) return;
+        dispatch({ type: "usage", usage });
+      } catch (e) {}
+    })();
 
-      return () => controller.abort();
-    },
-    [dispatch]
-  );
+    return () => controller.abort();
+  }, [dispatch]);
 
   let balanceDisplay;
   if (balance != null) {
-    balanceDisplay = <>
-              {symbol === "Dai" && localization.displayCurrencySymbol ? "$" : ""}
-              {toEth(balance, decimals)}{" "}
-              <span style={{ fontSize: 20 }}>{symbol_or_star}</span>
-        </>;
+    balanceDisplay = (
+      <>
+        {symbol === "Dai" && localization.displayCurrencySymbol ? "$" : ""}
+        {toEth(balance, decimals)}{" "}
+        <span style={{ fontSize: 20 }}>{symbol_or_star}</span>
+      </>
+    );
   } else {
-    balanceDisplay = "Loading..."
+    balanceDisplay = "Loading...";
   }
-
 
   return (
     <Card>
@@ -108,9 +106,7 @@ const Finances = () => {
           >
             {t("currentBalance")}
           </h5>
-          <h2 className="text-center mb-3">
-            {balanceDisplay}
-          </h2>
+          <h2 className="text-center mb-3">{balanceDisplay}</h2>
           <div className="d-flex justify-content-center mt-auto">
             <Button
               color="primary"

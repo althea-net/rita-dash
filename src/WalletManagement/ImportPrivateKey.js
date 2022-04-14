@@ -39,7 +39,7 @@ const ImportPrivateKey = () => {
     return;
   }, []);
 
-  const save = async (e) => {
+  const save = async e => {
     e.preventDefault();
 
     try {
@@ -50,7 +50,7 @@ const ImportPrivateKey = () => {
     }
   };
 
-  const confirm = (e) => {
+  const confirm = e => {
     e.preventDefault();
     setConfirming(true);
   };
@@ -107,7 +107,7 @@ const ImportPrivateKey = () => {
                     className="mr-3 mb-2"
                     id="privateKey"
                     name="privateKey"
-                    onChange={(e) => setPrivateKey(e.target.value)}
+                    onChange={e => setPrivateKey(e.target.value)}
                     value={privateKey}
                     style={{ width: 350 }}
                   />

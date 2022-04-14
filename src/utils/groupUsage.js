@@ -22,9 +22,9 @@ const groupData = (
 ) => {
   let data = {};
 
-  let indices = usage.map((h) => h.index);
+  let indices = usage.map(h => h.index);
 
-  indices.map((index) => {
+  indices.map(index => {
     const date = new Date(index * msPerHr);
     let i;
 
@@ -54,14 +54,14 @@ const groupData = (
 
     if (!data[i]) data[i] = { up: 0, down: 0, cost: 0, service: 0 };
 
-    let c = usage.find((c) => c.index === index);
+    let c = usage.find(c => c.index === index);
 
     if (payments && payments.length) {
-      let p = payments.find((p) => p.index === index);
+      let p = payments.find(p => p.index === index);
       if (p) {
         if (client) {
           data[i].service += p.payments
-            .filter((p) => p.to.meshIp === "::1")
+            .filter(p => p.to.meshIp === "::1")
             .reduce((a, b) => a + parseInt(b.amount), 0);
         }
 
@@ -76,20 +76,20 @@ const groupData = (
           if (client) {
             data[i].cost += p.payments
               .filter(
-                (p) =>
+                p =>
                   p.from.ethAddress.toLowerCase() ===
                   our_info.address.toLowerCase()
               )
-              .filter((p) => !(p.to.meshIp === "::1"))
+              .filter(p => !(p.to.meshIp === "::1"))
               .reduce((a, b) => a + parseInt(b.amount), 0);
           } else {
             data[i].cost += p.payments
               .filter(
-                (p) =>
+                p =>
                   p.to.ethAddress.toLowerCase() ===
                   our_info.address.toLowerCase()
               )
-              .filter((p) => !(p.to.meshIp === "::1"))
+              .filter(p => !(p.to.meshIp === "::1"))
               .reduce((a, b) => a + parseInt(b.amount), 0);
           }
         }
@@ -116,7 +116,7 @@ const groupData = (
     return c;
   });
 
-  const start = (hour) => {
+  const start = hour => {
     let date = new Date(hour * msPerHr);
 
     switch (period) {
@@ -130,7 +130,7 @@ const groupData = (
     }
   };
 
-  const end = (hour) => {
+  const end = hour => {
     let date = new Date(hour * msPerHr);
 
     switch (period) {
@@ -150,7 +150,7 @@ const groupData = (
   const rows = Object.keys(data)
     .reverse()
     .slice((page - 1) * limit, page * limit)
-    .map((d) => ({
+    .map(d => ({
       index: d,
       period: `${start(d)} - ${end(d)}`,
       usage:
@@ -159,7 +159,7 @@ const groupData = (
           .toFixed(4) + "GB",
       bandwidthCost: `${toEth(data[d].cost, 4)} ${symbol}`,
       serviceCost: `${toEth(data[d].service, 4)} ${symbol}`,
-      totalCost: `${toEth(data[d].cost + data[d].service, 4)} ${symbol}`,
+      totalCost: `${toEth(data[d].cost + data[d].service, 4)} ${symbol}`
     }));
 
   return [rows, data];

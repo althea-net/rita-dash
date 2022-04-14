@@ -56,15 +56,12 @@ const DaoFee = ({ readonly = false }) => {
     }
   };
 
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
-      getDaoFee(signal);
-      return () => controller.abort();
-    },
-    [getDaoFee]
-  );
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    getDaoFee(signal);
+    return () => controller.abort();
+  }, [getDaoFee]);
 
   const submit = e => {
     e.preventDefault();

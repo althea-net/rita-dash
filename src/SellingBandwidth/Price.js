@@ -11,7 +11,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   Label,
-  Progress,
+  Progress
 } from "reactstrap";
 import { get, post } from "store";
 import useInterval from "hooks/useInterval";
@@ -84,7 +84,7 @@ const Price = () => {
 
   useInterval(getPrice, 5000);
 
-  const submit = async (e) => {
+  const submit = async e => {
     e.preventDefault();
     setLoading(true);
 
@@ -114,7 +114,7 @@ const Price = () => {
     } catch {}
   };
 
-  const changePrice = (e) => {
+  const changePrice = e => {
     setSuccess(false);
     setNewPrice(e.target.value);
   };
@@ -146,7 +146,7 @@ const Price = () => {
                   style={{
                     background: "#F8F9FA",
                     fontSize: 14,
-                    color: "#888",
+                    color: "#888"
                   }}
                 >
                   {symbol_or_star} / GB

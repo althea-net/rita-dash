@@ -32,34 +32,31 @@ const APIDump = () => {
 
   const data = JSON.stringify(results, null, 2);
 
-  useEffect(
-    () => {
-      (async () => {
-        setLoading(true);
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
 
-        await Promise.all(
-          endpoints.map(async path => {
-            let res;
-            try {
-              res = await get(path);
-              if (!(res instanceof Error)) {
-                if (res.network) res.network.wgPrivateKey = "<redacted>";
-                if (res.payment) res.payment.ethPrivateKey = "<redacted>";
-              }
-            } catch (e) {
-              res = e.message;
+      await Promise.all(
+        endpoints.map(async path => {
+          let res;
+          try {
+            res = await get(path);
+            if (!(res instanceof Error)) {
+              if (res.network) res.network.wgPrivateKey = "<redacted>";
+              if (res.payment) res.payment.ethPrivateKey = "<redacted>";
             }
+          } catch (e) {
+            res = e.message;
+          }
 
-            results[path] = res;
-          })
-        );
+          results[path] = res;
+        })
+      );
 
-        setResults(results);
-        setLoading(false);
-      })();
-    },
-    [results]
-  );
+      setResults(results);
+      setLoading(false);
+    })();
+  }, [results]);
 
   return (
     <div>

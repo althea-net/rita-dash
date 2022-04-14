@@ -157,7 +157,11 @@ const NetworkOrganizer = () => {
               </div>
             </div>
           </div>
-          <Button color="secondary" style={{ color: "white", minWidth: 200 }} onClick={edit}>
+          <Button
+            color="secondary"
+            style={{ color: "white", minWidth: 200 }}
+            onClick={edit}
+          >
             {t("edit")}
           </Button>
         </>

@@ -38,7 +38,7 @@ const Billing = (daoAddress, ipAddress) => {
   const periods = {
     d: t("daily"),
     w: t("weekly"),
-    m: t("monthly"),
+    m: t("monthly")
   };
 
   useEffect(() => setPage(1), [period]);
@@ -47,7 +47,7 @@ const Billing = (daoAddress, ipAddress) => {
     h: 24,
     d: 10,
     w: 4,
-    m: 12,
+    m: 12
   }[period];
 
   const [rows, data] = useMemo(
@@ -100,7 +100,7 @@ const Billing = (daoAddress, ipAddress) => {
                     style={{
                       whiteSpace: "nowrap",
                       fontSize: 16,
-                      color: "#666",
+                      color: "#666"
                     }}
                     className="mt-2 mr-2 d-flex"
                   >
@@ -109,9 +109,9 @@ const Billing = (daoAddress, ipAddress) => {
                       type="select"
                       style={{ color: "#666" }}
                       value={period}
-                      onChange={(e) => setPeriod(e.target.value)}
+                      onChange={e => setPeriod(e.target.value)}
                     >
-                      {Object.keys(periods).map((p) => (
+                      {Object.keys(periods).map(p => (
                         <option key={p} value={p}>
                           {periods[p]}
                         </option>
@@ -132,7 +132,7 @@ const Billing = (daoAddress, ipAddress) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {rows.map((r) => (
+                    {rows.map(r => (
                       <tr key={r.period}>
                         <td>{r.period}</td>
                         <td>{r.usage}</td>

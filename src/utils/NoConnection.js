@@ -37,8 +37,9 @@ const NoConnection = () => {
               <Alert color="info">{t("safeToReboot")}</Alert>
             ))}
           {keyChange && <Alert color="danger">{t("keyChange")}</Alert>}
-          {wifiChange &&
-            waiting < 115 && <Alert color="danger">{t("wifiChange")}</Alert>}
+          {wifiChange && waiting < 115 && (
+            <Alert color="danger">{t("wifiChange")}</Alert>
+          )}
           {waiting > 0 ? t("waiting", { seconds: waiting }) : t("noRita")}
           <Progress value={100} animated color="danger" />
         </ModalBody>

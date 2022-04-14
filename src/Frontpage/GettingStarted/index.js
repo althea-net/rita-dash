@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Card } from "../../ui";
@@ -56,12 +57,9 @@ export default () => {
   const [loadingNickname] = useNickname();
   const [, loadingWifiSettings] = useWifiSettings();
 
-  useEffect(
-    () => {
-      setDismissed(window.localStorage.getItem(wgPublicKey) === "true");
-    },
-    [dismissed, wgPublicKey]
-  );
+  useEffect(() => {
+    setDismissed(window.localStorage.getItem(wgPublicKey) === "true");
+  }, [dismissed, wgPublicKey]);
 
   const dismiss = e => {
     e.preventDefault();

@@ -35,9 +35,12 @@ const Ports = () => {
     }
   };
 
-  useInterval(() => {
-    if (portsWaiting) dispatch({ type: "keepWaiting" });
-  }, waiting ? 1000 : null);
+  useInterval(
+    () => {
+      if (portsWaiting) dispatch({ type: "keepWaiting" });
+    },
+    waiting ? 1000 : null
+  );
 
   useInterval(getInterfaces, 5000);
 
@@ -45,11 +48,10 @@ const Ports = () => {
     setSelected(iface);
     if (mode === "Wan") {
       setWan(true);
-    } 
-    else {
+    } else {
       setMode(mode);
       setConfirming(true);
-    } 
+    }
   };
 
   if (!interfaces) {
@@ -91,7 +93,12 @@ const Ports = () => {
         cancel={cancel}
       />
 
-      <WANConfig open={wan} setOpen={setWan} setMode={setMode} setConfirming={setConfirming} />
+      <WANConfig
+        open={wan}
+        setOpen={setWan}
+        setMode={setMode}
+        setConfirming={setConfirming}
+      />
 
       <Card>
         <CardBody>

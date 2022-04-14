@@ -31,13 +31,10 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
     type === "dynamic" ? setType("static") : setType("dynamic");
   };
 
-  useEffect(
-    () => {
-      if (ipEl.current) ipEl.current.focus();
-      return;
-    },
-    [type]
-  );
+  useEffect(() => {
+    if (ipEl.current) ipEl.current.focus();
+    return;
+  }, [type]);
 
   const submit = async e => {
     e.preventDefault();
@@ -119,7 +116,11 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
             </>
           )}
 
-          <Button color="primary" className="ml-auto float-right" disabled={disabled}>
+          <Button
+            color="primary"
+            className="ml-auto float-right"
+            disabled={disabled}
+          >
             {t("next")}
           </Button>
         </Form>

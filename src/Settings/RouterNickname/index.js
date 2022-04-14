@@ -22,13 +22,10 @@ const Nickname = () => {
   const [newNickname, setNewNickname] = useState(nickname || "");
   const [loading] = useNickname();
 
-  useEffect(
-    () => {
-      nickname && setNewNickname(nickname);
-      return;
-    },
-    [nickname]
-  );
+  useEffect(() => {
+    nickname && setNewNickname(nickname);
+    return;
+  }, [nickname]);
 
   const update = e => {
     setNewNickname(e.target.value);

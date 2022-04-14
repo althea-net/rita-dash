@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { ListGroupItem } from "reactstrap";

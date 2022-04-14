@@ -59,7 +59,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
 
   const select = exit => {
     let verifMode;
-    
+
     if (exit.exitSettings.generalDetails)
       verifMode = exit.exitSettings.generalDetails.verifMode;
 
@@ -190,22 +190,25 @@ const ExitNodeSetup = ({ open, setOpen }) => {
                         );
                       case "Phone":
                         return (
-                          <PhoneForm phone={phone} handlePhone={handlePhone} next={next} />
+                          <PhoneForm
+                            phone={phone}
+                            handlePhone={handlePhone}
+                            next={next}
+                          />
                         );
                       default:
                         return null;
                     }
                   })()
                 ))}
-              {!resetting.length &&
-                (pending || registered) && (
-                  <CodeForm
-                    nickname={exit.nickname}
-                    registered={registered}
-                    targetLength={verifMode === "Email" ? 6 : 4}
-                    setOpen={setOpen}
-                  />
-                )}
+              {!resetting.length && (pending || registered) && (
+                <CodeForm
+                  nickname={exit.nickname}
+                  registered={registered}
+                  targetLength={verifMode === "Email" ? 6 : 4}
+                  setOpen={setOpen}
+                />
+              )}
             </ModalBody>
           </>
         )}

@@ -15,9 +15,12 @@ const Wifi = () => {
   const [{ wifiSettings, waiting }, dispatch] = useStore();
   const [wifiError, loading] = useWifiSettings();
 
-  useInterval(() => {
-    if (wifiWaiting) dispatch({ type: "keepWaiting" });
-  }, waiting ? 1000 : null);
+  useInterval(
+    () => {
+      if (wifiWaiting) dispatch({ type: "keepWaiting" });
+    },
+    waiting ? 1000 : null
+  );
 
   if (!wifiSettings || !wifiSettings.length)
     if (loading && !error)
@@ -39,7 +42,7 @@ const Wifi = () => {
         let channel = parseInt(setting.device.channel, 10);
 
         //convert from string to boolean: '0' === enabled = false, '1' === disabled = true
-        let disabled = setting.device.disabled === '1';
+        let disabled = setting.device.disabled === "1";
 
         data.push({ WifiChannel: { radio, channel } });
         data.push({ WifiSsid: { radio, ssid } });
@@ -66,19 +69,18 @@ const Wifi = () => {
         // dispatch({ type: "startWaiting", waiting: 120 });
         // dispatch({ type: "wifiChange" });
       }
-
-    } catch { }
+    } catch {}
   };
 
   let valid = wifiSettings.reduce(
-    (a, b) => a && (b.ssid.length >= 8 && b.key != null && b.key.length >= 8),
+    (a, b) => a && b.ssid.length >= 8 && b.key != null && b.key.length >= 8,
     true
   );
 
   return (
     <Card>
       <CardBody>
-        <Error error={wifiError ? t('wifiError') : error ? error : null} />
+        <Error error={wifiError ? t("wifiError") : error ? error : null} />
         <Form onSubmit={submit}>
           {wifiSettings.map((_, i) => (
             <WifiSettingsForm key={i} index={i} />

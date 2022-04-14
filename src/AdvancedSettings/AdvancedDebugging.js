@@ -73,25 +73,24 @@ const AdvancedDebugging = () => {
           </div>
         ))}
       </div>
-      {!isGateway &&
-        (haveProblem && (
-          <div className="mt-4 col-12">
-            <h5>{t("suggestedAction")}</h5>
-            {hasNeighborRoute ? (
-              hasExitRoute ? (
-                selectedExit ? (
-                  <p>{t("exitProblem")}</p>
-                ) : (
-                  <p>{t("noExit")}</p>
-                )
+      {!isGateway && haveProblem && (
+        <div className="mt-4 col-12">
+          <h5>{t("suggestedAction")}</h5>
+          {hasNeighborRoute ? (
+            hasExitRoute ? (
+              selectedExit ? (
+                <p>{t("exitProblem")}</p>
               ) : (
-                <p>{t("noNeighborExit")}</p>
+                <p>{t("noExit")}</p>
               )
             ) : (
-              <p>{t("noNeighbor")}</p>
-            )}
-          </div>
-        ))}
+              <p>{t("noNeighborExit")}</p>
+            )
+          ) : (
+            <p>{t("noNeighbor")}</p>
+          )}
+        </div>
+      )}
     </Card>
   );
 };

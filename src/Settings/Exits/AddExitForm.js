@@ -44,83 +44,83 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
   };
 
   return (
-        <Form onSubmit={submit}>
-          {loading && <Progress animated color="primary" value="100" />}
-          <Error error={error} />
-          {success ? (
-            <>
-              <Success message={success} />
-              <Button onClick={() => setAdding(false)}>{t("back")}</Button>
-            </>
-          ) : (
-            <>
-              <FormGroup>
-                <Label>{t("identifier")}</Label>
-                <Input
-                  value={identifier}
-                  onChange={e => setIdentifier(e.target.value)}
-                  placeholder={t("identifier")}
-                  autoFocus
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>{t("description")}</Label>
-                <Input
-                  value={description}
-                  onChange={e => setDescription(e.target.value)}
-                  placeholder={t("description")}
-                  autoFocus
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>{t("meshIp")}</Label>
-                <Input
-                  value={meshIp}
-                  onChange={e => setMeshIp(e.target.value)}
-                  placeholder={t("meshIp")}
-                  autoFocus
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>{t("ethereumAddress")}</Label>
-                <Input
-                  value={ethAddress}
-                  onChange={e => setEthAddress(e.target.value)}
-                  placeholder={t("ethereumAddress")}
-                  autoFocus
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>{t("wireguardPublicKey")}</Label>
-                <Input
-                  value={wgPubKey}
-                  onChange={e => setWgPubKey(e.target.value)}
-                  placeholder={t("wireguardPublicKey")}
-                  autoFocus
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label>{t("registrationPort")}</Label>
-                <Input
-                  value={registrationPort}
-                  onChange={e => setRegistrationPort(e.target.value)}
-                  placeholder={t("registrationPort")}
-                  autoFocus
-                />
-              </FormGroup>
-              <Button className="float-right" color="primary" type="submit">
-                {t("submit")}
-              </Button>
-              <Button
-                className="float-right mr-1"
-                onClick={() => setFillForm(false)}
-              >
-                {t("back")}
-              </Button>
-            </>
-          )}
-        </Form>
+    <Form onSubmit={submit}>
+      {loading && <Progress animated color="primary" value="100" />}
+      <Error error={error} />
+      {success ? (
+        <>
+          <Success message={success} />
+          <Button onClick={() => setAdding(false)}>{t("back")}</Button>
+        </>
+      ) : (
+        <>
+          <FormGroup>
+            <Label>{t("identifier")}</Label>
+            <Input
+              value={identifier}
+              onChange={e => setIdentifier(e.target.value)}
+              placeholder={t("identifier")}
+              autoFocus
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>{t("description")}</Label>
+            <Input
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              placeholder={t("description")}
+              autoFocus
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>{t("meshIp")}</Label>
+            <Input
+              value={meshIp}
+              onChange={e => setMeshIp(e.target.value)}
+              placeholder={t("meshIp")}
+              autoFocus
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>{t("ethereumAddress")}</Label>
+            <Input
+              value={ethAddress}
+              onChange={e => setEthAddress(e.target.value)}
+              placeholder={t("ethereumAddress")}
+              autoFocus
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>{t("wireguardPublicKey")}</Label>
+            <Input
+              value={wgPubKey}
+              onChange={e => setWgPubKey(e.target.value)}
+              placeholder={t("wireguardPublicKey")}
+              autoFocus
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label>{t("registrationPort")}</Label>
+            <Input
+              value={registrationPort}
+              onChange={e => setRegistrationPort(e.target.value)}
+              placeholder={t("registrationPort")}
+              autoFocus
+            />
+          </FormGroup>
+          <Button className="float-right" color="primary" type="submit">
+            {t("submit")}
+          </Button>
+          <Button
+            className="float-right mr-1"
+            onClick={() => setFillForm(false)}
+          >
+            {t("back")}
+          </Button>
+        </>
+      )}
+    </Form>
   );
-}
+};
 
 export default AddExitForm;

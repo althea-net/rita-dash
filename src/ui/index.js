@@ -25,13 +25,13 @@ export const LeftCard = ({ children }) => (
   <Boot className="mb-4 col-12 col-lg-6 mr-2 card-small">
     <CardBody>{children}</CardBody>
   </Boot>
-)
+);
 
 export const RightCard = ({ children }) => (
   <Boot className="mb-4 col-12 card-small">
     <CardBody>{children}</CardBody>
   </Boot>
-)
+);
 
 export const Dismiss = ({ title, link, linkText }) => (
   <div className="w-100 d-flex flex-wrap justify-content-between">

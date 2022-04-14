@@ -25,16 +25,13 @@ const ExportCSV = ({ open, setOpen, rows }) => {
 
   const toggleAll = () => setExportAll(!exportAll);
 
-  useEffect(
-    () => {
-      if (exportAll) {
-        const indices = rows.map(r => r.index);
-        setStartDate(new Date(Math.min(...indices) * msPerHr));
-        setEndDate(new Date(Math.max(...indices) * msPerHr));
-      }
-    },
-    [exportAll, rows]
-  );
+  useEffect(() => {
+    if (exportAll) {
+      const indices = rows.map(r => r.index);
+      setStartDate(new Date(Math.min(...indices) * msPerHr));
+      setEndDate(new Date(Math.max(...indices) * msPerHr));
+    }
+  }, [exportAll, rows]);
 
   if (!rows.length) return null;
   const keys = Object.keys(rows[0]).filter(k => k !== "index");

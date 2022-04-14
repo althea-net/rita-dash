@@ -16,17 +16,17 @@ const RemoteLogging = () => {
   const [success, setSuccess] = useState(false);
   const [nowWaiting, setNowWaiting] = useState(false);
 
-  useEffect(
-    () => {
-      if (level && !newLevel) setNewLevel(level);
-      return;
-    },
-    [level, newLevel]
-  );
+  useEffect(() => {
+    if (level && !newLevel) setNewLevel(level);
+    return;
+  }, [level, newLevel]);
 
-  useInterval(() => {
-    if (nowWaiting) dispatch({ type: "keepWaiting" });
-  }, waiting ? 1000 : null);
+  useInterval(
+    () => {
+      if (nowWaiting) dispatch({ type: "keepWaiting" });
+    },
+    waiting ? 1000 : null
+  );
 
   useRemoteLogging();
 

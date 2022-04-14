@@ -5,7 +5,7 @@ import CO from "images/flags/CO.png";
 import MX from "images/flags/MX.png";
 import US from "images/flags/US.png";
 
-export default {
+const flagMap = {
   AC: () => <img src={International} alt="International" />,
   AD: () => <img src={International} alt="International" />,
   AE: () => <img src={International} alt="International" />,
@@ -252,3 +252,5 @@ export default {
   ZM: () => <img src={International} alt="International" />,
   ZW: () => <img src={International} alt="International" />
 };
+
+export default flagMap;

@@ -16,28 +16,25 @@ const FundingStatus = () => {
 
   if (status) ({ key, reserve, minDai, dai, eth, dest } = status);
 
-  useEffect(
-    () => {
-      let timer;
+  useEffect(() => {
+    let timer;
 
-      if (key === "daiToXdai") {
-        setWaitingForXdai(true);
-        timer = setTimeout(() => setWaitingForXdai(false), 120000);
-      }
+    if (key === "daiToXdai") {
+      setWaitingForXdai(true);
+      timer = setTimeout(() => setWaitingForXdai(false), 120000);
+    }
 
-      if (key === "ethToDest") {
-        setWaitingForEth(t(key, { dai, eth, dest }));
-        timer = setTimeout(() => setWaitingForEth(false), 120000);
-      }
+    if (key === "ethToDest") {
+      setWaitingForEth(t(key, { dai, eth, dest }));
+      timer = setTimeout(() => setWaitingForEth(false), 120000);
+    }
 
-      return () => {
-        if (key === "noOp") clearTimeout(timer);
-      };
-    },
-    [dai, eth, dest, t, key, status]
-  );
+    return () => {
+      if (key === "noOp") clearTimeout(timer);
+    };
+  }, [dai, eth, dest, t, key, status]);
 
-  const withdraw = (e) => {
+  const withdraw = e => {
     e.preventDefault();
     setWithdrawing(true);
   };
@@ -55,7 +52,7 @@ const FundingStatus = () => {
             {
               <div
                 dangerouslySetInnerHTML={{
-                  __html: t("fundsAdded"),
+                  __html: t("fundsAdded")
                 }}
               />
             }
@@ -89,7 +86,7 @@ const FundingStatus = () => {
           <img src={clock} alt={t("clock")} className="mr-2" />
           <div
             dangerouslySetInnerHTML={{
-              __html: waitingForEth || t(key, { dai, eth, dest }),
+              __html: waitingForEth || t(key, { dai, eth, dest })
             }}
           />
         </div>

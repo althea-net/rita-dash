@@ -44,17 +44,14 @@ const RelaySettings = () => {
 
   useInterval(getNeighbors, 10000);
 
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      getNeighbors(signal);
+    getNeighbors(signal);
 
-      return () => controller.abort();
-    },
-    [getNeighbors]
-  );
+    return () => controller.abort();
+  }, [getNeighbors]);
 
   const toggle = () => setOpen(!open);
 

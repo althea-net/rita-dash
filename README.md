@@ -6,7 +6,7 @@ This is a web interface that can be used to manage the settings and configuratio
 
 The app is implemented with React. To get started:
 
-```
+```bash
   git clone https://github.com/althea-mesh/althea-dash
   cd althea-dash
   yarn
@@ -18,3 +18,10 @@ The app is implemented with React. To get started:
 2.) run ssh -L localhost:4877:localhost:4877 root@192.168.10.1 in terminal
 
 3.) navigate to althea-dash repo and run yarn start
+
+### Formatting
+
+```bash
+yarn
+node_modules/.bin/prettier --write src/*.js src/**/*.js src/**/**/*.js
+```

@@ -18,23 +18,20 @@ const Blockchain = () => {
   const [{ blockchain }, dispatch] = useStore();
   const [newBlockchain, setBlockchain] = useState(blockchain);
 
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
-      (async () => {
-        try {
-          const blockchain = await get("/blockchain/get", true, 5000, signal);
-          if (!(blockchain instanceof Error)) {
-            dispatch({ type: "blockchain", blockchain });
-          }
-        } catch (e) {}
-      })();
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    (async () => {
+      try {
+        const blockchain = await get("/blockchain/get", true, 5000, signal);
+        if (!(blockchain instanceof Error)) {
+          dispatch({ type: "blockchain", blockchain });
+        }
+      } catch (e) {}
+    })();
 
-      return () => controller.abort();
-    },
-    [dispatch]
-  );
+    return () => controller.abort();
+  }, [dispatch]);
 
   if (!blockchain || !newBlockchain) return null;
 

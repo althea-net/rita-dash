@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Button, Modal, ModalBody, Progress } from "reactstrap";
@@ -33,17 +34,20 @@ export default ({ open, setOpen }) => {
     }
   };
 
-  useInterval(() => {
-    if (firmwareUpgrading) {
-      dispatch({ type: "keepWaiting" });
-      if (!waiting && !firmwareUpgraded) {
-        setFirmwareUpgrading(false);
-        setWarning(t("firmwareNoUpdate"));
-        dispatch({ type: "firmwareUpgrading", firmwareUpgrading: false });
-        dispatch({ type: "warning", warning: true });
+  useInterval(
+    () => {
+      if (firmwareUpgrading) {
+        dispatch({ type: "keepWaiting" });
+        if (!waiting && !firmwareUpgraded) {
+          setFirmwareUpgrading(false);
+          setWarning(t("firmwareNoUpdate"));
+          dispatch({ type: "firmwareUpgrading", firmwareUpgrading: false });
+          dispatch({ type: "warning", warning: true });
+        }
       }
-    }
-  }, waiting ? 1000 : null);
+    },
+    waiting ? 1000 : null
+  );
 
   useEffect(() => {
     const firmwareUpgraded =

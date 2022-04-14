@@ -10,7 +10,7 @@ const Warning = () => {
   const [backingUp, setBackingUp] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
-  const dismiss = (e) => {
+  const dismiss = e => {
     e.preventDefault();
     setDismissed(true);
   };
@@ -36,7 +36,7 @@ const Warning = () => {
           className="my-auto"
           style={{ color: "#777", fontSize: 18, cursor: "pointer" }}
           dangerouslySetInnerHTML={{
-            __html: t("backupYourWallet"),
+            __html: t("backupYourWallet")
           }}
         />
       </div>

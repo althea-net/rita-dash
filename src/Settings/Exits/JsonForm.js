@@ -27,40 +27,40 @@ const JsonForm = ({ setAdding, setPasteJson }) => {
   };
 
   return (
-        <Form onSubmit={submit}>
-          {loading && <Progress animated color="primary" value="100" />}
-          <Error error={error} />
-          {success ? (
-            <>
-              <Success message={success} />
-              <Button onClick={() => setAdding(false)}>{t("back")}</Button>
-            </>
-          ) : (
-            <>
-              <FormGroup>
-                <Label>{t("exitJson")}</Label>
-                <Input
-                  type="textarea"
-                  value={json}
-                  onChange={e => setJson(e.target.value)}
-                  placeholder={t("exitJson")}
-                  autoFocus
-                  rows={8}
-                />
-              </FormGroup>
-              <Button className="float-right" color="primary">
-                {t("submit")}
-              </Button>
-              <Button
-                className="float-right mr-1"
-                onClick={() => setPasteJson(false)}
-              >
-                {t("back")}
-              </Button>
-            </>
-          )}
-        </Form>
-  )
-}
+    <Form onSubmit={submit}>
+      {loading && <Progress animated color="primary" value="100" />}
+      <Error error={error} />
+      {success ? (
+        <>
+          <Success message={success} />
+          <Button onClick={() => setAdding(false)}>{t("back")}</Button>
+        </>
+      ) : (
+        <>
+          <FormGroup>
+            <Label>{t("exitJson")}</Label>
+            <Input
+              type="textarea"
+              value={json}
+              onChange={e => setJson(e.target.value)}
+              placeholder={t("exitJson")}
+              autoFocus
+              rows={8}
+            />
+          </FormGroup>
+          <Button className="float-right" color="primary">
+            {t("submit")}
+          </Button>
+          <Button
+            className="float-right mr-1"
+            onClick={() => setPasteJson(false)}
+          >
+            {t("back")}
+          </Button>
+        </>
+      )}
+    </Form>
+  );
+};
 
 export default JsonForm;

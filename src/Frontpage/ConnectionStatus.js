@@ -45,9 +45,7 @@ const ConnectionStatus = () => {
 
   return (
     <div
-      className={`d-flex flex-wrap d-sm-block ml-sm-auto my-auto ${
-        state.color
-      }`}
+      className={`d-flex flex-wrap d-sm-block ml-sm-auto my-auto ${state.color}`}
     >
       <div>
         <img src={state.icon} alt={state.msg} className="mr-1" />

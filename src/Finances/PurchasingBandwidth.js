@@ -22,23 +22,20 @@ const PurchasingBandwidth = () => {
   const [withdrawing, setWithdrawing] = useState(false);
   const [{ balance, localFee, usage }, dispatch] = useStore();
 
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-      (async () => {
-        try {
-          const usage = await get("/usage/client", true, 10000, signal);
-          if (usage instanceof Error) return;
-          dispatch({ type: "usage", usage });
-        } catch (e) {}
-      })();
+    (async () => {
+      try {
+        const usage = await get("/usage/client", true, 10000, signal);
+        if (usage instanceof Error) return;
+        dispatch({ type: "usage", usage });
+      } catch (e) {}
+    })();
 
-      return () => controller.abort();
-    },
-    [dispatch]
-  );
+    return () => controller.abort();
+  }, [dispatch]);
 
   const totalUsage = usage.reduce((a, b) => {
     return a + b.up + b.down;
@@ -65,8 +62,8 @@ const PurchasingBandwidth = () => {
     isNaN(perMonthUsage) || isNaN(weeksOfService) || usage.length < 720
       ? t("insufficientUsage")
       : weeksOfService < 1
-        ? t("lessThanAWeek", { perMonthUsage })
-        : t("averageUsage", { perMonthUsage, weeksOfService });
+      ? t("lessThanAWeek", { perMonthUsage })
+      : t("averageUsage", { perMonthUsage, weeksOfService });
 
   return (
     <Card>

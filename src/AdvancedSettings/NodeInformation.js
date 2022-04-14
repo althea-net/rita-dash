@@ -21,24 +21,21 @@ const NodeInformation = () => {
   const [copied, setCopied] = useState("");
   const [{ address, meshIp, wgPublicKey }, dispatch] = useStore();
 
-  useEffect(
-    () => {
-      const init = async () => {
-        try {
-          const { meshIp } = await get("/mesh_ip");
-          dispatch({ type: "meshIp", meshIp });
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const { meshIp } = await get("/mesh_ip");
+        dispatch({ type: "meshIp", meshIp });
 
-          const wgPublicKey = await get("/wg_public_key");
-          dispatch({ type: "wgPublicKey", wgPublicKey });
-        } catch (e) {
-          console.log(e);
-        }
-      };
+        const wgPublicKey = await get("/wg_public_key");
+        dispatch({ type: "wgPublicKey", wgPublicKey });
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
-      init();
-    },
-    [dispatch]
-  );
+    init();
+  }, [dispatch]);
 
   const toggleQR = v => {
     if (qr === v) return setQR("");

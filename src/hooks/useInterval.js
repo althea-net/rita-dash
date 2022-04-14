@@ -8,22 +8,19 @@ export default function useInterval(callback, delay) {
     savedCallback.current = callback;
   });
 
-  useEffect(
-    () => {
-      const controller = new AbortController();
-      const signal = controller.signal;
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
+    savedCallback.current(signal);
+    function tick() {
       savedCallback.current(signal);
-      function tick() {
-        savedCallback.current(signal);
-      }
+    }
 
-      let id = setInterval(tick, delay);
-      return () => {
-        clearInterval(id);
-        controller.abort();
-      };
-    },
-    [delay]
-  );
+    let id = setInterval(tick, delay);
+    return () => {
+      clearInterval(id);
+      controller.abort();
+    };
+  }, [delay]);
 }

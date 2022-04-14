@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import exclamation from "images/exclamation.svg";
 
-const DebtWarning = (props) => {
+const DebtWarning = props => {
   let debt_value = props.debtValue;
   const [t] = useTranslation();
   const [dismissed, setDismissed] = useState(false);
 
-  const dismiss = (e) => {
+  const dismiss = e => {
     e.preventDefault();
     setDismissed(true);
   };
@@ -29,7 +29,7 @@ const DebtWarning = (props) => {
           className="my-auto"
           style={{ color: "#777", fontSize: 18, cursor: "pointer" }}
           dangerouslySetInnerHTML={{
-            __html: t("youHaveDebt", { debt_value }),
+            __html: t("youHaveDebt", { debt_value })
           }}
         />
       </div>

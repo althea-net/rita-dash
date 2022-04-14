@@ -13,17 +13,14 @@ const CodeForm = ({ nickname, registered, targetLength, setOpen }) => {
 
   let { verifyExit } = useContext(ExitsContext);
 
-  useEffect(
-    () => {
-      const timer = setTimeout(() => {
-        setWaiting(false);
-        setExpired(true);
-      }, 12000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setWaiting(false);
+      setExpired(true);
+    }, 12000);
 
-      return () => clearTimeout(timer);
-    },
-    [code]
-  );
+    return () => clearTimeout(timer);
+  }, [code]);
 
   let handleCode = e => {
     let { value } = e.target;
@@ -58,12 +55,11 @@ const CodeForm = ({ nickname, registered, targetLength, setOpen }) => {
             <Progress animated color="primary" value="100" />
           ) : (
             <>
-              {expired &&
-                code.length === targetLength && (
-                  <Alert color="danger" className="w-100">
-                    {t("registrationFailed")}
-                  </Alert>
-                )}
+              {expired && code.length === targetLength && (
+                <Alert color="danger" className="w-100">
+                  {t("registrationFailed")}
+                </Alert>
+              )}
               <Input
                 value={code}
                 id="confirmationCode"

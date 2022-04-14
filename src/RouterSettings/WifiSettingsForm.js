@@ -39,10 +39,9 @@ const WifiSettingsForm = ({ index }) => {
   };
 
   const setDisabled = e => {
-    settings.device.disabled = e.target.checked ? '1' : '0';
+    settings.device.disabled = e.target.checked ? "1" : "0";
     saveSettings();
   };
-
 
   return (
     <>
@@ -94,10 +93,9 @@ const WifiSettingsForm = ({ index }) => {
             name="dis"
             label=""
             onChange={setDisabled}
-            checked={settings.device.disabled === '1'}
+            checked={settings.device.disabled === "1"}
           />
         </FormGroup>
-
       </div>
     </>
   );

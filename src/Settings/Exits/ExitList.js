@@ -26,8 +26,8 @@ const ExitList = ({ setOpen, select }) => {
       return (
         (state !== "New" &&
           state !== "Disabled" &&
-          (exit.exitSettings.generalDetails &&
-            exit.exitSettings.generalDetails.exitCurrency === blockchain)) ||
+          exit.exitSettings.generalDetails &&
+          exit.exitSettings.generalDetails.exitCurrency === blockchain) ||
         state === "Denied"
       );
     })
@@ -35,27 +35,32 @@ const ExitList = ({ setOpen, select }) => {
 
   return (
     <div>
-      {adding ? <AddExit setAdding={setAdding} /> : exits.length ? (
+      {adding ? (
+        <AddExit setAdding={setAdding} />
+      ) : exits.length ? (
         <>
-        <p>{t("selectNode")}</p>
-        <ListGroup>
-          {exits.map(exit => (
-            <ExitListItem
-              exit={exit}
-              key={exit.nickname}
-              click={() => select(exit)}
-            />
-          ))}
-        </ListGroup>
-        <Button color="primary" onClick={addExit}>{t("addExit")}</Button>
+          <p>{t("selectNode")}</p>
+          <ListGroup>
+            {exits.map(exit => (
+              <ExitListItem
+                exit={exit}
+                key={exit.nickname}
+                click={() => select(exit)}
+              />
+            ))}
+          </ListGroup>
+          <Button color="primary" onClick={addExit}>
+            {t("addExit")}
+          </Button>
         </>
       ) : (
         <>
-        <Alert color="danger">{t("noExits")}</Alert>
-        <Button color="primary" onClick={addExit}>{t("addExit")}</Button>
+          <Alert color="danger">{t("noExits")}</Alert>
+          <Button color="primary" onClick={addExit}>
+            {t("addExit")}
+          </Button>
         </>
       )}
-
     </div>
   );
 };

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -29,19 +30,21 @@ export default () => {
   return (
     <ButtonDropdown isOpen={open} toggle={toggle}>
       <DropdownToggle
-        className="dropdown-toggle" 
-        caret 
+        className="dropdown-toggle"
+        caret
         style={toggleStyles}
-        id="langDropDown">
-          {languages[i18n.language] || languages["en"]}
+        id="langDropDown"
+      >
+        {languages[i18n.language] || languages["en"]}
       </DropdownToggle>
       <DropdownMenu>
         {Object.keys(languages).map(lang => (
-          <DropdownItem 
-            key={lang} 
+          <DropdownItem
+            key={lang}
             onClick={() => i18n.changeLanguage(lang)}
-            id={lang}>
-              {languages[lang]}
+            id={lang}
+          >
+            {languages[lang]}
           </DropdownItem>
         ))}
       </DropdownMenu>
