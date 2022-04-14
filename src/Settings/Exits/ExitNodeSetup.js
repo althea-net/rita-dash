@@ -23,8 +23,8 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   const [phone, setPhone] = useState("");
   const [valid, setValid] = useState(false);
 
-  const [{ exitIp, exits, resetting }, dispatch] = useStore();
-  const exit = exits.find(e => e.exitSettings.id.meshIp === exitIp);
+  const [{ exitWg, exits, resetting }, dispatch] = useStore();
+  const exit = exits.find(e => e.exitSettings.wireguard_public_key === exitWg);
 
   let registered = false;
   let denied = false;

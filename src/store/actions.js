@@ -22,7 +22,7 @@ export default (state, action) => {
         return {
           debt: debts.reduce((a, b) => {
             return b.identity.meshIp ===
-              state.selectedExit.exitSettings.id.meshIp
+              state.selectedExit.exitSettings.wireguard_public_key
               ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
               : a;
           }, BigNumber("0")),
@@ -139,12 +139,12 @@ export default (state, action) => {
             return !state.exits.find(
               e =>
                 e.exitSettings &&
-                e.exitSettings.id.meshIp === n.ip.replace(/"/g, "")
+                e.exitSettings.wireguard_public_key === n.ip.replace(/"/g, "")
             );
           })
           .map(n => {
             n.debt = state.debts.find(
-              d => d.identity.meshIp === n.ip.replace(/"/g, "")
+              d => d.identity.wireguard_public_key === n.ip.replace(/"/g, "")
             );
             return n;
           })
