@@ -59,7 +59,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
 
   const select = exit => {
     let verifMode;
-    
+
     if (exit.exitSettings.generalDetails)
       verifMode = exit.exitSettings.generalDetails.verifMode;
 
@@ -190,7 +190,11 @@ const ExitNodeSetup = ({ open, setOpen }) => {
                         );
                       case "Phone":
                         return (
-                          <PhoneForm phone={phone} handlePhone={handlePhone} next={next} />
+                          <PhoneForm
+                            phone={phone}
+                            handlePhone={handlePhone}
+                            next={next}
+                          />
                         );
                       default:
                         return null;

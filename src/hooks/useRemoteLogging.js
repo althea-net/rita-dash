@@ -15,7 +15,12 @@ const useRemoteLogging = () => {
         setLoading(true);
 
         try {
-          let remoteLogging = await get("/remote_logging/enabled", true, 5000, signal);
+          let remoteLogging = await get(
+            "/remote_logging/enabled",
+            true,
+            5000,
+            signal
+          );
           if (!(remoteLogging instanceof Error))
             dispatch({ type: "remoteLogging", remoteLogging });
         } catch {
@@ -24,8 +29,7 @@ const useRemoteLogging = () => {
 
         try {
           let level = await get("/remote_logging/level", true, 5000, signal);
-          if (!(level instanceof Error))
-            dispatch({ type: "level", level });
+          if (!(level instanceof Error)) dispatch({ type: "level", level });
         } catch {
           return;
         }

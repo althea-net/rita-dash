@@ -19,7 +19,12 @@ const useWifiSettings = () => {
       const signal = controller.signal;
       (async () => {
         try {
-          const wifiSettingsNoValidation = await get("/wifi_settings", true, 5000, signal);
+          const wifiSettingsNoValidation = await get(
+            "/wifi_settings",
+            true,
+            5000,
+            signal
+          );
 
           // this filters out the AltheaPhone network, which the user shouldn't edit
           let wifiSettings = wifiSettingsNoValidation.filter(filterPhone);

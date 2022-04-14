@@ -9,7 +9,7 @@ import {
   Input,
   FormGroup,
   Label,
-  InputGroup,
+  InputGroup
 } from "reactstrap";
 import QR from "qrcode.react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -68,7 +68,7 @@ function user_info_forum(
             type="text"
             defaultValue={billingDetails.user_first_name}
             placeholder="First Name"
-            onChange={(e) => {
+            onChange={e => {
               let local = billingDetails;
               local.user_first_name = e.target.value;
               setBillingDetails(local);
@@ -83,7 +83,7 @@ function user_info_forum(
             type="text"
             defaultValue={billingDetails.user_last_name}
             placeholder="Last Name"
-            onChange={(e) => {
+            onChange={e => {
               let local = billingDetails;
               local.user_last_name = e.target.value;
               setBillingDetails(local);
@@ -101,7 +101,7 @@ function user_info_forum(
             type="text"
             defaultValue={email}
             placeholder="User Email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           />
         </FormGroup>
         <FormGroup style={{ width: "49%" }} className="mb-1 ml-auto text-right">
@@ -115,7 +115,7 @@ function user_info_forum(
             inputComponent={SmartInput}
             placeholder="User Phonenumber"
             value={phone}
-            onChange={(p) => setPhone(p)}
+            onChange={p => setPhone(p)}
           />
         </FormGroup>
       </forum>
@@ -128,7 +128,7 @@ function user_info_forum(
           type="text"
           placeholder="Street"
           defaultValue={billingDetails.mailing_address.street}
-          onChange={(e) => {
+          onChange={e => {
             let local = billingDetails;
             local.mailing_address.street = e.target.value;
             setBillingDetails(local);
@@ -144,7 +144,7 @@ function user_info_forum(
             type="text"
             defaultValue={billingDetails.mailing_address.postal_code}
             placeholder="Postal Code"
-            onChange={(e) => {
+            onChange={e => {
               let local = billingDetails;
               local.mailing_address.postal_code = e.target.value;
               setBillingDetails(local);
@@ -159,7 +159,7 @@ function user_info_forum(
             type="text"
             defaultValue={billingDetails.mailing_address.city}
             placeholder="City"
-            onChange={(e) => {
+            onChange={e => {
               let local = billingDetails;
               local.mailing_address.city = e.target.value;
               setBillingDetails(local);
@@ -174,7 +174,7 @@ function user_info_forum(
             type="text"
             defaultValue={billingDetails.mailing_address.state}
             placeholder="State"
-            onChange={(e) => {
+            onChange={e => {
               let local = billingDetails;
               local.mailing_address.state = e.target.value;
               setBillingDetails(local);
@@ -189,7 +189,7 @@ function user_info_forum(
             type="select"
             defaultValue={billingDetails.mailing_address.country}
             placeholder="Country"
-            onChange={(e) => {
+            onChange={e => {
               let local = billingDetails;
               local.mailing_address.country = e.target.value;
               setBillingDetails(local);
@@ -212,7 +212,7 @@ function user_info_forum(
       <br />
       <Button
         color="primary"
-        onClick={(e) => {
+        onClick={e => {
           submit(billingDetails, phone, email, setState);
         }}
       >
@@ -343,11 +343,11 @@ const Deposit = ({ open, setOpen }) => {
           style={{
             display: "flex",
             flexWrap: "wrap",
-            justifyContent: "space-evenly",
+            justifyContent: "space-evenly"
           }}
         >
           <Button
-            onClick={(e) => {
+            onClick={e => {
               get_wyre_url_and_redirect(20.0);
             }}
             outline
@@ -356,7 +356,7 @@ const Deposit = ({ open, setOpen }) => {
             $20
           </Button>
           <Button
-            onClick={(e) => {
+            onClick={e => {
               get_wyre_url_and_redirect(40.0);
             }}
             outline
@@ -365,7 +365,7 @@ const Deposit = ({ open, setOpen }) => {
             $40
           </Button>
           <Button
-            onClick={(e) => {
+            onClick={e => {
               get_wyre_url_and_redirect(60.0);
             }}
             outline
@@ -374,7 +374,7 @@ const Deposit = ({ open, setOpen }) => {
             $60
           </Button>
           <Button
-            onClick={(e) => {
+            onClick={e => {
               get_wyre_url_and_redirect(100.0);
             }}
             outline
@@ -393,7 +393,7 @@ const Deposit = ({ open, setOpen }) => {
           style={{
             border: "1px solid #ddd",
             borderRadius: 5,
-            wordWrap: "break-word",
+            wordWrap: "break-word"
           }}
         >
           <div className="d-flex py-2 px-0 w-100">

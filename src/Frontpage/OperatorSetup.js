@@ -38,13 +38,13 @@ const OperatorSetup = () => {
     })();
   });
 
-  let dismiss = async (e) => {
+  let dismiss = async e => {
     try {
       setShouldDisplay(null);
       await post(`/operator_setup/false`);
     } catch (e) {}
   };
-  let submit = async (e) => {
+  let submit = async e => {
     try {
       let install_details = {};
       install_details.first_name = firstName;
@@ -98,7 +98,7 @@ const OperatorSetup = () => {
               type="text"
               defaultValue={firstName}
               placeholder="First Name"
-              onChange={(e) => setFirstName(e.target.value)}
+              onChange={e => setFirstName(e.target.value)}
             />
           </FormGroup>
           <FormGroup style={{ width: "50%" }}>
@@ -108,7 +108,7 @@ const OperatorSetup = () => {
               type="text"
               defaultValue={lastName}
               placeholder="Last Name"
-              onChange={(e) => setLastName(e.target.value)}
+              onChange={e => setLastName(e.target.value)}
             />
           </FormGroup>
         </forum>
@@ -121,7 +121,7 @@ const OperatorSetup = () => {
               type="text"
               defaultValue={email}
               placeholder="User Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
             />
           </FormGroup>
           <FormGroup
@@ -137,7 +137,7 @@ const OperatorSetup = () => {
               inputComponent={SmartInput}
               placeholder="User Phonenumber"
               value={phone}
-              onChange={(p) => setPhone(p)}
+              onChange={p => setPhone(p)}
             />
           </FormGroup>
         </forum>
@@ -148,7 +148,7 @@ const OperatorSetup = () => {
             type="text"
             placeholder="Street"
             defaultValue={street}
-            onChange={(e) => setStreet(e.target.value)}
+            onChange={e => setStreet(e.target.value)}
           />
         </InputGroup>
         <forum class="form-inline">
@@ -159,7 +159,7 @@ const OperatorSetup = () => {
               type="text"
               defaultValue={postalCode}
               placeholder="Postal Code"
-              onChange={(e) => setPostalCode(e.target.value)}
+              onChange={e => setPostalCode(e.target.value)}
             />
           </FormGroup>
           <FormGroup style={{ width: "25%" }}>
@@ -169,7 +169,7 @@ const OperatorSetup = () => {
               type="text"
               defaultValue={city}
               placeholder="City"
-              onChange={(e) => setCity(e.target.value)}
+              onChange={e => setCity(e.target.value)}
             />
           </FormGroup>
           <FormGroup style={{ width: "25%" }}>
@@ -179,7 +179,7 @@ const OperatorSetup = () => {
               type="text"
               defaultValue={state}
               placeholder="State"
-              onChange={(e) => setState(e.target.value)}
+              onChange={e => setState(e.target.value)}
             />
           </FormGroup>
           <FormGroup style={{ width: "25%" }}>
@@ -189,7 +189,7 @@ const OperatorSetup = () => {
               type="select"
               defaultValue={country}
               placeholder="Country"
-              onChange={(e) => setCountry(e.target.value)}
+              onChange={e => setCountry(e.target.value)}
             >
               <option selected value="United States">
                 United States
@@ -211,7 +211,7 @@ const OperatorSetup = () => {
           <Input
             type="text"
             placeholder="Physical address"
-            onChange={(e) => setPhysicalAddress(e.target.value)}
+            onChange={e => setPhysicalAddress(e.target.value)}
             defaultValue={physicalAddress}
           />
         </InputGroup>
@@ -221,7 +221,7 @@ const OperatorSetup = () => {
           <Input
             type="text"
             placeholder="CPE IP"
-            onChange={(e) => setCpeIP(e.target.value)}
+            onChange={e => setCpeIP(e.target.value)}
             defaultValue={cpeIP}
           />
         </InputGroup>
@@ -231,7 +231,7 @@ const OperatorSetup = () => {
           <Input
             type="text"
             placeholder="Relay antenna IPs comma separated list"
-            onChange={(e) => setRelayAntennaIPs(e.target.value)}
+            onChange={e => setRelayAntennaIPs(e.target.value)}
             defaultValue={relayAntennaIPs}
           />
         </InputGroup>
@@ -241,7 +241,7 @@ const OperatorSetup = () => {
           <Input
             type="text"
             placeholder="Phone antenna IPs comma separated list"
-            onChange={(e) => setPhoneClientAntennaIPs(e.target.value)}
+            onChange={e => setPhoneClientAntennaIPs(e.target.value)}
             defaultValue={phoneClientAntennaIPs}
           />
         </InputGroup>
@@ -251,7 +251,7 @@ const OperatorSetup = () => {
           <Input
             type="textarea"
             placeholder="Equipment details, short summary of hardware"
-            onChange={(e) => setEquipmentDetails(e.target.value)}
+            onChange={e => setEquipmentDetails(e.target.value)}
             defaultValue={equipmentDetails}
           />
         </InputGroup>

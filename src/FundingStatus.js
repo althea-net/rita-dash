@@ -37,7 +37,7 @@ const FundingStatus = () => {
     [dai, eth, dest, t, key, status]
   );
 
-  const withdraw = (e) => {
+  const withdraw = e => {
     e.preventDefault();
     setWithdrawing(true);
   };
@@ -55,7 +55,7 @@ const FundingStatus = () => {
             {
               <div
                 dangerouslySetInnerHTML={{
-                  __html: t("fundsAdded"),
+                  __html: t("fundsAdded")
                 }}
               />
             }
@@ -89,7 +89,7 @@ const FundingStatus = () => {
           <img src={clock} alt={t("clock")} className="mr-2" />
           <div
             dangerouslySetInnerHTML={{
-              __html: waitingForEth || t(key, { dai, eth, dest }),
+              __html: waitingForEth || t(key, { dai, eth, dest })
             }}
           />
         </div>

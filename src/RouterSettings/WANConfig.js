@@ -119,7 +119,11 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
             </>
           )}
 
-          <Button color="primary" className="ml-auto float-right" disabled={disabled}>
+          <Button
+            color="primary"
+            className="ml-auto float-right"
+            disabled={disabled}
+          >
             {t("next")}
           </Button>
         </Form>

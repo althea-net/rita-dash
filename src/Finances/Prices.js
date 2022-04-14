@@ -55,12 +55,12 @@ const Prices = () => {
   const organizerFeeCopy = t("organizerFeeContent", {
     maybeDollarSymbol,
     readableDAOPrice,
-    symbol_or_star,
+    symbol_or_star
   });
   const bandwidthPriceCopy = t("bandwidthPriceContent", {
     maybeDollarSymbol,
     readableExitPrice,
-    symbol_or_star,
+    symbol_or_star
   });
   console.log(symbol_or_star);
   console.log(organizerFeeCopy);

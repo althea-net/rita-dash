@@ -39,7 +39,7 @@ const Wifi = () => {
         let channel = parseInt(setting.device.channel, 10);
 
         //convert from string to boolean: '0' === enabled = false, '1' === disabled = true
-        let disabled = setting.device.disabled === '1';
+        let disabled = setting.device.disabled === "1";
 
         data.push({ WifiChannel: { radio, channel } });
         data.push({ WifiSsid: { radio, ssid } });
@@ -66,8 +66,7 @@ const Wifi = () => {
         // dispatch({ type: "startWaiting", waiting: 120 });
         // dispatch({ type: "wifiChange" });
       }
-
-    } catch { }
+    } catch {}
   };
 
   let valid = wifiSettings.reduce(
@@ -78,7 +77,7 @@ const Wifi = () => {
   return (
     <Card>
       <CardBody>
-        <Error error={wifiError ? t('wifiError') : error ? error : null} />
+        <Error error={wifiError ? t("wifiError") : error ? error : null} />
         <Form onSubmit={submit}>
           {wifiSettings.map((_, i) => (
             <WifiSettingsForm key={i} index={i} />
