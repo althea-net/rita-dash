@@ -26,7 +26,7 @@ const state = {
   debts: [],
   device: null,
   error: false,
-  exitIp: null,
+  exitWg: null,
   exits: [],
   selectedExit: null,
   factor: 0,

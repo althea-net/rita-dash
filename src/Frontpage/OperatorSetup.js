@@ -90,7 +90,7 @@ const OperatorSetup = () => {
         </a>
       </div>
       <div style={{ width: "100%" }}>
-        <forum class="form-inline">
+        <forum className="form-inline">
           <FormGroup style={{ width: "50%" }}>
             <Label>{"First Name"}</Label>
             <Input
@@ -113,7 +113,7 @@ const OperatorSetup = () => {
           </FormGroup>
         </forum>
         <br />
-        <forum class="form-inline">
+        <forum className="form-inline">
           <FormGroup style={{ width: "50%" }}>
             <Label>{"Email"}</Label>
             <Input
@@ -151,7 +151,7 @@ const OperatorSetup = () => {
             onChange={e => setStreet(e.target.value)}
           />
         </InputGroup>
-        <forum class="form-inline">
+        <forum className="form-inline">
           <FormGroup style={{ width: "25%" }}>
             <Label>{"Postal Code"}</Label>
             <Input
@@ -191,9 +191,7 @@ const OperatorSetup = () => {
               placeholder="Country"
               onChange={e => setCountry(e.target.value)}
             >
-              <option selected value="United States">
-                United States
-              </option>
+              <option defaultValue="United States">United States</option>
               <option value="Canada">Canada</option>
               <option value="Mexico">Mexico</option>
               <option value="Nigeria">Nigeria</option>

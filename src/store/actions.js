@@ -21,8 +21,7 @@ export default (state, action) => {
       if (state.selectedExit && debts.length) {
         return {
           debt: debts.reduce((a, b) => {
-            return b.identity.meshIp ===
-              state.selectedExit.exitSettings.wireguard_public_key
+            return b.wgPublicKey === state.selectedExit.exitSettings.wgPublicKey
               ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
               : a;
           }, BigNumber("0")),
@@ -139,12 +138,13 @@ export default (state, action) => {
             return !state.exits.find(
               e =>
                 e.exitSettings &&
-                e.exitSettings.wireguard_public_key === n.ip.replace(/"/g, "")
+                e.exitSettings.wgPublicKey ===
+                  n.id.wgPublicKey.replace(/"/g, "")
             );
           })
           .map(n => {
             n.debt = state.debts.find(
-              d => d.identity.wireguard_public_key === n.ip.replace(/"/g, "")
+              d => d.identity.wgPublicKey === n.id.wgPublicKey.replace(/"/g, "")
             );
             return n;
           })
@@ -152,7 +152,7 @@ export default (state, action) => {
     },
     initialized: ({ initialized }) => ({ initialized }),
     nickname: ({ nickname }) => ({ nickname }),
-    exitIp: ({ exitIp }) => ({ exitIp }),
+    exitWg: ({ exitWg }) => ({ exitWg }),
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname]
     }),

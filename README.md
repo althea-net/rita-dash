@@ -19,6 +19,8 @@ The app is implemented with React. To get started:
 
 3.) navigate to althea-dash repo and run yarn start
 
+4.) Navigate to localhost:3005 in browser
+
 ### Formatting
 
 ```bash

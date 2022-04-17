@@ -99,7 +99,7 @@ const BandwidthLimit = () => {
                   setLimit(e.target.value);
                   setUnsavedChanges(true);
                 }}
-                value={limit}
+                value={limit || ""}
                 readOnly={limit == null}
                 style={{ borderRight: "none" }}
               />
