@@ -21,7 +21,7 @@ export default (state, action) => {
       if (state.selectedExit && debts.length) {
         return {
           debt: debts.reduce((a, b) => {
-            return b.identity.meshIp ===
+            return b.wireguard_public_key ===
               state.selectedExit.exitSettings.wireguard_public_key
               ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
               : a;
@@ -152,7 +152,7 @@ export default (state, action) => {
     },
     initialized: ({ initialized }) => ({ initialized }),
     nickname: ({ nickname }) => ({ nickname }),
-    exitIp: ({ exitIp }) => ({ exitIp }),
+    exitWg: ({ exitWg }) => ({ exitWg }),
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname]
     }),

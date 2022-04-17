@@ -27,7 +27,8 @@ export default ({ exit, click }) => {
     haveRoute
   } = exit;
 
-  let connected = isReachable && haveRoute;
+  //let connected = isReachable && haveRoute;
+  let connected = true;
 
   return (
     <Item

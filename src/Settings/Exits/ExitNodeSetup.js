@@ -66,7 +66,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
     let {
       nickname,
       exitSettings: {
-        id: { meshIp },
+        id: { exitWg },
         state
       }
     } = exit;
@@ -81,7 +81,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
       toggle();
     }
 
-    dispatch({ type: "exitIp", exitIp: meshIp });
+    dispatch({ type: "exitWg", exitWg: exitWg });
   };
 
   const handleEmail = e => {
@@ -108,7 +108,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   const toggle = () => {
     setRegistering(false);
     setOpen(false);
-    dispatch({ type: "exitIp", exitIp: null });
+    dispatch({ type: "exitWg", exitWg: null });
   };
 
   return (
