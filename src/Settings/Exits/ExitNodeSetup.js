@@ -24,7 +24,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   const [valid, setValid] = useState(false);
 
   const [{ exitWg, exits, resetting }, dispatch] = useStore();
-  const exit = exits.find(e => e.exitSettings.wireguard_public_key === exitWg);
+  const exit = exits.find(e => e.exitSettings.wgPublicKey === exitWg);
 
   let registered = false;
   let denied = false;
@@ -65,10 +65,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
 
     let {
       nickname,
-      exitSettings: {
-        id: { meshIp },
-        state
-      }
+      exitSettings: { wgPublicKey: exitWg, state }
     } = exit;
 
     if (state === "Registered") {
@@ -81,7 +78,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
       toggle();
     }
 
-    dispatch({ type: "exitIp", exitIp: meshIp });
+    dispatch({ type: "exitWg", exitWg: exitWg });
   };
 
   const handleEmail = e => {
@@ -108,7 +105,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   const toggle = () => {
     setRegistering(false);
     setOpen(false);
-    dispatch({ type: "exitIp", exitIp: null });
+    dispatch({ type: "exitWg", exitWg: null });
   };
 
   return (

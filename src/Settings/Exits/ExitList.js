@@ -23,6 +23,10 @@ const ExitList = ({ setOpen, select }) => {
       const {
         exitSettings: { state }
       } = exit;
+      // if the exit state is new we can't yet register we must get details
+      // once we have general details we can check if the exit is on our currently
+      // selected chain. The exit may also send an update that it is disabled at which
+      // point we hide it.
       return (
         (state !== "New" &&
           state !== "Disabled" &&
