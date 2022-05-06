@@ -17,6 +17,7 @@ export default (state, action) => {
       symbol: symbols[blockchain]
     }),
     channels: ({ channels }) => ({ channels }),
+    security: ({ security }) => ({ security }),
     debt: ({ debts }) => {
       if (state.selectedExit && debts.length) {
         return {

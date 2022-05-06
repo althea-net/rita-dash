@@ -29,6 +29,7 @@ const useWifiSettings = () => {
         let wifiSettings = wifiSettingsNoValidation.filter(filterPhone);
 
         const channels = [];
+        const security = [];
 
         await Promise.all(
           wifiSettings.map(async setting => {
@@ -49,7 +50,27 @@ const useWifiSettings = () => {
           })
         );
 
+        await Promise.all(
+          wifiSettings.map(async setting => {
+            let radio = setting.device.sectionName;
+            security[radio] = [];
+            try {
+              security[radio] = await get(
+                `/wifi_settings/get_encryption/${radio}`,
+                true,
+                5000,
+                signal
+              );
+            } catch (e) {
+              if (e.message && e.message.includes("aborted")) return;
+              setError(true);
+            }
+            return security[radio];
+          })
+        );
+
         dispatch({ type: "channels", channels });
+        dispatch({ type: "security", security });
         dispatch({ type: "wifiSettings", wifiSettings });
       } catch (e) {
         if (e.message && e.message.includes("aborted")) return;
