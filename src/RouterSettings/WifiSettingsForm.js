@@ -5,7 +5,7 @@ import { useStore } from "store";
 
 const WifiSettingsForm = ({ index }) => {
   const [t] = useTranslation();
-  const [{ channels, wifiSettings }, dispatch] = useStore();
+  const [{ channels, security, wifiSettings }, dispatch] = useStore();
 
   const settings = wifiSettings[index];
 
@@ -40,6 +40,11 @@ const WifiSettingsForm = ({ index }) => {
 
   const setDisabled = e => {
     settings.device.disabled = e.target.checked ? "1" : "0";
+    saveSettings();
+  };
+
+  const setSecurity = e => {
+    settings.encryption = e.target.value;
     saveSettings();
   };
 
@@ -83,6 +88,20 @@ const WifiSettingsForm = ({ index }) => {
             {channels[radio] &&
               channels[radio].length &&
               channels[radio].map(c => <option key={c}>{c}</option>)}
+          </Input>
+        </FormGroup>
+        <FormGroup className="pr-2 mb-0">
+          <Label for="sec">{t("Encryption Mode")}</Label>
+          <Input
+            type="select"
+            id={"security_" + radio}
+            name="security"
+            onChange={setSecurity}
+            value={settings.encryption}
+          >
+            {security[radio] &&
+              security[radio].length &&
+              security[radio].map(c => <option key={c}>{c}</option>)}
           </Input>
         </FormGroup>
         <FormGroup className="pr-2 mb-0">

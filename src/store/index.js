@@ -19,6 +19,7 @@ const state = {
   backupCreated: false,
   blockchain: null,
   channels: [],
+  security: [],
   closeThreshold: null,
   counter: 0,
   daoAddress: null,

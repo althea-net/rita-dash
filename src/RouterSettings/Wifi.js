@@ -40,6 +40,7 @@ const Wifi = () => {
         let radio = setting.device.sectionName;
         let { ssid, key } = setting;
         let channel = parseInt(setting.device.channel, 10);
+        let encryption = setting.device.encryption;
 
         //convert from string to boolean: '0' === enabled = false, '1' === disabled = true
         let disabled = setting.device.disabled === "1";
@@ -48,6 +49,7 @@ const Wifi = () => {
         data.push({ WifiSsid: { radio, ssid } });
         data.push({ WifiPass: { radio, pass: key } });
         data.push({ WifiDisabled: { radio, disabled } });
+        data.push({ WifiSecurity: { radio, encryption } });
 
         return setting;
       });
