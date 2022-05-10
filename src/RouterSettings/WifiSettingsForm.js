@@ -90,8 +90,8 @@ const WifiSettingsForm = ({ index }) => {
               channels[radio].map(c => <option key={c}>{c}</option>)}
           </Input>
         </FormGroup>
-        <FormGroup className="pr-2 mb-0">
-          <Label for="sec">{t("Encryption Mode")}</Label>
+        <FormGroup className="pr-3 mb-0">
+          <Label for="sec">{t("wifiSecMode")}</Label>
           <Input
             type="select"
             id={"security_" + radio}

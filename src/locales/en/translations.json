@@ -271,6 +271,7 @@
   "neighbours": "Control which neighbor your router connects with, making a tradeoff between price and connection quality.",
   "networkConnection": "Network Connection",
   "networkPassword": "Network Password",
+  "wifiSecMode": "Security Mode",
   "networkSettings": "Network Settings",
   "next": "Next",
   "no": "No",
