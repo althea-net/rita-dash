@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import { Address4 } from "ip-address";
 
-const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
+const WANConfig = ({ open, setOpen, setMode }) => {
   const [t] = useTranslation();
   const [type, setType] = useState("dynamic");
 
@@ -38,10 +38,10 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    setMode("Wan");
-    if (type === "static") setMode({ StaticWan: { ipaddr, netmask, gateway } });
+    setMode((mode) => [...mode, "Wan"]);
+    if (type === "static")
+      setMode((mode) => [...mode, { StaticWan: { ipaddr, netmask, gateway } }]);
     toggle();
-    setConfirming(true);
   };
 
   const disabled =

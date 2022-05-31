@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { Alert } from "reactstrap";
+import { Alert, Form, Button } from "reactstrap";
 import { PortColumn, PortNumber, PortToggle } from "./PortStyles.js";
 
 import portOrderings from "../portOrderings";
@@ -16,7 +16,12 @@ const DSA_MODELS = [
   "ubnt-erx-sfp",
 ];
 
-const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
+const PortColumns = ({
+  device,
+  interfaces,
+  setInterfaceMode,
+  setInterfaceChanges,
+}) => {
   let [t] = useTranslation();
   const modes = [t("Lan"), t("Mesh"), t("LTE"), t("Phone"), t("Wan")];
 
@@ -74,7 +79,7 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
                     id={mode + "_" + column}
                     key={i}
                     selected={selected}
-                    onClick={() => selected || setInterfaceMode(iface, mode)}
+                    onClick={() => selected || setInterfaceChanges(iface, mode)}
                     disabled={disabled}
                     readOnly={selected}
                     className="active"
@@ -87,6 +92,9 @@ const PortColumns = ({ device, interfaces, setInterfaceMode }) => {
           </PortColumn>
         );
       })}
+      <Form onSubmit={setInterfaceMode}>
+        <Button color="primary">{t("save")}</Button>
+      </Form>
     </div>
   );
 };
