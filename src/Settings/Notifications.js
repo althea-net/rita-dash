@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 import { get, post } from "store";
 import PhoneInput from "react-phone-number-input";
-import SmartInput from "react-phone-number-input/smart-input";
 // import flags from "react-phone-number-input/flags";
 import emailValidator from "email-validator";
 import { isValidPhoneNumber } from "react-phone-number-input";
@@ -105,7 +104,6 @@ export default ({ balance, symbol }) => {
               <PhoneInput
                 country="US"
                 id="phoneNumber"
-                inputComponent={SmartInput}
                 flags={Flags}
                 placeholder={t("phoneNumber")}
                 value={phone}
