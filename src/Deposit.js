@@ -17,7 +17,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { get, useStore, post } from "store";
 import { toEth, Flags } from "utils";
 import PhoneInput from "react-phone-number-input";
-import SmartInput from "react-phone-number-input/smart-input";
 
 const qrStyle = { height: "auto", width: "80%" };
 
@@ -112,7 +111,6 @@ function user_info_forum(
             country="US"
             flags={Flags}
             id="exitPhone"
-            inputComponent={SmartInput}
             placeholder="User Phonenumber"
             value={phone}
             onChange={p => setPhone(p)}

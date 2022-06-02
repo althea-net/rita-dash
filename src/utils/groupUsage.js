@@ -136,14 +136,14 @@ const groupData = (
     switch (period) {
       case "m":
         date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
-        return format(date, "MMM YYYY", { locale });
+        return format(date, "MMM yyyy", { locale });
       case "d":
         date = new Date((parseInt(hour) + 24) * msPerHr);
-        return format(date, "dd, YYYY", { locale });
+        return format(date, "dd, yyyy", { locale });
       case "w":
       default:
         date = new Date((parseInt(hour) + 7 * 24) * msPerHr);
-        return format(date, "MMM dd, YYYY", { locale });
+        return format(date, "MMM dd, yyyy", { locale });
     }
   };
 

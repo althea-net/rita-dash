@@ -4,7 +4,6 @@ import { Card } from "../ui";
 import { Button, Input, InputGroup, FormGroup, Label } from "reactstrap";
 import { get, post } from "store";
 import PhoneInput from "react-phone-number-input";
-import SmartInput from "react-phone-number-input/smart-input";
 import { Flags } from "utils";
 
 const OperatorSetup = () => {
@@ -134,7 +133,6 @@ const OperatorSetup = () => {
               country="US"
               flags={Flags}
               id="exitPhone"
-              inputComponent={SmartInput}
               placeholder="User Phonenumber"
               value={phone}
               onChange={p => setPhone(p)}
