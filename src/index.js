@@ -16,9 +16,10 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-window.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-  navigator.userAgent
-);
+window.isMobile =
+  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
 
 if (window.isMobile) {
   let tag = document.createElement("script");

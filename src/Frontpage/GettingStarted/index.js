@@ -24,8 +24,8 @@ export default () => {
       wgPublicKey,
       selectedExit,
       nickname,
-      wifiSettings
-    }
+      wifiSettings,
+    },
   ] = useStore();
 
   const goBackup = () => setBackingUp(true);
@@ -61,14 +61,14 @@ export default () => {
     setDismissed(window.localStorage.getItem(wgPublicKey) === "true");
   }, [dismissed, wgPublicKey]);
 
-  const dismiss = e => {
+  const dismiss = (e) => {
     e.preventDefault();
     window.localStorage.setItem(wgPublicKey, true);
     setDismissed(true);
   };
 
   const isWifiPasswordSet = !!(
-    wifiSettings && wifiSettings.findIndex(s => s.key !== "ChangeMe") >= 0
+    wifiSettings && wifiSettings.findIndex((s) => s.key !== "ChangeMe") >= 0
   );
 
   const isRouterPasswordSet =
@@ -79,7 +79,7 @@ export default () => {
     {
       name: "setupExit",
       completed: selectedExit !== undefined,
-      onClick: goExit
+      onClick: goExit,
     },
     { name: "addFunding", completed: balance > 0, onClick: goDeposit },
     { name: "setWifiPass", completed: isWifiPasswordSet, onClick: goWifi },
@@ -87,8 +87,8 @@ export default () => {
     {
       name: "setDashPass",
       completed: isRouterPasswordSet,
-      onClick: goPassword
-    }
+      onClick: goPassword,
+    },
   ];
 
   if (dismissed || loadingNickname || loadingWifiSettings) return null;

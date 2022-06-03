@@ -7,7 +7,7 @@ const BandwidthSelling = () => {
   const [t] = useTranslation();
   const [{ sellingBandwidth }, dispatch] = useStore();
 
-  const check = e => {
+  const check = (e) => {
     dispatch({ type: "sellingBandwidth", sellingBandwidth: !sellingBandwidth });
   };
 
@@ -28,7 +28,7 @@ const BandwidthSelling = () => {
         </Form>
         <p
           dangerouslySetInnerHTML={{
-            __html: t("learnMoreAboutTheEquipment")
+            __html: t("learnMoreAboutTheEquipment"),
           }}
         />
       </CardBody>

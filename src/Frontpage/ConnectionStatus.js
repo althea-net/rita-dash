@@ -15,20 +15,20 @@ const ConnectionStatus = () => {
       msg: t("currentlyConnected"),
       color: "text-success",
       icon: greencheck,
-      link: false
+      link: false,
     },
     noConnection: {
       msg: t("noConnectionDetected"),
       color: "text-danger",
       icon: redx,
-      link: true
+      link: true,
     },
     connectionTrouble: {
       msg: t("connectionTrouble"),
       color: "text-warning",
       icon: yellowexclamation,
-      link: true
-    }
+      link: true,
+    },
   }[connectionStatus];
 
   const setupExit = () => {

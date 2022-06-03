@@ -14,8 +14,8 @@ const NoConnection = () => {
       portChange,
       waiting,
       wifiChange,
-      version
-    }
+      version,
+    },
   ] = useStore();
 
   if (!authenticated) return null;

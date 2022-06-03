@@ -4,7 +4,7 @@ import React, {
   useContext,
   useEffect,
   useState,
-  useReducer
+  useReducer,
 } from "react";
 
 import actions from "./actions";
@@ -61,7 +61,7 @@ const state = {
   wgPublicKey: null,
   wifiChange: null,
   wifiSettings: null,
-  withdrawChainSymbol: null
+  withdrawChainSymbol: null,
 };
 
 let { protocol, hostname } = window.location;
@@ -129,13 +129,13 @@ export async function post(url, data, camel = true) {
   let headers = {
     Accept: "application/json",
     Authorization,
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
   };
 
   const res = await fetch(base + url, {
     method: "POST",
     body: JSON.stringify(data),
-    headers
+    headers,
   });
 
   if (!res.ok) throw new Error(res.status);

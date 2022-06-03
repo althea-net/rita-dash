@@ -5,7 +5,7 @@ import { toEth } from "utils";
 const symbols = {
   Ethereum: "ETH",
   Rinkeby: "tETH",
-  Xdai: "Dai"
+  Xdai: "Dai",
 };
 
 export default (state, action) => {
@@ -14,7 +14,7 @@ export default (state, action) => {
   const actions = {
     blockchain: ({ blockchain }) => ({
       blockchain,
-      symbol: symbols[blockchain]
+      symbol: symbols[blockchain],
     }),
     channels: ({ channels }) => ({ channels }),
     security: ({ security }) => ({ security }),
@@ -26,7 +26,7 @@ export default (state, action) => {
               ? a.plus(BigNumber(b.paymentDetails.debt.toString()))
               : a;
           }, BigNumber("0")),
-          debts
+          debts,
         };
       }
 
@@ -42,15 +42,15 @@ export default (state, action) => {
         state.resetting &&
         exits
           .filter(
-            e =>
+            (e) =>
               e.exitSettings.state === "Pending" ||
               e.exitSettings.state === "GotInfo"
           )
-          .map(e => resetting.includes(e.nickname)).length;
+          .map((e) => resetting.includes(e.nickname)).length;
 
       if (resetOccurred) resetting = [];
 
-      const selectedExit = exits.find(exit => {
+      const selectedExit = exits.find((exit) => {
         return (
           exit.isSelected &&
           exit.exitSettings.state === "Registered" &&
@@ -90,8 +90,8 @@ export default (state, action) => {
         localFee,
         lowBalance,
         ritaVersion,
-        version
-      }
+        version,
+      },
     }) => {
       let lastVersion = state.lastVersion;
       if (version) {
@@ -117,7 +117,7 @@ export default (state, action) => {
         waiting:
           !version || state.portChange || state.firmwareUpgrading
             ? state.waiting
-            : 0
+            : 0,
       };
     },
     level: ({ level }) => ({ level }),
@@ -125,37 +125,38 @@ export default (state, action) => {
     keepWaiting: () => ({
       portChange: state.portChange && state.waiting >= 1,
       wifiChange: state.wifiChange && state.waiting >= 1,
-      waiting: Math.max(state.waiting - 1, 0)
+      waiting: Math.max(state.waiting - 1, 0),
     }),
     interfaces: ({ interfaces }) => ({
       interfaces: Object.keys(interfaces)
         /*eslint no-sequences: 0*/
-        .reduce((a, b) => ((a[b] = interfaces[b]), a), {})
+        .reduce((a, b) => ((a[b] = interfaces[b]), a), {}),
     }),
     neighbors: ({ neighbors }) => {
       return {
         neighbors: neighbors
-          .filter(n => {
+          .filter((n) => {
             return !state.exits.find(
-              e =>
+              (e) =>
                 e.exitSettings &&
                 e.exitSettings.wgPublicKey ===
                   n.id.wgPublicKey.replace(/"/g, "")
             );
           })
-          .map(n => {
+          .map((n) => {
             n.debt = state.debts.find(
-              d => d.identity.wgPublicKey === n.id.wgPublicKey.replace(/"/g, "")
+              (d) =>
+                d.identity.wgPublicKey === n.id.wgPublicKey.replace(/"/g, "")
             );
             return n;
-          })
+          }),
       };
     },
     initialized: ({ initialized }) => ({ initialized }),
     nickname: ({ nickname }) => ({ nickname }),
     exitWg: ({ exitWg }) => ({ exitWg }),
     reset: ({ nickname }) => ({
-      resetting: [...state.resetting, nickname]
+      resetting: [...state.resetting, nickname],
     }),
     lightClientAP: ({ lightClientAP }) => ({ lightClientAP }),
     meshAP: ({ meshAP }) => ({ meshAP }),
@@ -217,7 +218,7 @@ export default (state, action) => {
           minEth,
           requiredEth,
           reserve,
-          dest
+          dest,
         };
 
         return { status, withdrawChainSymbol: symbols[status.withdrawChain] };
@@ -230,7 +231,7 @@ export default (state, action) => {
     wgPublicKey: ({ wgPublicKey }) => ({ wgPublicKey }),
     wifiChange: () => ({ wifiChange: true }),
     wifiSettings: ({ wifiSettings }) => ({ wifiSettings }),
-    withdrawSuccess: ({ txid }) => ({ txid })
+    withdrawSuccess: ({ txid }) => ({ txid }),
   };
 
   if (actions[type]) return { ...state, ...actions[type]({ ...data }) };

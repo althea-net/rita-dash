@@ -13,7 +13,7 @@ const DSA_MODELS = [
   "linksys_wrt1900acs",
   "linksys_wrt1900ac",
   "ubnt-erx",
-  "ubnt-erx-sfp"
+  "ubnt-erx-sfp",
 ];
 
 const PortColumns = ({ device, interfaces, setInterfaceMode }) => {

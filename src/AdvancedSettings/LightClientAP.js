@@ -11,7 +11,7 @@ const LightClient = () => {
 
   uselightClientAP();
 
-  const check = e => {
+  const check = (e) => {
     post(`/interfaces/lightclient/${!lightClientAP}`);
     dispatch({ type: "lightClientAP", lightClientAP: !lightClientAP });
   };

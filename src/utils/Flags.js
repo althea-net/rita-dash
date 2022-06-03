@@ -250,7 +250,7 @@ const flagMap = {
   YT: () => <img src={International} alt="International" />,
   ZA: () => <img src={International} alt="International" />,
   ZM: () => <img src={International} alt="International" />,
-  ZW: () => <img src={International} alt="International" />
+  ZW: () => <img src={International} alt="International" />,
 };
 
 export default flagMap;

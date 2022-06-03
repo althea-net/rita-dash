@@ -22,16 +22,16 @@ const UsageMetrics = () => {
   const sumUsage = (a, b) => {
     return {
       usage: a.usage + b.up + b.down,
-      cost: a.cost + b.price * (b.up + b.down)
+      cost: a.cost + b.price * (b.up + b.down),
     };
   };
 
   const thisMonthData = usage
-    .filter(i => i.index > startOfThisMonth)
+    .filter((i) => i.index > startOfThisMonth)
     .reduce(sumUsage, initialUsage);
 
   const lastMonthData = usage
-    .filter(i => i.index >= startOfLastMonth && i.index < startOfThisMonth)
+    .filter((i) => i.index >= startOfLastMonth && i.index < startOfThisMonth)
     .reduce(sumUsage, initialUsage);
 
   const thisMonthUsage = BigNumber(thisMonthData.usage)
@@ -48,7 +48,7 @@ const UsageMetrics = () => {
 
   const lastMonthCost = BigNumber(toEth(lastMonthData.cost)).toFixed(3);
 
-  const format = n => (BigNumber(n).gt(0) ? n : "---");
+  const format = (n) => (BigNumber(n).gt(0) ? n : "---");
 
   return (
     <div

@@ -10,7 +10,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Label
+  Label,
 } from "reactstrap";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { get, useStore } from "store";
@@ -37,7 +37,7 @@ const NodeInformation = () => {
     init();
   }, [dispatch]);
 
-  const toggleQR = v => {
+  const toggleQR = (v) => {
     if (qr === v) return setQR("");
     setQR(v);
   };
@@ -52,7 +52,7 @@ const NodeInformation = () => {
               <QR
                 style={{
                   height: "auto",
-                  width: "50%"
+                  width: "50%",
                 }}
                 id="qr"
                 value={qr}

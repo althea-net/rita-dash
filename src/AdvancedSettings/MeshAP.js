@@ -11,7 +11,7 @@ const Mesh = () => {
 
   useMeshAP();
 
-  const check = e => {
+  const check = (e) => {
     post(`/interfaces/mesh/${!meshAP}`);
     dispatch({ type: "meshAP", meshAP: !meshAP });
   };

@@ -8,7 +8,7 @@ import {
   PopoverHeader,
   PopoverBody,
   Progress,
-  Table
+  Table,
 } from "reactstrap";
 import { get, useStore } from "store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +24,7 @@ const RelaySettings = () => {
   const [initialized, setInitialized] = useState(false);
 
   const getNeighbors = useCallback(
-    async signal => {
+    async (signal) => {
       if (!signal) {
         const controller = new AbortController();
         signal = controller.signal;

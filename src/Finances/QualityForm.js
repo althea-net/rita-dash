@@ -63,7 +63,7 @@ export default () => {
             min={0}
             max={6000}
             value={display_factor}
-            onChange={e => setFactor(e.target.value)}
+            onChange={(e) => setFactor(e.target.value)}
           />
           <div className="d-flex justify-content-between">
             <p style={{ maxWidth: 100, fontSize: 14 }}>

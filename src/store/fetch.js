@@ -50,8 +50,8 @@ export async function post(url, data, camel = true) {
     body: JSON.stringify(data),
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   });
 
   if (!res.ok) return new Error((await res.json()).error);

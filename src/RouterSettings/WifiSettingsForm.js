@@ -19,31 +19,31 @@ const WifiSettingsForm = ({ index }) => {
     wifiSettings[index] = settings;
     dispatch({
       type: "wifiSettings",
-      wifiSettings: JSON.parse(JSON.stringify(wifiSettings))
+      wifiSettings: JSON.parse(JSON.stringify(wifiSettings)),
     });
   };
 
-  const setSSID = e => {
+  const setSSID = (e) => {
     settings.ssid = e.target.value;
     saveSettings();
   };
 
-  const setKey = e => {
+  const setKey = (e) => {
     settings.key = e.target.value;
     saveSettings();
   };
 
-  const setChannel = e => {
+  const setChannel = (e) => {
     settings.device.channel = e.target.value;
     saveSettings();
   };
 
-  const setDisabled = e => {
+  const setDisabled = (e) => {
     settings.device.disabled = e.target.checked ? "1" : "0";
     saveSettings();
   };
 
-  const setSecurity = e => {
+  const setSecurity = (e) => {
     settings.encryption = e.target.value;
     saveSettings();
   };
@@ -87,7 +87,7 @@ const WifiSettingsForm = ({ index }) => {
           >
             {channels[radio] &&
               channels[radio].length &&
-              channels[radio].map(c => <option key={c}>{c}</option>)}
+              channels[radio].map((c) => <option key={c}>{c}</option>)}
           </Input>
         </FormGroup>
         <FormGroup className="pr-3 mb-0">
@@ -101,7 +101,7 @@ const WifiSettingsForm = ({ index }) => {
           >
             {security[radio] &&
               security[radio].length &&
-              security[radio].map(c => <option key={c}>{c}</option>)}
+              security[radio].map((c) => <option key={c}>{c}</option>)}
           </Input>
         </FormGroup>
         <FormGroup className="pr-2 mb-0">

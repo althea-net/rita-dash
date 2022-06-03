@@ -12,7 +12,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   Label,
-  Progress
+  Progress,
 } from "reactstrap";
 import { get, post, useStore } from "store";
 import { toEth, toWei, sleep } from "utils";
@@ -30,7 +30,7 @@ const DaoFee = ({ readonly = false }) => {
   const [{ symbol }] = useStore();
   const [error, setError] = useState(false);
 
-  const getDaoFee = useCallback(async signal => {
+  const getDaoFee = useCallback(async (signal) => {
     setLoading(true);
     try {
       let res = await get("/dao_fee", true, 5000, signal);
@@ -44,10 +44,8 @@ const DaoFee = ({ readonly = false }) => {
     setLoading(false);
   }, []);
 
-  const postDaoFee = async daoFee => {
-    let daoFeeWei = BigNumber(toWei(daoFee))
-      .div(secondsPerMonth)
-      .toFixed(0);
+  const postDaoFee = async (daoFee) => {
+    let daoFeeWei = BigNumber(toWei(daoFee)).div(secondsPerMonth).toFixed(0);
     try {
       await post("/dao_fee/" + daoFeeWei.toString(10));
       setSuccess(true);
@@ -63,7 +61,7 @@ const DaoFee = ({ readonly = false }) => {
     return () => controller.abort();
   }, [getDaoFee]);
 
-  const submit = e => {
+  const submit = (e) => {
     e.preventDefault();
     postDaoFee(daoFee);
   };
@@ -98,7 +96,7 @@ const DaoFee = ({ readonly = false }) => {
                   <Input
                     name="daoFee"
                     id="daoFee"
-                    onChange={e => setDaoFee(e.target.value)}
+                    onChange={(e) => setDaoFee(e.target.value)}
                     value={daoFee}
                     style={{ borderRight: "none", minWidth: 80 }}
                     readOnly={readonly}
@@ -108,7 +106,7 @@ const DaoFee = ({ readonly = false }) => {
                       style={{
                         background: "#F8F9FA",
                         fontSize: 14,
-                        color: "#888"
+                        color: "#888",
                       }}
                     >
                       {symbol} / {t("month")}

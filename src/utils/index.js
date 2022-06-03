@@ -12,17 +12,13 @@ const weiPerEth = BigNumber("1000000000000000000");
 const toEth = (n, i = 4) => {
   if (!n && n !== 0) return null;
 
-  return BigNumber(n.toString())
-    .div(weiPerEth)
-    .toFixed(i);
+  return BigNumber(n.toString()).div(weiPerEth).toFixed(i);
 };
 
-const toWei = n => {
+const toWei = (n) => {
   if (!n && n !== 0) return null;
 
-  return BigNumber(n.toString())
-    .times(weiPerEth)
-    .toString();
+  return BigNumber(n.toString()).times(weiPerEth).toString();
 };
 
 const txLink = (blockchain, txid) => {
@@ -43,8 +39,8 @@ const txLink = (blockchain, txid) => {
   return link;
 };
 
-const sleep = milliseconds => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
 export {
@@ -58,5 +54,5 @@ export {
   txLink,
   sleep,
   groupUsage,
-  Warning
+  Warning,
 };

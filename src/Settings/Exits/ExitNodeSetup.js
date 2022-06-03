@@ -24,7 +24,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
   const [valid, setValid] = useState(false);
 
   const [{ exitWg, exits, resetting }, dispatch] = useStore();
-  const exit = exits.find(e => e.exitSettings.wgPublicKey === exitWg);
+  const exit = exits.find((e) => e.exitSettings.wgPublicKey === exitWg);
 
   let registered = false;
   let denied = false;
@@ -38,11 +38,11 @@ const ExitNodeSetup = ({ open, setOpen }) => {
     setRegistering,
     resetExit,
     registerExit,
-    selectExit
+    selectExit,
   } = useContext(ExitsContext);
 
   if (exit) {
-    let exitObj = exits.find(e => e.nickname === exit.nickname);
+    let exitObj = exits.find((e) => e.nickname === exit.nickname);
     if (exitObj) {
       let { state } = exitObj.exitSettings;
 
@@ -57,7 +57,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
     }
   }
 
-  const select = exit => {
+  const select = (exit) => {
     let verifMode;
 
     if (exit.exitSettings.generalDetails)
@@ -65,7 +65,7 @@ const ExitNodeSetup = ({ open, setOpen }) => {
 
     let {
       nickname,
-      exitSettings: { wgPublicKey: exitWg, state }
+      exitSettings: { wgPublicKey: exitWg, state },
     } = exit;
 
     if (state === "Registered") {
@@ -81,13 +81,13 @@ const ExitNodeSetup = ({ open, setOpen }) => {
     dispatch({ type: "exitWg", exitWg: exitWg });
   };
 
-  const handleEmail = e => {
+  const handleEmail = (e) => {
     const { value } = e.target;
     setEmail(value);
     setValid(isValidEmail(value));
   };
 
-  const handlePhone = value => {
+  const handlePhone = (value) => {
     setPhone(value);
     setValid(isValidPhoneNumber(value));
   };

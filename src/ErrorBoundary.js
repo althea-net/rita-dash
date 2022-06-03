@@ -8,7 +8,7 @@ class ErrorBoundary extends React.Component {
       error: null,
       errorInfo: null,
       hasError: false,
-      debugging: false
+      debugging: false,
     };
   }
 
@@ -34,7 +34,7 @@ class ErrorBoundary extends React.Component {
             errorInfo && (
               <pre
                 dangerouslySetInnerHTML={{
-                  __html: this.state.error.toString()
+                  __html: this.state.error.toString(),
                 }}
               />
             )

@@ -7,7 +7,7 @@ import {
   CardBody,
   Form,
   FormGroup,
-  Input
+  Input,
 } from "reactstrap";
 import { get, post, useStore } from "store";
 
@@ -35,7 +35,7 @@ const Blockchain = () => {
 
   if (!blockchain || !newBlockchain) return null;
 
-  let submit = async e => {
+  let submit = async (e) => {
     e.preventDefault();
     try {
       await post(`/blockchain/set/${newBlockchain}`);
@@ -64,7 +64,7 @@ const Blockchain = () => {
                 label={t("blockchain")}
                 name="blockchain"
                 placeholder={t("enterBlockchain")}
-                onChange={e => setBlockchain(e.target.value)}
+                onChange={(e) => setBlockchain(e.target.value)}
                 value={newBlockchain}
                 type="select"
                 className="mr-2 mb-2"

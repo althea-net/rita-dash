@@ -11,7 +11,7 @@ const RemoteAccess = () => {
 
   useRemoteAccess();
 
-  const check = e => {
+  const check = (e) => {
     post(`/remote_access/${!remoteAccess}`);
     dispatch({ type: "remoteAccess", remoteAccess: !remoteAccess });
   };

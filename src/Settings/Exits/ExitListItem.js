@@ -24,7 +24,7 @@ export default ({ exit, click }) => {
     exitSettings: { description },
     nickname,
     isReachable,
-    haveRoute
+    haveRoute,
   } = exit;
 
   let connected = isReachable && haveRoute;

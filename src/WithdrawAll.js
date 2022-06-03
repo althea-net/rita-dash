@@ -9,7 +9,7 @@ import {
   Label,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 import { Error, txLink, toEth } from "utils";
 import { post, useStore } from "store";
@@ -26,7 +26,7 @@ const WithdrawAll = ({ open, setOpen }) => {
   const [{ balance, status }] = useStore();
   const { eth, dai } = status;
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     try {
       const txid = await post(`/withdraw_all/${address}`);
@@ -63,7 +63,7 @@ const WithdrawAll = ({ open, setOpen }) => {
               <img src={bigGreenCheck} alt="Checkmark" className="mb-2" />
               <p
                 dangerouslySetInnerHTML={{
-                  __html: t("withdrawAllSuccess", { txid, link })
+                  __html: t("withdrawAllSuccess", { txid, link }),
                 }}
                 style={{ wordWrap: "break-word" }}
               />
@@ -88,7 +88,7 @@ const WithdrawAll = ({ open, setOpen }) => {
                   type="text"
                   name="address"
                   placeholder={t("recipientAddress")}
-                  onChange={e => setAddress(e.target.value)}
+                  onChange={(e) => setAddress(e.target.value)}
                   value={address}
                   valid={addressValid}
                   invalid={!!(address && !addressValid)}

@@ -20,7 +20,7 @@ const Exits = () => {
 
   const [{ exits, resetting, selectedExit }, dispatch] = useStore();
 
-  const getExits = async signal => {
+  const getExits = async (signal) => {
     if (!signal) {
       const controller = new AbortController();
       signal = controller.signal;
@@ -43,14 +43,14 @@ const Exits = () => {
     } catch {}
   };
 
-  const resetExit = async exit => {
+  const resetExit = async (exit) => {
     const { nickname } = exit;
     dispatch({ type: "reset", nickname, resetting });
     await post(`/exits/${nickname}/reset`);
     getExits();
   };
 
-  const selectExit = async nickname => {
+  const selectExit = async (nickname) => {
     await post(`/exits/${nickname}/select`);
     getExits();
   };
@@ -94,7 +94,7 @@ const Exits = () => {
     registerExit,
     resetExit,
     selectExit,
-    verifyExit
+    verifyExit,
   };
 
   return (

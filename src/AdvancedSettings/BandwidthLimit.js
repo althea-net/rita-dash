@@ -11,7 +11,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   Label,
-  Progress
+  Progress,
 } from "reactstrap";
 import { get, post } from "store";
 import { Card } from "ui";
@@ -57,7 +57,7 @@ const BandwidthLimit = () => {
     }
   }
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -95,7 +95,7 @@ const BandwidthLimit = () => {
                 name="bandwidth"
                 id="selfLimitSpeed"
                 placeholder={t("enterSpeed")}
-                onChange={e => {
+                onChange={(e) => {
                   setLimit(e.target.value);
                   setUnsavedChanges(true);
                 }}
@@ -108,7 +108,7 @@ const BandwidthLimit = () => {
                   style={{
                     background: "#F8F9FA",
                     fontSize: 14,
-                    color: "#888"
+                    color: "#888",
                   }}
                 >
                   Mbps

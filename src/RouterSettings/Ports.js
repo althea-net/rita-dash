@@ -20,7 +20,7 @@ const Ports = () => {
 
   const [{ device, interfaces, waiting }, dispatch] = useStore();
 
-  const getInterfaces = async signal => {
+  const getInterfaces = async (signal) => {
     if (!signal) {
       const controller = new AbortController();
       signal = controller.signal;
