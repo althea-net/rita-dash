@@ -27,7 +27,7 @@ const Wifi = () => {
       return <Progress animated color="primary" value={100} />;
     else return <Alert color="info">{t("noWifi")}</Alert>;
 
-  let submit = async e => {
+  let submit = async (e) => {
     e.preventDefault();
 
     setWifiWaiting(true);
@@ -36,7 +36,7 @@ const Wifi = () => {
     try {
       let data = [];
 
-      wifiSettings.map(setting => {
+      wifiSettings.map((setting) => {
         let radio = setting.device.sectionName;
         let { ssid, key, encryption } = setting;
         let channel = parseInt(setting.device.channel, 10);

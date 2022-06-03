@@ -9,7 +9,7 @@ import {
   FormGroup,
   Input,
   Label,
-  Progress
+  Progress,
 } from "reactstrap";
 import { Address6 } from "ip-address";
 import { Error, Success } from "utils";
@@ -50,22 +50,22 @@ const NetworkOrganizer = () => {
     setEditing(true);
   };
 
-  const handleIp = e => setIpAddress(e.target.value);
-  const handleDao = e => setDaoAddress(e.target.value);
+  const handleIp = (e) => setIpAddress(e.target.value);
+  const handleDao = (e) => setDaoAddress(e.target.value);
 
   const ipValid = ip.isValid();
   const daoValid = isAddress(paymentAddress);
   const daoInvalid = paymentAddress && !isAddress(paymentAddress);
   const valid = ipValid && !daoInvalid;
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
     setSaving(true);
 
     try {
       const daos = await get("/dao_list");
       await Promise.all(
-        daos.map(address => post(`/dao_list/remove/${address}`))
+        daos.map((address) => post(`/dao_list/remove/${address}`))
       );
 
       if (paymentAddress) {

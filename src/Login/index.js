@@ -10,7 +10,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Progress
+  Progress,
 } from "reactstrap";
 import key from "../images/key.png";
 
@@ -21,7 +21,7 @@ const Login = () => {
   const [error, setError] = useState(false);
   const [, dispatch] = useStore();
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
@@ -62,7 +62,7 @@ const Login = () => {
                     type="password"
                     className="mr-3"
                     placeholder={t("adminPassword")}
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     value={password}
                   />
                 </FormGroup>

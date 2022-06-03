@@ -30,7 +30,7 @@ const RemoteLogging = () => {
 
   useRemoteLogging();
 
-  const check = async e => {
+  const check = async (e) => {
     dispatch({ type: "startWaiting", waiting: 30 });
     dispatch({ type: "remoteLogging", remoteLogging: !remoteLogging });
     try {
@@ -38,7 +38,7 @@ const RemoteLogging = () => {
     } catch (e) {}
   };
 
-  const changeLevel = async e => {
+  const changeLevel = async (e) => {
     setNewLevel(e.target.value);
     setError(null);
     setSuccess(null);

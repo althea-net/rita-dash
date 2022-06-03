@@ -6,7 +6,7 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader
+  ModalHeader,
 } from "reactstrap";
 
 const Confirm = ({ open, cancel, confirm, message }) => {

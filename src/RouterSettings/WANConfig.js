@@ -8,7 +8,7 @@ import {
   Input,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 import { Address4 } from "ip-address";
 
@@ -36,7 +36,7 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
     return;
   }, [type]);
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
     setMode("Wan");
     if (type === "static") setMode({ StaticWan: { ipaddr, netmask, gateway } });
@@ -88,7 +88,7 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
                 <Input
                   innerRef={ipEl}
                   value={ipaddr}
-                  onChange={e => setIpaddr(e.target.value)}
+                  onChange={(e) => setIpaddr(e.target.value)}
                   valid={addrIp.isValid()}
                   invalid={!!(ipaddr && !addrIp.isValid())}
                 />
@@ -98,7 +98,7 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
                 <Label>{t("netmask")}</Label>
                 <Input
                   value={netmask}
-                  onChange={e => setNetmask(e.target.value)}
+                  onChange={(e) => setNetmask(e.target.value)}
                   valid={netmaskIp.isValid()}
                   invalid={!!(netmask && !netmaskIp.isValid())}
                 />
@@ -108,7 +108,7 @@ const WANConfig = ({ open, setOpen, setMode, setConfirming }) => {
                 <Label>{t("gateway")}</Label>
                 <Input
                   value={gateway}
-                  onChange={e => setGateway(e.target.value)}
+                  onChange={(e) => setGateway(e.target.value)}
                   valid={gatewayIp.isValid()}
                   invalid={!!(gateway && !gatewayIp.isValid())}
                 />

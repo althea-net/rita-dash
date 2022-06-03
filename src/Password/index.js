@@ -9,7 +9,7 @@ import {
   Modal,
   ModalFooter,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 import { login, post } from "store";
 
@@ -22,7 +22,7 @@ const Password = ({ open, setOpen }) => {
   const [error, setError] = useState();
   const [success, setSuccess] = useState(false);
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
     setError();
     setSuccess();
@@ -63,7 +63,7 @@ const Password = ({ open, setOpen }) => {
                 id="password"
                 type="password"
                 className="mr-3"
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder={t("newPassword")}
                 value={password}
                 style={{ width: 300 }}
@@ -75,7 +75,7 @@ const Password = ({ open, setOpen }) => {
                 type="password"
                 className="mr-3"
                 placeholder={t("typeAgain")}
-                onChange={e => setConfirm(e.target.value)}
+                onChange={(e) => setConfirm(e.target.value)}
                 value={passConfirm}
                 style={{ width: 300 }}
               />

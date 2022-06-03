@@ -21,7 +21,7 @@ const AdvancedDebugging = () => {
   const [{ isGateway, neighbors, selectedExit }, dispatch] = useStore();
 
   const getNeighbors = useCallback(
-    async signal => {
+    async (signal) => {
       try {
         let neighbors = await get("/neighbors", true, 10000, signal);
         if (neighbors instanceof Error) return;
@@ -38,25 +38,25 @@ const AdvancedDebugging = () => {
   }
 
   let hasNeighborRoute =
-    neighbors.filter(n => n.routeMetric < 65000).length > 0;
+    neighbors.filter((n) => n.routeMetric < 65000).length > 0;
 
   let hasExitRoute =
-    neighbors.filter(n => n.routeMetricToExit < 65000).length > 0;
+    neighbors.filter((n) => n.routeMetricToExit < 65000).length > 0;
 
   let indicators = {
     haveRoute,
     isReachable,
-    isTunnelWorking
+    isTunnelWorking,
   };
 
   if (!isGateway)
     indicators = {
       hasNeighborRoute,
       hasExitRoute,
-      ...indicators
+      ...indicators,
     };
 
-  const haveProblem = Object.values(indicators).findIndex(v => !v) >= 0;
+  const haveProblem = Object.values(indicators).findIndex((v) => !v) >= 0;
 
   useInterval(getNeighbors, 10000);
 
@@ -66,7 +66,7 @@ const AdvancedDebugging = () => {
         <h4>{t("advancedDebugging")}</h4>
       </div>
       <div>
-        {Object.keys(indicators).map(indicator => (
+        {Object.keys(indicators).map((indicator) => (
           <div className="mb-2" key={indicator}>
             <Indicator condition={indicators[indicator]} />
             {t(indicator)}

@@ -2,12 +2,12 @@ import { css } from "styled-components";
 
 const lower = {
   desktop: 768,
-  mobile: 0
+  mobile: 0,
 };
 
 const upper = {
   desktop: 99999,
-  mobile: 768
+  mobile: 768,
 };
 
 const media = Object.keys(lower).reduce((acc, device) => {

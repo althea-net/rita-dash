@@ -16,7 +16,7 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -26,13 +26,13 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
           id: {
             mesh_ip: meshIp,
             eth_address: ethAddress,
-            wg_public_key: wgPubKey
+            wg_public_key: wgPubKey,
           },
           registration_port: registrationPort,
           description,
           state: "New",
-          nickname: ""
-        }
+          nickname: "",
+        },
       });
 
       setSuccess(t("addExitSuccess"));
@@ -58,7 +58,7 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
             <Label>{t("identifier")}</Label>
             <Input
               value={identifier}
-              onChange={e => setIdentifier(e.target.value)}
+              onChange={(e) => setIdentifier(e.target.value)}
               placeholder={t("identifier")}
               autoFocus
             />
@@ -67,7 +67,7 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
             <Label>{t("description")}</Label>
             <Input
               value={description}
-              onChange={e => setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
               placeholder={t("description")}
               autoFocus
             />
@@ -76,7 +76,7 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
             <Label>{t("meshIp")}</Label>
             <Input
               value={meshIp}
-              onChange={e => setMeshIp(e.target.value)}
+              onChange={(e) => setMeshIp(e.target.value)}
               placeholder={t("meshIp")}
               autoFocus
             />
@@ -85,7 +85,7 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
             <Label>{t("ethereumAddress")}</Label>
             <Input
               value={ethAddress}
-              onChange={e => setEthAddress(e.target.value)}
+              onChange={(e) => setEthAddress(e.target.value)}
               placeholder={t("ethereumAddress")}
               autoFocus
             />
@@ -94,7 +94,7 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
             <Label>{t("wireguardPublicKey")}</Label>
             <Input
               value={wgPubKey}
-              onChange={e => setWgPubKey(e.target.value)}
+              onChange={(e) => setWgPubKey(e.target.value)}
               placeholder={t("wireguardPublicKey")}
               autoFocus
             />
@@ -103,7 +103,7 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
             <Label>{t("registrationPort")}</Label>
             <Input
               value={registrationPort}
-              onChange={e => setRegistrationPort(e.target.value)}
+              onChange={(e) => setRegistrationPort(e.target.value)}
               placeholder={t("registrationPort")}
               autoFocus
             />

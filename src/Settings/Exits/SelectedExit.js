@@ -16,9 +16,9 @@ export default ({ exit, setRegistering }) => {
     exitSettings: {
       generalDetails: { description } = { description: null },
       state,
-      message
+      message,
     },
-    nickname
+    nickname,
   } = exit;
 
   let reset = () => {

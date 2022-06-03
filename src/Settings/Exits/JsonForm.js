@@ -11,7 +11,7 @@ const JsonForm = ({ setAdding, setPasteJson }) => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -42,7 +42,7 @@ const JsonForm = ({ setAdding, setPasteJson }) => {
             <Input
               type="textarea"
               value={json}
-              onChange={e => setJson(e.target.value)}
+              onChange={(e) => setJson(e.target.value)}
               placeholder={t("exitJson")}
               autoFocus
               rows={8}

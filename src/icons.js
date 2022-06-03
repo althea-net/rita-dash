@@ -13,7 +13,7 @@ import {
   faRoute,
   faSignal,
   faSitemap,
-  faSync
+  faSync,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faBan);

@@ -32,7 +32,7 @@ const useWifiSettings = () => {
         const security = [];
 
         await Promise.all(
-          wifiSettings.map(async setting => {
+          wifiSettings.map(async (setting) => {
             let radio = setting.device.sectionName;
             channels[radio] = [];
             try {
@@ -51,7 +51,7 @@ const useWifiSettings = () => {
         );
 
         await Promise.all(
-          wifiSettings.map(async setting => {
+          wifiSettings.map(async (setting) => {
             let radio = setting.device.sectionName;
             security[radio] = [];
             try {

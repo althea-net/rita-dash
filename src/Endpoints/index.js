@@ -21,7 +21,7 @@ const endpoints = [
   "/blockchain/get",
   "/usage/client",
   "/usage/relay",
-  "/usage/payments"
+  "/usage/payments",
 ];
 
 const APIDump = () => {
@@ -37,7 +37,7 @@ const APIDump = () => {
       setLoading(true);
 
       await Promise.all(
-        endpoints.map(async path => {
+        endpoints.map(async (path) => {
           let res;
           try {
             res = await get(path);
@@ -68,7 +68,7 @@ const APIDump = () => {
           <CardBody>
             <div className="float-right">
               <CopyToClipboard text={data} onCopy={() => setCopied(true)}>
-                <a href="#endpoints" onClick={e => e.preventDefault()}>
+                <a href="#endpoints" onClick={(e) => e.preventDefault()}>
                   <span>
                     <FontAwesomeIcon icon="copy" className="mr-2" />
                     {copied ? t("copied") : t("copyToClipboard")}

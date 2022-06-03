@@ -7,7 +7,7 @@ import {
   Label,
   Modal,
   ModalHeader,
-  ModalBody
+  ModalBody,
 } from "reactstrap";
 import dateFnsLocalizer, { defaultFormats } from "react-widgets-date-fns";
 import { DateTimePicker } from "react-widgets";
@@ -27,19 +27,19 @@ const ExportCSV = ({ open, setOpen, rows }) => {
 
   useEffect(() => {
     if (exportAll) {
-      const indices = rows.map(r => r.index);
+      const indices = rows.map((r) => r.index);
       setStartDate(new Date(Math.min(...indices) * msPerHr));
       setEndDate(new Date(Math.max(...indices) * msPerHr));
     }
   }, [exportAll, rows]);
 
   if (!rows.length) return null;
-  const keys = Object.keys(rows[0]).filter(k => k !== "index");
+  const keys = Object.keys(rows[0]).filter((k) => k !== "index");
 
   const csv =
-    keys.map(k => `"${t(k)}"`).join(",") +
+    keys.map((k) => `"${t(k)}"`).join(",") +
     "\n" +
-    rows.map(r => keys.map(k => `"${r[k]}"`).join(",")).join("\n");
+    rows.map((r) => keys.map((k) => `"${r[k]}"`).join(",")).join("\n");
 
   const save = () => {
     const filename = "usage.csv";
@@ -81,7 +81,7 @@ const ExportCSV = ({ open, setOpen, rows }) => {
           <Label>{t("startDate")}</Label>
           <DateTimePicker
             value={startDate}
-            onChange={v => setStartDate(v)}
+            onChange={(v) => setStartDate(v)}
             format={"yyyy-MM-dd"}
             time={false}
             disabled={exportAll}
@@ -91,7 +91,7 @@ const ExportCSV = ({ open, setOpen, rows }) => {
           <Label> {t("endDate")}</Label>
           <DateTimePicker
             value={endDate}
-            onChange={v => setEndDate(v)}
+            onChange={(v) => setEndDate(v)}
             format={"yyyy-MM-dd"}
             time={false}
             disabled={exportAll}

@@ -23,7 +23,7 @@ const List = ({ steps }) => {
             style={{
               color: "#6C757D",
               cursor: "pointer",
-              textDecoration: "underline"
+              textDecoration: "underline",
             }}
           >
             {t(name)}

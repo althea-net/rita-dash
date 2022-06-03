@@ -12,16 +12,16 @@ const ExitList = ({ setOpen, select }) => {
 
   const sort = (a, b) => {
     a.nickname.localeCompare(b.nickname, undefined, {
-      sensitivity: "base"
+      sensitivity: "base",
     });
   };
 
   const addExit = () => setAdding(true);
 
   exits = exits
-    .filter(exit => {
+    .filter((exit) => {
       const {
-        exitSettings: { state }
+        exitSettings: { state },
       } = exit;
       // if the exit state is new we can't yet register we must get details
       // once we have general details we can check if the exit is on our currently
@@ -45,7 +45,7 @@ const ExitList = ({ setOpen, select }) => {
         <>
           <p>{t("selectNode")}</p>
           <ListGroup>
-            {exits.map(exit => (
+            {exits.map((exit) => (
               <ExitListItem
                 exit={exit}
                 key={exit.nickname}

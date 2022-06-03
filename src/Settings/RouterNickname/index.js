@@ -8,7 +8,7 @@ import {
   FormGroup,
   Input,
   Progress,
-  Label
+  Label,
 } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import { post, useStore } from "store";
@@ -27,12 +27,12 @@ const Nickname = () => {
     return;
   }, [nickname]);
 
-  const update = e => {
+  const update = (e) => {
     setNewNickname(e.target.value);
     setSuccess(false);
   };
 
-  const submit = async e => {
+  const submit = async (e) => {
     e.preventDefault();
 
     try {

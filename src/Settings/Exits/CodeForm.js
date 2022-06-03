@@ -22,7 +22,7 @@ const CodeForm = ({ nickname, registered, targetLength, setOpen }) => {
     return () => clearTimeout(timer);
   }, [code]);
 
-  let handleCode = e => {
+  let handleCode = (e) => {
     let { value } = e.target;
     setCode(value);
     setWaiting(true);

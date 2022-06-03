@@ -9,7 +9,7 @@ import {
   Form,
   FormGroup,
   Input,
-  Label
+  Label,
 } from "reactstrap";
 import Backup from "../../Backup";
 import Confirm from "./Confirm";
@@ -40,7 +40,7 @@ const DashboardPassword = ({ balance, symbol }) => {
     }
   };
 
-  const confirm = e => {
+  const confirm = (e) => {
     e.preventDefault();
     setConfirming(true);
   };
@@ -71,7 +71,7 @@ const DashboardPassword = ({ balance, symbol }) => {
                 id="password"
                 type="password"
                 className="mr-3"
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
             </FormGroup>
@@ -81,7 +81,7 @@ const DashboardPassword = ({ balance, symbol }) => {
                 id="passConfirm"
                 type="password"
                 className="mr-3"
-                onChange={e => setConfirm(e.target.value)}
+                onChange={(e) => setConfirm(e.target.value)}
                 value={passConfirm}
               />
             </FormGroup>

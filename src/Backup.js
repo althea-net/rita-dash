@@ -6,7 +6,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Tooltip
+  Tooltip,
 } from "reactstrap";
 import { get, post, useStore } from "store";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -79,7 +79,7 @@ const Backup = ({ open, setOpen }) => {
             border: "1px solid #ddd",
             borderRadius: 5,
             background: "#eee",
-            wordWrap: "break-word"
+            wordWrap: "break-word",
           }}
         >
           <div className="d-flex py-2 px-0">

@@ -11,19 +11,19 @@ i18n
     resources: {
       en: { translations: require("./locales/en/translations.json") },
       es: { translations: require("./locales/es/translations.json") },
-      fr: { translations: require("./locales/fr/translations.json") }
+      fr: { translations: require("./locales/fr/translations.json") },
     },
 
     ns: ["translations"],
     defaultNS: "translations",
 
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
 
     react: {
-      wait: true
-    }
+      wait: true,
+    },
   });
 
 export default i18n;

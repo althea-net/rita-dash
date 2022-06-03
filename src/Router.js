@@ -10,7 +10,7 @@ import {
   SellingBandwidth,
   Settings,
   AdvancedSettings,
-  Endpoints
+  Endpoints,
 } from "./pages";
 
 let routes = {
@@ -20,7 +20,7 @@ let routes = {
   "selling-bandwidth": <SellingBandwidth />,
   advanced: <AdvancedSettings />,
   settings: <Settings />,
-  endpoints: <Endpoints />
+  endpoints: <Endpoints />,
 };
 
 const Router = ({ page, setPage, setOpen }) => {

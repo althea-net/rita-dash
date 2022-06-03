@@ -5,13 +5,13 @@ import {
   ButtonDropdown,
   DropdownMenu,
   DropdownToggle,
-  DropdownItem
+  DropdownItem,
 } from "reactstrap";
 
 const languages = {
   en: "English",
   es: "Español",
-  fr: "Français"
+  fr: "Français",
 };
 
 const toggleStyles = {
@@ -19,7 +19,7 @@ const toggleStyles = {
   border: "none",
   color: "#666",
   paddingRight: 30,
-  fontWeight: "normal"
+  fontWeight: "normal",
 };
 
 export default () => {
@@ -38,7 +38,7 @@ export default () => {
         {languages[i18n.language] || languages["en"]}
       </DropdownToggle>
       <DropdownMenu>
-        {Object.keys(languages).map(lang => (
+        {Object.keys(languages).map((lang) => (
           <DropdownItem
             key={lang}
             onClick={() => i18n.changeLanguage(lang)}

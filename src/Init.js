@@ -17,7 +17,7 @@ const Init = () => {
   const timeout = useRef();
 
   useEffect(() => {
-    timeout.current && timeout.current.map(t => clearTimeout(t));
+    timeout.current && timeout.current.map((t) => clearTimeout(t));
     return;
   }, [initialized]);
 
@@ -51,7 +51,7 @@ const Init = () => {
   }, [dispatch]);
 
   const getExits = useCallback(
-    async signal => {
+    async (signal) => {
       if (!signal) {
         const controller = new AbortController();
         signal = controller.signal;

@@ -8,7 +8,7 @@ import { Flags } from "utils";
 const PhoneForm = ({ phone, handlePhone, next }) => {
   const [t] = useTranslation();
 
-  const submit = e => {
+  const submit = (e) => {
     e.preventDefault();
     handlePhone(phone);
     next();
@@ -35,7 +35,7 @@ const PhoneForm = ({ phone, handlePhone, next }) => {
             id="exitPhone"
             placeholder={t("phoneNumber")}
             value={phone}
-            onChange={p => handlePhone(p)}
+            onChange={(p) => handlePhone(p)}
           />
         </FormGroup>
       </Form>
