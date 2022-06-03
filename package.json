@@ -79,7 +79,7 @@
     "ip-address": "^5.8.9",
     "jquery": "^1.12.4",
     "js-sha3": "^0.8.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "npm": "^6.3.0",
     "popper.js": "^1.14.4",
     "prettier": "^2.0.0",
