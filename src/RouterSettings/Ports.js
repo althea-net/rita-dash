@@ -12,13 +12,16 @@ import WANConfig from "./WANConfig";
 const Ports = () => {
   const [t] = useTranslation();
   const [confirming, setConfirming] = useState(false);
-  const [selected, setSelected] = useState([]);
-  const [mode, setMode] = useState([]);
+  const [wanMode, setWanMode] = useState(null);
   const [portsWaiting, setPortsWaiting] = useState(false);
   const [error, setError] = useState(false);
   const [wan, setWan] = useState(false);
 
   const [{ device, interfaces, waiting }, dispatch] = useStore();
+
+  const [interfaces_state, setInterfaces] = useState(null);
+  const interfaces_local =
+    interfaces_state != null ? interfaces_state : interfaces;
 
   const getInterfaces = async (signal) => {
     if (!signal) {
@@ -45,16 +48,36 @@ const Ports = () => {
   useInterval(getInterfaces, 5000);
 
   function setInterfaceMode() {
+    // wanMode is now used to check and set if a wan port has been assigned
+    // as it carries over the value (either Wan or StaticWan config) from WANConfig popup
+    if (wanMode !== null) {
+      let new_interfaces = interfaces_local;
+      for (let iface in new_interfaces) {
+        if (new_interfaces[iface] === "Wan") {
+          // if StaticWan has been set, this is where we actually handle adding it to the
+          // info sent to the backend
+          new_interfaces[iface] = wanMode;
+          setInterfaces(new_interfaces);
+          dispatch({ type: "interfaces", interfaces: new_interfaces });
+        }
+      }
+    }
     setConfirming(true);
   }
 
   let setInterfaceChanges = (iface, new_mode) => {
-    setSelected((selected) => [...selected, iface]);
     if (new_mode === "Wan") {
       setWan(true);
-    } else {
-      setMode((mode) => [...mode, new_mode]);
     }
+
+    // create a new interfaces array (to trigger a react rerender) and update it
+    let new_interfaces = interfaces_local;
+    new_interfaces[iface] = new_mode;
+
+    // set it to local state (overrides store)
+    setInterfaces(new_interfaces);
+    // save it to the store
+    dispatch({ type: "interfaces", interfaces: new_interfaces });
   };
 
   if (!interfaces) {
@@ -66,30 +89,15 @@ const Ports = () => {
     setConfirming(false);
     let unexpectedError = false;
 
-    // if an interface shows up multiple times in the selected array(e.g. user changed it
-    // more than once), take the most recent
-    const findDuplicates = (selected) =>
-      selected.filter((iface, index) => selected.indexOf(iface) !== index);
-    const duplicates = findDuplicates(selected);
-    // duplicates holds the names of which show up multiple times in selected
-    let selected_cleaned = [];
-    let modes_cleaned = [];
-    for (var i = 0; i < selected.length; i++) {
-      // keep the non duplicates
-      if (duplicates.indexOf(selected[i]) === -1) {
-        selected_cleaned.push(selected[i]);
-        modes_cleaned.push(mode[i]);
-      } else if (selected_cleaned.indexOf(selected[i]) === -1) {
-        // we must add the last instance of the duplicate
-        selected_cleaned.push(selected[selected.lastIndexOf(selected[i])]);
-        modes_cleaned.push(mode[selected.lastIndexOf(selected[i])]);
-      }
+    let selected = [];
+    let modes = [];
+    for (var n in interfaces_local) {
+      selected.push(n);
+      modes.push(interfaces_local[n]);
     }
-    setSelected(selected_cleaned);
-    setMode(modes_cleaned);
 
     try {
-      await post("/interfaces", { interfaces: selected, modes: mode });
+      await post("/interfaces", { interfaces: selected, modes: modes });
     } catch (e) {
       if (e.message.includes("500")) {
         unexpectedError = true;
@@ -100,15 +108,11 @@ const Ports = () => {
 
     if (!unexpectedError) {
       setPortsWaiting(true);
-      for (var j = 0; j < selected.length; j++) {
-        interfaces[selected[j]] = mode[j];
-      }
       dispatch({ type: "startPortChange" });
       dispatch({ type: "startWaiting", waiting: 120 });
       dispatch({ type: "interfaces", interfaces });
     }
-    setSelected([]);
-    setMode([]);
+    setWanMode(null);
   };
 
   let cancel = () => setConfirming(false);
@@ -122,7 +126,7 @@ const Ports = () => {
         cancel={cancel}
       />
 
-      <WANConfig open={wan} setOpen={setWan} setMode={setMode} />
+      <WANConfig open={wan} setOpen={setWan} setWanMode={setWanMode} />
 
       <Card>
         <CardBody>
@@ -135,7 +139,7 @@ const Ports = () => {
             <Error error={error} />
             <PortColumns
               device={device}
-              interfaces={interfaces}
+              interfaces={interfaces_local}
               setInterfaceMode={setInterfaceMode}
               setInterfaceChanges={setInterfaceChanges}
             />

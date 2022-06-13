@@ -48,50 +48,54 @@ const PortColumns = ({
   if (!order) return <Alert color="danger">{t("deviceNotRecognized")}</Alert>;
 
   return (
-    <div className="d-flex flex-wrap justify-content-center mb-2 mx-0 px-0">
-      {order.map((iface, i) => {
-        let last = i === order.length - 1;
-        let column = i;
+    <div>
+      <div className="d-flex flex-wrap justify-content-center mb-2 mx-0 px-0">
+        {order.map((iface, i) => {
+          let last = i === order.length - 1;
+          let column = i;
 
-        return (
-          <PortColumn last={last} key={i}>
-            <img src={portImage} alt={iface} width="60px" />
-            <PortNumber id={"port_" + i}>{i + 1}</PortNumber>
+          return (
+            <PortColumn last={last} key={i}>
+              <img src={portImage} alt={iface} width="60px" />
+              <PortNumber id={"port_" + i}>{i + 1}</PortNumber>
 
-            <div className="d-flex w-100 flex-column mt-3">
-              {modes.map((mode, i) => {
-                let currentInterface = interfaces[iface];
-                // static wan is a special case because it's an object
-                // in this case we just map it to wan
-                if (
-                  currentInterface != null &&
-                  interfaces[iface].StaticWan != null
-                ) {
-                  currentInterface = "Wan";
-                }
-                let selected = mode === currentInterface;
-                let disabled =
-                  !selected &&
-                  mode === "Wan" &&
-                  Object.values(interfaces).includes(mode);
-                return (
-                  <PortToggle
-                    id={mode + "_" + column}
-                    key={i}
-                    selected={selected}
-                    onClick={() => selected || setInterfaceChanges(iface, mode)}
-                    disabled={disabled}
-                    readOnly={selected}
-                    className="active"
-                  >
-                    {mode}
-                  </PortToggle>
-                );
-              })}
-            </div>
-          </PortColumn>
-        );
-      })}
+              <div className="d-flex w-100 flex-column mt-3">
+                {modes.map((mode, i) => {
+                  let currentInterface = interfaces[iface];
+                  // static wan is a special case because it's an object
+                  // in this case we just map it to wan
+                  if (
+                    currentInterface != null &&
+                    interfaces[iface].StaticWan != null
+                  ) {
+                    currentInterface = "Wan";
+                  }
+                  let selected = mode === currentInterface;
+                  let disabled =
+                    !selected &&
+                    mode === "Wan" &&
+                    Object.values(interfaces).includes(mode);
+                  return (
+                    <PortToggle
+                      id={mode + "_" + column}
+                      key={i}
+                      selected={selected}
+                      onClick={() =>
+                        selected || setInterfaceChanges(iface, mode)
+                      }
+                      disabled={disabled}
+                      readOnly={selected}
+                      className="active"
+                    >
+                      {mode}
+                    </PortToggle>
+                  );
+                })}
+              </div>
+            </PortColumn>
+          );
+        })}
+      </div>
       <Form onSubmit={setInterfaceMode}>
         <Button color="primary">{t("save")}</Button>
       </Form>
