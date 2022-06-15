@@ -11035,7 +11035,7 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-phone-number-input@^3.1.1:
+react-phone-number-input@^3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/react-phone-number-input/-/react-phone-number-input-3.2.2.tgz#afd21ac84dc4edf65b0627137d430b955d8ce0e6"
   integrity sha512-SXlABfoS+Dt7eK1Taxe/UdnzanIYlZHQaMzDPoSDlS7Pm5eGmLttG9TZBc07/XyC0cADBXh+HQ6IRm6hb25dwg==

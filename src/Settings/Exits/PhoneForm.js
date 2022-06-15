@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import phoneIcon from "images/phone.svg";
 import { Form, FormGroup } from "reactstrap";
 import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { Flags } from "utils";
 
 const PhoneForm = ({ phone, handlePhone, next }) => {
@@ -30,7 +31,7 @@ const PhoneForm = ({ phone, handlePhone, next }) => {
       <Form onSubmit={submit}>
         <FormGroup>
           <PhoneInput
-            country="US"
+            defaultCountry="US"
             flags={Flags}
             id="exitPhone"
             placeholder={t("phoneNumber")}

@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { get, post } from "store";
 import PhoneInput from "react-phone-number-input";
-// import flags from "react-phone-number-input/flags";
+import "react-phone-number-input/style.css";
 import emailValidator from "email-validator";
 import { isValidPhoneNumber } from "react-phone-number-input";
 import { Flags, Success } from "utils";
@@ -102,7 +102,7 @@ export default ({ balance, symbol }) => {
             <FormGroup className="mr-2 flex-grow-1">
               <Label for="phone">{t("phoneNumber")}</Label>
               <PhoneInput
-                country="US"
+                defaultCountry="US"
                 id="phoneNumber"
                 flags={Flags}
                 placeholder={t("phoneNumber")}

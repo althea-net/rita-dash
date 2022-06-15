@@ -4,6 +4,7 @@ import { Card } from "../ui";
 import { Button, Input, InputGroup, FormGroup, Label } from "reactstrap";
 import { get, post } from "store";
 import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { Flags } from "utils";
 
 const OperatorSetup = () => {
@@ -130,7 +131,7 @@ const OperatorSetup = () => {
             <Label>{"Phonenumber"}</Label>
             <PhoneInput
               style={{ width: "100%" }}
-              country="US"
+              defaultCountry="US"
               flags={Flags}
               id="exitPhone"
               placeholder="User Phonenumber"

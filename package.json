@@ -90,7 +90,7 @@
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.8.1",
     "react-i18next": "^10.0.0",
-    "react-phone-number-input": "^3.1.1",
+    "react-phone-number-input": "^3.2.2",
     "react-scripts": "^5.0.1",
     "react-sigma": "^1.2.30",
     "react-stateful": "https://github.com/asoltys/react-stateful",

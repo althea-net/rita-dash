@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { get, useStore, post } from "store";
 import { toEth, Flags } from "utils";
 import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 const qrStyle = { height: "auto", width: "80%" };
 
@@ -108,7 +109,7 @@ function user_info_forum(
           <PhoneInput
             disabled={canEdit}
             style={{ width: "100%" }}
-            country="US"
+            defaultCountry="US"
             flags={Flags}
             id="exitPhone"
             placeholder="User Phonenumber"
