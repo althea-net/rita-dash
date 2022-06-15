@@ -83,13 +83,21 @@ const ExitNodeSetup = ({ open, setOpen }) => {
 
   const handleEmail = (e) => {
     const { value } = e.target;
-    setEmail(value);
-    setValid(isValidEmail(value));
+    if (value != null) {
+      setEmail(value);
+      setValid(isValidEmail(value));
+    } else {
+      setValid(false);
+    }
   };
 
   const handlePhone = (value) => {
-    setPhone(value);
-    setValid(isValidPhoneNumber(value));
+    if (value != null) {
+      setPhone(value);
+      setValid(isValidPhoneNumber(value));
+    } else {
+      setValid(false);
+    }
   };
 
   const next = () => {
