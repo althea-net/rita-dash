@@ -73,8 +73,10 @@ const PortColumns = ({
                   let selected = mode === currentInterface;
                   let disabled =
                     !selected &&
-                    mode === "Wan" &&
-                    Object.values(interfaces).includes(mode);
+                    ((mode === "Wan" &&
+                      Object.values(interfaces).includes(mode)) ||
+                      (mode === "LTE" &&
+                        Object.values(interfaces).includes(mode)));
                   return (
                     <PortToggle
                       id={mode + "_" + column}
