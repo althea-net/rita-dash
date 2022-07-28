@@ -18,30 +18,31 @@ const Indicator = ({ condition }) => (
 
 const AdvancedDebugging = () => {
   const [t] = useTranslation();
-  const [{ isGateway, neighbors, selectedExit }, dispatch] = useStore();
+  const [{ isGateway, exits, selectedExit }, dispatch] = useStore();
 
-  const getNeighbors = useCallback(
+  const getExits = useCallback(
     async (signal) => {
       try {
-        let neighbors = await get("/neighbors", true, 10000, signal);
-        if (neighbors instanceof Error) return;
-        dispatch({ type: "neighbors", neighbors });
+        let exits = await get("/exits", true, 10000, signal);
+        if (exits instanceof Error) return;
+        dispatch({ type: "exits", exits });
       } catch (e) {}
     },
     [dispatch]
   );
+  let exit = exits.filter((n) => n.is_selected).length > 0;
 
-  let [haveRoute, isReachable, isTunnelWorking] = [false, false, false];
+  let haveRoute = exit.length > 0 ? exit[0].have_route : false;
+
+  let isReachable = exit.length > 0 ? exit[0].is_reachable : false;
+
+  let isTunnelWorking = exit.length > 0 ? exit[0].is_tunnel_working : false;
+
+  console.assert(exit.length, 1);
 
   if (selectedExit) {
     ({ haveRoute, isReachable, isTunnelWorking } = selectedExit);
   }
-
-  let hasNeighborRoute =
-    neighbors.filter((n) => n.routeMetric < 65000).length > 0;
-
-  let hasExitRoute =
-    neighbors.filter((n) => n.routeMetricToExit < 65000).length > 0;
 
   let indicators = {
     haveRoute,
@@ -49,16 +50,9 @@ const AdvancedDebugging = () => {
     isTunnelWorking,
   };
 
-  if (!isGateway)
-    indicators = {
-      hasNeighborRoute,
-      hasExitRoute,
-      ...indicators,
-    };
-
   const haveProblem = Object.values(indicators).findIndex((v) => !v) >= 0;
 
-  useInterval(getNeighbors, 10000);
+  useInterval(getExits, 10000);
 
   return (
     <Card>
@@ -76,23 +70,10 @@ const AdvancedDebugging = () => {
       {!isGateway && haveProblem && (
         <div className="mt-4 col-12">
           <h5>{t("suggestedAction")}</h5>
-          {hasNeighborRoute ? (
-            hasExitRoute ? (
-              selectedExit ? (
-                <p>{t("exitProblem")}</p>
-              ) : (
-                <p>{t("noExit")}</p>
-              )
-            ) : (
-              <p>{t("noNeighborExit")}</p>
-            )
-          ) : (
-            <p>{t("noNeighbor")}</p>
-          )}
+          {selectedExit ? <p>{t("exitProblem")}</p> : <p>{t("noExit")}</p>}
         </div>
       )}
     </Card>
   );
 };
-
 export default AdvancedDebugging;
