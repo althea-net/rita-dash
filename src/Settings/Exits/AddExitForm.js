@@ -23,11 +23,9 @@ const AddExitForm = ({ setAdding, setFillForm }) => {
     try {
       await post("/exits", {
         [identifier]: {
-          id: {
-            mesh_ip: meshIp,
-            eth_address: ethAddress,
-            wg_public_key: wgPubKey,
-          },
+          subnet: meshIp + "/128",
+          eth_address: ethAddress,
+          wg_public_key: wgPubKey,
           registration_port: registrationPort,
           description,
           state: "New",
