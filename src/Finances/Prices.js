@@ -37,7 +37,7 @@ const Prices = () => {
     .div(weiPerEth)
     .times(bytesPerGb)
     .toString();
-  const readableDAOPrice = BigNumber(prices.daoFee)
+  const readableOperatorPrice = BigNumber(prices.operatorFee)
     .times(secondsInMonth)
     .div(weiPerEth)
     .toFixed(0)
@@ -54,7 +54,7 @@ const Prices = () => {
 
   const organizerFeeCopy = t("organizerFeeContent", {
     maybeDollarSymbol,
-    readableDAOPrice,
+    readableOperatorPrice,
     symbol_or_star,
   });
   const bandwidthPriceCopy = t("bandwidthPriceContent", {

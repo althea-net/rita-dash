@@ -12,7 +12,6 @@ const endpoints = [
   "/debts",
   "/neighbors",
   "/wifi_settings",
-  "/dao_list",
   "/interfaces",
   "/mesh_ip",
   "/local_fee",

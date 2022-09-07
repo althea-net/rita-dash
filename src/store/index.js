@@ -22,7 +22,7 @@ const state = {
   security: [],
   closeThreshold: null,
   counter: 0,
-  daoAddress: null,
+  operatorAddress: null,
   debt: new BigNumber("0"),
   debts: [],
   device: null,

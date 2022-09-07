@@ -20,7 +20,7 @@ const NetworkOrganizer = () => {
   const [t] = useTranslation();
 
   const [ipAddress, setIpAddress] = useState("");
-  const [paymentAddress, setDaoAddress] = useState("");
+  const [paymentAddress, setOperatorAddress] = useState("");
   const [editing, setEditing] = useState(false);
 
   const [saving, setSaving] = useState(false);
@@ -39,8 +39,8 @@ const NetworkOrganizer = () => {
     (async () => {
       const { meshIp } = await get("/mesh_ip");
       setIpAddress(meshIp);
-      const daos = await get("/dao_list");
-      if (daos.length) setDaoAddress(daos[0]);
+      const operator = await get("/operator");
+      setOperatorAddress(operator);
     })();
     return;
   }, []);
@@ -51,31 +51,26 @@ const NetworkOrganizer = () => {
   };
 
   const handleIp = (e) => setIpAddress(e.target.value);
-  const handleDao = (e) => setDaoAddress(e.target.value);
+  const handleOperator = (e) => setOperatorAddress(e.target.value);
 
   const ipValid = ip.isValid();
-  const daoValid = isAddress(paymentAddress);
-  const daoInvalid = paymentAddress && !isAddress(paymentAddress);
-  const valid = ipValid && !daoInvalid;
+  const operatorValid = isAddress(paymentAddress);
+  const operatorInvalid = paymentAddress && !isAddress(paymentAddress);
+  const valid = ipValid && !operatorInvalid;
 
   const submit = async (e) => {
     e.preventDefault();
     setSaving(true);
 
     try {
-      const daos = await get("/dao_list");
-      await Promise.all(
-        daos.map((address) => post(`/dao_list/remove/${address}`))
-      );
-
       if (paymentAddress) {
-        await post(`/dao_list/add/${paymentAddress}`);
+        await post(`/operator/${paymentAddress}`);
       }
 
-      setSuccess(t("daoSuccess"));
+      setSuccess(t("operatorSuccess"));
       setEditing(false);
     } catch {
-      setError(t("daoError"));
+      setError(t("operatorError"));
     }
 
     setSaving(false);
@@ -121,11 +116,11 @@ const NetworkOrganizer = () => {
             <FormGroup>
               <Input
                 placeholder={t("organizerAddress")}
-                onChange={handleDao}
+                onChange={handleOperator}
                 value={paymentAddress}
-                valid={daoValid}
-                invalid={daoInvalid}
-                id="subnetDAOAddr"
+                valid={operatorValid}
+                invalid={operatorInvalid}
+                id="subnetOperatorAddr"
               />
               <FormFeedback invalid="true">{t("invalidAddress")}</FormFeedback>
             </FormGroup>
