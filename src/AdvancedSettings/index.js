@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import AdvancedDebugging from "./AdvancedDebugging";
 import BandwidthSelling from "./BandwidthSelling";
 import Blockchain from "./Blockchain";
-import DaoFee from "./DaoFee";
+import OperatorFee from "./OperatorFee";
 import NodeInformation from "./NodeInformation";
 import NetworkOrganizer from "./NetworkOrganizer";
 import RemoteAccess from "./RemoteAccess";
@@ -57,7 +57,7 @@ export default () => {
       >
         <LightClientAP />
         <MeshAP />
-        <DaoFee />
+        <OperatorFee />
       </div>
       <AdvancedDebugging />
     </div>

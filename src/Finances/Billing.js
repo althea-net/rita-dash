@@ -8,7 +8,7 @@ import ExportCSV from "./ExportCSV";
 
 import { enUS as en, es, fr } from "date-fns/locale";
 
-const Billing = (daoAddress, ipAddress) => {
+const Billing = (operatorAddress, ipAddress) => {
   const [t, i18n] = useTranslation();
   const locale = { en, es, fr }[i18n.language];
 

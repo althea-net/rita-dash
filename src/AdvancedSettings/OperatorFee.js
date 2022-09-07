@@ -22,32 +22,34 @@ import { Error } from "utils";
 const AbortController = window.AbortController;
 const secondsPerMonth = 60 * 60 * 24 * 30;
 
-const DaoFee = ({ readonly = false }) => {
+const OperatorFee = ({ readonly = false }) => {
   const [t] = useTranslation();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [daoFee, setDaoFee] = useState();
+  const [operatorFee, setOperatorFee] = useState();
   const [{ symbol }] = useStore();
   const [error, setError] = useState(false);
 
-  const getDaoFee = useCallback(async (signal) => {
+  const getOperatorFee = useCallback(async (signal) => {
     setLoading(true);
     try {
-      let res = await get("/dao_fee", true, 5000, signal);
+      let res = await get("/operator_fee", true, 5000, signal);
       if (!(res instanceof Error)) {
-        let { daoFee } = res;
-        daoFee = toEth(BigNumber(daoFee).times(secondsPerMonth));
-        setDaoFee(daoFee.toString());
+        let { operatorFee } = res;
+        operatorFee = toEth(BigNumber(operatorFee).times(secondsPerMonth));
+        setOperatorFee(operatorFee.toString());
       }
     } catch {}
 
     setLoading(false);
   }, []);
 
-  const postDaoFee = async (daoFee) => {
-    let daoFeeWei = BigNumber(toWei(daoFee)).div(secondsPerMonth).toFixed(0);
+  const postOperatorFee = async (operatorFee) => {
+    let operatorFeeWei = BigNumber(toWei(operatorFee))
+      .div(secondsPerMonth)
+      .toFixed(0);
     try {
-      await post("/dao_fee/" + daoFeeWei.toString(10));
+      await post("/operator_fee/" + operatorFeeWei.toString(10));
       setSuccess(true);
     } catch (e) {
       setError(e.message);
@@ -57,20 +59,20 @@ const DaoFee = ({ readonly = false }) => {
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
-    getDaoFee(signal);
+    getOperatorFee(signal);
     return () => controller.abort();
-  }, [getDaoFee]);
+  }, [getOperatorFee]);
 
   const submit = (e) => {
     e.preventDefault();
-    postDaoFee(daoFee);
+    postOperatorFee(operatorFee);
   };
 
   const defaultFee = async () => {
     setLoading(true);
-    await postDaoFee(0);
+    await postOperatorFee(0);
     await sleep(16000);
-    await getDaoFee();
+    await getOperatorFee();
   };
 
   return (
@@ -80,7 +82,7 @@ const DaoFee = ({ readonly = false }) => {
           <h4>{t("serviceCost")}</h4>
           <p>{t("theAmountYouPay")}</p>
 
-          {success && <Alert color="success">{t("daoFeeSaved")}</Alert>}
+          {success && <Alert color="success">{t("operatorFeeSaved")}</Alert>}
           <Error error={error} />
 
           {loading ? (
@@ -94,10 +96,10 @@ const DaoFee = ({ readonly = false }) => {
                   style={{ flexWrap: "nowrap", width: 350 }}
                 >
                   <Input
-                    name="daoFee"
-                    id="daoFee"
-                    onChange={(e) => setDaoFee(e.target.value)}
-                    value={daoFee}
+                    name="operatorFee"
+                    id="operatorFee"
+                    onChange={(e) => setOperatorFee(e.target.value)}
+                    value={operatorFee}
                     style={{ borderRight: "none", minWidth: 80 }}
                     readOnly={readonly}
                   />
@@ -139,4 +141,4 @@ const DaoFee = ({ readonly = false }) => {
   );
 };
 
-export default DaoFee;
+export default OperatorFee;
