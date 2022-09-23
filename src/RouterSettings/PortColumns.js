@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { Alert, Form, Button } from "reactstrap";
 import { PortColumn, PortNumber, PortToggle } from "./PortStyles.js";
+import { useStore } from "store";
 
 import portOrderings from "../portOrderings";
 import portImage from "images/port.png";
@@ -24,6 +25,18 @@ const PortColumns = ({
 }) => {
   let [t] = useTranslation();
   const modes = [t("Lan"), t("Mesh"), t("LTE"), t("Phone"), t("Wan")];
+  const [{ version }] = useStore();
+  function checkIfKeyLTE() {
+    // if this is a KeyLTE router the LTE port assignment is disabled.
+    let version_string = version.toLowerCase();
+    if (version_string.includes("keylte")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const is_keyLTE = checkIfKeyLTE();
 
   // see if we have kernel v5 orderings
   const orderv5 = portOrderings[device];
@@ -76,7 +89,8 @@ const PortColumns = ({
                     ((mode === "Wan" &&
                       Object.values(interfaces).includes(mode)) ||
                       (mode === "LTE" &&
-                        Object.values(interfaces).includes(mode)));
+                        (Object.values(interfaces).includes(mode) ||
+                          is_keyLTE)));
                   return (
                     <PortToggle
                       id={mode + "_" + column}
