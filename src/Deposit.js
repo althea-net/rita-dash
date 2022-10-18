@@ -18,6 +18,7 @@ import { get, useStore, post } from "store";
 import { toEth, Flags } from "utils";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const qrStyle = { height: "auto", width: "80%" };
 
@@ -239,21 +240,16 @@ const Deposit = ({ open, setOpen }) => {
   // selectAmount:  The user selects the amount they would like to deposit, the user
   //                will either leave the page to go to wyre or return to None
   const [modalDisplayState, setModalDisplayState] = useState("");
+  const [{ address, debt, lowBalance, status, symbol }] = useStore();
 
   const toggle = () => {
-    if (modalDisplayState === "None") {
-      if (wyreEnabled) {
-        setModalDisplayState("reviewDetails");
-      } else {
-        setModalDisplayState("QR");
-      }
+    setOpen(!open);
+    if (wyreEnabled) {
+      setModalDisplayState("reviewDetails");
     } else {
-      setModalDisplayState("None");
-      setOpen(false);
+      setModalDisplayState("QR");
     }
   };
-
-  const [{ address, debt, lowBalance, status, symbol }] = useStore();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -275,19 +271,16 @@ const Deposit = ({ open, setOpen }) => {
         if (!(wyreEnabled instanceof Error)) setWyreEnabled(wyreEnabled);
 
         setLoading(false);
+        if (wyreEnabled) {
+          setModalDisplayState("reviewDetails");
+        } else {
+          setModalDisplayState("QR");
+        }
       }
     })();
 
     return () => controller.abort();
   });
-
-  if ((modalDisplayState === "" || modalDisplayState === "None") && open) {
-    if (wyreEnabled) {
-      setModalDisplayState("reviewDetails");
-    } else {
-      setModalDisplayState("QR");
-    }
-  }
 
   let decimals = symbol === "Dai" ? 2 : 4;
   let minDeposit =
@@ -425,10 +418,20 @@ const Deposit = ({ open, setOpen }) => {
         </div>
       </>
     );
+  } else {
+    modal_body = (
+      <ClipLoader
+        color="#89CFF0"
+        loading={loading != null && loading}
+        size={50}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+      />
+    );
   }
   return (
     <Modal
-      isOpen={open && !loading}
+      isOpen={open}
       // this resets the contact details review modal flow
       // the flow goes, depositing true -> false
       // which shows the selection modal if appropriate
