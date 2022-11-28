@@ -38,8 +38,6 @@ const AdvancedDebugging = () => {
 
   let isTunnelWorking = exit.length > 0 ? exit[0].is_tunnel_working : false;
 
-  console.assert(exit.length, 1);
-
   if (selectedExit) {
     ({ haveRoute, isReachable, isTunnelWorking } = selectedExit);
   }

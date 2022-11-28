@@ -16,6 +16,7 @@ const AltheaNav = ({ page, setOpen }) => {
     "selling-bandwidth": t("sellingBandwidth"),
     settings: t("settings"),
     advanced: t("advanced"),
+    devices: t("devices"),
   };
 
   let navItems = Object.keys(pages).map((path, i) => {

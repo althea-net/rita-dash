@@ -405,5 +405,18 @@
   "enableSelfLimit": "Enable bandwidth limiter",
   "bandwidthLimitSaved": "Changes Saved",
   "bandwidthLimitTitle": "Your bandwidth limit",
-  "setYourBandwidth": "Your Althea network provides the fastest service possible at any given time. To control costs you may wish to limit this. For more details and advice on how to use this option contact your local operator or call at"
+  "setYourBandwidth": "Your Althea network provides the fastest service possible at any given time. To control costs you may wish to limit this. For more details and advice on how to use this option contact your local operator or call at",
+  "devices": "Devices",
+  "devicesLan": "Devices on LAN",
+  "refresh" : "Refresh",
+  "noDevices" : "No devices detected",
+  "device" : "Device",
+  "signalStrength" : "Signal strength",
+  "uploadedBytes" : "Uploaded bytes",
+  "downloadedBytes" : "Downloaded bytes",
+  "ipAddr": "Ip address",
+  "macAddr": "Mac address",
+  "wired": "Wired",
+  "true" : "true",
+  "false" : "false"
 }
