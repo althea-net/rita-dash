@@ -21,6 +21,7 @@ const endpoints = [
   "/usage/client",
   "/usage/relay",
   "/usage/payments",
+  "/lan_devices",
 ];
 
 const APIDump = () => {

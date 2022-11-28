@@ -11,6 +11,7 @@ import {
   Settings,
   AdvancedSettings,
   Endpoints,
+  DevicesOnLan,
 } from "./pages";
 
 let routes = {
@@ -21,6 +22,7 @@ let routes = {
   advanced: <AdvancedSettings />,
   settings: <Settings />,
   endpoints: <Endpoints />,
+  devices: <DevicesOnLan />,
 };
 
 const Router = ({ page, setPage, setOpen }) => {

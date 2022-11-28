@@ -381,5 +381,18 @@
   "bandwidthPriceName": "Bandwidth price: ",
   "organizerFeeContent": " {{maybeDollarSymbol}}{{readableOperatorPrice}} {{symbol_or_star}}/Mes",
   "bandwidthPriceContent": " {{maybeDollarSymbol}}{{readableExitPrice}} {{symbol_or_star}}/GB",
-  "pricesCopy": "Estas son las tarifas que paga actualmente su enrutador; las determinan otros miembros de su red y su organizador de red."
+  "pricesCopy": "Estas son las tarifas que paga actualmente su enrutador; las determinan otros miembros de su red y su organizador de red.",
+  "devices": "Dispositivos",
+  "devicesLan": "Dispositivos en LAN",
+  "refresh" : "Actualizar",
+  "noDevices" : "No se detectaron dispositivos",
+  "device" : "Device",
+  "signalStrength" : "Intensidad de señal",
+  "uploadedBytes" : "Bytes subidos",
+  "downloadedBytes" : "Bytes descargados",
+  "ipAddr": "Dirección IP",
+  "macAddr": "Dirección MAC",
+  "wired": "Cableado",
+  "true" : "cierto",
+  "false" : "falso"
 }
