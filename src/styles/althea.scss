@@ -6,7 +6,7 @@ $input-btn-padding-y: 0.7rem;
 $input-btn-padding-x: 1.5rem;
 $font-size-base: 1.1rem;
 $spacer: 1.5rem;
-$headings-margin-bottom: ($spacer / 1);
+$headings-margin-bottom: calc($spacer / 1);
 $input-placeholder-color: #aaa;
 
 @import "~bootstrap/scss/bootstrap";
