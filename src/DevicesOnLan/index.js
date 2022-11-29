@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import { React } from "react";
 import { useTranslation } from "react-i18next";
-import { InputGroup } from "reactstrap";
+import { InputGroup, Label } from "reactstrap";
 import Devices from "./Devices";
 
 const LanDevices = () => {
@@ -12,6 +12,7 @@ const LanDevices = () => {
       <InputGroup>
         <h2 id="devicesPage">{t("devicesLan")}</h2>
       </InputGroup>
+      <Label> Devices will be refreshed every 30 seconds.</Label>
       <Devices />
     </div>
   );

@@ -3,6 +3,7 @@ import { Card, CardBody } from "reactstrap";
 import { get } from "store";
 import Device from "./Device";
 import { useTranslation } from "react-i18next";
+import useInterval from "hooks/useInterval";
 import ClipLoader from "react-spinners/ClipLoader";
 
 const Devices = () => {
@@ -10,9 +11,16 @@ const Devices = () => {
   const [devices, setDevices] = useState(null);
   let [t] = useTranslation();
 
-  useEffect(() => {
-    const controller = new AbortController();
+  useInterval(async () => {
+    try {
+      let lanDevices = await get("/lan_devices");
+      if (!(lanDevices instanceof Error)) setDevices(lanDevices.allLanDevices);
+    } catch (e) {
+      console.log(e);
+    }
+  }, 30000); // every 30 seconds
 
+  useEffect(() => {
     (async () => {
       if (loading == null) {
         setLoading(true);
@@ -23,8 +31,8 @@ const Devices = () => {
       }
     })();
 
-    return () => controller.abort();
-  });
+    return;
+  }, [loading]);
 
   if (loading) {
     return (
