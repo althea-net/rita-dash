@@ -47,6 +47,7 @@ const Ports = () => {
 
   useInterval(getInterfaces, 5000);
 
+  // Call this from a button onClick, not a form onSubmit to avoid needing multiple save clicks
   function setInterfaceMode() {
     // wanMode is now used to check and set if a wan port has been assigned
     // as it carries over the value (either Wan or StaticWan config) from WANConfig popup
@@ -85,8 +86,6 @@ const Ports = () => {
   }
 
   let confirm = async () => {
-    setError(null);
-    setConfirming(false);
     let unexpectedError = false;
 
     let selected = [];
@@ -113,6 +112,8 @@ const Ports = () => {
       dispatch({ type: "interfaces", interfaces });
     }
     setWanMode(null);
+    setError(null);
+    setConfirming(false);
   };
 
   let cancel = () => setConfirming(false);
