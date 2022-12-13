@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { Alert, Form, Button } from "reactstrap";
+import { Alert, Button } from "reactstrap";
 import { PortColumn, PortNumber, PortToggle } from "./PortStyles.js";
 import { useStore } from "store";
 
@@ -112,9 +112,9 @@ const PortColumns = ({
           );
         })}
       </div>
-      <Form onSubmit={setInterfaceMode}>
-        <Button color="primary">{t("save")}</Button>
-      </Form>
+      <Button onClick={setInterfaceMode} color="primary">
+        {t("save")}
+      </Button>
     </div>
   );
 };
