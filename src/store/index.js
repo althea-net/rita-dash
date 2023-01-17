@@ -47,7 +47,6 @@ const state = {
   portChange: false,
   remoteAccess: false,
   meshAP: false,
-  lightClientAP: false,
   remoteLogging: false,
   resetting: [],
   ritaVersion: null,
