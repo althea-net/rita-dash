@@ -24,7 +24,7 @@ const PortColumns = ({
   setInterfaceChanges,
 }) => {
   let [t] = useTranslation();
-  const modes = [t("Lan"), t("Mesh"), t("LTE"), t("Phone"), t("Wan")];
+  const modes = [t("Lan"), t("Mesh"), t("LTE"), t("Wan")];
   const [{ version }] = useStore();
   function checkIfKeyLTE() {
     // if this is a KeyLTE router the LTE port assignment is disabled.

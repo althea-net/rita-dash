@@ -23,7 +23,6 @@ const OperatorSetup = () => {
   const [city, setCity] = useState(null);
   const [street, setStreet] = useState(null);
   const [relayAntennaIPs, setRelayAntennaIPs] = useState(null);
-  const [phoneClientAntennaIPs, setPhoneClientAntennaIPs] = useState(null);
   const [physicalAddress, setPhysicalAddress] = useState(null);
   const [equipmentDetails, setEquipmentDetails] = useState(null);
 
@@ -58,7 +57,6 @@ const OperatorSetup = () => {
       install_details.email = email;
       install_details.client_antenna_ip = cpeIP;
       install_details.relay_antennas = relayAntennaIPs;
-      install_details.phone_client_antennas = phoneClientAntennaIPs;
       install_details.physical_address = physicalAddress;
       install_details.equipment_details = equipmentDetails;
       await post(`/installation_details`, install_details);
@@ -230,16 +228,6 @@ const OperatorSetup = () => {
             placeholder="Relay antenna IPs comma separated list"
             onChange={(e) => setRelayAntennaIPs(e.target.value)}
             defaultValue={relayAntennaIPs}
-          />
-        </InputGroup>
-        <br />
-        <Label>{"Phone Antenna IPs"}</Label>
-        <InputGroup>
-          <Input
-            type="text"
-            placeholder="Phone antenna IPs comma separated list"
-            onChange={(e) => setPhoneClientAntennaIPs(e.target.value)}
-            defaultValue={phoneClientAntennaIPs}
           />
         </InputGroup>
         <br />

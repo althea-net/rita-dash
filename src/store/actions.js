@@ -158,7 +158,6 @@ export default (state, action) => {
     reset: ({ nickname }) => ({
       resetting: [...state.resetting, nickname],
     }),
-    lightClientAP: ({ lightClientAP }) => ({ lightClientAP }),
     meshAP: ({ meshAP }) => ({ meshAP }),
     remoteAccess: ({ remoteAccess }) => ({ remoteAccess }),
     remoteLogging: ({ remoteLogging }) => ({ remoteLogging }),
