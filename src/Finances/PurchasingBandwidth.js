@@ -8,9 +8,6 @@ import { BigNumber } from "bignumber.js";
 
 import updown from "../images/updown.svg";
 
-import Deposit from "../Deposit";
-import Withdraw from "../Withdraw";
-
 import QualityForm from "./QualityForm";
 
 const AbortController = window.AbortController;
@@ -31,7 +28,7 @@ const PurchasingBandwidth = () => {
         const usage = await get("/usage/client", true, 10000, signal);
         if (usage instanceof Error) return;
         dispatch({ type: "usage", usage });
-      } catch (e) {}
+      } catch (e) { }
     })();
 
     return () => controller.abort();
@@ -62,16 +59,14 @@ const PurchasingBandwidth = () => {
     isNaN(perMonthUsage) || isNaN(weeksOfService) || usage.length < 720
       ? t("insufficientUsage")
       : weeksOfService < 1
-      ? t("lessThanAWeek", { perMonthUsage })
-      : t("averageUsage", { perMonthUsage, weeksOfService });
+        ? t("lessThanAWeek", { perMonthUsage })
+        : t("averageUsage", { perMonthUsage, weeksOfService });
 
   return (
     <Card>
       <div className="col-12 px-0">
         <h4>{t("purchasingBandwidth")}</h4>
       </div>
-      <Deposit open={depositing} setOpen={setDepositing} />
-      <Withdraw open={withdrawing} setOpen={setWithdrawing} />
       <Left>
         <QualityForm />
       </Left>

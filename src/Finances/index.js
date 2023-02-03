@@ -19,16 +19,12 @@ import PurchasingBandwidth from "./PurchasingBandwidth";
 const Finances = () => {
   const [t] = useTranslation();
 
-  const [depositing, setDepositing] = useState(false);
   const [managing, setManaging] = useState(false);
-  const [withdrawing, setWithdrawing] = useState(false);
 
   return (
     <>
       <h2>{t("finances")}</h2>
       <Card>
-        <Deposit open={depositing} setOpen={setDepositing} />
-        <Withdraw open={withdrawing} setOpen={setWithdrawing} />
         <WalletManagement open={managing} setOpen={setManaging} />
         <Left>
           <Account />
