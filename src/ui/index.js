@@ -72,8 +72,14 @@ export const Heading = ({ title, link, linkText }) => (
 );
 
 export const InnerPhoneInput = forwardRef((props, ref) => {
-  return <input {...props} className="form-control" style={{ width: "100%" }}
-    onChange={(e) => props.onChange(String(e.target.value))}
-    value={props.value}
-    ref={ref} />
-})
+  return (
+    <input
+      {...props}
+      className="form-control"
+      style={{ width: "100%" }}
+      onChange={(e) => props.onChange(String(e.target.value))}
+      value={props.value}
+      ref={ref}
+    />
+  );
+});

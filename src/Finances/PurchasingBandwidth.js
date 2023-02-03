@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Card, Left, Right } from "ui";
@@ -15,8 +15,6 @@ const AbortController = window.AbortController;
 const PurchasingBandwidth = () => {
   const [t] = useTranslation();
 
-  const [depositing, setDepositing] = useState(false);
-  const [withdrawing, setWithdrawing] = useState(false);
   const [{ balance, localFee, usage }, dispatch] = useStore();
 
   useEffect(() => {
@@ -28,7 +26,7 @@ const PurchasingBandwidth = () => {
         const usage = await get("/usage/client", true, 10000, signal);
         if (usage instanceof Error) return;
         dispatch({ type: "usage", usage });
-      } catch (e) { }
+      } catch (e) {}
     })();
 
     return () => controller.abort();
@@ -59,8 +57,8 @@ const PurchasingBandwidth = () => {
     isNaN(perMonthUsage) || isNaN(weeksOfService) || usage.length < 720
       ? t("insufficientUsage")
       : weeksOfService < 1
-        ? t("lessThanAWeek", { perMonthUsage })
-        : t("averageUsage", { perMonthUsage, weeksOfService });
+      ? t("lessThanAWeek", { perMonthUsage })
+      : t("averageUsage", { perMonthUsage, weeksOfService });
 
   return (
     <Card>
