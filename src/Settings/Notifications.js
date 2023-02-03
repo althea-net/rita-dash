@@ -14,7 +14,7 @@ import {
 import { get, post } from "store";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { InnerPhoneInput } from "ui"
+import { InnerPhoneInput } from "ui";
 import emailValidator from "email-validator";
 import { Success } from "utils";
 
@@ -65,7 +65,7 @@ export default ({ balance, symbol }) => {
         post(`/low_balance_notification/${checked}`);
 
         setSuccess(t("settingsSaved"));
-      } catch (e) { }
+      } catch (e) {}
     }
   };
 

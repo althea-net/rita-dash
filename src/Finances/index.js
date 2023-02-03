@@ -6,8 +6,6 @@ import { Button } from "reactstrap";
 
 import padlock from "../images/padlock.svg";
 
-import Deposit from "../Deposit";
-import Withdraw from "../Withdraw";
 import WalletManagement from "../WalletManagement";
 
 import Account from "./Account";

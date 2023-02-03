@@ -15,7 +15,7 @@ import {
   Progress,
 } from "reactstrap";
 import { get, post, useStore } from "store";
-import { toEth, toWei, sleep } from "utils";
+import { toEth, toWei } from "utils";
 import { BigNumber } from "bignumber.js";
 import { Error } from "utils";
 
@@ -39,7 +39,7 @@ const OperatorFee = ({ readonly = false }) => {
         operatorFee = toEth(BigNumber(operatorFee).times(secondsPerMonth));
         setOperatorFee(operatorFee.toString());
       }
-    } catch { }
+    } catch {}
 
     setLoading(false);
   }, []);
