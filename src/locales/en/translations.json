@@ -196,7 +196,7 @@
   "currentDebt": "Current debt",
   "operatorError": "Problem saving organizer address",
   "serviceCost": "Service Cost",
-  "operatorFeeSaved": "Subnet Operator Fee Updated Successfully",
+  "operatorFeeSaved": "Operator Fee Updated Successfully",
   "operatorSuccess": "Addresses Updated Successfully",
   "dashboard": "Dashboard",
   "debtsError": "Problem retrieving debts",

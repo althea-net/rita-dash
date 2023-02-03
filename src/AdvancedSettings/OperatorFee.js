@@ -35,11 +35,11 @@ const OperatorFee = ({ readonly = false }) => {
     try {
       let res = await get("/operator_fee", true, 5000, signal);
       if (!(res instanceof Error)) {
-        let { operatorFee } = res;
+        let operatorFee = res;
         operatorFee = toEth(BigNumber(operatorFee).times(secondsPerMonth));
         setOperatorFee(operatorFee.toString());
       }
-    } catch {}
+    } catch { }
 
     setLoading(false);
   }, []);
@@ -69,10 +69,11 @@ const OperatorFee = ({ readonly = false }) => {
   };
 
   const defaultFee = async () => {
-    setLoading(true);
-    await postOperatorFee(0);
-    await sleep(16000);
-    await getOperatorFee();
+    // setLoading(true);
+    setOperatorFee("0");
+    postOperatorFee(0);
+    // await sleep(16000);
+    // await getOperatorFee();
   };
 
   return (
