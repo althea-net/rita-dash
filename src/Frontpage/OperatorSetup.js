@@ -5,6 +5,7 @@ import { Button, Input, InputGroup, FormGroup, Label } from "reactstrap";
 import { get, post } from "store";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { InnerPhoneInput } from "ui"
 import { Flags } from "utils";
 
 const OperatorSetup = () => {
@@ -41,7 +42,7 @@ const OperatorSetup = () => {
     try {
       setShouldDisplay(null);
       await post(`/operator_setup/false`);
-    } catch (e) {}
+    } catch (e) { }
   };
   let submit = async (e) => {
     try {
@@ -61,7 +62,7 @@ const OperatorSetup = () => {
       install_details.equipment_details = equipmentDetails;
       await post(`/installation_details`, install_details);
       setShouldDisplay(null);
-    } catch (e) {}
+    } catch (e) { }
   };
 
   if (!shouldDisplay) {
@@ -130,11 +131,11 @@ const OperatorSetup = () => {
             <PhoneInput
               style={{ width: "100%" }}
               defaultCountry="US"
-              flags={Flags}
               id="exitPhone"
               placeholder="User Phonenumber"
               value={phone}
               onChange={(p) => setPhone(p)}
+              inputComponent={InnerPhoneInput}
             />
           </FormGroup>
         </forum>

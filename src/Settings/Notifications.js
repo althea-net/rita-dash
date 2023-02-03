@@ -12,11 +12,11 @@ import {
   Label,
 } from "reactstrap";
 import { get, post } from "store";
-import PhoneInput from "react-phone-number-input";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { InnerPhoneInput } from "ui"
 import emailValidator from "email-validator";
-import { isValidPhoneNumber } from "react-phone-number-input";
-import { Flags, Success } from "utils";
+import { Success } from "utils";
 
 const isValidEmail = emailValidator.validate;
 
@@ -65,7 +65,7 @@ export default ({ balance, symbol }) => {
         post(`/low_balance_notification/${checked}`);
 
         setSuccess(t("settingsSaved"));
-      } catch (e) {}
+      } catch (e) { }
     }
   };
 
@@ -104,10 +104,10 @@ export default ({ balance, symbol }) => {
               <PhoneInput
                 defaultCountry="US"
                 id="phoneNumber"
-                flags={Flags}
                 placeholder={t("phoneNumber")}
                 value={phone}
                 onChange={(p) => handlePhone(p)}
+                inputComponent={InnerPhoneInput}
               />
             </FormGroup>
             <FormGroup className="mt-auto">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 import { Card as Boot, CardBody } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -70,3 +70,10 @@ export const Heading = ({ title, link, linkText }) => (
     </div>
   </div>
 );
+
+export const InnerPhoneInput = forwardRef((props, ref) => {
+  return <input {...props} className="form-control" style={{ width: "100%" }}
+    onChange={(e) => props.onChange(String(e.target.value))}
+    value={props.value}
+    ref={ref} />
+})
