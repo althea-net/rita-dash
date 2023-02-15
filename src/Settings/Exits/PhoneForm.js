@@ -4,7 +4,7 @@ import phoneIcon from "images/phone.svg";
 import { Form, FormGroup } from "reactstrap";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { Flags } from "utils";
+import { InnerPhoneInput } from "ui";
 
 const PhoneForm = ({ phone, handlePhone, next }) => {
   const [t] = useTranslation();
@@ -32,11 +32,11 @@ const PhoneForm = ({ phone, handlePhone, next }) => {
         <FormGroup>
           <PhoneInput
             defaultCountry="US"
-            flags={Flags}
             id="exitPhone"
             placeholder={t("phoneNumber")}
             value={phone}
             onChange={(p) => handlePhone(p)}
+            inputComponent={InnerPhoneInput}
           />
         </FormGroup>
       </Form>
