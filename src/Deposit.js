@@ -31,12 +31,10 @@ async function submit(billing_details, phone, email, setState) {
   } catch (e) {}
 }
 
-async function get_wyre_url_and_redirect(amount) {
-  let amountJson = {};
-  amountJson["amount"] = amount;
+async function get_c14_url_and_redirect(amount, address) {
   try {
-    let res = await post("/wyre_reservation", amountJson);
-    window.location.replace(res.url);
+    let url = `https://pay.c14.money?sourceCurrencyCode=USD&sourceAmount=${amount}&targetAddress=${address}&targetAssetId=38ee0010-ca62-41da-822e-ff8a9bfa0914`;
+    window.open(url, "_blank");
   } catch (e) {}
 }
 
@@ -323,10 +321,7 @@ const Deposit = ({ open, setOpen }) => {
       <div>
         <h5>Please select an amount to deposit from the choices below.</h5>
 
-        <p>
-          You will be redirected to our payment processor. Our payment processor
-          is international, so charges may come from outside the United States.{" "}
-        </p>
+        <p>You will be redirected to our payment processor, C14.</p>
         <p>
           If you experience any problems please call us at{" "}
           <a href="tel:8664258432">1-866-4ALTHEA</a> Thank you!
@@ -340,39 +335,39 @@ const Deposit = ({ open, setOpen }) => {
         >
           <Button
             onClick={(e) => {
-              get_wyre_url_and_redirect(20.0);
+              get_c14_url_and_redirect(50.0, address);
             }}
             outline
             color="primary"
           >
-            $20
+            $50
           </Button>
           <Button
             onClick={(e) => {
-              get_wyre_url_and_redirect(40.0);
-            }}
-            outline
-            color="primary"
-          >
-            $40
-          </Button>
-          <Button
-            onClick={(e) => {
-              get_wyre_url_and_redirect(60.0);
-            }}
-            outline
-            color="primary"
-          >
-            $60
-          </Button>
-          <Button
-            onClick={(e) => {
-              get_wyre_url_and_redirect(100.0);
+              get_c14_url_and_redirect(100.0, address);
             }}
             outline
             color="primary"
           >
             $100
+          </Button>
+          <Button
+            onClick={(e) => {
+              get_c14_url_and_redirect(200.0, address);
+            }}
+            outline
+            color="primary"
+          >
+            $200
+          </Button>
+          <Button
+            onClick={(e) => {
+              get_c14_url_and_redirect(500.0, address);
+            }}
+            outline
+            color="primary"
+          >
+            $500
           </Button>
         </div>
       </div>
