@@ -62,8 +62,8 @@ const Prices = () => {
     readableExitPrice,
     symbol_or_star,
   });
-  console.log(symbol_or_star);
-  console.log(organizerFeeCopy);
+  // console.log(symbol_or_star);
+  // console.log(organizerFeeCopy);
   const pricesCopy = t("pricesCopy");
 
   return (

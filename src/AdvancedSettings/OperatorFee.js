@@ -27,8 +27,18 @@ const OperatorFee = ({ readonly = false }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [operatorFee, setOperatorFee] = useState();
+  const [localization, setLocalization] = useState([]);
   const [{ symbol }] = useStore();
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let localization = await get("/localization");
+        if (!(localization instanceof Error)) setLocalization(localization);
+      } catch {}
+    })();
+  }, []);
 
   const getOperatorFee = useCallback(async (signal) => {
     setLoading(true);
@@ -76,6 +86,10 @@ const OperatorFee = ({ readonly = false }) => {
     // await getOperatorFee();
   };
 
+  // prepends the dollar symbol if we're using DAI
+  const maybeDollarSymbol =
+    symbol === "Dai" && localization.displayCurrencySymbol ? "$" : "";
+
   return (
     <Card className="mb-4">
       <CardBody>
@@ -96,6 +110,21 @@ const OperatorFee = ({ readonly = false }) => {
                   className="mr-3 mb-2"
                   style={{ flexWrap: "nowrap", width: 350 }}
                 >
+                  <InputGroupAddon addonType="prepend">
+                    {maybeDollarSymbol ? (
+                      <InputGroupText
+                        style={{
+                          background: "#F8F9FA",
+                          fontSize: 14,
+                          color: "#888",
+                        }}
+                      >
+                        $
+                      </InputGroupText>
+                    ) : (
+                      ""
+                    )}
+                  </InputGroupAddon>
                   <Input
                     name="operatorFee"
                     id="operatorFee"

@@ -119,6 +119,10 @@ const Price = () => {
     setNewPrice(e.target.value);
   };
 
+  // prepends the dollar symbol if we're using DAI
+  const maybeDollarSymbol =
+    symbol === "Dai" && localization.displayCurrencySymbol ? "$" : "";
+
   return (
     <Card>
       <Form onSubmit={submit}>
@@ -131,6 +135,21 @@ const Price = () => {
           <Label for="price">{t("bandwidthPrice")}</Label>
           <div className="d-flex flex-wrap">
             <InputGroup className="mr-2 mb-2" style={{ width: 320 }}>
+              {maybeDollarSymbol ? (
+                <InputGroupAddon addonType="prepend">
+                  <InputGroupText
+                    style={{
+                      background: "#F8F9FA",
+                      fontSize: 14,
+                      color: "#888",
+                    }}
+                  >
+                    $
+                  </InputGroupText>
+                </InputGroupAddon>
+              ) : (
+                ""
+              )}
               <Input
                 label={t("price")}
                 name="price"
