@@ -38,7 +38,7 @@ async function get_c14_url_and_redirect(amount, address) {
   } catch (e) {}
 }
 
-function user_info_forum(
+function user_info_form(
   billingDetails,
   setBillingDetails,
   email,
@@ -224,7 +224,6 @@ const Deposit = ({ open, setOpen }) => {
   const [t] = useTranslation();
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(null);
-  const [wyreEnabled, setWyreEnabled] = useState(false);
   const [operatorDebt, setOperatorDebt] = useState(0);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -236,13 +235,16 @@ const Deposit = ({ open, setOpen }) => {
   // reviewDetails: This is where the user views and possibly updates their details
   //                can return to none or progress to selectAmount
   // selectAmount:  The user selects the amount they would like to deposit, the user
-  //                will either leave the page to go to wyre or return to None
+  //                will either leave the page to go to the payment processor or return to None
   const [modalDisplayState, setModalDisplayState] = useState("");
   const [{ address, debt, lowBalance, status, symbol }] = useStore();
 
+  // set this to true, but keep it here to make it easier to reconnect to the backend
+  const addFundsEnabled = true;
+
   const toggle = () => {
     setOpen(!open);
-    if (wyreEnabled) {
+    if (addFundsEnabled) {
       setModalDisplayState("reviewDetails");
     } else {
       setModalDisplayState("QR");
@@ -259,17 +261,15 @@ const Deposit = ({ open, setOpen }) => {
         let operatorDebt = await get("/operator_debt");
         let email = await get("/email");
         let phone = await get("/phone");
-        let { wyreEnabled } = await get("/localization");
 
         if (!(phone instanceof Error)) setPhone(phone);
         if (!(email instanceof Error)) setEmail(email);
         if (!(billingDetails instanceof Error))
           setBillingDetails(billingDetails);
         if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
-        if (!(wyreEnabled instanceof Error)) setWyreEnabled(wyreEnabled);
 
         setLoading(false);
-        if (wyreEnabled) {
+        if (addFundsEnabled) {
           setModalDisplayState("reviewDetails");
         } else {
           setModalDisplayState("QR");
@@ -299,11 +299,11 @@ const Deposit = ({ open, setOpen }) => {
 
   // the modal size, edited for when a message case needs a larger modal
   let size = "sm";
-  if (wyreEnabled && modalDisplayState === "reviewDetails") {
+  if (addFundsEnabled && modalDisplayState === "reviewDetails") {
     size = "lg";
     modal_header = "Review Contact info";
 
-    modal_body = user_info_forum(
+    modal_body = user_info_form(
       billingDetails,
       setBillingDetails,
       email,
@@ -314,7 +314,7 @@ const Deposit = ({ open, setOpen }) => {
       false,
       setModalDisplayState
     );
-  } else if (wyreEnabled && modalDisplayState === "selectAmount") {
+  } else if (addFundsEnabled && modalDisplayState === "selectAmount") {
     size = "md";
     modal_header = "Select deposit amount";
     modal_body = (
