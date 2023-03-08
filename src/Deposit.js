@@ -322,6 +322,13 @@ const Deposit = ({ open, setOpen }) => {
         <h5>Please select an amount to deposit from the choices below.</h5>
 
         <p>You will be redirected to our payment processor, C14.</p>
+        <p style={{ backgroundColor: "#FAA", padding: "5px", borderRadius: 5 }}>
+          <center>
+            <strong>Note: debit cards only</strong>
+          </center>
+          Credit cards will not work because router funds are non-reversible.
+        </p>
+
         <p>
           If you experience any problems please call us at{" "}
           <a href="tel:8664258432">1-866-4ALTHEA</a> Thank you!
