@@ -6,7 +6,6 @@ import ExitListItem from "./ExitListItem";
 import ExitNodeSetup from "./ExitNodeSetup";
 import { Provider } from "store/Exits";
 import { get, post, useStore } from "store";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const AbortController = window.AbortController;
 
@@ -122,16 +121,6 @@ const Exits = () => {
                       className="mb-2 mb-sm-0 mr-1"
                     >
                       {t("updateExit")}
-                    </Button>
-                    <Button
-                      color="primary"
-                      outline
-                      onClick={() => resetExit(selectedExit)}
-                      className="mb-2 mb-sm-0"
-                      id="exitNodeButton"
-                    >
-                      <FontAwesomeIcon icon="sync" className="mr-2" />
-                      {t("resetConnection")}
                     </Button>
                   </div>
                 </>
