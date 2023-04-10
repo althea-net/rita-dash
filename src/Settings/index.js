@@ -8,6 +8,7 @@ import DashboardPassword from "./DashboardPassword";
 import Notifications from "./Notifications";
 import Firmware from "./Firmware";
 import DebuggingData from "./DebuggingData";
+import BandwidthLimit from "./BandwidthLimit";
 
 export default () => {
   const [t] = useTranslation();
@@ -19,6 +20,7 @@ export default () => {
       <DashboardPassword />
       <Notifications />
       <Exits />
+      <BandwidthLimit />
       <div
         className="d-flex flex-wrap"
         style={{ justifyContent: "space-evenly" }}

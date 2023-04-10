@@ -11,7 +11,6 @@ import NetworkOrganizer from "./NetworkOrganizer";
 import RemoteAccess from "./RemoteAccess";
 import RemoteLogging from "./RemoteLogging";
 import MeshAP from "./MeshAP";
-import BandwidthLimit from "./BandwidthLimit";
 import ResetExit from "./ResetExit";
 
 import exclamation from "images/exclamation.svg";
@@ -41,7 +40,6 @@ export default () => {
         <BandwidthSelling />
         <Blockchain />
       </div>
-      <BandwidthLimit />
       <NodeInformation />
       <div
         className="d-flex flex-wrap"
