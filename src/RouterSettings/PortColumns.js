@@ -28,6 +28,9 @@ const PortColumns = ({
   const [{ version }] = useStore();
   function checkIfKeyLTE() {
     // if this is a KeyLTE router the LTE port assignment is disabled.
+    if (version == null) {
+      return false;
+    }
     let version_string = version.toLowerCase();
     if (version_string.includes("keylte")) {
       return true;
