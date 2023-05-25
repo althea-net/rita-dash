@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Alert, Button, Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "../Pagination";
 import { get, useStore } from "store";
-import { groupUsage } from "utils";
+import { groupClientUsageData } from "utils";
 import ExportCSV from "./ExportCSV";
 
 import { enUS as en, es, fr } from "date-fns/locale";
@@ -52,9 +52,8 @@ const Billing = (operatorAddress, ipAddress) => {
 
   const [rows, data] = useMemo(
     () =>
-      groupUsage(
+      groupClientUsageData(
         info,
-        true,
         usage,
         period,
         symbol_or_star,

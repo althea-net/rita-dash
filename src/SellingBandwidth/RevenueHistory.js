@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Alert, Button, Card, CardBody, Input, Table } from "reactstrap";
 import Pagination from "../Pagination";
 import { get, useStore } from "store";
-import { groupUsage } from "utils";
+import { groupRelayUsageData } from "utils";
 import ExportCSV from "../Finances/ExportCSV";
 
 import { enUS as en, es, fr } from "date-fns/locale";
@@ -13,7 +13,8 @@ const RevenueHistory = () => {
   const locale = { en, es, fr }[i18n.language];
 
   const [period, setPeriod] = useState("w");
-  const [usage, setUsage] = useState([]);
+  const [clientUsage, setClientUsage] = useState([]);
+  const [relayUsage, setRelayUsage] = useState([]);
   const [{ symbol }] = useStore();
   const [page, setPage] = useState(1);
   const [exporting, setExporting] = useState(false);
@@ -40,10 +41,12 @@ const RevenueHistory = () => {
     (async () => {
       try {
         let payments = await get("/usage/payments");
-        let usage = await get("/usage/relay");
+        let clientUsage = await get("/usage/client");
+        let relayUsage = await get("/usage/relay");
         let info = await get("/info");
         let localization = await get("/localization");
-        if (!(usage instanceof Error)) setUsage(usage);
+        if (!(clientUsage instanceof Error)) setClientUsage(clientUsage);
+        if (!(relayUsage instanceof Error)) setRelayUsage(relayUsage);
         if (!(localization instanceof Error)) setLocalization(localization);
         if (!(info instanceof Error)) setInfo(info);
         if (!(payments instanceof Error)) setPayments(payments);
@@ -56,10 +59,10 @@ const RevenueHistory = () => {
 
   const [rows, data] = useMemo(
     () =>
-      groupUsage(
+      groupRelayUsageData(
         info,
-        false,
-        usage,
+        clientUsage,
+        relayUsage,
         period,
         symbol_or_star,
         locale,
@@ -67,7 +70,17 @@ const RevenueHistory = () => {
         limit,
         payments
       ),
-    [info, usage, period, symbol_or_star, locale, page, limit, payments]
+    [
+      info,
+      relayUsage,
+      period,
+      symbol_or_star,
+      locale,
+      page,
+      limit,
+      payments,
+      clientUsage,
+    ]
   );
 
   return (
@@ -110,12 +123,13 @@ const RevenueHistory = () => {
                   </div>
                 </div>
               </div>
+              <p>{t("revenueDescription")}</p>
               <div className="table-responsive">
                 <Table className="table-striped">
                   <thead>
                     <tr>
                       <th>{t("period")}</th>
-                      <th className="text-right">{t("usage")}</th>
+                      <th className="text-right">{t("relayUsage")}</th>
                       <th className="text-right">{t("totalRevenue")}</th>
                     </tr>
                   </thead>

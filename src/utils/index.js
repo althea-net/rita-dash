@@ -4,7 +4,7 @@ import { default as NoConnection } from "./NoConnection";
 import { default as Success } from "./Success";
 import { default as Confirm } from "./Confirm";
 import { default as Flags } from "./Flags";
-import { default as groupUsage } from "./groupUsage";
+import { groupClientUsageData, groupRelayUsageData } from "./groupUsage";
 
 import { BigNumber } from "bignumber.js";
 const weiPerEth = BigNumber("1000000000000000000");
@@ -53,6 +53,7 @@ export {
   toWei,
   txLink,
   sleep,
-  groupUsage,
+  groupClientUsageData,
+  groupRelayUsageData,
   Warning,
 };

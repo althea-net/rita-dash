@@ -42,6 +42,8 @@
   "withdrawAll": "Retirar todos los fondos",
   "totalRevenue": "Total Revenue",
   "revenueHistory": " Historial de ingresos ",
+  "revenueDescription": "Esta pantalla muestra los ingresos netos, el cambio total en el saldo de la billetera del enrutador. Si el valor es positivo, su enrutador está ganando dinero como retransmisor. Si el valor es negativo, el ancho de banda de retransmisión está compensando el gasto en su propio uso de datos",
+  "relayUsage": "Datos transmitidos",
   "beforeYouChange": "Antes de cambiar el precio, debe <a href='https://althea.net'>leer más sobre las mejores prácticas</a> para vender su ancho de banda y precios.",
   "theAmountYouPay": "La cantidad que paga al organizador de su red cada mes",
   "theseSettings": "Estas configuraciones generalmente no necesitan actualizarse y son utilizadas por los técnicos durante la configuración inicial. Asegúrese de saber lo que está haciendo, ya que los cambios aquí pueden causar una interrupción del servicio.",
