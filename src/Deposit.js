@@ -33,7 +33,7 @@ async function submit(billing_details, phone, email, setState) {
 
 async function get_c14_url_and_redirect(amount, address) {
   try {
-    let url = `https://pay.c14.money?sourceCurrencyCode=USD&sourceAmount=${amount}&targetAddress=${address}&targetAssetId=38ee0010-ca62-41da-822e-ff8a9bfa0914`;
+    let url = `https://pay.c14.money?sourceCurrencyCode=USD&sourceAmount=${amount}&targetAddress=${address}&targetAssetId=38ee0010-ca62-41da-822e-ff8a9bfa0914&clientId=c1a8e9d-f149-47c9-9875-3100bdbd8cea&targetAddressLock=true`;
     window.open(url, "_blank");
   } catch (e) {}
 }
