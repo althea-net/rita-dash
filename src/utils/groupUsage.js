@@ -247,7 +247,7 @@ const groupClientUsageData = (
                 p.from.ethAddress.toLowerCase() ===
                 our_info.address.toLowerCase()
             )
-            .filter((p) => p.to.meshIp === "::1")
+            .filter((p) => p.to.meshIp !== "::1")
             .reduce((a, b) => a + parseInt(b.amount), 0);
 
           // this is the NET balance change of the router not the client usage specifically
