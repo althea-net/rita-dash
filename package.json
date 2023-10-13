@@ -107,7 +107,7 @@
     "typescript": "^3.4.5",
     "unstated": "^2.1.1",
     "uuid": "^9.0.0",
-    "webpack": "^5.73.0",
+    "webpack": "^5.76.0",
     "yarn": "^1.22.17"
   },
   "resolutions": {
