@@ -77,7 +77,7 @@
     "i18next-xhr-backend": "^1.5.1",
     "input-format": "^0.3.8",
     "ip-address": "^5.8.9",
-    "jquery": "^1.12.4",
+    "jquery": "^3.5.0",
     "js-sha3": "^0.8.0",
     "npm": "^6.3.0",
     "popper.js": "^1.14.4",
