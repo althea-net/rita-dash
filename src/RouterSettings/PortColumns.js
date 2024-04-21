@@ -3,19 +3,9 @@ import { useTranslation } from "react-i18next";
 
 import { Alert, Button } from "reactstrap";
 import { PortColumn, PortNumber, PortToggle } from "./PortStyles.js";
-import { useStore } from "store";
 
 import portOrderings from "../portOrderings";
 import portImage from "images/port.png";
-
-const DSA_MODELS = [
-  "linksys_wrt3200acm",
-  "linksys_wrt32x",
-  "linksys_wrt1900acs",
-  "linksys_wrt1900ac",
-  "ubnt-erx",
-  "ubnt-erx-sfp",
-];
 
 const PortColumns = ({
   device,
@@ -25,25 +15,22 @@ const PortColumns = ({
 }) => {
   let [t] = useTranslation();
   const modes = [t("Lan"), t("Mesh"), t("LTE"), t("Wan")];
-  // see if we have kernel v5 orderings
+  // see if we have kernel v5+ orderings
   const orderv5 = portOrderings[device];
   let order = orderv5;
+  // get kernel v4 orderings for pre-DSA
+  const orderv4 = portOrderings[`${device}_v4`];
 
-  if (DSA_MODELS.includes(device)) {
-    // get the interface port names
-    const iface_keys = Object.keys(interfaces);
+  // get the interface port names
+  const iface_keys = Object.keys(interfaces);
 
-    // get kernel v4 orderings for pre-DSA
-    const orderv4 = portOrderings[`${device}_v4`];
-
-    // use v5 ifaces names, otherwise try v4
-    order =
-      orderv5 && iface_keys.includes(orderv5[0])
-        ? orderv5
-        : orderv4 && iface_keys.includes(orderv4[0])
-          ? orderv4
-          : null;
-  }
+  // use v5 ifaces names, otherwise try v4
+  order =
+    orderv5 && iface_keys.includes(orderv5[0])
+      ? orderv5
+      : orderv4 && iface_keys.includes(orderv4[0])
+      ? orderv4
+      : null;
 
   if (!order) return <Alert color="danger">{t("deviceNotRecognized")}</Alert>;
 
@@ -76,7 +63,7 @@ const PortColumns = ({
                     ((mode === "Wan" &&
                       Object.values(interfaces).includes(mode)) ||
                       (mode === "LTE" &&
-                        (Object.values(interfaces).includes(mode))));
+                        Object.values(interfaces).includes(mode)));
                   return (
                     <PortToggle
                       id={mode + "_" + column}
