@@ -25,22 +25,6 @@ const PortColumns = ({
 }) => {
   let [t] = useTranslation();
   const modes = [t("Lan"), t("Mesh"), t("LTE"), t("Wan")];
-  const [{ version }] = useStore();
-  function checkIfKeyLTE() {
-    // if this is a KeyLTE router the LTE port assignment is disabled.
-    if (version == null) {
-      return false;
-    }
-    let version_string = version.toLowerCase();
-    if (version_string.includes("keylte")) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  const is_keyLTE = checkIfKeyLTE();
-
   // see if we have kernel v5 orderings
   const orderv5 = portOrderings[device];
   let order = orderv5;
@@ -57,8 +41,8 @@ const PortColumns = ({
       orderv5 && iface_keys.includes(orderv5[0])
         ? orderv5
         : orderv4 && iface_keys.includes(orderv4[0])
-        ? orderv4
-        : null;
+          ? orderv4
+          : null;
   }
 
   if (!order) return <Alert color="danger">{t("deviceNotRecognized")}</Alert>;
@@ -92,8 +76,7 @@ const PortColumns = ({
                     ((mode === "Wan" &&
                       Object.values(interfaces).includes(mode)) ||
                       (mode === "LTE" &&
-                        (Object.values(interfaces).includes(mode) ||
-                          is_keyLTE)));
+                        (Object.values(interfaces).includes(mode))));
                   return (
                     <PortToggle
                       id={mode + "_" + column}
