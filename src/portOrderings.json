@@ -26,6 +26,7 @@
   "linksys_wrt32x_v4": ["eth0.1", "eth0.3", "eth0.4", "eth0.5", "eth1.2"],
   "linksys_wrt1900ac_v4": ["eth0.1", "eth0.3", "eth0.4", "eth0.5", "eth1.2"],
   "linksys_wrt1900acs_v4": ["eth0.1", "eth0.3", "eth0.4", "eth0.5", "eth1.2"],
+  "linksys_whw03v2": ["wan", "lan"],
   "mikrotik_hap-ac2_v4": ["eth1", "eth0.14", "eth0.13", "eth0.12", "eth0.11"],
   "mikrotik_hap-ac2": ["wan", "lan1", "lan2", "lan3", "lan4"],
   "mikrotik_hap-ac3_v4": ["eth1", "eth0.14", "eth0.13", "eth0.12", "eth0.11"],
