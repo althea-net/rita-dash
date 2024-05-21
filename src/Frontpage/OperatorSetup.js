@@ -6,11 +6,23 @@ import { get, post } from "store";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { InnerPhoneInput } from "ui";
+import { Error } from "utils";
+
+let { protocol, hostname } = window.location;
+
+if (protocol === "file:") {
+  protocol = "http:";
+  hostname = "192.168.10.1";
+}
+
+const port = 4877;
+const base =
+  process.env.REACT_APP_BACKEND_URL || `${protocol}//${hostname}:${port}`;
 
 const OperatorSetup = () => {
   const [shouldDisplay, setShouldDisplay] = useState(null);
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState(null);
   const [phone, setPhone] = useState(null);
   const [cpeIP, setCpeIP] = useState(null);
@@ -18,13 +30,15 @@ const OperatorSetup = () => {
   // since the dropdown may be correct to start users might not mess with
   // it, so it needs to have a correct starting value.
   const [country, setCountry] = useState("United States");
-  const [postalCode, setPostalCode] = useState(null);
+  const [postalCode, setPostalCode] = useState("");
   const [state, setState] = useState(null);
-  const [city, setCity] = useState(null);
-  const [street, setStreet] = useState(null);
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
   const [relayAntennaIPs, setRelayAntennaIPs] = useState(null);
   const [physicalAddress, setPhysicalAddress] = useState(null);
-  const [equipmentDetails, setEquipmentDetails] = useState(null);
+  const [equipmentDetails, setEquipmentDetails] = useState("");
+
+  const [error, setError] = useState(false);
 
   const [t] = useTranslation();
   useEffect(() => {
@@ -59,9 +73,25 @@ const OperatorSetup = () => {
       install_details.relay_antennas = relayAntennaIPs;
       install_details.physical_address = physicalAddress;
       install_details.equipment_details = equipmentDetails;
-      await post(`/installation_details`, install_details);
-      setShouldDisplay(null);
-    } catch (e) {}
+      const res = await fetch(base + `/installation_details`, {
+        method: "POST",
+        body: JSON.stringify(install_details),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.status !== 200) {
+        let err = await res.json();
+        setError("Submit unsuccessful: " + err);
+      } else {
+        console.log("Submit successful");
+        setError(false);
+        setShouldDisplay(null);
+      }
+    } catch (e) {
+      console.log(JSON.stringify(e));
+    }
   };
 
   if (!shouldDisplay) {
@@ -241,7 +271,8 @@ const OperatorSetup = () => {
           />
         </InputGroup>
         <br />
-        <Button onClick={submit}>submit</Button>
+        <Error error={error} />
+        <Button onClick={submit}>Submit</Button>
       </div>
     </Card>
   );
