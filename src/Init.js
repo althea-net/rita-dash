@@ -62,10 +62,6 @@ const Init = () => {
         if (!(blockchain instanceof Error))
           dispatch({ type: "blockchain", blockchain });
         else throw new Error("Problem fetching blockchain");
-
-        let exits = await get("/exits", true, 8000, signal);
-        if (!(exits instanceof Error)) dispatch({ type: "exits", exits });
-        else throw new Error("Problem fetching exits");
       } catch (e) {
         if (e.message && !e.message.includes("aborted")) console.log(e.message);
       }

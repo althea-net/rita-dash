@@ -4,7 +4,7 @@ import { toEth } from "utils";
 
 const symbols = {
   Ethereum: "ETH",
-  Rinkeby: "tETH",
+  Sepolia: "tETH",
   Xdai: "Dai",
 };
 
@@ -34,50 +34,6 @@ export default (state, action) => {
     },
     authenticated: ({ authenticated }) => ({ authenticated }),
     backupCreated: ({ backupCreated }) => ({ backupCreated }),
-    exits: ({ exits }) => {
-      let { resetting } = state;
-
-      const resetOccurred =
-        exits.length &&
-        state.resetting &&
-        exits
-          .filter(
-            (e) =>
-              e.exitSettings.state === "Pending" ||
-              e.exitSettings.state === "GotInfo"
-          )
-          .map((e) => resetting.includes(e.nickname)).length;
-
-      if (resetOccurred) resetting = [];
-
-      const selectedExit = exits.find((exit) => {
-        return (
-          exit.isSelected &&
-          exit.exitSettings.state === "Registered" &&
-          exit.exitSettings.generalDetails.exitCurrency === state.blockchain
-        );
-      });
-
-      let connectionStatus = "noConnection";
-      if (selectedExit) {
-        connectionStatus = selectedExit.isTunnelWorking
-          ? "connected"
-          : "connectionTrouble";
-      }
-
-      let counter = state.counter;
-      if (
-        connectionStatus === "connectionTrouble" &&
-        state.connectionStatus === "connected"
-      ) {
-        counter += 1;
-        if (counter < 5) connectionStatus = "connected";
-      } else if (connectionStatus === "connected") {
-        counter = 0;
-      }
-
-      return { connectionStatus, exits, selectedExit, resetting, counter };
-    },
     firmwareUpgrading: ({ firmwareUpgrading }) => ({ firmwareUpgrading }),
     error: ({ error }) => ({ error }),
     info: ({

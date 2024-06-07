@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const endpoints = [
   "/info",
-  "/exits",
   "/settings",
   "/debts",
   "/neighbors",

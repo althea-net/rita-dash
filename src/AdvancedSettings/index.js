@@ -2,7 +2,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import AdvancedDebugging from "./AdvancedDebugging";
 import BandwidthSelling from "./BandwidthSelling";
 import Blockchain from "./Blockchain";
 import OperatorFee from "./OperatorFee";
@@ -11,7 +10,6 @@ import NetworkOrganizer from "./NetworkOrganizer";
 import RemoteAccess from "./RemoteAccess";
 import RemoteLogging from "./RemoteLogging";
 import MeshAP from "./MeshAP";
-import ResetExit from "./ResetExit";
 
 import exclamation from "images/exclamation.svg";
 
@@ -54,10 +52,8 @@ export default () => {
         style={{ justifyContent: "space-evenly" }}
       >
         <MeshAP />
-        <ResetExit />
       </div>
       <OperatorFee />
-      <AdvancedDebugging />
     </div>
   );
 };

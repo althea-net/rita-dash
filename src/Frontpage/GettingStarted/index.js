@@ -17,28 +17,10 @@ export default () => {
   const [depositing, setDepositing] = useState(false);
   const [settingPassword, setSettingPassword] = useState(false);
 
-  const [
-    {
-      balance,
-      backupCreated,
-      wgPublicKey,
-      selectedExit,
-      nickname,
-      wifiSettings,
-    },
-  ] = useStore();
+  const [{ balance, backupCreated, wgPublicKey, nickname, wifiSettings }] =
+    useStore();
 
   const goBackup = () => setBackingUp(true);
-
-  const goExit = () => {
-    window.location.href = "#settings";
-    let scroll = () => {
-      let el = document.getElementById("exits");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-      else setTimeout(scroll, 100);
-    };
-    scroll();
-  };
 
   const goNickname = () => {
     window.location.href = "#settings";
@@ -76,11 +58,6 @@ export default () => {
 
   const steps = [
     { name: "backupWallet", completed: backupCreated, onClick: goBackup },
-    {
-      name: "setupExit",
-      completed: selectedExit !== undefined,
-      onClick: goExit,
-    },
     { name: "addFunding", completed: balance > 0, onClick: goDeposit },
     { name: "setWifiPass", completed: isWifiPasswordSet, onClick: goWifi },
     { name: "setNickname", completed: nickname !== null, onClick: goNickname },

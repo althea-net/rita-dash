@@ -261,8 +261,6 @@
   "next": "Siguiente",
   "no": "No",
   "resetConnection": "Restablecer conexión",
-  "resetExit": "Restablecer Salir de la conexión",
-  "resetExitBlurb": "Restablece la conexión de salida para que pueda registrarse nuevamente, esto no debe usarse a menos que el enrutador haya estado desconectado durante algunos meses y puede haber perdido la sincronización con la salida",
   "noConnection": "Esperando la conexión",
   "noDevice": "No se puede determinar el modelo del router",
   "noExits": "No se pudo contactar una salida",

@@ -4,8 +4,6 @@ import { useStore } from "store";
 
 import Finances from "./Finances";
 import GettingStarted from "./GettingStarted";
-import ConnectionStatus from "./ConnectionStatus";
-import OperatorSetup from "./OperatorSetup";
 
 const Frontpage = () => {
   const [t] = useTranslation();
@@ -20,9 +18,7 @@ const Frontpage = () => {
           </h2>
           <p id="version">{t("version", { version, ritaVersion })}</p>
         </div>
-        <ConnectionStatus />
       </div>
-      <OperatorSetup />
       <GettingStarted />
       <Finances />
     </>

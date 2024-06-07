@@ -68,8 +68,6 @@
   "register": "enregistrer",
   "registrationTimeout": "L'inscription a expiré, probablement à cause d'un code invalide",
   "resetConnection": "Réinitialiser la connexion",
-  "resetExit": "Réinitialiser Quitter Connexion",
-  "resetExitBlurb": "Réinitialise la connexion de sortie afin que vous puissiez vous enregistrer à nouveau, cela ne doit pas être utilisé sauf si le routeur a été hors ligne pendant quelques mois et peut avoir perdu la synchronisation avec la sortie",
   "reset": "Réinitialiser",
   "routerSettings": "Paramètres du routeur",
   "save": "enregistrer",

@@ -2,7 +2,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import Exits from "./Exits";
 import RouterNickname from "./RouterNickname";
 import DashboardPassword from "./DashboardPassword";
 import Notifications from "./Notifications";
@@ -19,7 +18,6 @@ export default () => {
       <RouterNickname />
       <DashboardPassword />
       <Notifications />
-      <Exits />
       <BandwidthLimit />
       <div
         className="d-flex flex-wrap"
