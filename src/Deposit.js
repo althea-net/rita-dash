@@ -258,7 +258,6 @@ const Deposit = ({ open, setOpen }) => {
       if (loading == null) {
         setLoading(true);
         let billingDetails = await get("/billing_details", false);
-        let operatorDebt = await get("/operator_debt");
         let email = await get("/email");
         let phone = await get("/phone");
 

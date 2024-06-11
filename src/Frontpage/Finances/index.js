@@ -9,17 +9,15 @@ import Deposit from "../../Deposit";
 import Withdraw from "../../Withdraw";
 import UsageMetrics from "./UsageMetrics";
 import Warning from "./Warning";
-import DebtWarning from "./DebtWarning";
 import FundingStatus from "../../FundingStatus";
 
 const Finances = () => {
   const [t] = useTranslation();
   const [depositing, setDepositing] = useState(false);
   const [withdrawing, setWithdrawing] = useState(false);
-  const [operatorDebt, setOperatorDebt] = useState(0);
   const [localization, setLocalization] = useState([]);
 
-  const [{ debt, balance, status, symbol }, dispatch] = useStore();
+  const [{ balance, status, symbol }, dispatch] = useStore();
 
   const decimals = symbol === "Dai" ? 2 : 4;
 
@@ -42,12 +40,6 @@ const Finances = () => {
     threshold = ethThreshold;
   }
 
-  let debtToBePaid =
-    Number(toEth(debt, decimals)) + Number(toEth(operatorDebt, decimals));
-  const debtToBePaidString = `${dollar_or_nothing}${debtToBePaid} ${symbol_or_star}`;
-
-  let show_debt_warning = debtToBePaid > threshold;
-
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -56,8 +48,6 @@ const Finances = () => {
       try {
         let localization = await get("/localization");
         if (!(localization instanceof Error)) setLocalization(localization);
-        let operatorDebt = await get("/operator_debt");
-        if (!(operatorDebt instanceof Error)) setOperatorDebt(operatorDebt);
 
         const usage = await get("/usage/client", true, 10000, signal);
         if (usage instanceof Error) return;
@@ -130,9 +120,7 @@ const Finances = () => {
 
           <FundingStatus />
         </div>
-        {show_debt_warning ? (
-          <DebtWarning debtValue={debtToBePaidString} />
-        ) : (
+        {(
           <Warning />
         )}
       </div>
