@@ -1,4 +1,6 @@
 {
+  "running": "Exit is online and operating normally",
+  "ExitStartup": "Exit operational status",
   "syncFromURL": "Sync from URL",
   "exitJson": "Exit JSON",
   "addManually": "Add Manually",
