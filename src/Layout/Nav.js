@@ -27,8 +27,6 @@ const AltheaNav = ({ page, setOpen }) => {
   });
 
   return navItems.map((page, i) => {
-    if (page.path === "selling-bandwidth" && !sellingBandwidth) return null;
-
     return (
       <NavItem style={padded} className={page.active} key={i}>
         <NavLink

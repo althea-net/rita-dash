@@ -2,9 +2,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import BandwidthSelling from "./BandwidthSelling";
 import Blockchain from "./Blockchain";
-import OperatorFee from "./OperatorFee";
 import NodeInformation from "./NodeInformation";
 import NetworkOrganizer from "./NetworkOrganizer";
 import RemoteAccess from "./RemoteAccess";
@@ -35,8 +33,8 @@ export default () => {
         className="d-flex flex-wrap"
         style={{ justifyContent: "space-evenly" }}
       >
-        <BandwidthSelling />
         <Blockchain />
+        <MeshAP />
       </div>
       <NodeInformation />
       <div
@@ -46,14 +44,6 @@ export default () => {
         <RemoteAccess />
         <RemoteLogging />
       </div>
-
-      <div
-        className="d-flex flex-wrap"
-        style={{ justifyContent: "space-evenly" }}
-      >
-        <MeshAP />
-      </div>
-      <OperatorFee />
     </div>
   );
 };

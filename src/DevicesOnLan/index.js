@@ -12,7 +12,7 @@ const LanDevices = () => {
       <InputGroup>
         <h2 id="devicesPage">{t("devicesLan")}</h2>
       </InputGroup>
-      <Label> Devices will be refreshed every 30 seconds.</Label>
+      <Label>{t("devicesLanLabel")}</Label>
       <Devices />
     </div>
   );

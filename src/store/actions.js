@@ -117,10 +117,6 @@ export default (state, action) => {
     meshAP: ({ meshAP }) => ({ meshAP }),
     remoteAccess: ({ remoteAccess }) => ({ remoteAccess }),
     remoteLogging: ({ remoteLogging }) => ({ remoteLogging }),
-    sellingBandwidth: ({ sellingBandwidth }) => {
-      window.localStorage.setItem("sellingBandwidth", sellingBandwidth);
-      return { sellingBandwidth };
-    },
     startPortChange: () => ({ portChange: true }),
     startWaiting: ({ waiting }) => ({ waiting }),
     status: ({ status }) => {

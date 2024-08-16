@@ -50,7 +50,6 @@ const state = {
   remoteLogging: false,
   resetting: [],
   ritaVersion: null,
-  sellingBandwidth: false,
   status: null,
   symbol: null,
   txid: null,
