@@ -68,7 +68,7 @@ const Billing = (operatorAddress, ipAddress) => {
   useEffect(() => {
     (async () => {
       try {
-        let usage = await get("/usage/client");
+        let usage = await get("/usage/exit");
         if (!(usage instanceof Error)) setUsage(usage);
       } catch {}
 

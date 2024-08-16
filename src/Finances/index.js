@@ -10,7 +10,6 @@ import WalletManagement from "../WalletManagement";
 
 import Account from "./Account";
 import Billing from "./Billing";
-import Prices from "./Prices";
 import FundingStatus from "../FundingStatus";
 import PurchasingBandwidth from "./PurchasingBandwidth";
 
@@ -49,7 +48,6 @@ const Finances = () => {
         </Right>
       </Card>
       <PurchasingBandwidth />
-      <Prices />
       <Billing />
     </>
   );
