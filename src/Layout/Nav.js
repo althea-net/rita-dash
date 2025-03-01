@@ -1,13 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavItem, NavLink } from "reactstrap";
-import { useStore } from "store";
 
 const padded = { paddingLeft: 5, paddingRight: 5 };
 
 const AltheaNav = ({ page, setOpen }) => {
   let [t] = useTranslation();
-  const [{ sellingBandwidth }] = useStore();
 
   let pages = {
     dashboard: t("dashboard"),
@@ -17,9 +15,10 @@ const AltheaNav = ({ page, setOpen }) => {
     settings: t("settings"),
     advanced: t("advanced"),
     devices: t("devices"),
+    network: t("networkSettings"),
   };
 
-  let navItems = Object.keys(pages).map((path, i) => {
+  let navItems = Object.keys(pages).map((path) => {
     let active = path === page ? "active" : null;
     let title = pages[path];
 
