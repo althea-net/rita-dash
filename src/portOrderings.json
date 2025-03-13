@@ -57,5 +57,6 @@
   "ubnt-unifiac-lite": ["eth0"],
   "x86_64": ["eth0", "eth1", "eth2", "eth3", "eth4"],
   "dl-wrtx36": ["wan", "lan1", "lan2", "lan3", "lan4"],
+  "gl-mt6000": ["eth1", "lan1", "lan2", "lan3", "lan4", "lan5"],
   "zyxel_nbg6817": ["eth1.1", "eth1.2", "eth1.3", "eth1.4", "eth0.5"]
 }
