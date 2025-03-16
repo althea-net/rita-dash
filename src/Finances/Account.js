@@ -66,7 +66,7 @@ const Finances = () => {
             color="primary"
             id="withdraw"
             onClick={() => setWithdrawing(true)}
-            disabled={!status || status.key !== "noOp"}
+            disabled={!status || status.state !== "NoOp"}
           >
             {t("withdraw")}
           </Button>

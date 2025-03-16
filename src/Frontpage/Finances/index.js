@@ -122,7 +122,7 @@ const Finances = () => {
               id="withdraw"
               onClick={() => setWithdrawing(true)}
               style={{ minWidth: 130 }}
-              disabled={!status || status.key !== "noOp"}
+              disabled={!status || status.state !== "NoOp"}
             >
               {t("withdraw")}
             </Button>
