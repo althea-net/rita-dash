@@ -31,9 +31,9 @@ async function submit(billing_details, phone, email, setState) {
   } catch (e) {}
 }
 
-async function get_c14_url_and_redirect(amount, address) {
+async function redirect_to_myalthea(amount, address) {
   try {
-    let url = `https://pay.c14.money?sourceCurrencyCode=USD&sourceAmount=${amount}&targetAddress=${address}&targetAssetId=38ee0010-ca62-41da-822e-ff8a9bfa0914&clientId=c1a8e9d-f149-47c9-9875-3100bdbd8cea&targetAddressLock=true`;
+    let url = `https://my.althea.net`;
     window.open(url, "_blank");
   } catch (e) {}
 }
@@ -316,19 +316,13 @@ const Deposit = ({ open, setOpen }) => {
     );
   } else if (addFundsEnabled && modalDisplayState === "selectAmount") {
     size = "md";
-    modal_header = "Select deposit amount";
     modal_body = (
       <div>
-        <h5>Please select an amount to deposit from the choices below.</h5>
-
-        <p>You will be redirected to our payment processor, C14.</p>
-        <p style={{ backgroundColor: "#FAA", padding: "5px", borderRadius: 5 }}>
-          <center>
-            <strong>Note: debit cards only</strong>
-          </center>
-          Credit cards will not work because router funds are non-reversible.
+        <p>
+          You can see your balance and deposit funds from the management page on
+          my.althea.net You can login with the phone number you just set in the
+          previous step.
         </p>
-
         <p>
           If you experience any problems please call us at{" "}
           <a href="tel:8664258432">1-866-4ALTHEA</a> Thank you!
@@ -342,39 +336,12 @@ const Deposit = ({ open, setOpen }) => {
         >
           <Button
             onClick={(e) => {
-              get_c14_url_and_redirect(50.0, address);
+              redirect_to_myalthea();
             }}
             outline
             color="primary"
           >
-            $50
-          </Button>
-          <Button
-            onClick={(e) => {
-              get_c14_url_and_redirect(100.0, address);
-            }}
-            outline
-            color="primary"
-          >
-            $100
-          </Button>
-          <Button
-            onClick={(e) => {
-              get_c14_url_and_redirect(200.0, address);
-            }}
-            outline
-            color="primary"
-          >
-            $200
-          </Button>
-          <Button
-            onClick={(e) => {
-              get_c14_url_and_redirect(500.0, address);
-            }}
-            outline
-            color="primary"
-          >
-            $500
+            Go to my.althea.net
           </Button>
         </div>
       </div>
